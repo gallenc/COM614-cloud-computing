@@ -1,0 +1,26 @@
+# using fixed ip addresses
+# to see all network use docker network ls
+# to see config use docker network inspect minimal-horizon_frontend
+# note gateway is 172.20.0.1 
+networks:
+  frontend:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
+        
+volumes:
+  data-raspberrypi: {}
+        
+services:
+  dockerpi1:
+    image: lukechilds/dockerpi:latest
+    container_name: dockerpi1
+    volumes:
+      - data-raspberrypi:/sdcard
+      - ./container-fs/raspberrypi/entrypoint.sh:/entrypoint.sh
+    ports:
+      - "2201-2212:2222"
+      - "1022:22"
+    networks:
+      frontend:
+        ipv4_address: 172.20.0.100

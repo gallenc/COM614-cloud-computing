@@ -1,0 +1,13 @@
+Today, we are implementing (a) the button readouts, and (b) the LED movement code.
+
+We'll need the hexadecimal format of the binary numbers:
+
+0010 0000 0000 0000 0000 0000 0000
+
+0001 0000 0000 0000 0000 0000 0000
+
+0000 1000 0000 0000 0000 0000 0000
+
+Can you work these out from previous lessons?
+
+Which bit-line is set to 1 in each of the above cases? - How do these correspond to the port numbers used?
