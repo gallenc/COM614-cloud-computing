@@ -1,3 +1,3 @@
-[Main Menu](../../../sessions/README.md) |[session1](../../session1/) | [Session 1 Notes](../docs/sessionNotes.md)
+[Main Menu](../../../sessions/README.md) |[session8](../../session8/) | [Session 8 Notes](../docs/sessionNotes.md)
 
-# Session 1 Notes
+# Session 8 Notes
