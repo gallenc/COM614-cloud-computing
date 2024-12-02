@@ -2,3 +2,4 @@
 
 # Session 12 Wrap Up
 
+See [Session 12 Notes](../session12/docs/sessionNotes.md)

@@ -2,5 +2,7 @@
 
 # Session 1 
 
+See [Session 1 Notes](../session1/docs/sessionNotes.md)
+
 
 

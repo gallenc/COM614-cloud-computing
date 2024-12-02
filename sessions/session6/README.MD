@@ -2,3 +2,4 @@
 
 # Session 6 
 
+See [Session 6 Notes](../session6/docs/sessionNotes.md)
