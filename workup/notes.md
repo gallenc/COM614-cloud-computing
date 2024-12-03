@@ -97,3 +97,20 @@ https://www.docker.com/blog/lxc-vs-docker/  LXC vs docker
 
 
 gpxe ethernet boot http://etherboot.org/wiki/index.php
+
+
+# kubernetes tutorial
+
+[Kubernetes Crash Course for Absolute Beginners](https://www.youtube.com/watch?v=s_o8dwzRlu4)
+
+installing minikube https://minikube.sigs.k8s.io/docs/start/
+
+(start docker desktop first)
+
+minikube start --driver docker
+minikube status
+kubectl get node
+
+
+
+

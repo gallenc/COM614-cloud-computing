@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-deployment
+  labels:
+    app: mongo
+spec:
+  replicas: 1       # this is a database so we will not replicate it
+  selector:         # defines all the pods matching this lable belong to this deployment
+    matchLabels:    # you can lable anything as an additional identifier all pod replicas may share same label
+      app: mongo
+  template:         # this configures the pod within a deployment
+    metadata:
+      labels:
+        app: mongo
+    spec:
+      containers:
+      - name: mongodb
+        image: mongo:5.0
+        ports:
+        - containerPort: 27017
+        env:         # see env variables for container https://hub.docker.com/_/mongo
+        - name: MONGO_INITDB_ROOT_USERNAME  
+          # value: # can use value directly or take from secrets file below
+          valueFrom:
+             secretKeyRef:
+                name: mongo-secret
+                key: mongo-user
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          valueFrom:
+             secretKeyRef:
+                name: mongo-secret
+                key: mongo-password
+---
+# seperate config within same file seperated by ---
+# see https://kubernetes.io/docs/concepts/services-networking/service/
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-service
+spec:
+  selector:  # maps to pods belonging to this service
+    app: mongo
+  ports:
+    - protocol: TCP
+      port: 27017        # external port
+      targetPort: 27017  # same as container port
+
+      

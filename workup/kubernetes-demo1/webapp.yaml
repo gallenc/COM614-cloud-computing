@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-deployment
+  labels:
+    app: webapp
+spec:
+  replicas: 1       
+  selector:         # defines all the pods matching this lable belong to this deployment
+    matchLabels:    # you can lable anything as an additional identifier all pod replicas may share same label
+      app: webapp
+  template:         # this configures the pod within a deployment
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:   # simple node js application
+      - name: webapp
+        image: nanajanashia/k8s-demo-app:v1.0
+        ports:
+        - containerPort: 3000
+        env:
+        - name: USER_NAME
+          valueFrom:
+             secretKeyRef:
+                name: mongo-secret
+                key: mongo-user
+        - name: USER_PWD
+          valueFrom:
+             secretKeyRef:
+                name: mongo-secret
+                key: mongo-password
+        - name: DB_URL
+          valueFrom:
+             configMapKeyRef:
+                name: mongo-config
+                key: mongo-url
+        
+---
+# seperate config within same file seperated by ---
+# see https://kubernetes.io/docs/concepts/services-networking/service/
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-service
+spec:
+  # type: ClusterIP      # this is default internal service
+  type: NodePort         # this is an external port
+  selector:  # maps to pods belonging to this service
+    app: webapp
+  ports:
+    - protocol: TCP
+      port: 3000        # external port
+      targetPort: 3000  # same as container port
+      nodePort: 30100   # nodePort must be in default range between 30000-32767
+
+      
