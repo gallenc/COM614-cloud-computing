@@ -81,6 +81,36 @@ kubectl apply -f webapp.yaml
 
 https://stackoverflow.com/questions/71536310/unable-to-access-minikube-ip-address  NOTE exactly the same tutorial problem Unable to access minikube IP address [closed]
 
+must use 
+```
+command minikube service webapp-service --url 
+```
+to get the actual port on your machine
+
+(or minikube service webapp-service )
+
+```
+minikube service webapp-service
+|-----------|----------------|-------------|---------------------------|
+| NAMESPACE |      NAME      | TARGET PORT |            URL            |
+|-----------|----------------|-------------|---------------------------|
+| default   | webapp-service |        3000 | http://192.168.49.2:30100 |
+|-----------|----------------|-------------|---------------------------|
+* Starting tunnel for service webapp-service.
+|-----------|----------------|-------------|------------------------|
+| NAMESPACE |      NAME      | TARGET PORT |          URL           |
+|-----------|----------------|-------------|------------------------|
+| default   | webapp-service |             | http://127.0.0.1:57818 |
+|-----------|----------------|-------------|------------------------|
+* Opening service default/webapp-service in default browser...
+! Because you are using a Docker driver on windows, the terminal needs to be open to run it.
+```
+
+or
+
+```
+kubectl port-forward svc/<SERVICE_NAME> 3000:3000
+```
 
 
 
