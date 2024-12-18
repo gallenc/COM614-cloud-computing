@@ -159,4 +159,8 @@ NAME       STATUS   ROLES           AGE    VERSION   INTERNAL-IP    EXTERNAL-IP 
 minikube   Ready    control-plane   145m   v1.31.0   192.168.49.2   <none>        Ubuntu 22.04.4 LTS   5.15.167.4-microsoft-standard-WSL2   docker://27.2.0
 ```
 
+# Really good instructions rocky 9
 
+[install minikube rocky linux](https://www.linuxbuzz.com/how-to-install-minikube-on-rocky-linux/)
+
+[minikube dashboard] https://minikube.sigs.k8s.io/docs/handbook/dashboard/
