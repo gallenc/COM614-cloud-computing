@@ -578,6 +578,55 @@ create service in same file https://kubernetes.io/docs/concepts/services-network
 
 mongo express https://hub.docker.com/_/mongo-express
 
+```
+kubectl apply -f mongodb-configmap.yml 
+kubectl apply -f mongodb-secret.yaml 
+kubectl apply -f mongo-express.yaml 
+kubectl apply -f mongo.yaml 
+
+kubectl get all
+NAME                                    READY   STATUS    RESTARTS   AGE
+pod/mongo-deployment-654874b47f-cfbj9   1/1     Running   0          95s
+pod/mongo-express-85d8576d55-gvz9r      1/1     Running   0          106s
+
+NAME                            TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+service/kubernetes              ClusterIP      10.96.0.1       <none>        443/TCP          27h
+service/mongo-express-service   LoadBalancer   10.98.187.226   <pending>     8081:30000/TCP   106s
+service/mongodb-service         ClusterIP      10.99.146.90    <none>        27017/TCP        95s
+
+NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/mongo-deployment   1/1     1            1           95s
+deployment.apps/mongo-express      1/1     1            1           106s
+
+NAME                                          DESIRED   CURRENT   READY   AGE
+replicaset.apps/mongo-deployment-654874b47f   1         1         1       95s
+replicaset.apps/mongo-express-85d8576d55      1         1         1       106s
+```
+note that ClusterIP is the default name for an internal service ip
+
+note that service/mongo-express-service   external ip addres is pending. We can only assign this in minikube
+
+```
+inikube service mongo-express-service
+|-----------|-----------------------|-------------|---------------------------|
+| NAMESPACE |         NAME          | TARGET PORT |            URL            |
+|-----------|-----------------------|-------------|---------------------------|
+| default   | mongo-express-service |        8081 | http://192.168.49.2:30000 |
+|-----------|-----------------------|-------------|---------------------------|
+🎉  Opening service default/mongo-express-service in default browser...
+```
+note default username  admin 
+default password pass
+
+# namespaces
+
+
+
+
+```
+
+```
+
 
 # 5 things you need to know before kubernetes:
 
