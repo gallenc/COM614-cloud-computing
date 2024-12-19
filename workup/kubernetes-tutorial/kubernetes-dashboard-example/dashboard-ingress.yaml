@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1beta1
 kind: ingress
 metadata:
   name: dashboard-ingress
-  namesapce: kubernetes-dashboard
+  namespace: kubernetes-dashboard
 spec:
   rules:
   - host: kubernetes-dashboard.com
