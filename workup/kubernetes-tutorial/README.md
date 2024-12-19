@@ -831,11 +831,15 @@ replicaset.apps/kubernetes-dashboard-695b96c756       1         1         1     
 
 create dashboard-ingress.yaml
 
+(note tutorial api version wrong - check api versions kubectl api-versions)
 kubectl apply -f dashboard-ingress.yaml
 
 kubectl get ingress -n kuberentes-dashboard --watch
 
 edit hosts file to include mapping for kubernetes-dashboard.com
+
+
+
 ```
 sudo nano /etc/hosts
 ```
