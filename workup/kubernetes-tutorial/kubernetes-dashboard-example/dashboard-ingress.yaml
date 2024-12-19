@@ -21,9 +21,11 @@ spec:
   - host: kubernetes-dashboard.com
     http:
       paths:
-      - backend:
-          service:
-            name: kubernetes-dashboard
-            port:
-              number: 80
+        - pathType: Prefix
+          path: "/"
+          backend:
+            service:
+              name: kubernetes-dashboard
+              port:
+                number: 80
   
