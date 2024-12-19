@@ -620,13 +620,225 @@ default password pass
 
 # namespaces
 
+namespace - organise resources in namespaces - a virtual cluster wihin a kubernetes cluster
 
-
+```
+kubectl get namespace
+NAME              STATUS   AGE
+default           Active   42h  # used to create resources if haven't created new name space
+kube-node-lease   Active   42h  # heartbeats of nodes  - availability
+kube-public       Active   42h  # publicly accessible date without authentication
+kube-system       Active   42h  # not meant for user - system processes
 
 ```
 
 ```
+kubectl cluster-info 
+Kubernetes control plane is running at https://192.168.49.2:8443
+CoreDNS is running at https://192.168.49.2:8443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+```
 
+```
+kubectl get pods --all-namespaces -o wide
+NAMESPACE     NAME                                READY   STATUS    RESTARTS   AGE   IP             NODE       NOMINATED NODE   READINESS GATES
+default       mongo-deployment-654874b47f-cfbj9   1/1     Running   0          15h   10.244.0.24    minikube   <none>           <none>
+default       mongo-express-85d8576d55-gvz9r      1/1     Running   0          15h   10.244.0.23    minikube   <none>           <none>
+kube-system   coredns-6f6b679f8f-ktsqk            1/1     Running   0          43h   10.244.0.2     minikube   <none>           <none>
+kube-system   etcd-minikube                       1/1     Running   0          43h   192.168.49.2   minikube   <none>           <none>
+kube-system   kube-apiserver-minikube             1/1     Running   0          43h   192.168.49.2   minikube   <none>           <none>
+kube-system   kube-controller-manager-minikube    1/1     Running   0          43h   192.168.49.2   minikube   <none>           <none>
+kube-system   kube-proxy-4dtbq                    1/1     Running   0          43h   192.168.49.2   minikube   <none>           <none>
+kube-system   kube-scheduler-minikube             1/1     Running   0          43h   192.168.49.2   minikube   <none>           <none>
+kube-system   storage-provisioner                 1/1     Running   3          43h   192.168.49.2   minikube   <none>           <none>
+
+```
+
+create a namespace - can also be created in a ConfigMap
+
+```
+kubectl create namespace my-namespace
+kubectl get namespace 
+NAME              STATUS   AGE
+default           Active   43h
+kube-node-lease   Active   43h
+kube-public       Active   43h
+kube-system       Active   43h
+my-namespace      Active   7s
+
+```
+usage - create namespaces for specific resources logically
+e.g. database, monitoring, elastic etc
+
+* many teams same application - helps with different teams using same application in differnt namespaces
+* staging and development in same cluster - can use common resources in 
+* blue green deployment - different versions of production systems - using same nginx controller etc
+* access limits on namespaces e.g. per names apce resource quotas etc
+
+cant access resources from another namespace - secrets , config map - must recreate
+can share services across namespaces  - can access services from other namespaces e.g.
+
+```
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-configmap
+data:
+  db_url: mysql-service.database
+```
+The database namespace is suffix to mysql-service
+some components an be in a namespace - e.g. node and volume
+
+```
+kubectl api-resources --namespaced=false
+kubectl api-resources --namespaced=true
+```
+
+kubectl apply creates in default namespace 
+
+```
+kubectl get configmap
+same as
+kubectl get configmap -n default 
+
+kubectl get configmap -o yaml
+
+```
+
+can create a reourse in a namspace using
+```
+kubectl apply -f msql-configmap.yaml --namesapce=my-namesapce
+```
+or include namespace in matadata of resource  (best practice)
+
+```
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-configmap
+  namespace: my-namespace
+data:
+  db_url: mysql-service.database
+
+```
+
+Tool to manage active namespace - rather than using it with kubectl all the time
+see https://github.com/ahmetb/kubectx 
+kubectx is a tool to switch between contexts (clusters) on kubectl faster.
+kubens is a tool to switch between Kubernetes namespaces (and configure them for kubectl) easily.
+
+## kubernetes ingress vs external service
+
+external service - quick deployment but only http ( no https)
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-internal-service
+spec:
+  selector:
+    app: myapp
+    # defaults to type: ClusterIP (internal service)
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      # no nodePort since internal service
+
+```
+usual deployment - my-app service (internal) my-app ingres - external
+
+routing rules - host in browser mapped to service paths - is url path after domain name
+
+```
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: myapp-ingress
+spec:
+  rules:
+  - host: myapp.com
+    http:
+      paths
+       -backend:
+          serviceName: myapp-internal-service
+          servicePort:8080
+
+```
+
+you need an implementation of ingress  - an ingress controller pod
+K8s Nginx ingress controller
+
+cloud load balancer - redirect to k8s load balancer - minimal effort
+basre metal deploy - need a n entryp ont - either inside cluster or external server - proxy server
+
+minikube  -similar install ingress controller
+
+```
+minikube addons enable ingress
+💡  ingress is an addon maintained by Kubernetes. For any concerns contact minikube on GitHub.
+You can view the list of minikube maintainers at: https://github.com/kubernetes/minikube/blob/master/OWNERS
+    ▪ Using image registry.k8s.io/ingress-nginx/controller:v1.11.2
+    ▪ Using image registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.4.3
+    ▪ Using image registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.4.3
+🔎  Verifying ingress addon...
+
+🌟  The 'ingress' addon is enabled
+
+## check pod available
+kubectl get pods --all-namespaces
+NAMESPACE       NAME                                       READY   STATUS      RESTARTS   AGE
+default         mongo-deployment-654874b47f-cfbj9          1/1     Running     0          16h
+default         mongo-express-85d8576d55-gvz9r             1/1     Running     0          16h
+ingress-nginx   ingress-nginx-admission-create-zs9q6       0/1     Completed   0          10m
+ingress-nginx   ingress-nginx-admission-patch-r4vq6        0/1     Completed   0          10m
+ingress-nginx   ingress-nginx-controller-bc57996ff-d29ml   1/1     Running     0          10m
+kube-system     coredns-6f6b679f8f-ktsqk                   1/1     Running     0          44h
+kube-system     etcd-minikube                              1/1     Running     0          44h
+kube-system     kube-apiserver-minikube                    1/1     Running     0          44h
+kube-system     kube-controller-manager-minikube           1/1     Running     0          44h
+kube-system     kube-proxy-4dtbq                           1/1     Running     0          44h
+kube-system     kube-scheduler-minikube                    1/1     Running     0          44h
+kube-system     storage-provisioner                        1/1     Running     3          44h
+
+```
+
+enable kubernetes dashboard
+
+```
+minikube addons list
+
+minikube addons enable dashboard
+
+kubectl get all -n kubernetes-dashboard
+NAME                                            READY   STATUS    RESTARTS   AGE
+pod/dashboard-metrics-scraper-c5db448b4-wpsqz   1/1     Running   0          2m5s
+pod/kubernetes-dashboard-695b96c756-7fcr6       1/1     Running   0          2m5s
+
+NAME                                TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+service/dashboard-metrics-scraper   ClusterIP   10.109.178.176   <none>        8000/TCP   2m4s
+service/kubernetes-dashboard        ClusterIP   10.102.172.6     <none>        80/TCP     2m5s
+
+NAME                                        READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/dashboard-metrics-scraper   1/1     1            1           2m6s
+deployment.apps/kubernetes-dashboard        1/1     1            1           2m6s
+
+NAME                                                  DESIRED   CURRENT   READY   AGE
+replicaset.apps/dashboard-metrics-scraper-c5db448b4   1         1         1       2m6s
+replicaset.apps/kubernetes-dashboard-695b96c756       1         1         1       2m5s
+
+```
+
+create dashboard-ingress.yaml
+
+kubectl apply -f dashboard-ingress.yaml
+
+kubectl get ingress -n kuberentes-dashboard --watch
+
+edit hosts file to include mapping for kubernetes-dashboard.com
+```
+sudo nano /etc/hosts
+```
 
 # 5 things you need to know before kubernetes:
 
