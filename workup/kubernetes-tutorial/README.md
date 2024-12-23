@@ -829,20 +829,175 @@ replicaset.apps/kubernetes-dashboard-695b96c756       1         1         1     
 
 ```
 
+note that tutorial is slightly wrong since it uses an old api.
+
 create dashboard-ingress.yaml
 
 (note tutorial api version wrong - check api versions kubectl api-versions)
 kubectl apply -f dashboard-ingress.yaml
 
-kubectl get ingress -n kuberentes-dashboard --watch
+kubectl apply -f dashboard-ingress.yaml
+ingress.networking.k8s.io/dashboard-ingress created
+[admin@vbox kubernetes-dashboard-example]$ kubectl get ingress -n kubernetes-dashboard
+NAME                CLASS   HOSTS                      ADDRESS        PORTS   AGE
+dashboard-ingress   nginx   kubernetes-dashboard.com   192.168.49.2   80      81s
 
 edit hosts file to include mapping for kubernetes-dashboard.com
 
-
-
 ```
 sudo nano /etc/hosts
+
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+
+# temporary for kuberentes dashboard
+192.168.49.2 kubernetes-dashboard.com
+
 ```
+
+browse to http://kubernetes-dashboard.com/
+
+default backend - use if request for service not defined
+
+```
+kubectl describe ingress dashboard-ingress -n kubernetes-dashboard
+Name:             dashboard-ingress
+Labels:           <none>
+Namespace:        kubernetes-dashboard
+Address:          192.168.49.2
+Ingress Class:    nginx
+Default backend:  <default>
+Rules:
+  Host                      Path  Backends
+  ----                      ----  --------
+  kubernetes-dashboard.com  
+                            /   kubernetes-dashboard:80 (10.244.0.28:9090)
+Annotations:                <none>
+Events:
+  Type    Reason  Age                From                      Message
+  ----    ------  ----               ----                      -------
+  Normal  Sync    10m (x2 over 11m)  nginx-ingress-controller  Scheduled for sync
+```
+
+https://kubernetes.github.io/ingress-nginx/user-guide/default-backend/
+
+
+# helm explained
+no longer tiller in helm3
+
+# volumes
+storage doenst depend on pod lifecyle
+not tied to one particular node
+survive cluster crash scenario
+db persistance - use remote storage
+application must use a persistant volume claim PVC
+
+directory - persistant volume - cluster resource 
+needs physical storiage  -NFX / AWS block storage or local disk
+pesistant volumes not namespaced
+local vs remote volumes
+
+pod requests a volume through a PV claim with storage size
+d specificaiton volumes referenes PVC
+pvc and pod must be in same name space
+volume has an actual storage back end
+volume is mounted in the pod - can then mount in the container
+
+why so many abstraction
+Admin provisions storage reosurces
+Devleloper claims resouses
+
+configMap Secret - differnt volumes - both local volumes - owned by kubernetes
+mount a config map
+
+storage class - provisios persistance volumes dynmaciallg when rewuied
+
+3 abstractions : 
+
+persistant volume - persisted back end chared across pods
+
+persistant volume claim - claims a storage volume from within a pod
+
+storage class - creates a pv for you using the  backend
+
+
+StatefulSet - used for stateful applications - all databases - stores data to keep stack of state - deployed using StatefulSet
+
+Stateless - each request is isolated - no record of state - deployed using deployment - can have many replicas
+
+note that stateful set and deployment very simlar - volumes, replicas etc - what is difference
+
+Stateful pods - are not identical - tey all have their own sticky identity - same specificatino but not interchangeble - keeps the identity if dies
+only one pod can WRITE (master) rest are slaves. Dont have same physical storage -replicas of storage - applications must continuously synchronise
+clustered database setup - maste changes - slaves replicate  - clones from Previous pod
+
+tempoary storage possible - data lost when all pods die
+persistant volume lifecycle not related to lifecycle
+pod dies - storege volume re-attached to same volume - must use REMOTE STORAGE
+
+every pod has onn identifier - fixed orgerd names - statefulset name with ordinal mysql-o etc 
+each pod 2 end points - individual dns name for each pod and for service
+predictable pod name and dns name
+
+stateful applications not ideal for container environment - often databases etc provisioned and replicated outside
+
+# kubernetes services
+
+ClusterIP Services
+default service type
+pod with microservice and sidecar container - service logs 
+pod has ip address from range of ip address assigned to node
+pod ip addresses kubectl get pod -o wide
+
+clusterIp ( internal service) - abstraction layer representing ip address and port
+ingress - service - load balance pods
+service selector - deternines key value pairs matchign labels
+
+service will match all pod replicas with same labels
+service targetPort - matches selector
+multiple ports in a service - have to name the ports 
+
+
+headless - client wants to talk to one of the pods direcltly or pod want to alk to pod
+Stateful -  master and worker instances - master and work replicate
+
+pod ip addresses dns lookup - 
+spec clisterIP: none
+
+Loadbalancer service - the external loadbalanced of he platform route the traffic to the clusterIP
+
+
+NodePort - external traffic accessable on each workernode - port on workernode exposed
+
+
+
+
+NodePort Services
+Headless Services
+LoadBalancer Services
+
+pod has own ip address - ephemeral
+service - stable IP address
+laodbalancing
+
+# cloud native postgress
+
+https://www.cncf.io/blog/2023/09/29/recommended-architectures-for-postgresql-in-kubernetes/
+'You can run databases on Kubernetes because it’s fundamentally the same as running a database on a VM'
+CloudNativePG is a comprehensive open source platform designed to seamlessly manage PostgreSQL databases within Kubernetes environments, covering the entire operational lifecycle from initial deployment to ongoing maintenance. The main component is the CloudNativePG operator.
+
+https://github.com/cloudnative-pg/cloudnative-pg
+
+https://cloudnative-pg.io/documentation/1.24/
+
+https://awslabs.github.io/data-on-eks/docs/blueprints/distributed-databases/cloudnative-postgres
+
+may 2024 https://medium.com/@nabil.abdi/more-with-cloudnativepg-in-azure-8f84eb003a79
+
+https://learn.microsoft.com/en-us/azure/aks/create-postgresql-ha?tabs=helm   Create infrastructure for deploying a highly available PostgreSQL database on AKS (azure kubernetes service)
+
+# introduction to kubernetes networking
+https://blogs.cisco.com/developer/kubernetes-intro-1
 
 # 5 things you need to know before kubernetes:
 
