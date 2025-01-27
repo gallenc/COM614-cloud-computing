@@ -1,0 +1,84 @@
+---
+version: '3'
+
+# using fixed ip addresses so opennms provisoning config works
+# to see all network use docker network ls
+# to see config use docker network inspect minimal-minion-grpc_frontend
+# note gateway is 172.20.0.1 
+networks:
+  minion:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
+
+volumes:
+  data-postgres: {}
+  data-opennms: {}
+  data-opennms-cfg: {}
+  data-grafana: {}
+
+services:
+
+ 
+  minion-remote-pi-01:
+    image: ${DOCKER_REGISTRY:-docker.io}/${DOCKER_ORG:-opennms}/${MINION_OCI:-minion}:${ONMS_VERSION:-bleeding}
+    container_name: minion-remote-1
+    hostname: minion-remote-pi-01
+    sysctls:
+      net.ipv4.ping_group_range: "0 429496729"
+    environment:
+      TZ: ${TIMEZONE:-America/New_York}
+      JAVA_MIN_MEM: 512M
+      JAVA_MAX_MEM: 2048M
+    volumes:
+      - './container-fs/minion-remote-1/opt/minion/minion-config.yaml:/opt/minion/minion-config.yaml'
+    command: ["-f"]
+    healthcheck:
+      test: "/health.sh"
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    ports:
+      - "8201:8201/tcp"
+      - "1162:1162/udp"
+      - "1514:1514/udp"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 2560M
+    networks:
+      minion:
+        ipv4_address: 172.20.0.25
+
+  # minion with ssl
+#  minion-remote-2:
+#    image: ${DOCKER_REGISTRY:-docker.io}/${DOCKER_ORG:-opennms}/${MINION_OCI:-minion}:${ONMS_VERSION:-bleeding}
+#    container_name: minion-remote-pi-02
+#    hostname: minion-remote-2
+#    sysctls:
+#      net.ipv4.ping_group_range: "0 429496729"
+#    environment:
+#      TZ: ${TIMEZONE:-America/New_York}
+#      JAVA_MIN_MEM: 512M
+#      JAVA_MAX_MEM: 2048M
+#    volumes:
+#      - './container-fs/minion-remote-pi-02/opt/minion/minion-config.yaml:/opt/minion/minion-config.yaml'
+#    command: ["-f"]
+#    healthcheck:
+#      test: "/health.sh"
+#      interval: 30s
+#      timeout: 20s
+#      retries: 3
+#    ports:
+#      - "8301:8201/tcp"
+#      - "1262:1162/udp"
+#      - "1614:1514/udp"
+#    deploy:
+#      resources:
+#        limits:
+#          cpus: "0.5"
+#          memory: 2560M
+#    networks:
+#      minion:
+#        ipv4_address: 172.20.0.30    
