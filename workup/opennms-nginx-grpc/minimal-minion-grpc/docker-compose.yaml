@@ -1,0 +1,189 @@
+---
+version: '3'
+
+# using fixed ip addresses so opennms provisoning config works
+# to see all network use docker network ls
+# to see config use docker network inspect minimal-minion-grpc_frontend
+# note gateway is 172.20.0.1 
+networks:
+  frontend:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
+
+volumes:
+  data-postgres: {}
+  data-opennms: {}
+  data-opennms-cfg: {}
+  data-grafana: {}
+
+services:
+
+  nginx:
+    image: nginx:1.23-alpine
+    container_name: nginx
+    hostname: nginx
+    restart: unless-stopped
+    volumes:
+      - ./container-fs/nginx/conf.d:/etc/nginx/conf.d
+      - ./container-fs/nginx/certs:/etc/ssl/certs
+      - ./container-fs/nginx/private:/etc/ssl/private
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      frontend:
+        ipv4_address: 172.20.0.5
+
+  database:
+    image: ${DOCKER_REGISTRY:-docker.io}/postgres:${POSTGRES_VERSION:-13}
+    container_name: database
+    hostname: database
+    environment:
+      TZ: ${TIMEZONE:-America/New_York}
+      POSTGRES_HOST: database
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - data-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 30s
+      retries: 3
+    networks:
+      frontend:
+        ipv4_address: 172.20.0.10
+
+  horizon:
+    image: ${DOCKER_REGISTRY:-docker.io}/${DOCKER_ORG:-opennms}/${HORIZON_OCI:-horizon}:${ONMS_VERSION:-bleeding}
+    container_name: horizon
+    hostname: horizon
+    sysctls:
+      net.ipv4.ping_group_range: "0 429496729"
+    depends_on:
+      - database
+    environment:
+      TZ: ${TIMEZONE:-America/New_York}
+      # JAVA_OPTS matches default in container plus enable debugger
+      # extenal jdb connection from windows using  jdb -connect com.sun.jdi.SocketAttach:hostname=localhost,port=8001
+      JAVA_OPTS: -Xmx1024m -XX:MaxMetaspaceSize=512m -agentlib:jdwp=transport=dt_socket,server=y,address=*:8001,suspend=n
+    volumes:
+      - data-opennms:/opennms-data
+      - data-opennms-cfg:/opt/opennms/etc
+      - ./container-fs/horizon/opt/opennms/deploy:/opt/opennms/deploy
+      - ./container-fs/horizon/opt/opennms-overlay:/opt/opennms-overlay
+      - ./container-fs/horizon/etc/conf.d/confd.toml:/etc/confd/confd.toml
+    command: ["-s"]
+    ports:
+      - "8101:8101/tcp"
+      - "8980:8980/tcp"
+      - "10162:1162/udp"
+      - "8990:8990"
+      - "8001:8001" # JPDA debugging port
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "-I", "http://localhost:8980/opennms/login.jsp" ]
+      interval: 1m
+      timeout: 5s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 4G
+    networks:
+      frontend:
+        ipv4_address: 172.20.0.15
+      
+  grafana:
+    image: ${DOCKER_REGISTRY:-docker.io}/grafana/grafana:${GRAFANA_VERSION:-latest}
+    container_name: grafana
+    hostname: grafana
+    environment:
+      TZ: ${TIMEZONE:-America/New_York}
+      GF_SECURITY_ADMIN_PASSWORD: mypass
+      GF_INSTALL_PLUGINS: opennms-opennms-app,grafana-piechart-panel,neocat-cal-heatmap-panel,briangann-datatable-panel
+      GF_SERVER_HTTP_PORT: 3000
+      GF_SERVER_PROTOCOL: http
+      GF_SERVER_DOMAIN: localhost:80
+      GF_SERVER_ROOT_URL: http://localhost:80/grafana/
+      GF_SERVER_SERVER_FROM_SUB_PATH: true
+
+    volumes:
+      - data-grafana:/var/lib/grafana
+      - ./container-fs/grafana/provisioning:/etc/grafana/provisioning/
+      - ./container-fs/grafana/conf/conf.ini:/conf/conf.ini
+    ports:
+      - "3000:3000/tcp"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 100M
+    networks:
+      frontend:
+        ipv4_address: 172.20.0.20
+
+  minion1:
+    image: ${DOCKER_REGISTRY:-docker.io}/${DOCKER_ORG:-opennms}/${MINION_OCI:-minion}:${ONMS_VERSION:-bleeding}
+    container_name: minion1
+    hostname: minion1
+    sysctls:
+      net.ipv4.ping_group_range: "0 429496729"
+    environment:
+      TZ: ${TIMEZONE:-America/New_York}
+      JAVA_MIN_MEM: 512M
+      JAVA_MAX_MEM: 2048M
+    volumes:
+      - './container-fs/minion1/opt/minion/minion-config.yaml:/opt/minion/minion-config.yaml'
+    command: ["-f"]
+    healthcheck:
+      test: "/health.sh"
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    ports:
+      - "8201:8201/tcp"
+      - "1162:1162/udp"
+      - "1514:1514/udp"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 2560M
+    networks:
+      frontend:
+        ipv4_address: 172.20.0.25
+
+  # minion with ssl
+#  minion2:
+#    image: ${DOCKER_REGISTRY:-docker.io}/${DOCKER_ORG:-opennms}/${MINION_OCI:-minion}:${ONMS_VERSION:-bleeding}
+#    container_name: minion2
+#    hostname: minion2
+#    sysctls:
+#      net.ipv4.ping_group_range: "0 429496729"
+#    environment:
+#      TZ: ${TIMEZONE:-America/New_York}
+#      JAVA_MIN_MEM: 512M
+#      JAVA_MAX_MEM: 2048M
+#    volumes:
+#      - './container-fs/minion2/opt/minion/minion-config.yaml:/opt/minion/minion-config.yaml'
+#    command: ["-f"]
+#    healthcheck:
+#      test: "/health.sh"
+#      interval: 30s
+#      timeout: 20s
+#      retries: 3
+#    ports:
+#      - "8301:8201/tcp"
+#      - "1262:1162/udp"
+#      - "1614:1514/udp"
+#    deploy:
+#      resources:
+#        limits:
+#          cpus: "0.5"
+#          memory: 2560M
+#    networks:
+#      frontend:
+#        ipv4_address: 172.20.0.30    

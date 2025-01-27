@@ -25,7 +25,7 @@ todo:
 
 hashicorp vagrant https://www.vagrantup.com/
 
-https://stakkr.readthedocs.io/en/stable/   simple cration of docker compose
+https://stakkr.readthedocs.io/en/stable/   simple creation of docker compose
 
 ## terrform / opentofu
 
@@ -56,8 +56,8 @@ objective: install ansible using docker compose and use this to provision a serv
 
 This could be made to work
 
-Summay: this turodial is intend to show how pxe boot could be made to work where the machien is booted from bare metal and then configured using ansible
-note that this cannot be done in docker without qemu as docker itself does not have a bios/pxe bot capability since the machien is not really a seperate machine.
+Summay: this tutorial is intend to show how pxe boot could be made to work where the machien is booted from bare metal and then configured using ansible
+note that this cannot be done in docker without qemu as docker itself does not have a bios/pxe bot capability since the machine is not really a separate machine.
 
 objective: install OS on docker container using pixi boot
 
