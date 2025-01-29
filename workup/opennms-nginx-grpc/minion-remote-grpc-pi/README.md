@@ -2,6 +2,13 @@
 
 
 ## Usage
+
+```
+sudo cp docker-compose@.service /etc/systemd/system/docker-compose@.service
+
+sudo chmod 644 /etc/systemd/system/docker-compose@.service
+```
+
 Place the docker compose project in a folder named after the service.
 
 e.g. place the project as a folder in `/opt/docker/compose/`
@@ -20,6 +27,12 @@ systemctl start docker-compose@minion-remote-grpc-pi
 systemctl stop docker-compose@minion-remote-grpc-pi
 
 ```
+to see logs for systemctl startup
+```
+journalctl -xeu docker-compose@minion-remote-grpc-pi.service
+
+```
+
 to enable on startup boot
 ```
 systemctl enable docker-compose@minion-remote-grpc-pi
@@ -34,8 +47,17 @@ docker compose logs -f minion-remote-pi-01
 
 docker compose exec minion-remote-pi-01 bash
 
-minion@minion-remote-pi-01:~$ ssh -p 8201 admin@localhost
+(use exit to logout)
 
+minion@minion-remote-pi-01:~$ ssh -p 8201 admin@localhost
+Password authentication
+(admin@localhost) Password:  (default admin)
+(use logout to logout)
+
+admin@minion()>bundle:list # will eventually show all OpenNMS bundles
+```
+To check connectivity try
+```
 admin@minion()> opennms:health-check                                                                                                     
 Verifying the health of the container
 
