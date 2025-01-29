@@ -55,6 +55,9 @@ Password authentication
 (use logout to logout)
 
 admin@minion()>bundle:list # will eventually show all OpenNMS bundles
+
+note that startup takes several minutes - be patient
+
 ```
 To check connectivity try
 ```
@@ -69,6 +72,44 @@ Connecting to gRPC IPC Server   [ Success  ]
 => Everything is awesome
 ```
 
+## setting up netsnmp on pi
+sudo apt update
+sudo apt -y  install snmpd snmp
+
+cp pisnmpd.conf /etc/snmp/snmpd.conf.d
+
+change listening address in /etc/snmp/snmpd.conf
+
+```
+#agentaddress  127.0.0.1,[::1]
+agentaddress udp:161
+```
+also possible to repond only to particular addresses
+
+```
+gentAddress udp:161
+...
+# rocommunity public  default    -V systemonly
+rocommunity public 172.25.7.169/32
+```
+
+this opens up all metrics to community string
+
+(see https://bestmonitoringtools.com/raspberry-pi-snmp-monitoring-install-enable-agent-server/)
+
+start and enable  
+
+sudo systemctl start snmpsudo systemctl enable snmpd
+
+you can test using
+
+```
+snmpwalk -c piminion -v2c localhost 1.3.6
+
+# to access docker host from docker
+snmpwalk -c piminion -v2c 172.17.0.1      1.3.6
+
+```
 
 
 ## references
