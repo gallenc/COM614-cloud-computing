@@ -112,5 +112,9 @@ minikube status
 kubectl get node
 
 
+# helm tutorial
+
+https://phoenixnap.com/kb/install-helm
+
 
 
