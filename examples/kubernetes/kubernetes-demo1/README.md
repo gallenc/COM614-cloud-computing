@@ -1,4 +1,4 @@
-kubernetes demo
+# kubernetes demo - crash course
 
 installation
 
