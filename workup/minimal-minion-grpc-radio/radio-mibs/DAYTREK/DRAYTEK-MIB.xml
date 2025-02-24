@@ -84,8 +84,8 @@
       <mibObj oid=".1.3.6.1.4.1.7367.4.23" instance="0" alias="lterscp" type="octetstring"/>
    </group>
    
-    <systemDef name="daytrek-wireles">
-        <sysoid>.1.3.6.1.4.1.7367</sysoid>  <!-- change to daytrack -->
+    <systemDef name="draytek">
+        <sysoid>.1.3.6.1.4.1.7367</sysoid> 
         <collect>
             <includeGroup>lteinfoObjects</includeGroup>
         </collect>

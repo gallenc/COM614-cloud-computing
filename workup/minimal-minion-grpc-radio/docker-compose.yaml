@@ -11,6 +11,7 @@ networks:
       config:
         - subnet: 172.20.0.0/24
 
+
 volumes:
   data-postgres: {}
   data-opennms: {}
@@ -155,6 +156,27 @@ services:
     networks:
       frontend:
         ipv4_address: 172.20.0.25
+
+  # snmpsim container in network N000 - chubb MIB
+  snmpsim:
+#    image: ${DOCKER_REGISTRY:-docker.io}/tandrup/snmpsim:${SNMPSIM_VERSION:-v0.4}
+    image: onms-training/snmpsim
+    build: ./container-fs/snmpsim/
+    container_name: snmpsim
+    hostname: snmpsim
+    environment:
+      EXTRA_FLAGS: "--v3-user=testing --v3-auth-key=testing123"
+    volumes:
+      - ./container-fs/snmpsim/data/chubb.snmprec:/usr/local/snmpsim/data/chubb.snmprec
+      # note empty public.snmprec so that there is no response to a community name public request
+      - ./container-fs/snmpsim/data/public.snmprec:/usr/local/snmpsim/data/public.snmprec
+      - ./container-fs/snmpsim/mibs:/usr/local/snmpsim/mibs
+    ports:
+      - "11761:161/udp"
+    networks:
+      frontend:
+        ipv4_address: 172.20.0.100
+
 
   # minion with ssl
 #  minion2:
