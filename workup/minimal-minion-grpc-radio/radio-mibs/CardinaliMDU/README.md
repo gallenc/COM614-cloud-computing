@@ -1,4 +1,4 @@
-# DrayTek2860(pri)
+# Cardinal iMDU (Mains Distribution Unit)
 
 ## SNMP Walk
 
