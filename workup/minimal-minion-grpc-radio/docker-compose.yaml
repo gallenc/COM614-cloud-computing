@@ -10,6 +10,10 @@ networks:
     ipam:
       config:
         - subnet: 172.20.0.0/24
+  testradiosite1:
+    ipam:
+      config:
+        - subnet: 192.168.105.0/24
 
 
 volumes:
@@ -156,8 +160,10 @@ services:
     networks:
       frontend:
         ipv4_address: 172.20.0.25
+      testradiosite1:
+        ipv4_address: 192.168.105.245
 
-  # snmpsim container in network N000 - chubb MIB
+  # snmpsim container in network default - all radio mibs
   snmpsim:
 #    image: ${DOCKER_REGISTRY:-docker.io}/tandrup/snmpsim:${SNMPSIM_VERSION:-v0.4}
     image: onms-training/snmpsim
@@ -167,9 +173,17 @@ services:
     environment:
       EXTRA_FLAGS: "--v3-user=testing --v3-auth-key=testing123"
     volumes:
-      - ./container-fs/snmpsim/data/chubb.snmprec:/usr/local/snmpsim/data/chubb.snmprec
+      - ./container-fs/snmpsim/data/cardinalImdu.snmprec:/usr/local/snmpsim/data/cardinalImdu.snmprec
+      - ./container-fs/snmpsim/data/DEVA7012.snmprec:/usr/local/snmpsim/data/DEVA7012.snmprec
+      - ./container-fs/snmpsim/data/DEVA8008.snmprec:/usr/local/snmpsim/data/DEVA8008.snmprec
+      - ./container-fs/snmpsim/data/DEVA9000.snmprec:/usr/local/snmpsim/data/DEVA9000.snmprec
+      - ./container-fs/snmpsim/data/draytek2860-pri.snmprec:/usr/local/snmpsim/data/draytek2860-pri.snmprec
+      - ./container-fs/snmpsim/data/draytek2860-sec.snmprec:/usr/local/snmpsim/data/draytek2860-sec.snmprec
+      - ./container-fs/snmpsim/data/draytek2860-virtual.snmprec:/usr/local/snmpsim/data/draytek2860-virtual.snmprec
+
       # note empty public.snmprec so that there is no response to a community name public request
       - ./container-fs/snmpsim/data/public.snmprec:/usr/local/snmpsim/data/public.snmprec
+      # mibs folder so we can compile mibs if needed
       - ./container-fs/snmpsim/mibs:/usr/local/snmpsim/mibs
     ports:
       - "11761:161/udp"
@@ -177,35 +191,151 @@ services:
       frontend:
         ipv4_address: 172.20.0.100
 
+  # snmpsim container in testradiosite1
+  DB9000RX:
+#    image: ${DOCKER_REGISTRY:-docker.io}/tandrup/snmpsim:${SNMPSIM_VERSION:-v0.4}
+    image: onms-training/snmpsim
+    build: ./container-fs/snmpsim/
+    container_name: snmpsim
+    hostname: snmpsim
+    environment:
+      EXTRA_FLAGS: "--v3-user=testing --v3-auth-key=testing123"
+    volumes:
+      - ./container-fs/snmpsim/data/DEVA9000.snmprec:/usr/local/snmpsim/data/DEVA9000.snmprec
 
-  # minion with ssl
-#  minion2:
-#    image: ${DOCKER_REGISTRY:-docker.io}/${DOCKER_ORG:-opennms}/${MINION_OCI:-minion}:${ONMS_VERSION:-bleeding}
-#    container_name: minion2
-#    hostname: minion2
-#    sysctls:
-#      net.ipv4.ping_group_range: "0 429496729"
-#    environment:
-#      TZ: ${TIMEZONE:-America/New_York}
-#      JAVA_MIN_MEM: 512M
-#      JAVA_MAX_MEM: 2048M
-#    volumes:
-#      - './container-fs/minion2/opt/minion/minion-config.yaml:/opt/minion/minion-config.yaml'
-#    command: ["-f"]
-#    healthcheck:
-#      test: "/health.sh"
-#      interval: 30s
-#      timeout: 20s
-#      retries: 3
-#    ports:
-#      - "8301:8201/tcp"
-#      - "1262:1162/udp"
-#      - "1614:1514/udp"
-#    deploy:
-#      resources:
-#        limits:
-#          cpus: "0.5"
-#          memory: 2560M
-#    networks:
-#      frontend:
-#        ipv4_address: 172.20.0.30    
+      # note empty public.snmprec so that there is no response to a community name public request
+      - ./container-fs/snmpsim/data/public.snmprec:/usr/local/snmpsim/data/public.snmprec
+      # mibs folder so we can compile mibs if needed
+      - ./container-fs/snmpsim/mibs:/usr/local/snmpsim/mibs
+    ports:
+      - "11761:161/udp"
+    networks:
+      testradiosite1:
+        ipv4_address: 192.168.105.99
+
+  DB8008:
+#    image: ${DOCKER_REGISTRY:-docker.io}/tandrup/snmpsim:${SNMPSIM_VERSION:-v0.4}
+    image: onms-training/snmpsim
+    build: ./container-fs/snmpsim/
+    container_name: snmpsim
+    hostname: snmpsim
+    environment:
+      EXTRA_FLAGS: "--v3-user=testing --v3-auth-key=testing123"
+    volumes:
+      - ./container-fs/snmpsim/data/DEVA8008.snmprec:/usr/local/snmpsim/data/DEVA8008.snmprec
+
+      # note empty public.snmprec so that there is no response to a community name public request
+      - ./container-fs/snmpsim/data/public.snmprec:/usr/local/snmpsim/data/public.snmprec
+      # mibs folder so we can compile mibs if needed
+      - ./container-fs/snmpsim/mibs:/usr/local/snmpsim/mibs
+    ports:
+      - "11761:161/udp"
+    networks:
+      testradiosite1:
+        ipv4_address: 192.168.105.100
+
+  DB7012:
+#    image: ${DOCKER_REGISTRY:-docker.io}/tandrup/snmpsim:${SNMPSIM_VERSION:-v0.4}
+    image: onms-training/snmpsim
+    build: ./container-fs/snmpsim/
+    container_name: snmpsim
+    hostname: snmpsim
+    environment:
+      EXTRA_FLAGS: "--v3-user=testing --v3-auth-key=testing123"
+    volumes:
+      - ./container-fs/snmpsim/data/DEVA7012.snmprec:/usr/local/snmpsim/data/DEVA7012.snmprec
+
+      # note empty public.snmprec so that there is no response to a community name public request
+      - ./container-fs/snmpsim/data/public.snmprec:/usr/local/snmpsim/data/public.snmprec
+      # mibs folder so we can compile mibs if needed
+      - ./container-fs/snmpsim/mibs:/usr/local/snmpsim/mibs
+    ports:
+      - "11761:161/udp"
+    networks:
+      testradiosite1:
+        ipv4_address: 192.168.105.101
+
+  VIGOR2927-PRI:
+#    image: ${DOCKER_REGISTRY:-docker.io}/tandrup/snmpsim:${SNMPSIM_VERSION:-v0.4}
+    image: onms-training/snmpsim
+    build: ./container-fs/snmpsim/
+    container_name: snmpsim
+    hostname: snmpsim
+    environment:
+      EXTRA_FLAGS: "--v3-user=testing --v3-auth-key=testing123"
+    volumes:
+      - ./container-fs/snmpsim/data/draytek2860-pri.snmprec:/usr/local/snmpsim/data/draytek2860-pri.snmprec
+
+      # note empty public.snmprec so that there is no response to a community name public request
+      - ./container-fs/snmpsim/data/public.snmprec:/usr/local/snmpsim/data/public.snmprec
+      # mibs folder so we can compile mibs if needed
+      - ./container-fs/snmpsim/mibs:/usr/local/snmpsim/mibs
+    ports:
+      - "11761:161/udp"
+    networks:
+      testradiosite1:
+        ipv4_address: 192.168.105.1
+        
+  VIGOR2927L-SEC:
+#    image: ${DOCKER_REGISTRY:-docker.io}/tandrup/snmpsim:${SNMPSIM_VERSION:-v0.4}
+    image: onms-training/snmpsim
+    build: ./container-fs/snmpsim/
+    container_name: snmpsim
+    hostname: snmpsim
+    environment:
+      EXTRA_FLAGS: "--v3-user=testing --v3-auth-key=testing123"
+    volumes:
+      - ./container-fs/snmpsim/data/draytek2860-sec.snmprec:/usr/local/snmpsim/data/draytek2860-sec.snmprec
+
+      # note empty public.snmprec so that there is no response to a community name public request
+      - ./container-fs/snmpsim/data/public.snmprec:/usr/local/snmpsim/data/public.snmprec
+      # mibs folder so we can compile mibs if needed
+      - ./container-fs/snmpsim/mibs:/usr/local/snmpsim/mibs
+    ports:
+      - "11761:161/udp"
+    networks:
+      testradiosite1:
+        ipv4_address: 192.168.105.2
+        
+  VIGOR2927L-VIRTUAL:
+#    image: ${DOCKER_REGISTRY:-docker.io}/tandrup/snmpsim:${SNMPSIM_VERSION:-v0.4}
+    image: onms-training/snmpsim
+    build: ./container-fs/snmpsim/
+    container_name: snmpsim
+    hostname: snmpsim
+    environment:
+      EXTRA_FLAGS: "--v3-user=testing --v3-auth-key=testing123"
+    volumes:
+      - ./container-fs/snmpsim/data/draytek2860-virtual.snmprec:/usr/local/snmpsim/data/draytek2860-virtual.snmprec
+
+      # note empty public.snmprec so that there is no response to a community name public request
+      - ./container-fs/snmpsim/data/public.snmprec:/usr/local/snmpsim/data/public.snmprec
+      # mibs folder so we can compile mibs if needed
+      - ./container-fs/snmpsim/mibs:/usr/local/snmpsim/mibs
+    ports:
+      - "11761:161/udp"
+    networks:
+      testradiosite1:
+        ipv4_address: 192.168.105.254
+        
+  cardinalImdu:
+#    image: ${DOCKER_REGISTRY:-docker.io}/tandrup/snmpsim:${SNMPSIM_VERSION:-v0.4}
+    image: onms-training/snmpsim
+    build: ./container-fs/snmpsim/
+    container_name: snmpsim
+    hostname: snmpsim
+    environment:
+      EXTRA_FLAGS: "--v3-user=testing --v3-auth-key=testing123"
+    volumes:
+      - ./container-fs/snmpsim/data/cardinalImdu.snmprec:/usr/local/snmpsim/data/cardinalImdu.snmprec
+
+      # note empty public.snmprec so that there is no response to a community name public request
+      - ./container-fs/snmpsim/data/public.snmprec:/usr/local/snmpsim/data/public.snmprec
+      # mibs folder so we can compile mibs if needed
+      - ./container-fs/snmpsim/mibs:/usr/local/snmpsim/mibs
+    ports:
+      - "11761:161/udp"
+    networks:
+      testradiosite1:
+        ipv4_address: 192.168.105.250
+

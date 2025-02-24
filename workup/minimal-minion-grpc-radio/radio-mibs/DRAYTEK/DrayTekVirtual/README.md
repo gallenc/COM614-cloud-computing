@@ -11,3 +11,10 @@ if Widley_Sec then the secondary router is being used (assumption)
 ```
 snmpwalk -v1 -On 192.168.105.254 -c public .1.3
 ```
+
+## SNMPSIM recording
+
+```
+ snmprec.py --community=public  --protocol-version=1   --agent-udpv4-endpoint=192.168.105.254 --output-fi
+le=./draytek2860-virtual.snmprec
+```
