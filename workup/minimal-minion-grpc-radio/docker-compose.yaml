@@ -12,6 +12,13 @@ networks:
     ipam:
       config:
         - subnet: 192.168.105.0/24
+#  vpn:
+#    name: vpn
+#    driver: bridge
+#    ipam:
+#      config:
+#        - subnet: 192.168.105.0/24
+#          gateway: 192.168.105.1
 
 
 volumes:
@@ -190,9 +197,13 @@ services:
         limits:
           cpus: "0.5"
           memory: 2560M
+    cap_add: # allows us to add route in container
+      - NET_ADMIN
     networks:
       frontend:
         ipv4_address: 172.20.0.28
+#      vpn:
+#        ipv4_address: 192.168.105.11
 
   # snmpsim container in network default - all radio mibs
   snmpsim:
