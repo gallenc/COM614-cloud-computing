@@ -69,9 +69,9 @@ services:
       - database
     environment:
       TZ: ${TIMEZONE:-America/New_York}
-      # JAVA_OPTS matches default in container plus enable debugger
+      # JAVA_OPTS mupdates from default in container (-Xmx1024m -XX:MaxMetaspaceSize=512m) plus enable debugger
       # extenal jdb connection from windows using  jdb -connect com.sun.jdi.SocketAttach:hostname=localhost,port=8001
-      JAVA_OPTS: -Xmx1024m -XX:MaxMetaspaceSize=512m -agentlib:jdwp=transport=dt_socket,server=y,address=*:8001,suspend=n
+      JAVA_OPTS: -Xmx2048m -XX:MaxMetaspaceSize=1024m -agentlib:jdwp=transport=dt_socket,server=y,address=*:8001,suspend=n
     volumes:
       - data-opennms:/opennms-data
       - data-opennms-cfg:/opt/opennms/etc
