@@ -12,6 +12,7 @@ networks:
     ipam:
       config:
         - subnet: 192.168.105.0/24
+   # trying to get vpn to work but problem with routing 
 #  vpn:
 #    name: vpn
 #    driver: bridge
