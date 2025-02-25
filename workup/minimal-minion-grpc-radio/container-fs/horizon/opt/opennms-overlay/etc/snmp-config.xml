@@ -11,4 +11,17 @@
    <definition version="v1" write-community="private" location="testradiosite1">
       <specific>192.168.105.250</specific>
    </definition>
+
+   <definition version="v1" write-community="private" read-community="DEVA8008" location="ftwidleyradiosite">
+      <specific>192.168.105.100</specific>
+   </definition>
+   <definition version="v1" write-community="private" read-community="DEVA7012" location="ftwidleyradiosite">
+      <specific>192.168.105.101</specific>
+   </definition>
+   <definition version="v1" write-community="private" read-community="DEVA9000" location="ftwidleyradiosite">
+      <specific>192.168.105.99</specific>
+   </definition>
+   <definition version="v1" write-community="private" location="ftwidleyradiosite">
+      <specific>192.168.105.250</specific>
+   </definition>
 </snmp-config>
