@@ -89,7 +89,7 @@
       <include-collection dataCollectionGroup="Zertico"/>
       <include-collection dataCollectionGroup="Zeus"/>
       
-      <include-collection dataCollectionGroup="daytrek-wireles"/>
+      <include-collection dataCollectionGroup="DRAYTEK-MIB"/>
    </snmp-collection>
 
    <!--

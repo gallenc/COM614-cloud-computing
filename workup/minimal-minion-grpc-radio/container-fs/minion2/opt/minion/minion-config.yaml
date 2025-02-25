@@ -1,7 +1,7 @@
 ---
 http-url: "https://horizon:8980/opennms"
 id: "minion-02"
-location: "minion2-location"
+location: "ftwidleyradiosite"
 
 karaf:
   shell:
@@ -10,8 +10,8 @@ karaf:
 
 ipc:
   grpc:
-    host: "nginx"
-    port: "443"
+    host: "horizon"
+    port: "8990"
 
 netmgt:
   syslog:
