@@ -91,6 +91,7 @@
       
       <include-collection dataCollectionGroup="DRAYTEK-MIB"/>
       <include-collection dataCollectionGroup="CARDINAL-MIB"/>
+      <include-collection dataCollectionGroup="DB7012-MIB"/>
    </snmp-collection>
 
    <!--

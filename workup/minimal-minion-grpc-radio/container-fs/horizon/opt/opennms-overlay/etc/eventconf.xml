@@ -9,6 +9,7 @@
       </security>
    </global>
    <event-file>events/CARDINAL-MIB.events.xml</event-file>
+   <event-file>events/DB7012-MIB.events.xml</event-file>
    
    <event-file>events/opennms.snmp.trap.translator.events.xml</event-file>
    <event-file>events/opennms.ackd.events.xml</event-file>
