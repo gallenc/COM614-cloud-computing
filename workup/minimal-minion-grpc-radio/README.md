@@ -1,16 +1,26 @@
 # RADIO CONFIG
 
-snmpsim containers all have netsnmp installed if you run a build (only once) before running model
+This docker compose project contains configurations to test OpenNMS with simulated data (using snmpsim 0.4.x) for broadcast radio equipment.
+
+docker-compose-external.yaml contains a configuration running a minion (minion1) which can connect to the VPN through the PC bridge.
+
+```
+docker compose -f docker-compose-external.yaml up -d
+```
+
+docker-compose.yaml contains the configuration running a minion (minion2) talking to a subnet containing 7 broadcast radio devices simulated using snmpsim.
+
+The snmpsim containers all have netsnmp installed if you run a build (only once) before running the model
 
 ```
 docker compose build
 docker compose up -d
 ```
 
-log into a snmpsim container and run snmpwalk
+log into one of the snmpsim containers and run snmpwalk  as shown below.
 
 Note that the community strings are public in the draytek routers.
-This is achieved by mapping the data files in each container.
+This is achieved by mapping the drayteck snmpsim data files to public.snmpsim  in each container.
 
 ```
 docker compose exec DB9000RX bash

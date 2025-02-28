@@ -90,6 +90,7 @@
       <include-collection dataCollectionGroup="Zeus"/>
       
       <include-collection dataCollectionGroup="DRAYTEK-MIB"/>
+      <include-collection dataCollectionGroup="CARDINAL-MIB"/>
    </snmp-collection>
 
    <!--

@@ -1,7 +1,7 @@
 ---
 http-url: "https://horizon:8980/opennms"
 id: "minion-02"
-location: "ftwidleyradiosite"
+location: "ftwidley1"
 
 karaf:
   shell:

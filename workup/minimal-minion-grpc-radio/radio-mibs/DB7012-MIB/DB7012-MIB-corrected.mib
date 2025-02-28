@@ -226,7 +226,7 @@ dabAvailableServicesTableEntry OBJECT-TYPE
   STATUS current
   DESCRIPTION
     "DAB Services Table Entry"
-  INDEX { dabServiceNum }
+  INDEX { dabAvailableServiceIndex }
   ::= { dabAvalableServicesTable 1 }
 
 DabAvailableServicesTableEntry  ::= SEQUENCE {
@@ -931,7 +931,8 @@ alias OBJECT-TYPE
 dateTime OBJECT IDENTIFIER  ::= { device 2 }
 
 date OBJECT-TYPE
-  SYNTAX Integer32 (0x16925E80..0xBDFA46FF)
+  -- SYNTAX Integer32 (0x16925E80..0xBDFA46FF)
+  SYNTAX Integer32 
   MAX-ACCESS read-write
   STATUS current
   DESCRIPTION
@@ -963,7 +964,7 @@ dsten OBJECT-TYPE
   ::= { dateTime 4 }
 
 serviceTable OBJECT-TYPE
-  SYNTAX SEQUENCE OF ChannelTableEntry 
+  SYNTAX SEQUENCE OF ServiceTableEntry 
   MAX-ACCESS not-accessible
   STATUS current
   DESCRIPTION
@@ -971,7 +972,7 @@ serviceTable OBJECT-TYPE
   ::= { logger 2 }
 
 serviceTableEntry OBJECT-TYPE
-  SYNTAX ChannelTableEntry 
+  SYNTAX ServiceTableEntry 
   MAX-ACCESS not-accessible
   STATUS current
   DESCRIPTION
@@ -1629,7 +1630,7 @@ loggerCurrentService OBJECT-TYPE
   ::= { status 2 }
 
 serviceStatusTable OBJECT-TYPE
-  SYNTAX SEQUENCE OF ChannelStatusTableEntry 
+  SYNTAX SEQUENCE OF ServiceStatusTableEntry 
   MAX-ACCESS not-accessible
   STATUS current
   DESCRIPTION
@@ -1637,7 +1638,7 @@ serviceStatusTable OBJECT-TYPE
   ::= { status 3 }
 
 serviceStatusTableEntry OBJECT-TYPE
-  SYNTAX ChannelStatusTableEntry 
+  SYNTAX ServiceStatusTableEntry 
   MAX-ACCESS not-accessible
   STATUS current
   DESCRIPTION

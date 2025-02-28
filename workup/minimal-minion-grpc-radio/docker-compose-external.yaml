@@ -137,44 +137,10 @@ services:
         ipv4_address: 172.20.0.20
 
 # minion1 is a simulation of the minion on site. Used to access devices simulated using snmpsim
-  minion1:
-    image: ${DOCKER_REGISTRY:-docker.io}/${DOCKER_ORG:-opennms}/${MINION_OCI:-minion}:${ONMS_VERSION:-bleeding}
-    container_name: minion1
-    hostname: minion1
-    sysctls:
-      net.ipv4.ping_group_range: "0 429496729"
-    environment:
-      TZ: ${TIMEZONE:-America/New_York}
-      JAVA_MIN_MEM: 512M
-      JAVA_MAX_MEM: 2048M
-    volumes:
-      - './container-fs/minion1/opt/minion/minion-config.yaml:/opt/minion/minion-config.yaml'
-    command: ["-f"]
-    healthcheck:
-      test: "/health.sh"
-      interval: 30s
-      timeout: 20s
-      retries: 3
-    ports:
-      - "9201:8201/tcp"
-      - "2162:1162/udp"
-      - "2514:1514/udp"
-    deploy:
-      resources:
-        limits:
-          cpus: "0.5"
-          memory: 2560M
-    networks:
-      frontend:
-        ipv4_address: 172.20.0.25
-#      testradiosite1:
-#        ipv4_address: 192.168.105.245
-
-# minion 2 is a localhost minion used to access site through the local vpn established to the remote site
-#  minion2:
+#  minion1:
 #    image: ${DOCKER_REGISTRY:-docker.io}/${DOCKER_ORG:-opennms}/${MINION_OCI:-minion}:${ONMS_VERSION:-bleeding}
-#    container_name: minion2
-#    hostname: minion2
+#    container_name: minion1
+#    hostname: minion1
 #    sysctls:
 #      net.ipv4.ping_group_range: "0 429496729"
 #    environment:
@@ -182,7 +148,7 @@ services:
 #      JAVA_MIN_MEM: 512M
 #      JAVA_MAX_MEM: 2048M
 #    volumes:
-#      - './container-fs/minion2/opt/minion/minion-config.yaml:/opt/minion/minion-config.yaml'
+#      - './container-fs/minion1/opt/minion/minion-config.yaml:/opt/minion/minion-config.yaml'
 #    command: ["-f"]
 #    healthcheck:
 #      test: "/health.sh"
@@ -190,19 +156,53 @@ services:
 #      timeout: 20s
 #      retries: 3
 #    ports:
-#      - "8201:8201/tcp"
-#      - "1162:1162/udp"
-#      - "1514:1514/udp"
+#      - "9201:8201/tcp"
+#      - "2162:1162/udp"
+#      - "2514:1514/udp"
 #    deploy:
 #      resources:
 #        limits:
 #          cpus: "0.5"
 #          memory: 2560M
-#    cap_add: # allows us to add route in container
-#      - NET_ADMIN
 #    networks:
 #      frontend:
-#        ipv4_address: 172.20.0.28
+#        ipv4_address: 172.20.0.25
+#      testradiosite1:
+#        ipv4_address: 192.168.105.245
+
+# minion 2 is a localhost minion used to access site through the local vpn established to the remote site
+  minion2:
+    image: ${DOCKER_REGISTRY:-docker.io}/${DOCKER_ORG:-opennms}/${MINION_OCI:-minion}:${ONMS_VERSION:-bleeding}
+    container_name: minion2
+    hostname: minion2
+    sysctls:
+      net.ipv4.ping_group_range: "0 429496729"
+    environment:
+      TZ: ${TIMEZONE:-America/New_York}
+      JAVA_MIN_MEM: 512M
+      JAVA_MAX_MEM: 2048M
+    volumes:
+      - './container-fs/minion2/opt/minion/minion-config.yaml:/opt/minion/minion-config.yaml'
+    command: ["-f"]
+    healthcheck:
+      test: "/health.sh"
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    ports:
+      - "8201:8201/tcp"
+      - "1162:1162/udp"
+      - "1514:1514/udp"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 2560M
+    cap_add: # allows us to add route in container
+      - NET_ADMIN
+    networks:
+      frontend:
+        ipv4_address: 172.20.0.28
 #      vpn:
 #        ipv4_address: 192.168.105.11
 
