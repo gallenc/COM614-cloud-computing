@@ -64,3 +64,8 @@ snmpwalk -v1 -On VIGOR2927L-VIRTUAL -c public .1.3
 ```
 snmpwalk -v1 -On cardinalImdu -c public .1.3
 ```
+
+
+## rrd tool
+
+https://oss.oetiker.ch/rrdtool/tut/cdeftutorial.en.html

@@ -151,6 +151,8 @@ services:
     volumes:
       - './container-fs/minion1/opt/minion/minion-config.yaml:/opt/minion/minion-config.yaml'
     command: ["-f"]
+    depends_on:
+      - horizon
     healthcheck:
       test: "/health.sh"
       interval: 30s
@@ -187,6 +189,8 @@ services:
     volumes:
       - './container-fs/minion2/opt/minion/minion-config.yaml:/opt/minion/minion-config.yaml'
     command: ["-f"]
+    depends_on:
+      - horizon
     healthcheck:
       test: "/health.sh"
       interval: 30s
