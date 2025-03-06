@@ -1,0 +1,1456 @@
+-- www.devavroadcast.com DB8008 MIB File.
+--
+-- Author                   Date        Comment
+-- ==================================================================
+-- Alexander Petrov         23/04/2020  DB8008
+--
+
+DB8008-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+  DisplayString, TEXTUAL-CONVENTION FROM SNMPv2-TC
+  OBJECT-GROUP FROM SNMPv2-CONF
+  MODULE-IDENTITY,
+  OBJECT-TYPE,
+  OBJECT-IDENTITY,
+  enterprises,
+  IpAddress,
+  Integer32,
+  NOTIFICATION-TYPE  FROM SNMPv2-SMI;
+
+devabroadcast MODULE-IDENTITY
+       LAST-UPDATED "202004231000Z"
+       ORGANIZATION "DEVA Broadcast LTD"
+       CONTACT-INFO
+               "        Alexander Petrov
+
+                E-mail: support@devabroadcast.com"
+
+       DESCRIPTION
+               "The MIB module for entities implementing the SNMPv2c
+               protocol."
+       REVISION     "202004231000Z"
+       DESCRIPTION
+               "The latest version of this MIB module."
+       REVISION     "202004230900Z"
+       DESCRIPTION
+               " "
+       ::= { enterprises 35833 }
+
+Fr8p8 ::= TEXTUAL-CONVENTION
+  STATUS      current
+  DESCRIPTION 
+  "Fixed point 16-bit signed value.
+   Higher 8 bits represent integer part and
+   Lower 8 bits represent fractional part.
+  
+   Fr8p8 to float conversion:
+  
+   float = Fr8p8 / 256;
+   Fr8p8 = Round( float * 256 );
+
+   Examples:
+    Fr8p8    float
+   -32768   -128.0
+        .       .
+     -256     -1.0
+        .       .
+       -1     -0.00390625
+        0      0.0
+        1      0.00390625
+        .       .
+      256      1.0
+        .       .
+    32767    127.99609375"
+  SYNTAX      Integer32 (-32768..32767)
+
+Fr9p7 ::= TEXTUAL-CONVENTION
+  STATUS      current
+  DESCRIPTION 
+  "Fixed point 16-bit signed value.
+   Higher 9 bits represent integer part and
+   Lower 7 bits represent fractional part.
+  
+   Fr9p7 to float conversion:
+  
+   float = Fr9p7 / 128;
+   Fr9p7 = Round( float * 128 );
+
+   Examples:
+    Fr9p7    float
+   -32768   -256.0
+        .       .
+     -128     -1.0
+        .       .
+       -1     -0.0078125
+        0      0.0
+        1      0.0078125
+        .       .
+      128      1.0
+        .       .
+    32767    255.9921875"
+  SYNTAX      Integer32 (-32768..32767)
+
+Fr1p15 ::= TEXTUAL-CONVENTION
+  STATUS      current
+  DESCRIPTION 
+ "Fixed point 16-bit signed value.
+   Lower 15 bits represent fractional part.
+  
+   Fr1p15 to float conversion:
+  
+   float = Fr1p15 / 32768;
+   Fr1p15 = Round( float * 32768 );
+
+   Examples:
+   Fr1p15    float
+   -32768     -1.0
+        .       .
+   -16384     -0.5
+        .       .
+       -1     -0.000030517578125
+        0      0.0
+        1      0.000030517578125
+        .       .
+    16384      0.5
+        .       .
+    32767      0.999969482421875"
+  SYNTAX      Integer32 (-32768..32767)
+
+Ix10 ::= TEXTUAL-CONVENTION
+  STATUS      current
+  DESCRIPTION 
+ "Fixed point 16-bit signed value.
+        
+   Ix10 to float conversion:
+  
+   float = Ix10 / 10;
+   Ix10 = Round( float * 10 );
+
+   Examples:
+   Ix10    float
+   -32768  -3276.8
+        .       .
+   -16384  -1638.4
+        .       .
+       -1     -0.1
+        0      0.0
+        1      0.1
+        .       .
+    16384   1638.4
+        .       .
+    32767   3276.8"
+  SYNTAX      Integer32 (-32768..32767)
+
+Ix1000 ::= TEXTUAL-CONVENTION
+  STATUS      current
+  DESCRIPTION 
+ "Fixed point 16-bit signed value.
+        
+   Ix1000 to float conversion:
+  
+   float = Ix1000 / 1000;
+   Ix1000 = Round( float * 1000 );
+
+   Examples:
+   Ix10    float
+   -32768    -32.768
+        .       .
+   -16384    -16.384
+        .       .
+       -1     -0.001
+        0      0.0
+        1      0.001
+        .       .
+    16384     16.384
+        .       .
+    32767     32.768"
+  SYNTAX      Integer32 (-32768..32767)
+
+db8008 OBJECT-IDENTITY
+  STATUS current
+  DESCRIPTION
+      "DB8008 Silence Monitor & Backup Player"
+    ::=  { devabroadcast 6 }
+
+product OBJECT IDENTIFIER ::= { db8008 1 }
+
+fwrev OBJECT-TYPE
+  SYNTAX DisplayString (SIZE(0..31)) 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "Firmware revision"
+  ::= { product 1 }
+
+sernum OBJECT-TYPE
+  SYNTAX DisplayString (SIZE(0..31)) 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "Serial number"
+  ::= { product 2 }
+
+settings OBJECT IDENTIFIER ::= { db8008 2 }
+
+mainInputs OBJECT IDENTIFIER  ::= { settings 1 }
+
+mainType OBJECT-TYPE
+  SYNTAX INTEGER {insel2Analog(19),insel2DigitalSPDIF(20),insel2DigitalOptic(21),insel2DigitalAESEBU(22)}
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Main Audio Type"
+  ::= { mainInputs 1 }
+
+anaMainGain OBJECT-TYPE
+  SYNTAX Ix10 (-100..100)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Main Analog Audio Gain"
+  ::= { mainInputs 2 }
+
+digMainGain OBJECT-TYPE
+  SYNTAX Ix10 (-100..100)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Main Digital Audio Gain"
+  ::= { mainInputs 3 }
+
+auxInputs OBJECT IDENTIFIER  ::= { settings 2 }
+
+auxType OBJECT-TYPE
+  SYNTAX INTEGER {insel2Analog(19),insel2DigitalSPDIF(20),insel2DigitalOptic(21),insel2DigitalAESEBU(22)}
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "AUX Audio Type"
+  ::= { auxInputs 4 }
+
+anaAuxGain OBJECT-TYPE
+  SYNTAX Ix10 (-100..100)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "AUX Analog Audio Gain"
+  ::= { auxInputs 5 }
+
+digAuxGain OBJECT-TYPE
+  SYNTAX Ix10 (-100..100)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "AUX Digital Audio Gain"
+  ::= { auxInputs 6 }
+
+ipAudio OBJECT IDENTIFIER  ::= { settings 3 }
+
+ipAudioCient1 OBJECT IDENTIFIER  ::= { ipAudio 1 }
+
+strmurl1 OBJECT-TYPE
+  SYNTAX DisplayString (SIZE(0..255)) 
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Server URL and port"
+  ::= { ipAudioCient1 1 }
+
+strmdec1 OBJECT-TYPE
+  SYNTAX INTEGER {codecAuto(1),codecMP3Auto(2),codecHEMinusAACAuto(3),codecPCM32kHz(4),codecPCM44p1kHz(5),codecPCM48kHz(6)}
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Decoder"
+  ::= { ipAudioCient1 2 }
+
+strmgain1 OBJECT-TYPE
+  SYNTAX Integer32 (-100..100)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Audio Gain adjust"
+  ::= { ipAudioCient1 3 }
+
+strmprebuf1 OBJECT-TYPE
+  SYNTAX Integer32 (500..10000)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Pre-buffer time"
+  ::= { ipAudioCient1 4 }
+
+strmconn1 OBJECT-TYPE
+  SYNTAX INTEGER {connectionAlwaysON(0),connectionOnDemand(1)}
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Connection"
+  ::= { ipAudioCient1 5 }
+
+ipAudioCient2 OBJECT IDENTIFIER  ::= { ipAudio 2 }
+
+strmurl2 OBJECT-TYPE
+  SYNTAX DisplayString (SIZE(0..255)) 
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Server URL and port"
+  ::= { ipAudioCient2 1 }
+
+strmdec2 OBJECT-TYPE
+  SYNTAX INTEGER {codecAuto(1),codecMP3Auto(2),codecHEMinusAACAuto(3),codecPCM32kHz(4),codecPCM44p1kHz(5),codecPCM48kHz(6)}
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Decoder"
+  ::= { ipAudioCient2 2 }
+
+strmgain2 OBJECT-TYPE
+  SYNTAX Integer32 (-100..100)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Audio Gain adjust"
+  ::= { ipAudioCient2 3 }
+
+strmprebuf2 OBJECT-TYPE
+  SYNTAX Integer32 (500..10000)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Pre-buffer time"
+  ::= { ipAudioCient2 4 }
+
+strmconn2 OBJECT-TYPE
+  SYNTAX INTEGER {connectionAlwaysON(0),connectionOnDemand(1)}
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Connection"
+  ::= { ipAudioCient2 5 }
+
+ipAudioCient3 OBJECT IDENTIFIER  ::= { ipAudio 3 }
+
+strmurl3 OBJECT-TYPE
+  SYNTAX DisplayString (SIZE(0..255)) 
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Server URL and port"
+  ::= { ipAudioCient3 1 }
+
+strmdec3 OBJECT-TYPE
+  SYNTAX INTEGER {codecAuto(1),codecMP3Auto(2),codecHEMinusAACAuto(3),codecPCM32kHz(4),codecPCM44p1kHz(5),codecPCM48kHz(6)}
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Decoder"
+  ::= { ipAudioCient3 2 }
+
+strmgain3 OBJECT-TYPE
+  SYNTAX Integer32 (-100..100)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Audio Gain adjust"
+  ::= { ipAudioCient3 3 }
+
+strmprebuf3 OBJECT-TYPE
+  SYNTAX Integer32 (500..10000)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Pre-buffer time"
+  ::= { ipAudioCient3 4 }
+
+strmconn3 OBJECT-TYPE
+  SYNTAX INTEGER {connectionAlwaysON(0),connectionOnDemand(1)}
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Connection"
+  ::= { ipAudioCient3 5 }
+
+rtpReceiver OBJECT IDENTIFIER  ::= { ipAudio 4 }
+
+rtprcvport OBJECT-TYPE
+  SYNTAX Integer32 (1..65535)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "UDP Port"
+  ::= { rtpReceiver 1 }
+
+rtprcvmcast OBJECT-TYPE
+  SYNTAX IpAddress 
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Multicast group address"
+  ::= { rtpReceiver 2 }
+
+rtprcvdec OBJECT-TYPE
+  SYNTAX INTEGER {codecMP3Auto(2),codecHEMinusAACAuto(3),codecPCM32kHz(4),codecPCM44p1kHz(5),codecPCM48kHz(6)}
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Decoder"
+  ::= { rtpReceiver 3 }
+
+rtprcvgain OBJECT-TYPE
+  SYNTAX Integer32 (-100..100)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Audio Gain adjust"
+  ::= { rtpReceiver 4 }
+
+rtprcvprebuf OBJECT-TYPE
+  SYNTAX Integer32 (500..10000)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Pre-buffer time"
+  ::= { rtpReceiver 5 }
+
+backup OBJECT IDENTIFIER  ::= { settings 4 }
+
+srcmain OBJECT-TYPE
+  SYNTAX INTEGER {insel2MainAudio(1),insel2AUXAudio(2),insel2IPAudioClient1(3),insel2IPAudioClient2(4),insel2IPAudioClient3(5),insel2RTPReceiver(6),insel2MP3Player(7)}
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Main source"
+  ::= { backup 5 }
+
+backup1 OBJECT-TYPE
+  SYNTAX INTEGER {insel2NotUsed(0),insel2MainAudio(1),insel2AUXAudio(2),insel2IPAudioClient1(3),insel2IPAudioClient2(4),insel2IPAudioClient3(5),insel2RTPReceiver(6),insel2MP3Player(7)}
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Backup 1"
+  ::= { backup 6 }
+
+backup2 OBJECT-TYPE
+  SYNTAX INTEGER {insel2NotUsed(0),insel2MainAudio(1),insel2AUXAudio(2),insel2IPAudioClient1(3),insel2IPAudioClient2(4),insel2IPAudioClient3(5),insel2RTPReceiver(6),insel2MP3Player(7)}
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Backup 2"
+  ::= { backup 7 }
+
+backup3 OBJECT-TYPE
+  SYNTAX INTEGER {insel2NotUsed(0),insel2MainAudio(1),insel2AUXAudio(2),insel2IPAudioClient1(3),insel2IPAudioClient2(4),insel2IPAudioClient3(5),insel2RTPReceiver(6),insel2MP3Player(7)}
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Backup 3"
+  ::= { backup 8 }
+
+gpi1Func OBJECT-TYPE
+  SYNTAX INTEGER {gpiNotUsed(0),gpiForceMain(1),gpiForceBackup1(2),gpiForceBackup2(3),gpiForceBackup3(4)}
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "GPI Forced"
+  ::= { backup 9 }
+
+audioLossAndRecovery OBJECT IDENTIFIER  ::= { backup 10 }
+
+aulossth OBJECT-TYPE
+  SYNTAX Ix10 (-900..0)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Audio Loss Threshold"
+  ::= { audioLossAndRecovery 1 }
+
+aulosstout OBJECT-TYPE
+  SYNTAX Integer32 (1..240)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Audio Loss Timeout"
+  ::= { audioLossAndRecovery 2 }
+
+aurecth OBJECT-TYPE
+  SYNTAX Ix10 (-900..0)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Audio Recovery Threshold"
+  ::= { audioLossAndRecovery 3 }
+
+aurectout OBJECT-TYPE
+  SYNTAX Integer32 (1..240)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Audio Recovery Timeout"
+  ::= { audioLossAndRecovery 4 }
+
+aumonmode OBJECT-TYPE
+  SYNTAX INTEGER {monmodeSingleChannel(3),monmodeBothChannels(4)}
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Audio Monitor Mode"
+  ::= { audioLossAndRecovery 5 }
+
+mp3Player OBJECT IDENTIFIER  ::= { backup 11 }
+
+fporder OBJECT-TYPE
+  SYNTAX INTEGER {playerAZ(0),playerZA(1),playerShuffle(2),playerPlaylist(3),playerShuffledPlaylist(4)}
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "MP3 Player Playback Order"
+  ::= { mp3Player 1 }
+
+fpjorder OBJECT-TYPE
+  SYNTAX INTEGER {playerAZ(0),playerZA(1),playerShuffle(2),playerPlaylist(3),playerShuffledPlaylist(4)}
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Jingle Player Playback Order"
+  ::= { mp3Player 2 }
+
+fpjmode OBJECT-TYPE
+  SYNTAX Integer32 (0..10)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Jingle Player Mode"
+  ::= { mp3Player 3 }
+
+fpgain OBJECT-TYPE
+  SYNTAX Integer32 (-100..100)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Audio Gain adjust"
+  ::= { mp3Player 4 }
+
+dayparts OBJECT IDENTIFIER  ::= { settings 5 }
+
+daypartEna OBJECT-TYPE
+  SYNTAX INTEGER {altEnable(3),altDisable(4)}
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Dayparting enable"
+  ::= { dayparts 1 }
+
+output OBJECT IDENTIFIER  ::= { settings 6 }
+
+volPho OBJECT-TYPE
+  SYNTAX Ix10 (-300..0)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Headphones volume"
+  ::= { output 1 }
+
+volAnaOut OBJECT-TYPE
+  SYNTAX Ix10 (-900..180)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Analog output level"
+  ::= { output 2 }
+
+digoutEnable OBJECT-TYPE
+  SYNTAX INTEGER {altEnable(3),altDisable(4)}
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Digital out enable"
+  ::= { output 3 }
+
+digoutSr OBJECT-TYPE
+  SYNTAX INTEGER {osrExternalSync(1),osr32kHz(2),osr44p1kHz(3),osr48kHz(4),osr88p2kHz(5),osr96kHz(6)}
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Digital out sample rate"
+  ::= { output 4 }
+
+network OBJECT IDENTIFIER  ::= { settings 7 }
+
+ethernet OBJECT IDENTIFIER  ::= { network 1 }
+
+dhcpen OBJECT-TYPE
+  SYNTAX INTEGER {altEnable(3),altDisable(4)}
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "DHCP Client"
+  ::= { ethernet 1 }
+
+ip OBJECT-TYPE
+  SYNTAX IpAddress 
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "IP address (static)"
+  ::= { ethernet 2 }
+
+netmask OBJECT-TYPE
+  SYNTAX IpAddress 
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Network mask  (static)"
+  ::= { ethernet 3 }
+
+gwip OBJECT-TYPE
+  SYNTAX IpAddress 
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Gateway address (static)"
+  ::= { ethernet 4 }
+
+dns1Ip OBJECT-TYPE
+  SYNTAX IpAddress 
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Primary DNS IP address (static)"
+  ::= { ethernet 5 }
+
+dns2Ip OBJECT-TYPE
+  SYNTAX IpAddress 
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Secondary DNS IP address (static)"
+  ::= { ethernet 6 }
+
+http OBJECT IDENTIFIER  ::= { network 2 }
+
+httpport OBJECT-TYPE
+  SYNTAX Integer32 (1..65535)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "WEB server port"
+  ::= { http 1 }
+
+httptout OBJECT-TYPE
+  SYNTAX Integer32 (0..3600)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "WEB session timeout"
+  ::= { http 2 }
+
+snmp OBJECT IDENTIFIER  ::= { network 3 }
+
+snmpen OBJECT-TYPE
+  SYNTAX INTEGER {altEnable(3),altDisable(4)}
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "SNMP protocol enable"
+  ::= { snmp 1 }
+
+snmpmip OBJECT-TYPE
+  SYNTAX IpAddress 
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Manager IP address"
+  ::= { snmp 2 }
+
+snmpmport OBJECT-TYPE
+  SYNTAX Integer32 (1..65535)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Manager port"
+  ::= { snmp 3 }
+
+snmpaport OBJECT-TYPE
+  SYNTAX Integer32 (1..65535)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Agent port"
+  ::= { snmp 4 }
+
+snmpaid OBJECT-TYPE
+  SYNTAX Integer32 (0..255)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Agent ID for the device"
+  ::= { snmp 5 }
+
+snmprcomm OBJECT-TYPE
+  SYNTAX DisplayString (SIZE(0..31)) 
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Read community password"
+  ::= { snmp 6 }
+
+snmpwcomm OBJECT-TYPE
+  SYNTAX DisplayString (SIZE(0..31)) 
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Write community password"
+  ::= { snmp 7 }
+
+snmptout OBJECT-TYPE
+  SYNTAX Integer32 (10..3600)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Inactivity timeout - for SNMP write only"
+  ::= { snmp 8 }
+
+ftp OBJECT IDENTIFIER  ::= { network 4 }
+
+ftpen OBJECT-TYPE
+  SYNTAX INTEGER {altEnable(3),altDisable(4)}
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "FTP protocol"
+  ::= { ftp 1 }
+
+ftpdport OBJECT-TYPE
+  SYNTAX Integer32 (1..65535)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "FTP data port"
+  ::= { ftp 2 }
+
+ftpcport OBJECT-TYPE
+  SYNTAX Integer32 (1..65535)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "FTP command port"
+  ::= { ftp 3 }
+
+sntp OBJECT IDENTIFIER  ::= { network 5 }
+
+sntpen OBJECT-TYPE
+  SYNTAX INTEGER {altEnable(3),altDisable(4)}
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "SNTP protocol (Internet time)"
+  ::= { sntp 1 }
+
+sntpsrv OBJECT-TYPE
+  SYNTAX DisplayString (SIZE(0..255)) 
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Time server host name"
+  ::= { sntp 2 }
+
+sntpport OBJECT-TYPE
+  SYNTAX Integer32 (1..65535)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Time server port"
+  ::= { sntp 3 }
+
+email OBJECT IDENTIFIER  ::= { network 6 }
+
+emailen OBJECT-TYPE
+  SYNTAX INTEGER {altEnable(3),altDisable(4)}
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "SMTP protocol (email)"
+  ::= { email 1 }
+
+smtpsrv OBJECT-TYPE
+  SYNTAX DisplayString (SIZE(0..255)) 
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Outgoing server host name"
+  ::= { email 2 }
+
+smtpport OBJECT-TYPE
+  SYNTAX Integer32 (1..65535)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Outgoing server port"
+  ::= { email 3 }
+
+email1 OBJECT-TYPE
+  SYNTAX DisplayString (SIZE(0..63)) 
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "First recipient email address"
+  ::= { email 4 }
+
+email2 OBJECT-TYPE
+  SYNTAX DisplayString (SIZE(0..63)) 
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Second recipient email address"
+  ::= { email 5 }
+
+smtpsender OBJECT-TYPE
+  SYNTAX DisplayString (SIZE(0..31)) 
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Sender name"
+  ::= { email 6 }
+
+smtpuname OBJECT-TYPE
+  SYNTAX DisplayString (SIZE(0..31)) 
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Outgoing server user name"
+  ::= { email 7 }
+
+smtpupass OBJECT-TYPE
+  SYNTAX DisplayString (SIZE(0..31)) 
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Outgoing server password"
+  ::= { email 8 }
+
+smtphostname OBJECT-TYPE
+  SYNTAX DisplayString (SIZE(0..255)) 
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Client Hostname"
+  ::= { email 9 }
+
+smtpconntype OBJECT-TYPE
+  SYNTAX INTEGER {smtpconnRegular(0),smtpconnEncrypted(1)}
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Connection Type"
+  ::= { email 10 }
+
+device OBJECT IDENTIFIER  ::= { settings 8 }
+
+alias OBJECT-TYPE
+  SYNTAX DisplayString (SIZE(0..31)) 
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Alias name for device"
+  ::= { device 1 }
+
+dateTime OBJECT IDENTIFIER  ::= { device 2 }
+
+date OBJECT-TYPE
+  SYNTAX Integer32 (1..1)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Manual set Date"
+  ::= { dateTime 1 }
+
+time OBJECT-TYPE
+  SYNTAX Integer32 (0..86399)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Manual set Time"
+  ::= { dateTime 2 }
+
+tzone OBJECT-TYPE
+  SYNTAX Integer32 (-24..24)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Time zone"
+  ::= { dateTime 3 }
+
+slogmage OBJECT-TYPE
+  SYNTAX INTEGER {slogInfinite(0),slog5days(1),slog10days(2),slog15days(3),slog20days(4),slog25days(5),slog30days(6)}
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "0"
+  ::= { device 3 }
+
+daypartTable OBJECT-TYPE
+  SYNTAX SEQUENCE OF DaypartTableEntry 
+  MAX-ACCESS not-accessible
+  STATUS current
+  DESCRIPTION
+    "Daypart Table"
+  ::= { dayparts 2 }
+
+daypartTableEntry OBJECT-TYPE
+  SYNTAX DaypartTableEntry 
+  MAX-ACCESS not-accessible
+  STATUS current
+  DESCRIPTION
+    "Daypart Table Entry"
+  INDEX { dpIdx }
+  ::= { daypartTable 1 }
+
+DaypartTableEntry  ::= SEQUENCE { 
+  dpIdx Integer32,
+  dpStart Integer32,
+  dpDuration Integer32,
+  dpWeekDay INTEGER,
+  dpDate Integer32,
+  dpInput INTEGER
+}
+
+dpIdx OBJECT-TYPE
+  SYNTAX Integer32 (0..7)
+  MAX-ACCESS not-accessible
+  STATUS current
+  DESCRIPTION
+    "dp Idx "
+  ::= { daypartTableEntry 1 }
+
+dpStart OBJECT-TYPE
+  SYNTAX Integer32 (0..86399)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "dp Start "
+  ::= { daypartTableEntry 2 }
+
+dpDuration OBJECT-TYPE
+  SYNTAX Integer32 (0..86399)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "dp Duration "
+  ::= { daypartTableEntry 3 }
+
+dpWeekDay OBJECT-TYPE
+  SYNTAX INTEGER {wdaySunday(0),wdayMonday(1),wdayTuesday(2),wdayWednesday(3),wdayThursday(4),wdayFriday(5),wdaySaturday(6),wdayEveryday(7),wdayNever(8),wdayOnaDate(9)}
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "dp Week Day"
+  ::= { daypartTableEntry 4 }
+
+dpDate OBJECT-TYPE
+  SYNTAX Integer32 
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "dp Date "
+  ::= { daypartTableEntry 5 }
+
+dpInput OBJECT-TYPE
+  SYNTAX INTEGER {srcMain(0),srcBackup1(1),srcBackup2(2)}
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "dp Input "
+  ::= { daypartTableEntry 6 }
+
+monitoring OBJECT IDENTIFIER  ::= { db8008 3 }
+
+mntrSource OBJECT-TYPE
+  SYNTAX INTEGER {insel2MainAudio(1),insel2AUXAudio(2),insel2IPAudioClient1(3),insel2IPAudioClient2(4),insel2IPAudioClient3(5),insel2RTPReceiver(6),insel2MP3Player(7),insel2MainAnalog(13),insel2MainDigital(14),insel2AUXAnalog(15),insel2AUXDigital(16),insel2Auto(128)}
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "mntr Source "
+  ::= { monitoring 1 }
+
+mntrSourceAppliedby OBJECT-TYPE
+  SYNTAX INTEGER {appliedAutoselected(0),appliedForcedOverWEB(1),appliedForcedByDaypart(2),appliedForcedOverSNMP(3),appliedForcedByGPI(4)}
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr Source AppliedBy"
+  ::= { monitoring 2 }
+
+mntrOutputLValue OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr OUTPUT_L Value"
+  ::= { monitoring 3 }
+
+mntrOutputLValueAvr OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr OUTPUT_L Value Avr"
+  ::= { monitoring 4 }
+
+mntrOutputLPeakMax OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr OUTPUT_L Peak Max"
+  ::= { monitoring 5 }
+
+mntrOutputRValue OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr OUTPUT_R Value"
+  ::= { monitoring 6 }
+
+mntrOutputRValueAvr OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr OUTPUT_R Value Avr"
+  ::= { monitoring 7 }
+
+mntrOutputRPeakMax OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr OUTPUT_R Peak Max"
+  ::= { monitoring 8 }
+
+mntrMainAudioLeftValue OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr MAIN_AUDIO_LEFT Value"
+  ::= { monitoring 9 }
+
+mntrMainAudioLeftValueAvr OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr MAIN_AUDIO_LEFT Value Avr"
+  ::= { monitoring 10 }
+
+mntrMainAudioLeftPeakMax OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr MAIN_AUDIO_LEFT Peak Max"
+  ::= { monitoring 11 }
+
+mntrMainAudioRightValue OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr MAIN_AUDIO_RIGHT Value"
+  ::= { monitoring 12 }
+
+mntrMainAudioRightValueAvr OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr MAIN_AUDIO_RIGHT Value Avr"
+  ::= { monitoring 13 }
+
+mntrMainAudioRightPeakMax OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr MAIN_AUDIO_RIGHT Peak Max"
+  ::= { monitoring 14 }
+
+mntrMainDigitalSync OBJECT-TYPE
+  SYNTAX INTEGER {altOff(1),altOn(2)}
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr MAIN_DIGITAL Sync"
+  ::= { monitoring 15 }
+
+mntrAuxAudioLeftValue OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr AUX_AUDIO_LEFT Value"
+  ::= { monitoring 16 }
+
+mntrAuxAudioLeftValueAvr OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr AUX_AUDIO_LEFT Value Avr"
+  ::= { monitoring 17 }
+
+mntrAuxAudioLeftPeakMax OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr AUX_AUDIO_LEFT Peak Max"
+  ::= { monitoring 18 }
+
+mntrAuxAudioRightValue OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr AUX_AUDIO_RIGHT Value"
+  ::= { monitoring 19 }
+
+mntrAuxAudioRightValueAvr OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr AUX_AUDIO_RIGHT Value Avr"
+  ::= { monitoring 20 }
+
+mntrAuxAudioRightPeakMax OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr AUX_AUDIO_RIGHT Peak Max"
+  ::= { monitoring 21 }
+
+mntrAuxDigitalSync OBJECT-TYPE
+  SYNTAX INTEGER {altOff(1),altOn(2)}
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr AUX_DIGITAL Sync"
+  ::= { monitoring 22 }
+
+mntrIPAudio1LValue OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr I_P_AUDIO_1_L Value"
+  ::= { monitoring 23 }
+
+mntrIPAudio1LValueAvr OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr I_P_AUDIO_1_L Value Avr"
+  ::= { monitoring 24 }
+
+mntrIPAudio1LPeakMax OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr I_P_AUDIO_1_L Peak Max"
+  ::= { monitoring 25 }
+
+mntrIPAudio1RValue OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr I_P_AUDIO_1_R Value"
+  ::= { monitoring 26 }
+
+mntrIPAudio1RValueAvr OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr I_P_AUDIO_1_R Value Avr"
+  ::= { monitoring 27 }
+
+mntrIPAudio1RPeakMax OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr I_P_AUDIO_1_R Peak Max"
+  ::= { monitoring 28 }
+
+mntrIPAudio2LValue OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr I_P_AUDIO_2_L Value"
+  ::= { monitoring 29 }
+
+mntrIPAudio2LValueAvr OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr I_P_AUDIO_2_L Value Avr"
+  ::= { monitoring 30 }
+
+mntrIPAudio2LPeakMax OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr I_P_AUDIO_2_L Peak Max"
+  ::= { monitoring 31 }
+
+mntrIPAudio2RValue OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr I_P_AUDIO_2_R Value"
+  ::= { monitoring 32 }
+
+mntrIPAudio2RValueAvr OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr I_P_AUDIO_2_R Value Avr"
+  ::= { monitoring 33 }
+
+mntrIPAudio2RPeakMax OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr I_P_AUDIO_2_R Peak Max"
+  ::= { monitoring 34 }
+
+mntrIPAudio3LValue OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr I_P_AUDIO_3_L Value"
+  ::= { monitoring 35 }
+
+mntrIPAudio3LValueAvr OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr I_P_AUDIO_3_L Value Avr"
+  ::= { monitoring 36 }
+
+mntrIPAudio3LPeakMax OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr I_P_AUDIO_3_L Peak Max"
+  ::= { monitoring 37 }
+
+mntrIPAudio3RValue OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr I_P_AUDIO_3_R Value"
+  ::= { monitoring 38 }
+
+mntrIPAudio3RValueAvr OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr I_P_AUDIO_3_R Value Avr"
+  ::= { monitoring 39 }
+
+mntrIPAudio3RPeakMax OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr I_P_AUDIO_3_R Peak Max"
+  ::= { monitoring 40 }
+
+mntrRTPReceiverLValue OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr R_T_P_RECEIVER_L Value"
+  ::= { monitoring 41 }
+
+mntrRTPReceiverLValueAvr OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr R_T_P_RECEIVER_L Value Avr"
+  ::= { monitoring 42 }
+
+mntrRTPReceiverLPeakMax OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr R_T_P_RECEIVER_L Peak Max"
+  ::= { monitoring 43 }
+
+mntrRTPReceiverRValue OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr R_T_P_RECEIVER_R Value"
+  ::= { monitoring 44 }
+
+mntrRTPReceiverRValueAvr OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr R_T_P_RECEIVER_R Value Avr"
+  ::= { monitoring 45 }
+
+mntrRTPReceiverRPeakMax OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr R_T_P_RECEIVER_R Peak Max"
+  ::= { monitoring 46 }
+
+mntrMP3PlayerLValue OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr M_P3_Player_L Value"
+  ::= { monitoring 47 }
+
+mntrMP3PlayerLValueAvr OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr M_P3_Player_L Value Avr"
+  ::= { monitoring 48 }
+
+mntrMP3PlayerLPeakMax OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr M_P3_Player_L Peak Max"
+  ::= { monitoring 49 }
+
+mntrMP3PlayerRValue OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr M_P3_Player_R Value"
+  ::= { monitoring 50 }
+
+mntrMP3PlayerRValueAvr OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr M_P3_Player_R Value Avr"
+  ::= { monitoring 51 }
+
+mntrMP3PlayerRPeakMax OBJECT-TYPE
+  SYNTAX Fr8p8 
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr M_P3_Player_R Peak Max"
+  ::= { monitoring 52 }
+
+mntrMainLoss OBJECT-TYPE
+  SYNTAX INTEGER {altOff(1),altOn(2)}
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr Main Loss"
+  ::= { monitoring 53 }
+
+mntrBackup1Loss OBJECT-TYPE
+  SYNTAX INTEGER {altOff(1),altOn(2)}
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr Backup1 Loss"
+  ::= { monitoring 54 }
+
+mntrBackup2Loss OBJECT-TYPE
+  SYNTAX INTEGER {altOff(1),altOn(2)}
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "mntr Backup2 Loss"
+  ::= { monitoring 55 }
+
+traps OBJECT IDENTIFIER  ::= { db8008 254 }
+
+notification OBJECT IDENTIFIER  ::= { traps 0 }
+
+notifTest NOTIFICATION-TYPE
+  OBJECTS { alias, snmpaid }
+  STATUS current
+  DESCRIPTION
+    "notif  test"
+  ::= { notification 1 }
+
+notifSourceChange NOTIFICATION-TYPE
+  OBJECTS { mntrSource, mntrSourceAppliedby, alias, snmpaid }
+  STATUS current
+  DESCRIPTION
+    "notif source Change"
+  ::= { notification 2 }
+
+notifDigitalSyncLoss NOTIFICATION-TYPE
+  OBJECTS { mntrSource, alias, snmpaid }
+  STATUS current
+  DESCRIPTION
+    "notif Digital Sync Loss"
+  ::= { notification 3 }
+
+notifDigitalSyncRecover NOTIFICATION-TYPE
+  OBJECTS { mntrSource, alias, snmpaid }
+  STATUS current
+  DESCRIPTION
+    "notif Digital Sync Recover"
+  ::= { notification 4 }
+
+notifAudioLoss NOTIFICATION-TYPE
+  OBJECTS { mntrSource, alias, snmpaid }
+  STATUS current
+  DESCRIPTION
+    "notif Audio Loss"
+  ::= { notification 5 }
+
+notifAudioRecover NOTIFICATION-TYPE
+  OBJECTS { mntrSource, alias, snmpaid }
+  STATUS current
+  DESCRIPTION
+    "notif Audio Recover"
+  ::= { notification 6 }
+
+END

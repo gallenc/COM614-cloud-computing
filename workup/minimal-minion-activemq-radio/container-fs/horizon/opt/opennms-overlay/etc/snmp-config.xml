@@ -1,0 +1,27 @@
+<snmp-config xmlns="http://xmlns.opennms.org/xsd/config/snmp" version="v2c" read-community="public" timeout="5000" retry="1">
+   <definition version="v1" write-community="private" read-community="DEVA8008" location="testradiosite1">
+      <specific>192.168.105.100</specific>
+   </definition>
+   <definition version="v1" write-community="private" read-community="DEVA7012" location="testradiosite1">
+      <specific>192.168.105.101</specific>
+   </definition>
+   <definition version="v1" write-community="private" read-community="DEVA9000" location="testradiosite1">
+      <specific>192.168.105.99</specific>
+   </definition>
+   <definition version="v1" write-community="private" location="testradiosite1">
+      <specific>192.168.105.250</specific>
+   </definition>
+
+   <definition  write-community="private" read-community="DEVA8008" location="ftwidley1">
+      <specific>192.168.105.100</specific>
+   </definition>
+   <definition  write-community="private" read-community="DEVA7012" location="ftwidley1">
+      <specific>192.168.105.101</specific>
+   </definition>
+   <definition  write-community="private" read-community="DEVA9000" location="ftwidley1">
+      <specific>192.168.105.99</specific>
+   </definition>
+   <definition  write-community="private" read-community="public" location="ftwidley1">
+      <specific>192.168.105.250</specific>
+   </definition>
+</snmp-config>
