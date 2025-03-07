@@ -1,5 +1,6 @@
 ---
-http-url: "https://horizon:8980/opennms"
+http-url: "http://horizon:8980/opennms"
+broker-url: "failover:tcp://horizon:61616"
 id: "minion-02"
 location: "ftwidley1"
 
@@ -7,11 +8,6 @@ karaf:
   shell:
     ssh:
       host: "0.0.0.0"
-
-ipc:
-  grpc:
-    host: "horizon"
-    port: "8990"
 
 netmgt:
   syslog:

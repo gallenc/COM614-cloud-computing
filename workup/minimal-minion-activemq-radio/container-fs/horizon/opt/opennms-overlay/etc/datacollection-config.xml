@@ -7,6 +7,13 @@
          <rra>RRA:MAX:0.5:288:366</rra>
          <rra>RRA:MIN:0.5:288:366</rra>
       </rrd>
+      <!-- Custom collection groups for the default collection go here -->
+      <include-collection dataCollectionGroup="DRAYTEK-MIB"/>
+      <include-collection dataCollectionGroup="CARDINAL-MIB"/>
+      <include-collection dataCollectionGroup="DB7012-MIB"/>
+      <include-collection dataCollectionGroup="DB8008-MIB"/>
+      <include-collection dataCollectionGroup="DB9000RX-MIB"/>
+
       <include-collection dataCollectionGroup="MIB2"/>
       <include-collection dataCollectionGroup="3Com"/>
       <include-collection dataCollectionGroup="Acme Packet"/>
@@ -64,7 +71,6 @@
       <include-collection dataCollectionGroup="OpenNMS Appliances"/>
       <include-collection dataCollectionGroup="PaloAlto"/>
       <include-collection dataCollectionGroup="pfSense"/>
-      <include-collection dataCollectionGroup="PostgreSQL-JDBC"/>
       <include-collection dataCollectionGroup="Powerware"/>
       <include-collection dataCollectionGroup="Printers"/>
       <include-collection dataCollectionGroup="REF_Compaq-Insight-Manager"/>
@@ -80,21 +86,14 @@
       <include-collection dataCollectionGroup="SUN Microsystems"/>
       <include-collection dataCollectionGroup="Trango"/>
       <include-collection dataCollectionGroup="VMware-Cim"/>
-      <include-collection dataCollectionGroup="VMware3"/>
-      <include-collection dataCollectionGroup="VMware4"/>
-      <include-collection dataCollectionGroup="VMware5"/>
       <include-collection dataCollectionGroup="VMware6"/>
       <include-collection dataCollectionGroup="VMware7"/>
       <include-collection dataCollectionGroup="WMI"/>
       <include-collection dataCollectionGroup="Zertico"/>
       <include-collection dataCollectionGroup="Zeus"/>
-      
-      <include-collection dataCollectionGroup="DRAYTEK-MIB"/>
-      <include-collection dataCollectionGroup="CARDINAL-MIB"/>
-      <include-collection dataCollectionGroup="DB7012-MIB"/>
-      <include-collection dataCollectionGroup="DB8008-MIB"/>
-      <include-collection dataCollectionGroup="DB9000RX-MIB"/>
    </snmp-collection>
+
+   <!-- Custom collection packages go here -->
 
    <!--
       We need a dedicated collection with a different RRD setup for EJN equipment because
