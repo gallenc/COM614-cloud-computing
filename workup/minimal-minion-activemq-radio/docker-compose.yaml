@@ -27,6 +27,7 @@ volumes:
   data-opennms: {}
   data-opennms-cfg: {}
   data-grafana: {}
+  data-pgadmin: {}
 
 services:
 
@@ -67,6 +68,23 @@ services:
       frontend:
         ipv4_address: 172.20.0.10
 
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: always
+    ports:
+      - "8888:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user-name@domain-name.com
+      PGADMIN_DEFAULT_PASSWORD: minad1234
+      PGADMIN_SERVER_JSON_FILE: /pgadmin/servers.json
+    volumes:
+      - data-pgadmin:/var/lib/pgadmin
+      - ./container-fs/pgadmin/:/pgadmin
+    networks:
+      frontend:
+        ipv4_address: 172.20.0.11
+
   horizon:
     image: ${DOCKER_REGISTRY:-docker.io}/${DOCKER_ORG:-opennms}/${HORIZON_OCI:-horizon}:${ONMS_VERSION:-bleeding}
     container_name: horizon
@@ -74,12 +92,13 @@ services:
     sysctls:
       net.ipv4.ping_group_range: "0 429496729"
     depends_on:
-      - database
+      database:
+        condition: service_healthy
     environment:
       TZ: ${TIMEZONE:-America/New_York}
-      # JAVA_OPTS mupdates from default in container (-Xmx1024m -XX:MaxMetaspaceSize=512m) plus enable debugger
+      # JAVA_OPTS updates from default in container (-Xmx1024m -XX:MaxMetaspaceSize=512m) plus enable debugger
       # extenal jdb connection from windows using  jdb -connect com.sun.jdi.SocketAttach:hostname=localhost,port=8001
-      JAVA_OPTS: -Xmx4096m -XX:MaxMetaspaceSize=1024m -agentlib:jdwp=transport=dt_socket,server=y,address=*:8001,suspend=n
+      JAVA_OPTS: -Xmx2048m -XX:MaxMetaspaceSize=512m -agentlib:jdwp=transport=dt_socket,server=y,address=*:8001,suspend=n
     volumes:
       - data-opennms:/opennms-data
       - data-opennms-cfg:/opt/opennms/etc
@@ -103,7 +122,7 @@ services:
       resources:
         limits:
           cpus: "2"
-          memory: 6G
+          memory: 4G
     networks:
       frontend:
         ipv4_address: 172.20.0.15
@@ -153,7 +172,8 @@ services:
       - './container-fs/minion1/opt/minion/minion-config.yaml:/opt/minion/minion-config.yaml'
     command: ["-f"]
     depends_on:
-      - horizon
+      horizon:
+        condition: service_healthy
     healthcheck:
       test: "/health.sh"
       interval: 30s
@@ -191,7 +211,8 @@ services:
       - './container-fs/minion2/opt/minion/minion-config.yaml:/opt/minion/minion-config.yaml'
     command: ["-f"]
     depends_on:
-      - horizon
+      horizon:
+         condition: service_healthy
     healthcheck:
       test: "/health.sh"
       interval: 30s

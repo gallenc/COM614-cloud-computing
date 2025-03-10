@@ -74,12 +74,13 @@ services:
     sysctls:
       net.ipv4.ping_group_range: "0 429496729"
     depends_on:
-      - database
+      database:
+        condition: service_healthy
     environment:
       TZ: ${TIMEZONE:-America/New_York}
-      # JAVA_OPTS mupdates from default in container (-Xmx1024m -XX:MaxMetaspaceSize=512m) plus enable debugger
+      # JAVA_OPTS updates from default in container (-Xmx1024m -XX:MaxMetaspaceSize=512m) plus enable debugger
       # extenal jdb connection from windows using  jdb -connect com.sun.jdi.SocketAttach:hostname=localhost,port=8001
-      JAVA_OPTS: -Xmx2048m -XX:MaxMetaspaceSize=1024m -agentlib:jdwp=transport=dt_socket,server=y,address=*:8001,suspend=n
+      JAVA_OPTS: -Xmx2048m -XX:MaxMetaspaceSize=512m -agentlib:jdwp=transport=dt_socket,server=y,address=*:8001,suspend=n
     volumes:
       - data-opennms:/opennms-data
       - data-opennms-cfg:/opt/opennms/etc
@@ -91,7 +92,8 @@ services:
       - "8101:8101/tcp"
       - "8980:8980/tcp"
       - "10162:1162/udp"
-      - "8990:8990"
+#      - "61616:61616/tcp" # activemq
+      - "8990:8990" # grpc
       - "8001:8001" # JPDA debugging port
     healthcheck:
       test: [ "CMD", "curl", "-f", "-I", "http://localhost:8980/opennms/login.jsp" ]
@@ -145,11 +147,15 @@ services:
 #      net.ipv4.ping_group_range: "0 429496729"
 #    environment:
 #      TZ: ${TIMEZONE:-America/New_York}
-#      JAVA_MIN_MEM: 512M
-#      JAVA_MAX_MEM: 2048M
+#     JAVA_MIN_MEM: 512M  # doesnt work
+#     JAVA_MAX_MEM: 2048M # doesnt work
+#     JAVA_OPTS: -Xmx2048m -Xms512m -agentlib:jdwp=transport=dt_socket,server=y,address=*:8001,suspend=n
 #    volumes:
 #      - './container-fs/minion1/opt/minion/minion-config.yaml:/opt/minion/minion-config.yaml'
 #    command: ["-f"]
+#    depends_on:
+#      horizon:
+#        condition: service_healthy
 #    healthcheck:
 #      test: "/health.sh"
 #      interval: 30s
@@ -162,8 +168,8 @@ services:
 #    deploy:
 #      resources:
 #        limits:
-#          cpus: "0.5"
-#          memory: 2560M
+#          cpus: "1"
+#          memory: 3216M
 #    networks:
 #      frontend:
 #        ipv4_address: 172.20.0.25
@@ -179,11 +185,15 @@ services:
       net.ipv4.ping_group_range: "0 429496729"
     environment:
       TZ: ${TIMEZONE:-America/New_York}
-      JAVA_MIN_MEM: 512M
-      JAVA_MAX_MEM: 2048M
+      JAVA_MIN_MEM: 512M  # doesnt work
+      JAVA_MAX_MEM: 2048M # doesnt work
+      JAVA_OPTS: -Xmx2048m -Xms512m -agentlib:jdwp=transport=dt_socket,server=y,address=*:8001,suspend=n
     volumes:
       - './container-fs/minion2/opt/minion/minion-config.yaml:/opt/minion/minion-config.yaml'
     command: ["-f"]
+    depends_on:
+      horizon:
+         condition: service_healthy
     healthcheck:
       test: "/health.sh"
       interval: 30s
@@ -193,11 +203,12 @@ services:
       - "8201:8201/tcp"
       - "1162:1162/udp"
       - "1514:1514/udp"
+      - "9002:8001" # JPDA debugging port
     deploy:
       resources:
         limits:
-          cpus: "0.5"
-          memory: 2560M
+          cpus: "1"
+          memory: 3216M
     cap_add: # allows us to add route in container
       - NET_ADMIN
     networks:
