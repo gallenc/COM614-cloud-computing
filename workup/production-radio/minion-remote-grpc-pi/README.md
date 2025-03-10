@@ -1,5 +1,27 @@
 # README
 
+# notes
+
+to set up a pi 5
+
+the Pi will prefer to use the eth0 wired connection before using the wlan0 connection as its gateway.
+In or experiments this might not be correct because we know that only the wired network has connectivity to the internet using eduroam.
+
+On the pi we could correct this by deleting the etho default route using
+
+```
+sudo ip route del default dev eth0
+```
+
+or (newer pi)
+
+```
+sudo nmcli connection modify 'Wired connection 1' ipv4.route-metric 50
+sudo nmcli connection up 'Wired connection 1' 
+
+ip route 
+
+```
 
 ## Usage
 
