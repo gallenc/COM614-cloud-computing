@@ -91,7 +91,8 @@ services:
       - "8101:8101/tcp"
       - "8980:8980/tcp"
       - "10162:1162/udp"
-      - "8990:8990"
+#      - "61616:61616/tcp" # activemq
+      - "8990:8990" # grpc
       - "8001:8001" # JPDA debugging port
     healthcheck:
       test: [ "CMD", "curl", "-f", "-I", "http://localhost:8980/opennms/login.jsp" ]
