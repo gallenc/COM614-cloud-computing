@@ -1,7 +1,7 @@
 ---
 http-url: "https://172.236.28.206:8980/opennms"
 id: "minion-remote-pi-02"
-location: "ftwidley1"
+location: "ftwidley2"
 
 karaf:
   shell:
