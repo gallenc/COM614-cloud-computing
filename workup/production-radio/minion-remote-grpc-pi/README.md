@@ -177,6 +177,23 @@ snmpwalk -c piminion -v2c 172.17.0.1      1.3.6
 
 ```
 
+## installing log2ram
+
+log2ram can increase the life of SD card by only writing daily
+
+https://github.com/azlux/log2ram
+
+```
+sudo apt install rsync
+
+echo "deb [signed-by=/usr/share/keyrings/azlux-archive-keyring.gpg] http://packages.azlux.fr/debian/ bookworm main" | sudo tee /etc/apt/sources.list.d/azlux.list
+sudo wget -O /usr/share/keyrings/azlux-archive-keyring.gpg  https://azlux.fr/repo.gpg
+sudo apt update
+sudo apt install log2ram
+
+```
+now need to ensure logging goes correct place
+
 
 ## references
 
