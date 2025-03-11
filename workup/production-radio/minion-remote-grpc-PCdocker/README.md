@@ -1,5 +1,11 @@
 # README
 
+This is a minion which can run on a remote raspberry pi
+
+id: "minion-remote-pi-01"
+
+location: "ftwidley1"
+
 # notes
 
 to set up a pi 5

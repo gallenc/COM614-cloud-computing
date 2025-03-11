@@ -1,5 +1,11 @@
 # README
 
+This is a minion which can run on a local pc and connect through a vpn
+
+id: "minion-remote-pi-02"
+
+location: "ftwidley2"
+
 # notes
 
 to set up a pi 5

@@ -27,4 +27,20 @@
    <definition version="v2c"  write-community="private" read-community="piminion" location="ftwidley1">
       <specific>192.168.105.245</specific>
    </definition>
+   
+   <definition  version="v2c" write-community="private" read-community="DEVA8008" location="ftwidley2">
+      <specific>192.168.105.100</specific>
+   </definition>
+   <definition  version="v2c" write-community="private" read-community="DEVA7012" location="ftwidley2">
+      <specific>192.168.105.101</specific>
+   </definition>
+   <definition  version="v2c" write-community="private" read-community="DEVA9000" location="ftwidley2">
+      <specific>192.168.105.99</specific>
+   </definition>
+   <definition version="v2c"  write-community="private" read-community="public" location="ftwidley2">
+      <specific>192.168.105.250</specific>
+   </definition>
+   <definition version="v2c"  write-community="private" read-community="piminion" location="ftwidley2">
+      <specific>192.168.105.245</specific>
+   </definition>
 </snmp-config>
