@@ -1,0 +1,816 @@
+-- www.devavroadcast.com 	DB9000RX MIB File.
+--
+-- Author                   Date        Comment
+-- ==================================================================
+-- Kolyo Zhishev           11/05/12     DB9000RX
+-- Kolyo Zhishev           23/07/12     icecast compatible Source Server
+-- Alexander Petrov        06/04/15     Connection status details
+
+DB9000RX-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+	DisplayString, TEXTUAL-CONVENTION	FROM SNMPv2-TC
+
+	MODULE-IDENTITY, 
+	OBJECT-TYPE,
+	OBJECT-IDENTITY,
+	enterprises,
+	IpAddress,
+	NOTIFICATION-TYPE,
+	Integer32		FROM SNMPv2-SMI;
+
+
+devabroadcast MODULE-IDENTITY
+       LAST-UPDATED "201504060859Z"
+       ORGANIZATION "DEVA Broadcast LTD"
+       CONTACT-INFO
+               "        Alexander Petrov
+
+                E-mail: alex@devabroadcast.com"
+
+       DESCRIPTION
+               "The MIB module for entities implementing the SNMPv2c
+               protocol."
+       REVISION      "201504060859Z"
+       DESCRIPTION
+               "The latest version of this MIB module."
+       REVISION      "201205101130Z"
+       DESCRIPTION
+               " "
+       ::= { enterprises 35833 }
+
+TCdot ::= TEXTUAL-CONVENTION
+	DISPLAY-HINT "d-1"
+	STATUS      current
+	DESCRIPTION 
+		" "
+	SYNTAX      Integer32
+
+	
+	
+db9000rx	OBJECT-IDENTITY
+	STATUS current
+	DESCRIPTION
+	" "
+	::=  { devabroadcast 7 }
+  
+
+ 
+product OBJECT IDENTIFIER  ::= { db9000rx 1 }
+	   
+deviceID OBJECT-TYPE
+  SYNTAX DisplayString
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Device Identification String"
+  ::= { product 1 }
+	   
+serial OBJECT-TYPE
+  SYNTAX DisplayString
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "Device Serial Number"
+  ::= { product 2 }
+	   
+revision OBJECT-TYPE
+  SYNTAX DisplayString
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "Device Firmware Revision"
+  ::= { product 3 }
+	   
+setup OBJECT IDENTIFIER  ::= { db9000rx 2 }
+	   
+network OBJECT IDENTIFIER  ::= { setup 1 }
+	   
+deviceIpAddress OBJECT-TYPE
+  SYNTAX IpAddress
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "Device IP Address"
+  ::= { network 1 }
+	   
+gatewayAddress OBJECT-TYPE
+  SYNTAX IpAddress
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "Device Gateway Address"
+  ::= { network 2 }
+	   
+subnetMask OBJECT-TYPE
+  SYNTAX IpAddress
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "Device Subnet Mask"
+  ::= { network 3 }
+	   
+dnsAddress OBJECT-TYPE
+  SYNTAX IpAddress
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "Device DNS Address"
+  ::= { network 4 }
+	   
+dhcp OBJECT-TYPE
+  SYNTAX INTEGER {off(0), on(1) }
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "Enable / Disable DHCP Client"
+  ::= { network 5 }
+	   
+ipVoice OBJECT-TYPE
+  SYNTAX INTEGER {off(0), on(1) }
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "Enable / Disable IP Voice Announcement"
+  ::= { network 6 }
+	   
+ftp OBJECT IDENTIFIER  ::= { setup 2 }
+	   
+ftpCmdPort OBJECT-TYPE
+  SYNTAX Integer32 (1..65535)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "FTP Server Command Port"
+  ::= { ftp 1 }
+	   
+ftpDataPort OBJECT-TYPE
+  SYNTAX Integer32 (1..65535)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "FTP  Server Data Port"
+  ::= { ftp 2 }
+	   
+ftpUsername OBJECT-TYPE
+  SYNTAX DisplayString (SIZE (1..15))
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "FTP Server Username"
+  ::= { ftp 3 }
+	   
+ftpPassword OBJECT-TYPE
+  SYNTAX DisplayString (SIZE (1..15))
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "FTP Server Password"
+  ::= { ftp 4 }
+	   
+http OBJECT IDENTIFIER  ::= { setup 3 }
+	   
+httpPort OBJECT-TYPE
+  SYNTAX Integer32 (1..65535)
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "WEB HTTP Port"
+  ::= { http 1 }
+	   
+httpUsername OBJECT-TYPE
+  SYNTAX DisplayString (SIZE (1..15))
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "WEB Authentication Username"
+  ::= { http 2 }
+	   
+httpPassword OBJECT-TYPE
+  SYNTAX DisplayString (SIZE (1..15))
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "WEB Authentication Password"
+  ::= { http 3 }
+	   
+snmp OBJECT IDENTIFIER  ::= { setup 4 }
+	   
+snmpAgentEn OBJECT-TYPE
+  SYNTAX INTEGER { off(0), on(1) }
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "SNMP Agent Enable/Disable"
+  ::= { snmp 1 }
+	   
+snmpMngrIp OBJECT-TYPE
+  SYNTAX IpAddress
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "SNMP Manager Ip Address"
+  ::= { snmp 2 }
+	   
+snmpMngrPort OBJECT-TYPE
+  SYNTAX Integer32 (1..65535)
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "SNMP Manager Port"
+  ::= { snmp 3 }
+	   
+snmpAgentID OBJECT-TYPE
+  SYNTAX Integer32 (0..250)
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "SNMP Agent ID"
+  ::= { snmp 4 }
+	   
+snmpAgentPort OBJECT-TYPE
+  SYNTAX Integer32 (1..65535)
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "SNMP Agent Port"
+  ::= { snmp 5 }
+	   
+snmpCommunity OBJECT-TYPE
+  SYNTAX DisplayString (SIZE (1..10))
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "SNMP Agent Community"
+  ::= { snmp 6 }
+	   
+	   
+ipAudio OBJECT IDENTIFIER  ::= { setup 5 }
+	   
+streamTable OBJECT-TYPE
+  SYNTAX SEQUENCE OF StreamEntry
+  MAX-ACCESS not-accessible
+  STATUS current
+  DESCRIPTION
+    "Stream Table"
+  ::= { ipAudio 1 }
+	   
+streamEntry OBJECT-TYPE
+  SYNTAX StreamEntry
+  MAX-ACCESS not-accessible
+  STATUS current
+  DESCRIPTION
+    " "
+  INDEX { streamNumber }
+  ::= { streamTable 1 }
+StreamEntry ::= SEQUENCE {
+  streamNumber Integer32,
+  url DisplayString,
+  decoder INTEGER,
+  sampleRate Integer32,
+  channelsNumber Integer32,
+  preBuffer Integer32,
+  bufferingTout Integer32,
+  gain Integer32
+}
+	   
+streamNumber OBJECT-TYPE
+  SYNTAX Integer32 (0.. 2)
+  MAX-ACCESS not-accessible
+  STATUS current
+  DESCRIPTION
+    "Index of stream number"
+  ::= { streamEntry 1 }
+	   
+url OBJECT-TYPE
+  SYNTAX DisplayString (SIZE (1..64))
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "Stream URL"
+  ::= { streamEntry 2 }
+	   
+decoder OBJECT-TYPE
+  SYNTAX INTEGER { pcm(0), mp3(1), aac(2) }
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "Stream Audio Decoder Type"
+  ::= { streamEntry 3 }
+	   
+sampleRate OBJECT-TYPE
+  SYNTAX Integer32 ( 32000 | 44100 | 48000 )
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "PCM Audio Stream Sample Rate [Hz]"
+  ::= { streamEntry 4 }
+	   
+channelsNumber OBJECT-TYPE
+  SYNTAX Integer32 ( 1 | 2 )
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "Number of Channels 1-Mono 2-Stereo"
+  ::= { streamEntry 5 }
+	   
+preBuffer OBJECT-TYPE
+  SYNTAX Integer32 ( 5.. 62 )
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "Compressed Data Buffer Size [kB]"
+  ::= { streamEntry 6 }
+	   
+bufferingTout OBJECT-TYPE
+  SYNTAX Integer32 ( 5.. 60 )
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "State PreBuffering Timeout [s]"
+  ::= { streamEntry 7 }
+	   
+gain OBJECT-TYPE
+  SYNTAX Integer32 ( -10.. 10 )
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "Audio Stream Gain Adjust [dB]"
+  ::= { streamEntry 8 }
+	   
+	   
+icecastServer OBJECT IDENTIFIER  ::= { ipAudio 2 }
+	   
+soSerPort OBJECT-TYPE
+  SYNTAX Integer32 (1..65535)
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "Source Server port"
+  ::= { icecastServer 1 }
+	   
+soSerUser OBJECT-TYPE
+  SYNTAX DisplayString (SIZE (1..15))
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "Source Server Authorization username"
+  ::= { icecastServer 2 }
+	   
+soSerPass OBJECT-TYPE
+  SYNTAX DisplayString (SIZE (1..15))
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "Source Server Authorization password"
+  ::= { icecastServer 3 }
+	   
+soSerDec OBJECT-TYPE
+  SYNTAX INTEGER { pcm(0), mp3(1), aac(2) }
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "Source Server Audio Decoder Type"
+  ::= { icecastServer 4 }
+	   
+rtpServer OBJECT IDENTIFIER  ::= { ipAudio 3 }
+	   
+soRtpPort OBJECT-TYPE
+  SYNTAX Integer32 (1..65535)
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "RTP port"
+  ::= { rtpServer 1 }
+	   
+soRtpDec OBJECT-TYPE
+  SYNTAX INTEGER { mp3(1), aac(2) }
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "RTP Server Audio Decoder Type"
+  ::= { rtpServer 2 }
+	   
+backup OBJECT IDENTIFIER  ::= { setup 6 }
+	   
+audioLossLevel OBJECT-TYPE
+  SYNTAX Integer32 ( -40.. -5 )
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "Audio Loss Threshold Level [dB]"
+  ::= { backup 1 }
+	   
+audioRecoverLevel OBJECT-TYPE
+  SYNTAX Integer32 ( -40.. -5 )
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "Audio Recover Threshold Level [dB]"
+  ::= { backup 2 }
+	   
+audioLossDelay OBJECT-TYPE
+  SYNTAX Integer32 ( 10.. 255 )
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "Audio Loss Delay [s]"
+  ::= { backup 3 }
+	   
+audioRecoverDelay OBJECT-TYPE
+  SYNTAX Integer32 ( 10.. 255 )
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "Audio Recover Delay [s]"
+  ::= { backup 4 }
+	   
+mp3PlaybackOrder OBJECT-TYPE
+  SYNTAX INTEGER { az(0), za(1), shuffle(2), playlist(3), playlistShuffle(4) }
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    " "
+  ::= { backup 5 }
+	   
+ethToRS232 OBJECT IDENTIFIER  ::= { setup 7 }
+	   
+rs232Baud OBJECT-TYPE
+  SYNTAX Integer32
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "RS232 Baudrate"
+  ::= { ethToRS232 1 }
+	   
+rs232Port OBJECT-TYPE
+  SYNTAX Integer32 (1..65535)
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "RS232 Server Port"
+  ::= { ethToRS232 2 }
+	   
+rs232Pass OBJECT-TYPE
+  SYNTAX DisplayString (SIZE (1..18))
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "RS232 Server Password"
+  ::= { ethToRS232 3 }
+	   
+option OBJECT IDENTIFIER  ::= { setup 8 }
+	   
+stereoMode OBJECT-TYPE
+  SYNTAX INTEGER { off(0), on(1) }
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Select Stereo or Mono. Note: Only the Left audio channel is used in Mono mode."
+  ::= { option 1 }
+	   
+emphasis OBJECT-TYPE
+  SYNTAX INTEGER { off(0), us50(1), us75(2) }
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Select 50us(Europe), 70us(America) or Off"
+  ::= { option 2 }
+	   
+audioGain OBJECT-TYPE
+  SYNTAX TCdot (-60..180)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Select audio gain at the input of the Stereo coder [dB]"
+  ::= { option 3 }
+	   
+pilotInjLvl OBJECT-TYPE
+  SYNTAX TCdot (0..120)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Select injection level of the 19 kHz pilot tone [%]"
+  ::= { option 4 }
+	   
+rdsInjLvl OBJECT-TYPE
+  SYNTAX TCdot (0..120)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Select injection level of the RDS subcarrier [%]"
+  ::= { option 5 }
+	   
+pilotPhaseAdj OBJECT-TYPE
+  SYNTAX Integer32 (-90..90)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Select phase of the 19 kHz pilot tone"
+  ::= { option 6 }
+	   
+lrSubPhaseAdj OBJECT-TYPE
+  SYNTAX Integer32 (-90..90)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Select phase of the L-R subcarrier"
+  ::= { option 7 }
+	   
+rdsSubPhaseAdj OBJECT-TYPE
+  SYNTAX Integer32 (-90..90)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Select phase of the RDS subcarrier"
+  ::= { option 8 }
+	   
+mpxLimiterEn OBJECT-TYPE
+  SYNTAX INTEGER { off(0), on(1) }
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Enable or Disable MPX limiter. Default: Disabled"
+  ::= { option 9 }
+	   
+mpxLimiterPreset OBJECT-TYPE
+  SYNTAX INTEGER { slow(0), mid(1), fast(2), cust1(3), cust2(4), cust3(5) }
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Select MPX limiter presset"
+  ::= { option 10 }
+	   
+mpxOutLvl OBJECT-TYPE
+  SYNTAX TCdot (-720..120)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Select output level at the multiplex signal connector. Step 1.5db"
+  ::= { option 11 }
+	   
+rdsOutLvl OBJECT-TYPE
+  SYNTAX TCdot (-720..60)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Select ouptut level at the RDS only signal connector.  Step 1.5db"
+  ::= { option 12 }
+	   
+agcEn OBJECT-TYPE
+  SYNTAX INTEGER { off(0), on(1) }
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Enable or Disable Automatic gain control"
+  ::= { option 13 }
+	   
+agcPreset OBJECT-TYPE
+  SYNTAX INTEGER { slow(0), mid(1), fast(2), cust1(3), cust2(4) }
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Select AGC presset"
+  ::= { option 14 }
+	   
+eq63hz OBJECT-TYPE
+  SYNTAX TCdot (-120..120)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "[dB]"
+  ::= { option 15 }
+	   
+eq630hz OBJECT-TYPE
+  SYNTAX TCdot (-120..120)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "[dB]"
+  ::= { option 16 }
+	   
+eq6300hz OBJECT-TYPE
+  SYNTAX TCdot (-120..120)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "[dB]"
+  ::= { option 17 }
+	   
+rdsEncoderEn OBJECT-TYPE
+  SYNTAX INTEGER { off(0), on(1) }
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Enable or disable RDS encoder"
+  ::= { option 18 }
+	   
+psStatic OBJECT-TYPE
+  SYNTAX DisplayString (SIZE(1..8))
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Static program station name"
+  ::= { option 19 }
+	   
+psDynamic OBJECT-TYPE
+  SYNTAX DisplayString (SIZE(0..64))
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Dynamic program station name"
+  ::= { option 20 }
+	   
+dpsScrollStep OBJECT-TYPE
+  SYNTAX Integer32 (0..9)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Dynamic PS parsing method: 0 - Centered/[1-8] - Number of characters to shift/9 - Left word alignment"
+  ::= { option 21 }
+	   
+dpsScrollSpeed OBJECT-TYPE
+  SYNTAX Integer32 (0..9)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Dynamic PS speed: 0 - DPS off / 1 - Slow  9 - Fast"
+  ::= { option 22 }
+	   
+radioText OBJECT-TYPE
+  SYNTAX DisplayString (SIZE(0..64))
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Radio text string. Up to 64 characters"
+  ::= { option 23 }
+	   
+radioTextSpeed OBJECT-TYPE
+  SYNTAX Integer32 (0..9)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Select RT transmission speed: 0 - RT off/1 - Slow ; 9 - Fast"
+  ::= { option 24 }
+	   
+piCode OBJECT-TYPE
+  SYNTAX Integer32
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Program identification"
+  ::= { option 25 }
+	   
+programType OBJECT-TYPE
+  SYNTAX Integer32 (0..31)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    " "
+  ::= { option 26 }
+	   
+msFlag OBJECT-TYPE
+  SYNTAX INTEGER { speech(0), music(1) }
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    " "
+  ::= { option 27 }
+	   
+tpFlag OBJECT-TYPE
+  SYNTAX INTEGER { off(0), on(1) }
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    " "
+  ::= { option 28 }
+	   
+taFlag OBJECT-TYPE
+  SYNTAX INTEGER { off(0), on(1) }
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    " "
+  ::= { option 29 }
+	   
+dateTimeEn OBJECT-TYPE
+  SYNTAX INTEGER { off(0), on(1) }
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Enable or disable transmission of date and time"
+  ::= { option 30 }
+	   
+ptynEn OBJECT-TYPE
+  SYNTAX INTEGER { off(0), on(1) }
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    " "
+  ::= { option 31 }
+	   
+ptyn OBJECT-TYPE
+  SYNTAX DisplayString (SIZE(0..8))
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Program type name is used to enhance program type information"
+  ::= { option 32 }
+	   
+consolePort OBJECT-TYPE
+  SYNTAX Integer32 (1..65535)
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "TCP port of the RDS settings console. Default: 8000"
+  ::= { option 33 }
+	   
+consolePass OBJECT-TYPE
+  SYNTAX DisplayString (SIZE(0..15))
+  MAX-ACCESS read-write
+  STATUS current
+  DESCRIPTION
+    "Password for the RDS settings console"
+  ::= { option 34 }
+	    
+monitoring OBJECT IDENTIFIER  ::= { db9000rx 3 }
+	   
+currentSource OBJECT-TYPE
+  SYNTAX INTEGER {url1(0),url2(1),url3(2), mp3player(3) , icecastClient(4), rtpClient(5)}
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "Get  Current Audio Source"
+  ::= { monitoring 1 }
+	   
+getLvlL OBJECT-TYPE
+  SYNTAX Integer32
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "Get Channel L level [db] "
+  ::= { monitoring 2 }
+	   
+getLvlR OBJECT-TYPE
+  SYNTAX Integer32
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "Get Channel R level [db]"
+  ::= { monitoring 3 }
+
+currentSourceConnectionStatus OBJECT-TYPE
+  SYNTAX INTEGER {idle(0),connecting(1),buffering(2),connected(3),error(4)}
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "Get  current audio source Connection status"
+  ::= { monitoring 4 }
+
+currentSourceSampleRate OBJECT-TYPE
+  SYNTAX Integer32
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "Get  current audio source sample rate [Hz]"
+  ::= { monitoring 5 }
+	   
+currentSourceBitRate OBJECT-TYPE
+  SYNTAX Integer32
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "Get  current audio source bit rate [kbps]"
+  ::= { monitoring 6 }
+	   
+currentSourceBufferLevel OBJECT-TYPE
+  SYNTAX TCdot (0..1000)
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION
+    "Get  current audio source Buffer level [%]"
+  ::= { monitoring 7 }
+	   
+	   
+notification OBJECT IDENTIFIER  ::= { db9000rx 4 }
+	   
+alarmTest NOTIFICATION-TYPE
+  OBJECTS { snmpAgentID, serial }
+  STATUS current
+  DESCRIPTION
+    " "
+  ::= { notification 1 }
+	   
+alarmInputSwitch NOTIFICATION-TYPE
+  OBJECTS { snmpAgentID, currentSource }
+  STATUS current
+  DESCRIPTION
+    " "
+  ::= { notification 2 }
+	 
+ 
+
+
+
+END
+--

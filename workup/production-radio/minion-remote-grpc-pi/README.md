@@ -23,7 +23,33 @@ ip route
 
 ```
 
-## Usage
+# installation
+
+To install eduroam on pi so automatically connects, use tethered hotspot (on phone) to download linux eduroam installer for your institution from https://cat.eduroam.org/
+
+## install docker
+install docker on pi  https://pimylifeup.com/raspberry-pi-docker/
+
+```
+sudo apt-get update
+curl -sSL https://get.docker.com | sh
+sudo usermod -aG docker $USER
+
+sudo sudo systemctl enable docker
+
+```
+
+## install project
+
+on pi
+
+```
+git clone https://github.com/gallenc/COM614-cloud-computing.git
+cd COM614-cloud-computing/workup/production-radio/minion-remote-grpc-pi
+
+```
+
+set up docker compose service so pi restarts each time
 
 ```
 sudo cp docker-compose@.service /etc/systemd/system/docker-compose@.service

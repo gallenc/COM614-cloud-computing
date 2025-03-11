@@ -1,0 +1,417 @@
+---
+# using fixed ip addresses so opennms provisoning config works
+# to see all network use docker network ls
+# to see config use docker network inspect minimal-minion-grpc_frontend
+# note gateway is 172.20.0.1 
+networks:
+  frontend:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
+  testradiosite1:
+    ipam:
+      config:
+        - subnet: 192.168.105.0/24
+   # trying to get vpn to work but problem with routing 
+#  vpn:
+#    name: vpn
+#    driver: bridge
+#    ipam:
+#      config:
+#        - subnet: 192.168.105.0/24
+#          gateway: 192.168.105.1
+
+
+volumes:
+  data-postgres: {}
+  data-opennms: {}
+  data-opennms-cfg: {}
+  data-grafana: {}
+  data-pgadmin: {}
+
+services:
+
+  nginx:
+    image: nginx:1.23-alpine
+    container_name: nginx
+    hostname: nginx
+    restart: unless-stopped
+    volumes:
+      - ./container-fs/nginx/conf.d:/etc/nginx/conf.d
+      - ./container-fs/nginx/certs:/etc/ssl/certs
+      - ./container-fs/nginx/private:/etc/ssl/private
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      frontend:
+        ipv4_address: 172.20.0.5
+
+  database:
+    image: ${DOCKER_REGISTRY:-docker.io}/postgres:${POSTGRES_VERSION:-13}
+    container_name: database
+    hostname: database
+    environment:
+      TZ: ${TIMEZONE:-America/New_York}
+      POSTGRES_HOST: database
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - data-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 30s
+      retries: 3
+    networks:
+      frontend:
+        ipv4_address: 172.20.0.10
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: always
+    ports:
+      - "8888:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user-name@domain-name.com
+      PGADMIN_DEFAULT_PASSWORD: minad1234
+      PGADMIN_SERVER_JSON_FILE: /pgadmin/servers.json
+    volumes:
+      - data-pgadmin:/var/lib/pgadmin
+      - ./container-fs/pgadmin/:/pgadmin
+    networks:
+      frontend:
+        ipv4_address: 172.20.0.11
+
+  horizon:
+    image: ${DOCKER_REGISTRY:-docker.io}/${DOCKER_ORG:-opennms}/${HORIZON_OCI:-horizon}:${ONMS_VERSION:-bleeding}
+    container_name: horizon
+    hostname: horizon
+    sysctls:
+      net.ipv4.ping_group_range: "0 429496729"
+    depends_on:
+      database:
+        condition: service_healthy
+    environment:
+      TZ: ${TIMEZONE:-America/New_York}
+      # JAVA_OPTS updates from default in container (-Xmx1024m -XX:MaxMetaspaceSize=512m) plus enable debugger
+      # extenal jdb connection from windows using  jdb -connect com.sun.jdi.SocketAttach:hostname=localhost,port=8001
+      JAVA_OPTS: -Xmx2048m -XX:MaxMetaspaceSize=512m -agentlib:jdwp=transport=dt_socket,server=y,address=*:8001,suspend=n
+    volumes:
+      - data-opennms:/opennms-data
+      - data-opennms-cfg:/opt/opennms/etc
+      - ./container-fs/horizon/opt/opennms/deploy:/opt/opennms/deploy
+      - ./container-fs/horizon/opt/opennms-overlay:/opt/opennms-overlay
+      - ./container-fs/horizon/etc/conf.d/confd.toml:/etc/confd/confd.toml
+    command: ["-s"]
+    ports:
+      - "8101:8101/tcp"
+      - "8980:8980/tcp"
+      - "10162:1162/udp"
+#      - "61616:61616/tcp" # activemq
+      - "8990:8990" # grpc
+      - "8001:8001" # JPDA debugging port
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "-I", "http://localhost:8980/opennms/login.jsp" ]
+      interval: 1m
+      timeout: 5s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 4G
+    networks:
+      frontend:
+        ipv4_address: 172.20.0.15
+      
+  grafana:
+    image: ${DOCKER_REGISTRY:-docker.io}/grafana/grafana:${GRAFANA_VERSION:-latest}
+    container_name: grafana
+    hostname: grafana
+    environment:
+      TZ: ${TIMEZONE:-America/New_York}
+      GF_SECURITY_ADMIN_PASSWORD: mypass
+      GF_INSTALL_PLUGINS: opennms-opennms-app,grafana-piechart-panel,neocat-cal-heatmap-panel,briangann-datatable-panel
+      GF_SERVER_HTTP_PORT: 3000
+      GF_SERVER_PROTOCOL: http
+      GF_SERVER_DOMAIN: localhost:80
+      GF_SERVER_ROOT_URL: http://localhost:80/grafana/
+      GF_SERVER_SERVER_FROM_SUB_PATH: true
+
+    volumes:
+      - data-grafana:/var/lib/grafana
+      - ./container-fs/grafana/provisioning:/etc/grafana/provisioning/
+      - ./container-fs/grafana/conf/conf.ini:/conf/conf.ini
+    ports:
+      - "3000:3000/tcp"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 100M
+    networks:
+      frontend:
+        ipv4_address: 172.20.0.20
+
+# minion1 is a simulation of the minion on site. Used to access devices simulated using snmpsim
+  minion1:
+    image: ${DOCKER_REGISTRY:-docker.io}/${DOCKER_ORG:-opennms}/${MINION_OCI:-minion}:${ONMS_VERSION:-bleeding}
+    container_name: minion1
+    hostname: minion1
+    sysctls:
+      net.ipv4.ping_group_range: "0 429496729"
+    environment:
+      TZ: ${TIMEZONE:-America/New_York}
+      JAVA_MIN_MEM: 512M  # doesnt work
+      JAVA_MAX_MEM: 2048M # doesnt work
+      JAVA_OPTS: -Xmx2048m -Xms512m -agentlib:jdwp=transport=dt_socket,server=y,address=*:8001,suspend=n
+    volumes:
+      - './container-fs/minion1/opt/minion/minion-config.yaml:/opt/minion/minion-config.yaml'
+    command: ["-f"]
+    depends_on:
+      horizon:
+        condition: service_healthy
+    healthcheck:
+      test: "/health.sh"
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    ports:
+      - "9201:8201/tcp"
+      - "2162:1162/udp"
+      - "2514:1514/udp"
+      - "9001:8001" # JPDA debugging port
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 3216M
+    networks:
+      frontend:
+        ipv4_address: 172.20.0.25
+      testradiosite1:
+        ipv4_address: 192.168.105.245
+
+# minion 2 is a localhost minion used to access site through the local vpn established to the remote site
+  minion2:
+    image: ${DOCKER_REGISTRY:-docker.io}/${DOCKER_ORG:-opennms}/${MINION_OCI:-minion}:${ONMS_VERSION:-bleeding}
+    container_name: minion2
+    hostname: minion2
+    sysctls:
+      net.ipv4.ping_group_range: "0 429496729"
+    environment:
+      TZ: ${TIMEZONE:-America/New_York}
+      JAVA_MIN_MEM: 512M  # doesnt work
+      JAVA_MAX_MEM: 2048M # doesnt work
+      JAVA_OPTS: -Xmx2048m -Xms512m -agentlib:jdwp=transport=dt_socket,server=y,address=*:8001,suspend=n
+    volumes:
+      - './container-fs/minion2/opt/minion/minion-config.yaml:/opt/minion/minion-config.yaml'
+    command: ["-f"]
+    depends_on:
+      horizon:
+         condition: service_healthy
+    healthcheck:
+      test: "/health.sh"
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    ports:
+      - "8201:8201/tcp"
+      - "1162:1162/udp"
+      - "1514:1514/udp"
+      - "9002:8001" # JPDA debugging port
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 3216M
+    cap_add: # allows us to add route in container
+      - NET_ADMIN
+    networks:
+      frontend:
+        ipv4_address: 172.20.0.28
+#      vpn:
+#        ipv4_address: 192.168.105.11
+
+  # snmpsim container in network default - all radio mibs
+  snmpsim:
+#    image: ${DOCKER_REGISTRY:-docker.io}/tandrup/snmpsim:${SNMPSIM_VERSION:-v0.4}
+    image: onms-training/snmpsim
+    build: ./container-fs/snmpsim/
+    container_name: snmpsim
+    hostname: snmpsim
+    environment:
+      EXTRA_FLAGS: "--v3-user=testing --v3-auth-key=testing123"
+    volumes:
+      - ./container-fs/snmpsim/data/cardinalImdu.snmprec:/usr/local/snmpsim/data/cardinalImdu.snmprec
+      - ./container-fs/snmpsim/data/DEVA7012.snmprec:/usr/local/snmpsim/data/DEVA7012.snmprec
+      - ./container-fs/snmpsim/data/DEVA8008.snmprec:/usr/local/snmpsim/data/DEVA8008.snmprec
+      - ./container-fs/snmpsim/data/DEVA9000.snmprec:/usr/local/snmpsim/data/DEVA9000.snmprec
+      - ./container-fs/snmpsim/data/draytek2860-pri.snmprec:/usr/local/snmpsim/data/draytek2860-pri.snmprec
+      - ./container-fs/snmpsim/data/draytek2860-sec.snmprec:/usr/local/snmpsim/data/draytek2860-sec.snmprec
+      - ./container-fs/snmpsim/data/draytek2860-virtual.snmprec:/usr/local/snmpsim/data/draytek2860-virtual.snmprec
+
+      # note empty public.snmprec so that there is no response to a community name public request
+      - ./container-fs/snmpsim/data/public.snmprec:/usr/local/snmpsim/data/public.snmprec
+      # mibs folder so we can compile mibs if needed
+      - ./container-fs/snmpsim/mibs:/usr/local/snmpsim/mibs
+    ports:
+      - "11761:161/udp"
+    networks:
+      frontend:
+        ipv4_address: 172.20.0.100
+
+  # snmpsim container in testradiosite1
+  DB9000RX:
+#    image: ${DOCKER_REGISTRY:-docker.io}/tandrup/snmpsim:${SNMPSIM_VERSION:-v0.4}
+    image: onms-training/snmpsim
+    build: ./container-fs/snmpsim/
+    container_name: DB9000RX
+    hostname: DB9000RX
+    environment:
+      EXTRA_FLAGS: "--v3-user=testing --v3-auth-key=testing123"
+    volumes:
+      - ./container-fs/snmpsim/data/DEVA9000.snmprec:/usr/local/snmpsim/data/DEVA9000.snmprec
+
+      # note empty public.snmprec so that there is no response to a community name public request
+      - ./container-fs/snmpsim/data/public.snmprec:/usr/local/snmpsim/data/public.snmprec
+      # mibs folder so we can compile mibs if needed
+      - ./container-fs/snmpsim/mibs:/usr/local/snmpsim/mibs
+    ports:
+      - "11861:161/udp"
+    networks:
+      testradiosite1:
+        ipv4_address: 192.168.105.99
+
+  DB8008:
+#    image: ${DOCKER_REGISTRY:-docker.io}/tandrup/snmpsim:${SNMPSIM_VERSION:-v0.4}
+    image: onms-training/snmpsim
+    build: ./container-fs/snmpsim/
+    container_name: DB8008
+    hostname: DB8008
+    environment:
+      EXTRA_FLAGS: "--v3-user=testing --v3-auth-key=testing123"
+    volumes:
+      - ./container-fs/snmpsim/data/DEVA8008.snmprec:/usr/local/snmpsim/data/DEVA8008.snmprec
+
+      # note empty public.snmprec so that there is no response to a community name public request
+      - ./container-fs/snmpsim/data/public.snmprec:/usr/local/snmpsim/data/public.snmprec
+      # mibs folder so we can compile mibs if needed
+      - ./container-fs/snmpsim/mibs:/usr/local/snmpsim/mibs
+    ports:
+      - "11961:161/udp"
+    networks:
+      testradiosite1:
+        ipv4_address: 192.168.105.100
+
+  DB7012:
+#    image: ${DOCKER_REGISTRY:-docker.io}/tandrup/snmpsim:${SNMPSIM_VERSION:-v0.4}
+    image: onms-training/snmpsim
+    build: ./container-fs/snmpsim/
+    container_name: DB7012
+    hostname: DB7012
+    environment:
+      EXTRA_FLAGS: "--v3-user=testing --v3-auth-key=testing123"
+    volumes:
+      - ./container-fs/snmpsim/data/DEVA7012.snmprec:/usr/local/snmpsim/data/DEVA7012.snmprec
+
+      # note empty public.snmprec so that there is no response to a community name public request
+      - ./container-fs/snmpsim/data/public.snmprec:/usr/local/snmpsim/data/public.snmprec
+      # mibs folder so we can compile mibs if needed
+      - ./container-fs/snmpsim/mibs:/usr/local/snmpsim/mibs
+    ports:
+      - "12061:161/udp"
+    networks:
+      testradiosite1:
+        ipv4_address: 192.168.105.101
+
+  VIGOR2927-PRI:
+#    image: ${DOCKER_REGISTRY:-docker.io}/tandrup/snmpsim:${SNMPSIM_VERSION:-v0.4}
+    image: onms-training/snmpsim
+    build: ./container-fs/snmpsim/
+    container_name: VIGOR2927-PRI
+    hostname: VIGOR2927-PRI
+    environment:
+      EXTRA_FLAGS: "--v3-user=testing --v3-auth-key=testing123"
+    volumes:
+      # mapping to public community string
+      - ./container-fs/snmpsim/data/draytek2860-pri.snmprec:/usr/local/snmpsim/data/public.snmprec
+
+      # note empty public.snmprec so that there is no response to a community name public request
+      #- ./container-fs/snmpsim/data/public.snmprec:/usr/local/snmpsim/data/public.snmprec
+      # mibs folder so we can compile mibs if needed
+      - ./container-fs/snmpsim/mibs:/usr/local/snmpsim/mibs
+    ports:
+      - "12161:161/udp"
+    networks:
+      testradiosite1:
+        ipv4_address: 192.168.105.10 # note in the simulation we are using address .10 because .1 conflicts with default gateway in docker network 192.168.105.1
+        
+  VIGOR2927L-SEC:
+#    image: ${DOCKER_REGISTRY:-docker.io}/tandrup/snmpsim:${SNMPSIM_VERSION:-v0.4}
+    image: onms-training/snmpsim
+    build: ./container-fs/snmpsim/
+    container_name: VIGOR2927L-SEC
+    hostname: VIGOR2927L-SEC
+    environment:
+      EXTRA_FLAGS: "--v3-user=testing --v3-auth-key=testing123"
+    volumes:
+      # mapping to public community string
+      - ./container-fs/snmpsim/data/draytek2860-sec.snmprec:/usr/local/snmpsim/data/public.snmprec
+
+      # note empty public.snmprec so that there is no response to a community name public request
+      #- ./container-fs/snmpsim/data/public.snmprec:/usr/local/snmpsim/data/public.snmprec
+      # mibs folder so we can compile mibs if needed
+      - ./container-fs/snmpsim/mibs:/usr/local/snmpsim/mibs
+    ports:
+      - "12261:161/udp"
+    networks:
+      testradiosite1:
+        ipv4_address: 192.168.105.2
+        
+  VIGOR2927L-VIRTUAL:
+#    image: ${DOCKER_REGISTRY:-docker.io}/tandrup/snmpsim:${SNMPSIM_VERSION:-v0.4}
+    image: onms-training/snmpsim
+    build: ./container-fs/snmpsim/
+    container_name: VIGOR2927L-VIRTUAL
+    hostname: VIGOR2927L-VIRTUAL
+    environment:
+      EXTRA_FLAGS: "--v3-user=testing --v3-auth-key=testing123"
+    volumes:
+      # mapping to public community string
+      - ./container-fs/snmpsim/data/draytek2860-virtual.snmprec:/usr/local/snmpsim/data/public.snmprec
+
+      # note empty public.snmprec so that there is no response to a community name public request
+      # - ./container-fs/snmpsim/data/public.snmprec:/usr/local/snmpsim/data/public.snmprec
+      # mibs folder so we can compile mibs if needed
+      - ./container-fs/snmpsim/mibs:/usr/local/snmpsim/mibs
+    ports:
+      - "12361:161/udp"
+    networks:
+      testradiosite1:
+        ipv4_address: 192.168.105.254
+        
+  cardinalImdu:
+#    image: ${DOCKER_REGISTRY:-docker.io}/tandrup/snmpsim:${SNMPSIM_VERSION:-v0.4}
+    image: onms-training/snmpsim
+    build: ./container-fs/snmpsim/
+    container_name: cardinalImdu
+    hostname: cardinalImdu
+    environment:
+      EXTRA_FLAGS: "--v3-user=testing --v3-auth-key=testing123"
+    volumes:
+      - ./container-fs/snmpsim/data/cardinalImdu.snmprec:/usr/local/snmpsim/data/public.snmprec
+
+      # note empty public.snmprec so that there is no response to a community name public request
+      # - ./container-fs/snmpsim/data/public.snmprec:/usr/local/snmpsim/data/public.snmprec
+      # mibs folder so we can compile mibs if needed
+      - ./container-fs/snmpsim/mibs:/usr/local/snmpsim/mibs
+    ports:
+      - "12461:161/udp"
+    networks:
+      testradiosite1:
+        ipv4_address: 192.168.105.250
+
