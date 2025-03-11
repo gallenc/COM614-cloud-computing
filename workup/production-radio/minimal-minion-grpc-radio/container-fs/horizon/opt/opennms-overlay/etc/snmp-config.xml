@@ -24,4 +24,7 @@
    <definition version="v2c"  write-community="private" read-community="public" location="ftwidley1">
       <specific>192.168.105.250</specific>
    </definition>
+   <definition version="v2c"  write-community="private" read-community="piminion" location="ftwidley1">
+      <specific>192.168.105.245</specific>
+   </definition>
 </snmp-config>

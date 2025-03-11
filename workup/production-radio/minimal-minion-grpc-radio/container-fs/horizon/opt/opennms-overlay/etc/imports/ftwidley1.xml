@@ -41,4 +41,10 @@
          <monitored-service service-name="SNMP"/>
       </interface>
    </node>
+   <node location="ftwidley1" foreign-id="FTWIDLEY-minion-remote-pi-01-host" node-label="FTWIDLEY--minion-remote-pi-01-host">
+      <interface ip-addr="192.168.105.245" status="1" snmp-primary="P">
+         <monitored-service service-name="ICMP"/>
+         <monitored-service service-name="SNMP"/>
+      </interface>
+   </node>
 </model-import>

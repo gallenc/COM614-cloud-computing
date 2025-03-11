@@ -76,12 +76,14 @@ systemctl stop docker-compose@minion-remote-grpc-pi
 
 ```
 to see logs for systemctl startup
+
 ```
 journalctl -xeu docker-compose@minion-remote-grpc-pi.service
 
 ```
 
 to enable on startup boot
+
 ```
 systemctl enable docker-compose@minion-remote-grpc-pi
 
@@ -108,6 +110,7 @@ note that startup takes several minutes - be patient
 
 ```
 To check connectivity try
+
 ```
 admin@minion()> opennms:health-check                                                                                                     
 Verifying the health of the container
@@ -121,10 +124,18 @@ Connecting to gRPC IPC Server   [ Success  ]
 ```
 
 ## setting up netsnmp on pi
+
+this opens up all metrics to community string
+
+(see https://bestmonitoringtools.com/raspberry-pi-snmp-monitoring-install-enable-agent-server/)
+
+```
 sudo apt update
 sudo apt -y  install snmpd snmp
 
-cp pisnmpd.conf /etc/snmp/snmpd.conf.d
+cp pisnmpd.conf /etc/snmp/snmpd.conf.d/
+
+```
 
 change listening address in /etc/snmp/snmpd.conf
 
@@ -132,29 +143,30 @@ change listening address in /etc/snmp/snmpd.conf
 #agentaddress  127.0.0.1,[::1]
 agentaddress udp:161
 ```
-also possible to repond only to particular addresses
+
+also possible to respond only to particular addresses
 
 ```
-gentAddress udp:161
+agentAddress udp:161
 ...
 # rocommunity public  default    -V systemonly
 rocommunity public 172.25.7.169/32
 ```
 
-this opens up all metrics to community string
-
-(see https://bestmonitoringtools.com/raspberry-pi-snmp-monitoring-install-enable-agent-server/)
 
 start and enable  
 
-sudo systemctl start snmpsudo systemctl enable snmpd
+```
+sudo systemctl start snmpd
+sudo systemctl enable snmpd
+```
 
 you can test using
 
 ```
 snmpwalk -c piminion -v2c localhost 1.3.6
 
-# to access docker host from docker
+# to access docker host from inside docker container 
 snmpwalk -c piminion -v2c 172.17.0.1      1.3.6
 
 ```
