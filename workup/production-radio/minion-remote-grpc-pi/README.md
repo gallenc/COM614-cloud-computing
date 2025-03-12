@@ -179,7 +179,7 @@ snmpwalk -c piminion -v2c 172.17.0.1      1.3.6
 
 ## installing log2ram
 
-log2ram can increase the life of SD card by only writing daily
+log2ram can increase the life of SD card by only writing logs to SD daily
 
 https://github.com/azlux/log2ram
 
@@ -192,7 +192,13 @@ sudo apt update
 sudo apt install log2ram
 
 ```
-now need to ensure logging goes to correct place
+start file is `/etc/systemd/system/log2ram.service`
+
+```
+systemctl  enable log2ram  # enables log2 ram on startup
+```
+
+We now need to ensure logging goes to correct place
 
 edit `/etc/log2ram.conf` and modify PATH_DISK so that minion-log is included
 
