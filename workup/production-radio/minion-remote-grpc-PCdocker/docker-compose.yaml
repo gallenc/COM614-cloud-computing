@@ -27,7 +27,7 @@ services:
       JAVA_MIN_MEM: 512M
       JAVA_MAX_MEM: 2048M
     volumes:
-      - './container-fs/minion-remote-1/opt/minion/minion-config.yaml:/opt/minion/minion-config.yaml'
+      - './container-fs/minion-remote-2/opt/minion/minion-config.yaml:/opt/minion/minion-config.yaml'
     command: ["-f"]
     healthcheck:
       test: "/health.sh"

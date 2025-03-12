@@ -29,6 +29,33 @@ ip route
 
 ```
 
+## to install netcat opennms minion 
+
+simulate syslog using netcat https://nelsonslog.wordpress.com/2013/04/19/faking-out-remote-syslog-via-netcat/
+
+1514 is opennms minion syslog port 
+
+```
+echo "<14>sourcehost message text" | nc -v -u -w 0 localhost 1514
+```
+
+
+
+https://help.ubidots.com/en/articles/937233-sending-tcp-udp-packets-using-netcat
+
+https://nmap.org/ncat/ ncat project as a much-improved re-implementation of the venerable Netcat.
+
+```
+docker compose exec -u root minion-name bash
+
+microdnf install nmap-ncat
+```
+
+to send udp messages to minion ( simulating syslog)
+
+cat /dev/ttyUBS0 | nc -u <hostname> <udp port>
+
+
 # installation
 
 To install eduroam on pi so automatically connects, use tethered hotspot (on phone) to download linux eduroam installer for your institution from https://cat.eduroam.org/
