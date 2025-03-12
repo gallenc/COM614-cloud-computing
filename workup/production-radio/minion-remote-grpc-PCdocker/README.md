@@ -33,15 +33,16 @@ ip route
 
 simulate syslog using netcat https://nelsonslog.wordpress.com/2013/04/19/faking-out-remote-syslog-via-netcat/
 
-1514 is opennms minion syslog port 
-
-```
-echo "<14>sourcehost message text" | nc -v -u -w 0 localhost 1514
-```
-
-
-
 https://help.ubidots.com/en/articles/937233-sending-tcp-udp-packets-using-netcat
+
+on raspberry pi / ubuntu use
+
+```
+apt-get install netcat
+```
+(note netcat now included in snmpim Dockerfile)
+
+on minion use 
 
 https://nmap.org/ncat/ ncat project as a much-improved re-implementation of the venerable Netcat.
 
@@ -53,8 +54,17 @@ microdnf install nmap-ncat
 
 to send udp messages to minion ( simulating syslog)
 
-cat /dev/ttyUBS0 | nc -u <hostname> <udp port>
+1514 is opennms minion syslog port 
 
+```
+echo "<14>sourcehost message text" | nc -v -u -w 10 localhost 1514
+```
+
+or 
+
+```
+ echo "<14>sourcehost message text" | nc -v -u -w 1 minion1.minimal-minion-grpc-radio_frontend 1514
+```
 
 # installation
 
