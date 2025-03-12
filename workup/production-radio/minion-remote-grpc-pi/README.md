@@ -192,8 +192,13 @@ sudo apt update
 sudo apt install log2ram
 
 ```
-now need to ensure logging goes correct place
+now need to ensure logging goes to correct place
 
+edit `/etc/log2ram.conf` and modify PATH_DISK so that minion-log is included
+
+```
+PATH_DISK="/var/log;/opt/docker/compose/minion-remote-grpc-pi/minion-log"
+```
 
 ## references
 

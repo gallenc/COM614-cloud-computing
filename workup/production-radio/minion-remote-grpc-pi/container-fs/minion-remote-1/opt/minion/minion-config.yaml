@@ -1,5 +1,5 @@
 ---
-http-url: "https://172.236.28.206:8980/opennms"
+http-url: "https://172.236.28.206/opennms"
 id: "minion-remote-pi-01"
 location: "ftwidley1"
 

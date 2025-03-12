@@ -1,6 +1,3 @@
----
-version: '3'
-
 # using fixed ip addresses so opennms provisoning config works
 # to see all network use docker network ls
 # to see config use docker network inspect minimal-minion-grpc_frontend
@@ -31,6 +28,8 @@ services:
       JAVA_MAX_MEM: 2048M
     volumes:
       - './container-fs/minion-remote-1/opt/minion/minion-config.yaml:/opt/minion/minion-config.yaml'
+      # note minion-log permissions must allow writing log files
+      - './minion-log/:/opt/minion/data/log/:rw'
     command: ["-f"]
     healthcheck:
       test: "/health.sh"
