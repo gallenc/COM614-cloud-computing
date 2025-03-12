@@ -33,6 +33,21 @@ ip route
 
 To install eduroam on pi so automatically connects, use tethered hotspot (on phone) to download linux eduroam installer for your institution from https://cat.eduroam.org/
 
+the wifi connections are here /etc/NetworkManager/system-connections
+
+you need to set the priority of the eduroam connection
+
+to see current priority
+```
+nmcli -f NAME,UUID,AUTOCONNECT,AUTOCONNECT-PRIORITY c
+```
+
+to change priority 
+
+```
+nmcli connection modify eduroam connection.autoconnect-priority 100
+```
+
 ## install docker
 install docker on pi  https://pimylifeup.com/raspberry-pi-docker/
 
@@ -205,6 +220,20 @@ edit `/etc/log2ram.conf` and modify PATH_DISK so that minion-log is included
 ```
 PATH_DISK="/var/log;/opt/docker/compose/minion-remote-grpc-pi/minion-log"
 ```
+
+in the docker compose project, you need to ensure that the permissions are set 777 for minion-log so that docker can write logs to that file
+
+```
+sudo chmod  777 /opt/docker/compose/minion-remote-grpc-pi/minion-log
+```
+when log2ram starts up it will create a folder where it will copy the ram logs in minion-log after a day
+
+```
+/opt/docker/compose/minion-remote-grpc-pi/hdd.minion-log
+
+```
+
+
 
 ## references
 
