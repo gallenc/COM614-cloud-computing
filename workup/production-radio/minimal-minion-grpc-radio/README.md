@@ -93,3 +93,36 @@ snmpwalk -v1 -On cardinalImdu -c public .1.3
 ## rrd tool
 
 https://oss.oetiker.ch/rrdtool/tut/cdeftutorial.en.html
+
+
+## standby router service poller 
+
+the SNMP monitor https://docs.opennms.com/horizon/33/reference/service-assurance/monitors/SnmpMonitor.html
+
+  is used to check if the virtual router 192.168.105.245 is primary or secondary.
+If it is not primary, then a service alarm is raised.
+
+The poller-configuration.xml file contains the configuration which checks the snmp router name which is currently the primary router
+
+```
+      <!-- checks viror virtual router router is running on primary router-->
+      <service name="VIGOR2927L-VIRTUAL" interval="300000" user-defined="false" status="on">
+         <parameter key="oid" value=".1.3.6.1.2.1.1.5.0 "/>
+         <parameter key="operator" value="="/>
+         <parameter key="operand" value="${requisition:primarysnmproutername|not set}"/>
+         <parameter key="reason-template" value="Virtual Router Service is running on standby router. The state should be ok (${operand}) the observed value is (${observedValue})"/> 
+      </service>
+```
+
+Which checks if the router name on the virtual router matches the `primarysnmproutername` metadata in the requisition definition
+
+```
+   <node location="ftwidley1" foreign-id="FTWIDLEY1-VIGOR2927L-VIRTUAL" node-label="FTWIDLEY1-VIGOR2927L-VIRTUAL">
+      <interface ip-addr="192.168.105.254" status="1" snmp-primary="P">
+         <monitored-service service-name="ICMP"/>
+         <monitored-service service-name="SNMP"/>
+         <monitored-service service-name="VIGOR2927L-VIRTUAL"/>
+      </interface>
+      <meta-data context="requisition" key="primarysnmproutername" value="Widley_Pri"/>
+   </node>
+```

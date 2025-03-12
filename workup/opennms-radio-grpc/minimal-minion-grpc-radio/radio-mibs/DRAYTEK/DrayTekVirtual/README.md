@@ -4,6 +4,10 @@ Note this is the virtual router - and seems to respond with the Primary router i
 
 note OID .1.3.6.1.2.1.1.5.0 = STRING: "Widley_Pri"
 
+```
+snmpget -v1 -c public 192.168.105.254  .1.3.6.1.2.1.1.5.0
+```
+
 if Widley_Sec then the secondary router is being used (assumption)
 
 ## SNMP Walk
