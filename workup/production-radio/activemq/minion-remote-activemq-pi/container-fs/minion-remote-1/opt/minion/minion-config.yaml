@@ -1,5 +1,6 @@
 ---
 http-url: "https://172.236.28.206/opennms"
+broker-url: "failover:tcp://horizon:61616"
 id: "minion-remote-pi-01"
 location: "ftwidley1"
 
