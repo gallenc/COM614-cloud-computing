@@ -1,0 +1,52 @@
+<model-import xmlns="http://xmlns.opennms.org/xsd/config/model-import" date-stamp="2025-02-25T08:36:42.108-05:00" foreign-source="ftwidley2" last-import="2025-02-25T08:36:49.007-05:00">
+   <node location="ftwidley2" foreign-id="FTWIDLEY2-VIGOR2927L-SEC" node-label="FTWIDLEY2-VIGOR2927L-SEC">
+      <interface ip-addr="192.168.105.2" status="1" snmp-primary="P">
+         <monitored-service service-name="ICMP"/>
+         <monitored-service service-name="SNMP"/>
+      </interface>
+   </node>
+   <node location="ftwidley2" foreign-id="FTWIDLEY2-VIGOR2927-PRI" node-label="FTWIDLEY2-VIGOR2927-PRI">
+      <interface ip-addr="192.168.105.1" status="1" snmp-primary="P">
+         <monitored-service service-name="ICMP"/>
+         <monitored-service service-name="SNMP"/>
+      </interface>
+   </node>
+   <node location="ftwidley2" foreign-id="FTWIDLEY2-VIGOR2927L-VIRTUAL" node-label="FTWIDLEY2-VIGOR2927L-VIRTUAL">
+      <interface ip-addr="192.168.105.254" status="1" snmp-primary="P">
+         <monitored-service service-name="ICMP"/>
+         <monitored-service service-name="SNMP"/>
+         <monitored-service service-name="VIGOR2927L-VIRTUAL"/>
+      </interface>
+      <meta-data context="requisition" key="primarysnmproutername" value="Widley_Pri"/>
+   </node>
+   <node location="ftwidley2" foreign-id="FTWIDLEY2-DB8008" node-label="FTWIDLEY2-DB8008">
+      <interface ip-addr="192.168.105.100" status="1" snmp-primary="P">
+         <monitored-service service-name="ICMP"/>
+         <monitored-service service-name="SNMP"/>
+      </interface>
+   </node>
+   <node location="ftwidley2" foreign-id="FTWIDLEY2-DB7012" node-label="FTWIDLEY2-DB7012">
+      <interface ip-addr="192.168.105.101" status="1" snmp-primary="P">
+         <monitored-service service-name="ICMP"/>
+         <monitored-service service-name="SNMP"/>
+      </interface>
+   </node>
+   <node location="ftwidley2" foreign-id="FTWIDLEY2-DB9000RX" node-label="FTWIDLEY2-DB9000RX">
+      <interface ip-addr="192.168.105.99" status="1" snmp-primary="P">
+         <monitored-service service-name="ICMP"/>
+         <monitored-service service-name="SNMP"/>
+      </interface>
+   </node>
+   <node location="ftwidley2" foreign-id="FTWIDLEY2-cardinalImdu" node-label="FTWIDLEY2-cardinalImdu">
+      <interface ip-addr="192.168.105.250" status="1" snmp-primary="P">
+         <monitored-service service-name="ICMP"/>
+         <monitored-service service-name="SNMP"/>
+      </interface>
+   </node>
+   <node location="ftwidley2" foreign-id="FTWIDLEY2-minion-remote-pi-01-host" node-label="FTWIDLEY2-minion-remote-pi-01-host">
+      <interface ip-addr="192.168.105.245" status="1" snmp-primary="P">
+         <monitored-service service-name="ICMP"/>
+         <monitored-service service-name="SNMP"/>
+      </interface>
+   </node>
+</model-import>

@@ -1,0 +1,396 @@
+<events xmlns="http://xmlns.opennms.org/xsd/eventconf">
+   <event>
+      <mask>
+         <maskelement>
+            <mename>id</mename>
+            <mevalue>.1.3.6.1.4.1.35833.6.254</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>generic</mename>
+            <mevalue>6</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>specific</mename>
+            <mevalue>1</mevalue>
+         </maskelement>
+      </mask>
+      <uei>uei.opennms.org/traps/DB8008-MIB/notifTest</uei>
+      <event-label>DB8008-MIB defined trap event: notifTest</event-label>
+      <descr>
+&lt;p>notif  test&lt;/p>&lt;table>
+	&lt;tr>&lt;td>&lt;b>
+
+	alias&lt;/b>&lt;/td>&lt;td>
+	%parm[#1]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	snmpaid&lt;/b>&lt;/td>&lt;td>
+	%parm[#2]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>&lt;/table>
+	</descr>
+      <logmsg dest="logndisplay">&lt;p>
+	notifTest trap received
+	alias=%parm[#1]%
+	snmpaid=%parm[#2]%&lt;/p>
+	</logmsg>
+      <severity>Indeterminate</severity>
+   </event>
+   <event>
+      <mask>
+         <maskelement>
+            <mename>id</mename>
+            <mevalue>.1.3.6.1.4.1.35833.6.254</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>generic</mename>
+            <mevalue>6</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>specific</mename>
+            <mevalue>2</mevalue>
+         </maskelement>
+      </mask>
+      <uei>uei.opennms.org/traps/DB8008-MIB/notifSourceChange</uei>
+      <event-label>DB8008-MIB defined trap event: notifSourceChange</event-label>
+      <descr>
+&lt;p>notif source Change&lt;/p>&lt;table>
+	&lt;tr>&lt;td>&lt;b>
+
+	mntrSource&lt;/b>&lt;/td>&lt;td>
+	%parm[#1]%;&lt;/td>&lt;td>&lt;p>
+		insel2MainAudio(1)
+		insel2AUXAudio(2)
+		insel2IPAudioClient1(3)
+		insel2IPAudioClient2(4)
+		insel2IPAudioClient3(5)
+		insel2RTPReceiver(6)
+		insel2MP3Player(7)
+		insel2MainAnalog(13)
+		insel2MainDigital(14)
+		insel2AUXAnalog(15)
+		insel2AUXDigital(16)
+		insel2Auto(128)
+	&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	mntrSourceAppliedby&lt;/b>&lt;/td>&lt;td>
+	%parm[#2]%;&lt;/td>&lt;td>&lt;p>
+		appliedAutoselected(0)
+		appliedForcedOverWEB(1)
+		appliedForcedByDaypart(2)
+		appliedForcedOverSNMP(3)
+		appliedForcedByGPI(4)
+	&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	alias&lt;/b>&lt;/td>&lt;td>
+	%parm[#3]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	snmpaid&lt;/b>&lt;/td>&lt;td>
+	%parm[#4]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>&lt;/table>
+	</descr>
+      <logmsg dest="logndisplay">&lt;p>
+	notifSourceChange trap received
+	mntrSource=%parm[#1]%
+	mntrSourceAppliedby=%parm[#2]%
+	alias=%parm[#3]%
+	snmpaid=%parm[#4]%&lt;/p>
+	</logmsg>
+      <severity>Indeterminate</severity>
+      <varbindsdecode>
+         <parmid>parm[#1]</parmid>
+         <decode varbindvalue="1" varbinddecodedstring="insel2MainAudio"/>
+         <decode varbindvalue="2" varbinddecodedstring="insel2AUXAudio"/>
+         <decode varbindvalue="3" varbinddecodedstring="insel2IPAudioClient1"/>
+         <decode varbindvalue="4" varbinddecodedstring="insel2IPAudioClient2"/>
+         <decode varbindvalue="5" varbinddecodedstring="insel2IPAudioClient3"/>
+         <decode varbindvalue="6" varbinddecodedstring="insel2RTPReceiver"/>
+         <decode varbindvalue="7" varbinddecodedstring="insel2MP3Player"/>
+         <decode varbindvalue="13" varbinddecodedstring="insel2MainAnalog"/>
+         <decode varbindvalue="14" varbinddecodedstring="insel2MainDigital"/>
+         <decode varbindvalue="15" varbinddecodedstring="insel2AUXAnalog"/>
+         <decode varbindvalue="16" varbinddecodedstring="insel2AUXDigital"/>
+         <decode varbindvalue="128" varbinddecodedstring="insel2Auto"/>
+      </varbindsdecode>
+      <varbindsdecode>
+         <parmid>parm[#2]</parmid>
+         <decode varbindvalue="0" varbinddecodedstring="appliedAutoselected"/>
+         <decode varbindvalue="1" varbinddecodedstring="appliedForcedOverWEB"/>
+         <decode varbindvalue="2" varbinddecodedstring="appliedForcedByDaypart"/>
+         <decode varbindvalue="3" varbinddecodedstring="appliedForcedOverSNMP"/>
+         <decode varbindvalue="4" varbinddecodedstring="appliedForcedByGPI"/>
+      </varbindsdecode>
+   </event>
+   <event>
+      <mask>
+         <maskelement>
+            <mename>id</mename>
+            <mevalue>.1.3.6.1.4.1.35833.6.254</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>generic</mename>
+            <mevalue>6</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>specific</mename>
+            <mevalue>3</mevalue>
+         </maskelement>
+      </mask>
+      <uei>uei.opennms.org/traps/DB8008-MIB/notifDigitalSyncLoss</uei>
+      <event-label>DB8008-MIB defined trap event: notifDigitalSyncLoss</event-label>
+      <descr>
+&lt;p>notif Digital Sync Loss&lt;/p>&lt;table>
+	&lt;tr>&lt;td>&lt;b>
+
+	mntrSource&lt;/b>&lt;/td>&lt;td>
+	%parm[#1]%;&lt;/td>&lt;td>&lt;p>
+		insel2MainAudio(1)
+		insel2AUXAudio(2)
+		insel2IPAudioClient1(3)
+		insel2IPAudioClient2(4)
+		insel2IPAudioClient3(5)
+		insel2RTPReceiver(6)
+		insel2MP3Player(7)
+		insel2MainAnalog(13)
+		insel2MainDigital(14)
+		insel2AUXAnalog(15)
+		insel2AUXDigital(16)
+		insel2Auto(128)
+	&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	alias&lt;/b>&lt;/td>&lt;td>
+	%parm[#2]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	snmpaid&lt;/b>&lt;/td>&lt;td>
+	%parm[#3]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>&lt;/table>
+	</descr>
+      <logmsg dest="logndisplay">&lt;p>
+	notifDigitalSyncLoss trap received
+	mntrSource=%parm[#1]%
+	alias=%parm[#2]%
+	snmpaid=%parm[#3]%&lt;/p>
+	</logmsg>
+      <severity>Indeterminate</severity>
+      <varbindsdecode>
+         <parmid>parm[#1]</parmid>
+         <decode varbindvalue="1" varbinddecodedstring="insel2MainAudio"/>
+         <decode varbindvalue="2" varbinddecodedstring="insel2AUXAudio"/>
+         <decode varbindvalue="3" varbinddecodedstring="insel2IPAudioClient1"/>
+         <decode varbindvalue="4" varbinddecodedstring="insel2IPAudioClient2"/>
+         <decode varbindvalue="5" varbinddecodedstring="insel2IPAudioClient3"/>
+         <decode varbindvalue="6" varbinddecodedstring="insel2RTPReceiver"/>
+         <decode varbindvalue="7" varbinddecodedstring="insel2MP3Player"/>
+         <decode varbindvalue="13" varbinddecodedstring="insel2MainAnalog"/>
+         <decode varbindvalue="14" varbinddecodedstring="insel2MainDigital"/>
+         <decode varbindvalue="15" varbinddecodedstring="insel2AUXAnalog"/>
+         <decode varbindvalue="16" varbinddecodedstring="insel2AUXDigital"/>
+         <decode varbindvalue="128" varbinddecodedstring="insel2Auto"/>
+      </varbindsdecode>
+   </event>
+   <event>
+      <mask>
+         <maskelement>
+            <mename>id</mename>
+            <mevalue>.1.3.6.1.4.1.35833.6.254</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>generic</mename>
+            <mevalue>6</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>specific</mename>
+            <mevalue>4</mevalue>
+         </maskelement>
+      </mask>
+      <uei>uei.opennms.org/traps/DB8008-MIB/notifDigitalSyncRecover</uei>
+      <event-label>DB8008-MIB defined trap event: notifDigitalSyncRecover</event-label>
+      <descr>
+&lt;p>notif Digital Sync Recover&lt;/p>&lt;table>
+	&lt;tr>&lt;td>&lt;b>
+
+	mntrSource&lt;/b>&lt;/td>&lt;td>
+	%parm[#1]%;&lt;/td>&lt;td>&lt;p>
+		insel2MainAudio(1)
+		insel2AUXAudio(2)
+		insel2IPAudioClient1(3)
+		insel2IPAudioClient2(4)
+		insel2IPAudioClient3(5)
+		insel2RTPReceiver(6)
+		insel2MP3Player(7)
+		insel2MainAnalog(13)
+		insel2MainDigital(14)
+		insel2AUXAnalog(15)
+		insel2AUXDigital(16)
+		insel2Auto(128)
+	&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	alias&lt;/b>&lt;/td>&lt;td>
+	%parm[#2]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	snmpaid&lt;/b>&lt;/td>&lt;td>
+	%parm[#3]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>&lt;/table>
+	</descr>
+      <logmsg dest="logndisplay">&lt;p>
+	notifDigitalSyncRecover trap received
+	mntrSource=%parm[#1]%
+	alias=%parm[#2]%
+	snmpaid=%parm[#3]%&lt;/p>
+	</logmsg>
+      <severity>Indeterminate</severity>
+      <varbindsdecode>
+         <parmid>parm[#1]</parmid>
+         <decode varbindvalue="1" varbinddecodedstring="insel2MainAudio"/>
+         <decode varbindvalue="2" varbinddecodedstring="insel2AUXAudio"/>
+         <decode varbindvalue="3" varbinddecodedstring="insel2IPAudioClient1"/>
+         <decode varbindvalue="4" varbinddecodedstring="insel2IPAudioClient2"/>
+         <decode varbindvalue="5" varbinddecodedstring="insel2IPAudioClient3"/>
+         <decode varbindvalue="6" varbinddecodedstring="insel2RTPReceiver"/>
+         <decode varbindvalue="7" varbinddecodedstring="insel2MP3Player"/>
+         <decode varbindvalue="13" varbinddecodedstring="insel2MainAnalog"/>
+         <decode varbindvalue="14" varbinddecodedstring="insel2MainDigital"/>
+         <decode varbindvalue="15" varbinddecodedstring="insel2AUXAnalog"/>
+         <decode varbindvalue="16" varbinddecodedstring="insel2AUXDigital"/>
+         <decode varbindvalue="128" varbinddecodedstring="insel2Auto"/>
+      </varbindsdecode>
+   </event>
+   <event>
+      <mask>
+         <maskelement>
+            <mename>id</mename>
+            <mevalue>.1.3.6.1.4.1.35833.6.254</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>generic</mename>
+            <mevalue>6</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>specific</mename>
+            <mevalue>5</mevalue>
+         </maskelement>
+      </mask>
+      <uei>uei.opennms.org/traps/DB8008-MIB/notifAudioLoss</uei>
+      <event-label>DB8008-MIB defined trap event: notifAudioLoss</event-label>
+      <descr>
+&lt;p>notif Audio Loss&lt;/p>&lt;table>
+	&lt;tr>&lt;td>&lt;b>
+
+	mntrSource&lt;/b>&lt;/td>&lt;td>
+	%parm[#1]%;&lt;/td>&lt;td>&lt;p>
+		insel2MainAudio(1)
+		insel2AUXAudio(2)
+		insel2IPAudioClient1(3)
+		insel2IPAudioClient2(4)
+		insel2IPAudioClient3(5)
+		insel2RTPReceiver(6)
+		insel2MP3Player(7)
+		insel2MainAnalog(13)
+		insel2MainDigital(14)
+		insel2AUXAnalog(15)
+		insel2AUXDigital(16)
+		insel2Auto(128)
+	&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	alias&lt;/b>&lt;/td>&lt;td>
+	%parm[#2]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	snmpaid&lt;/b>&lt;/td>&lt;td>
+	%parm[#3]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>&lt;/table>
+	</descr>
+      <logmsg dest="logndisplay">&lt;p>
+	notifAudioLoss trap received
+	mntrSource=%parm[#1]%
+	alias=%parm[#2]%
+	snmpaid=%parm[#3]%&lt;/p>
+	</logmsg>
+      <severity>Indeterminate</severity>
+      <varbindsdecode>
+         <parmid>parm[#1]</parmid>
+         <decode varbindvalue="1" varbinddecodedstring="insel2MainAudio"/>
+         <decode varbindvalue="2" varbinddecodedstring="insel2AUXAudio"/>
+         <decode varbindvalue="3" varbinddecodedstring="insel2IPAudioClient1"/>
+         <decode varbindvalue="4" varbinddecodedstring="insel2IPAudioClient2"/>
+         <decode varbindvalue="5" varbinddecodedstring="insel2IPAudioClient3"/>
+         <decode varbindvalue="6" varbinddecodedstring="insel2RTPReceiver"/>
+         <decode varbindvalue="7" varbinddecodedstring="insel2MP3Player"/>
+         <decode varbindvalue="13" varbinddecodedstring="insel2MainAnalog"/>
+         <decode varbindvalue="14" varbinddecodedstring="insel2MainDigital"/>
+         <decode varbindvalue="15" varbinddecodedstring="insel2AUXAnalog"/>
+         <decode varbindvalue="16" varbinddecodedstring="insel2AUXDigital"/>
+         <decode varbindvalue="128" varbinddecodedstring="insel2Auto"/>
+      </varbindsdecode>
+   </event>
+   <event>
+      <mask>
+         <maskelement>
+            <mename>id</mename>
+            <mevalue>.1.3.6.1.4.1.35833.6.254</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>generic</mename>
+            <mevalue>6</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>specific</mename>
+            <mevalue>6</mevalue>
+         </maskelement>
+      </mask>
+      <uei>uei.opennms.org/traps/DB8008-MIB/notifAudioRecover</uei>
+      <event-label>DB8008-MIB defined trap event: notifAudioRecover</event-label>
+      <descr>
+&lt;p>notif Audio Recover&lt;/p>&lt;table>
+	&lt;tr>&lt;td>&lt;b>
+
+	mntrSource&lt;/b>&lt;/td>&lt;td>
+	%parm[#1]%;&lt;/td>&lt;td>&lt;p>
+		insel2MainAudio(1)
+		insel2AUXAudio(2)
+		insel2IPAudioClient1(3)
+		insel2IPAudioClient2(4)
+		insel2IPAudioClient3(5)
+		insel2RTPReceiver(6)
+		insel2MP3Player(7)
+		insel2MainAnalog(13)
+		insel2MainDigital(14)
+		insel2AUXAnalog(15)
+		insel2AUXDigital(16)
+		insel2Auto(128)
+	&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	alias&lt;/b>&lt;/td>&lt;td>
+	%parm[#2]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	snmpaid&lt;/b>&lt;/td>&lt;td>
+	%parm[#3]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>&lt;/table>
+	</descr>
+      <logmsg dest="logndisplay">&lt;p>
+	notifAudioRecover trap received
+	mntrSource=%parm[#1]%
+	alias=%parm[#2]%
+	snmpaid=%parm[#3]%&lt;/p>
+	</logmsg>
+      <severity>Indeterminate</severity>
+      <varbindsdecode>
+         <parmid>parm[#1]</parmid>
+         <decode varbindvalue="1" varbinddecodedstring="insel2MainAudio"/>
+         <decode varbindvalue="2" varbinddecodedstring="insel2AUXAudio"/>
+         <decode varbindvalue="3" varbinddecodedstring="insel2IPAudioClient1"/>
+         <decode varbindvalue="4" varbinddecodedstring="insel2IPAudioClient2"/>
+         <decode varbindvalue="5" varbinddecodedstring="insel2IPAudioClient3"/>
+         <decode varbindvalue="6" varbinddecodedstring="insel2RTPReceiver"/>
+         <decode varbindvalue="7" varbinddecodedstring="insel2MP3Player"/>
+         <decode varbindvalue="13" varbinddecodedstring="insel2MainAnalog"/>
+         <decode varbindvalue="14" varbinddecodedstring="insel2MainDigital"/>
+         <decode varbindvalue="15" varbinddecodedstring="insel2AUXAnalog"/>
+         <decode varbindvalue="16" varbinddecodedstring="insel2AUXDigital"/>
+         <decode varbindvalue="128" varbinddecodedstring="insel2Auto"/>
+      </varbindsdecode>
+   </event>
+</events>
