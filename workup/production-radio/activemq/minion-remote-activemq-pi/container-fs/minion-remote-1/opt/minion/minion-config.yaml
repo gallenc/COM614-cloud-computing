@@ -9,11 +9,6 @@ karaf:
     ssh:
       host: "0.0.0.0"
 
-ipc:
-  grpc:
-    host: "172.236.28.206"
-    port: "8990"
-
 netmgt:
   syslog:
     syslog.listen.interface: "0.0.0.0"
