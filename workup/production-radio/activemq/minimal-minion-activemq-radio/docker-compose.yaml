@@ -97,7 +97,7 @@ services:
       - "8101:8101/tcp"
       - "8980:8980/tcp"
       - "10162:1162/udp"
-#      - "61616:61616/tcp" # activemq
+      - "61616:61616/tcp" # activemq
       - "8990:8990" # grpc
       - "8001:8001" # JPDA debugging port
     healthcheck:
