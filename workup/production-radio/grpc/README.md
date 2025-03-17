@@ -1,4 +1,4 @@
-# Production Configuration
+# Production GRPC Configuration
 
 This folder contains the production configurations for an opennms cloud service and for minions running on a raspberry pi
 
