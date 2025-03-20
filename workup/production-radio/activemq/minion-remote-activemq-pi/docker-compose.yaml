@@ -38,8 +38,8 @@ services:
       retries: 3
     ports:
       - "8201:8201/tcp"
-      - "1162:1162/udp"
-      - "1514:1514/udp"
+      - "162:1162/udp"  # trap
+      - "514:1514/udp"  # syslog
     deploy:
       resources:
         limits:
