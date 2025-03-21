@@ -3,21 +3,27 @@
       <interface ip-addr="192.168.105.2" status="1" snmp-primary="P">
          <monitored-service service-name="ICMP"/>
          <monitored-service service-name="SNMP"/>
+         <monitored-service service-name="DNS"/>
       </interface>
+      <meta-data context="requisition" key="lookup" value="www.google.com"/>
    </node>
    <node location="ftwidley2" foreign-id="FTWIDLEY2-VIGOR2927-PRI" node-label="FTWIDLEY2-VIGOR2927-PRI">
       <interface ip-addr="192.168.105.1" status="1" snmp-primary="P">
          <monitored-service service-name="ICMP"/>
          <monitored-service service-name="SNMP"/>
+         <monitored-service service-name="DNS"/>
       </interface>
+      <meta-data context="requisition" key="lookup" value="www.google.com"/>
    </node>
    <node location="ftwidley2" foreign-id="FTWIDLEY2-VIGOR2927L-VIRTUAL" node-label="FTWIDLEY2-VIGOR2927L-VIRTUAL">
       <interface ip-addr="192.168.105.254" status="1" snmp-primary="P">
          <monitored-service service-name="ICMP"/>
          <monitored-service service-name="SNMP"/>
          <monitored-service service-name="VIGOR2927L-VIRTUAL"/>
+         <monitored-service service-name="DNS"/>
       </interface>
       <meta-data context="requisition" key="primarysnmproutername" value="Widley_Pri"/>
+      <meta-data context="requisition" key="lookup" value="www.google.com"/>
    </node>
    <node location="ftwidley2" foreign-id="FTWIDLEY2-DB8008" node-label="FTWIDLEY2-DB8008">
       <interface ip-addr="192.168.105.100" status="1" snmp-primary="P">
@@ -43,7 +49,13 @@
          <monitored-service service-name="SNMP"/>
       </interface>
    </node>
-   <node location="ftwidley2" foreign-id="FTWIDLEY2-minion-remote-pi-01-host" node-label="FTWIDLEY2-minion-remote-pi-01-host">
+   <node location="ftwidley2" foreign-id="FTWIDLEY2-TX1000" node-label="FTWIDLEY1-TX1000">
+      <interface ip-addr="192.168.105.98" status="1" snmp-primary="P">
+         <monitored-service service-name="ICMP"/>
+         <monitored-service service-name="SNMP"/>
+      </interface>
+   </node>
+   <node location="ftwidley1" foreign-id="FTWIDLEY2-minion-remote-pi-01-host" node-label="FTWIDLEY1-minion-remote-pi-01-host">
       <interface ip-addr="192.168.105.11" status="1" snmp-primary="P">
          <monitored-service service-name="ICMP"/>
          <monitored-service service-name="SNMP"/>

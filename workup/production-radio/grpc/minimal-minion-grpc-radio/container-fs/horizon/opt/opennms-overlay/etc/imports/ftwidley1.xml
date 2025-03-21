@@ -3,21 +3,27 @@
       <interface ip-addr="192.168.105.2" status="1" snmp-primary="P">
          <monitored-service service-name="ICMP"/>
          <monitored-service service-name="SNMP"/>
+         <monitored-service service-name="DNS"/>
       </interface>
+      <meta-data context="requisition" key="lookup" value="www.google.com"/>
    </node>
    <node location="ftwidley1" foreign-id="FTWIDLEY1-VIGOR2927-PRI" node-label="FTWIDLEY1-VIGOR2927-PRI">
       <interface ip-addr="192.168.105.1" status="1" snmp-primary="P">
          <monitored-service service-name="ICMP"/>
          <monitored-service service-name="SNMP"/>
+         <monitored-service service-name="DNS"/>
       </interface>
+      <meta-data context="requisition" key="lookup" value="www.google.com"/>
    </node>
    <node location="ftwidley1" foreign-id="FTWIDLEY1-VIGOR2927L-VIRTUAL" node-label="FTWIDLEY1-VIGOR2927L-VIRTUAL">
       <interface ip-addr="192.168.105.254" status="1" snmp-primary="P">
          <monitored-service service-name="ICMP"/>
          <monitored-service service-name="SNMP"/>
          <monitored-service service-name="VIGOR2927L-VIRTUAL"/>
+         <monitored-service service-name="DNS"/>
       </interface>
       <meta-data context="requisition" key="primarysnmproutername" value="Widley_Pri"/>
+      <meta-data context="requisition" key="lookup" value="www.google.com"/>
    </node>
    <node location="ftwidley1" foreign-id="FTWIDLEY1-DB8008" node-label="FTWIDLEY1-DB8008">
       <interface ip-addr="192.168.105.100" status="1" snmp-primary="P">
@@ -39,6 +45,12 @@
    </node>
    <node location="ftwidley1" foreign-id="FTWIDLEY1-cardinalImdu" node-label="FTWIDLEY1-cardinalImdu">
       <interface ip-addr="192.168.105.250" status="1" snmp-primary="P">
+         <monitored-service service-name="ICMP"/>
+         <monitored-service service-name="SNMP"/>
+      </interface>
+   </node>
+   <node location="ftwidley1" foreign-id="FTWIDLEY1-TX1000" node-label="FTWIDLEY1-TX1000">
+      <interface ip-addr="192.168.105.98" status="1" snmp-primary="P">
          <monitored-service service-name="ICMP"/>
          <monitored-service service-name="SNMP"/>
       </interface>

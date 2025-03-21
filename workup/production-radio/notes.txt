@@ -1,0 +1,15 @@
+java.util.concurrent.CompletionException: java.lang.IllegalArgumentException: Invalid IPAddress Widley_Pri:
+        at java.util.concurrent.CompletableFuture.encodeThrowable(CompletableFuture.java:315) ~[?:?]
+        at java.util.concurrent.CompletableFuture.completeThrowable(CompletableFuture.java:320) ~[?:?]
+        at java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1770) ~[?:?]
+        at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136) ~[?:?]
+        at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[?:?]
+        at java.lang.Thread.run(Thread.java:840) ~[?:?]
+Caused by: java.lang.IllegalArgumentException: Invalid IPAddress Widley_Pri:
+        at org.opennms.core.network.IPAddress.getInetAddress(IPAddress.java:317) ~[?:?]
+        at org.opennms.core.network.IPAddress.<init>(IPAddress.java:42) ~[?:?]
+        at org.opennms.core.utils.InetAddressUtils.getInetAddress(InetAddressUtils.java:209) ~[?:?]
+        at org.opennms.core.utils.InetAddressUtils.addr(InetAddressUtils.java:569) ~[?:?]
+        at org.opennms.netmgt.provision.dns.client.rpc.DnsLookupClientRpcModule.lambda$execute$0(DnsLookupClientRpcModule.java:65) ~[?:?]
+        at java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1768) ~[?:?]
+        ... 3 more

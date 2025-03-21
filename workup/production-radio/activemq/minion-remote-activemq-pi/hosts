@@ -1,0 +1,21 @@
+127.0.0.1       localhost
+::1     localhost ip6-localhost ip6-loopback
+fe00::  ip6-localnet
+ff00::  ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+
+# hosts defined for syslog
+192.168.105.250   FTWIDLEY1-cardinalImdu
+192.168.105.101   FTWIDLEY1-DB7012
+192.168.105.100   FTWIDLEY1-DB8008
+192.168.105.99   FTWIDLEY1-DB9000RX
+192.168.105.11   FTWIDLEY1-minion-remote-pi-01-host
+192.168.105.2   FTWIDLEY1-VIGOR2927L-SEC
+192.168.105.254   FTWIDLEY1-VIGOR2927L-VIRTUAL
+192.168.105.1   FTWIDLEY1-VIGOR2927-PRI
+192.168.105.98   uknown-device1
+
+192.168.105.1 Widley_Pri
+192.168.105.2 Widley_Sec
+
