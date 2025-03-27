@@ -30,7 +30,7 @@ services:
       - './container-fs/minion-remote-1/opt/minion/minion-config.yaml:/opt/minion/minion-config.yaml'
       # note minion-log permissions must allow writing log files
       - './minion-log/:/opt/minion/data/log/:rw'
-      #- ./hosts:/etc/hosts  # injecting hosts for logs reverse dns
+      - ./hosts:/etc/hosts  # injecting hosts for logs reverse dns
  
     command: ["-f"]
     healthcheck:

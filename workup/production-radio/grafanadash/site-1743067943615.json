@@ -1,0 +1,676 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_OPENNMS_ENTITIES",
+      "label": "OpenNMS Entities",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "opennms-entity-datasource",
+      "pluginName": "OpenNMS Entities"
+    },
+    {
+      "name": "DS_OPENNMS_PERFORMANCE",
+      "label": "OpenNMS Performance",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "opennms-performance-datasource",
+      "pluginName": "OpenNMS Performance"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.1.4"
+    },
+    {
+      "type": "panel",
+      "id": "opennms-alarm-table-panel",
+      "name": "Alarm Table",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "opennms-entity-datasource",
+      "name": "OpenNMS Entities",
+      "version": "9"
+    },
+    {
+      "type": "datasource",
+      "id": "opennms-performance-datasource",
+      "name": "OpenNMS Performance",
+      "version": "9"
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "opennms-entity-datasource",
+        "uid": "${DS_OPENNMS_ENTITIES}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "INDETERMINATE": {
+                  "color": "#999000",
+                  "index": 0,
+                  "text": "Indeterminate"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "CLEARED": {
+                  "color": "#eee000",
+                  "index": 1,
+                  "text": "Cleared"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "NORMAL": {
+                  "color": "#86b15b",
+                  "index": 2,
+                  "text": "Normal"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "WARNING": {
+                  "color": "#fccc3b",
+                  "index": 3,
+                  "text": "Warning"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "MINOR": {
+                  "color": "#ee901c",
+                  "index": 4,
+                  "text": "Minor"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "MAJOR": {
+                  "color": "#e3692f",
+                  "index": 5,
+                  "text": "Major"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "CRITICAL": {
+                  "color": "#db4345",
+                  "index": 6,
+                  "text": "Critical"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 3,
+      "options": {
+        "alarmTable": {
+          "alarmTableAdditional": {
+            "displayActionNotice": true,
+            "useGrafanaUser": false
+          },
+          "alarmTableAlarms": {
+            "severityTheme": {
+              "label": "Default",
+              "value": 0
+            },
+            "styleWithSeverity": {
+              "label": "Column",
+              "value": 1
+            }
+          },
+          "alarmTableColumnSizes": {
+            "active": false,
+            "columnSizes": []
+          },
+          "alarmTableData": {
+            "columns": [
+              {
+                "label": "Is Acknowledged",
+                "value": 20
+              },
+              {
+                "label": "Severity",
+                "value": 5
+              },
+              {
+                "label": "Count",
+                "value": 1
+              },
+              {
+                "label": "Last Event Time",
+                "value": 23
+              },
+              {
+                "label": "Location",
+                "value": 8
+              },
+              {
+                "label": "Node Label",
+                "value": 14
+              },
+              {
+                "label": "Log Message",
+                "value": 9
+              }
+            ]
+          },
+          "alarmTablePaging": {
+            "fontSize": {
+              "label": "100%",
+              "value": 2
+            },
+            "pauseRefresh": false,
+            "rowsPerPage": 10,
+            "scroll": true
+          }
+        }
+      },
+      "targets": [
+        {
+          "clauses": [
+            {
+              "attribute": {},
+              "comparator": {},
+              "comparedString": "",
+              "comparedValue": "",
+              "nestingType": 0,
+              "type": 2
+            }
+          ],
+          "datasource": {
+            "type": "opennms-entity-datasource",
+            "uid": "${DS_OPENNMS_ENTITIES}"
+          },
+          "filter": {
+            "clauses": [],
+            "limit": 10,
+            "orderBy": []
+          },
+          "refId": "A",
+          "selectType": {
+            "label": "Alarms"
+          }
+        }
+      ],
+      "title": "Panel Title",
+      "type": "opennms-alarm-table-panel"
+    },
+    {
+      "datasource": {
+        "type": "opennms-entity-datasource",
+        "uid": "${DS_OPENNMS_ENTITIES}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "INDETERMINATE": {
+                  "color": "#999000",
+                  "index": 0,
+                  "text": "Indeterminate"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "CLEARED": {
+                  "color": "#eee000",
+                  "index": 1,
+                  "text": "Cleared"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "NORMAL": {
+                  "color": "#86b15b",
+                  "index": 2,
+                  "text": "Normal"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "WARNING": {
+                  "color": "#fccc3b",
+                  "index": 3,
+                  "text": "Warning"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "MINOR": {
+                  "color": "#ee901c",
+                  "index": 4,
+                  "text": "Minor"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "MAJOR": {
+                  "color": "#e3692f",
+                  "index": 5,
+                  "text": "Major"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "CRITICAL": {
+                  "color": "#db4345",
+                  "index": 6,
+                  "text": "Critical"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 8
+      },
+      "id": 2,
+      "options": {
+        "alarmTable": {
+          "alarmTableAdditional": {
+            "displayActionNotice": true,
+            "useGrafanaUser": false
+          },
+          "alarmTableAlarms": {
+            "severityTheme": {
+              "label": "Default",
+              "value": 0
+            },
+            "styleWithSeverity": {
+              "label": "Column",
+              "value": 1
+            }
+          },
+          "alarmTableColumnSizes": {
+            "active": false,
+            "columnSizes": []
+          },
+          "alarmTableData": {
+            "columns": [
+              {
+                "label": "Is Acknowledged",
+                "value": 20
+              },
+              {
+                "label": "Severity",
+                "value": 5
+              },
+              {
+                "label": "Count",
+                "value": 1
+              },
+              {
+                "label": "Last Event Time",
+                "value": 23
+              },
+              {
+                "label": "Location",
+                "value": 8
+              },
+              {
+                "label": "Node Label",
+                "value": 14
+              },
+              {
+                "label": "Log Message",
+                "value": 9
+              }
+            ]
+          },
+          "alarmTablePaging": {
+            "fontSize": {
+              "label": "100%",
+              "value": 2
+            },
+            "pauseRefresh": false,
+            "rowsPerPage": 10,
+            "scroll": true
+          }
+        }
+      },
+      "targets": [
+        {
+          "clauses": [
+            {
+              "attribute": {
+                "label": "Node Label",
+                "type": {
+                  "id": "STRING",
+                  "label": "string"
+                },
+                "value": {
+                  "id": "node.label",
+                  "label": "Node Label",
+                  "name": "Node: Label",
+                  "orderBy": true,
+                  "type": {
+                    "id": "STRING",
+                    "label": "string"
+                  }
+                }
+              },
+              "comparator": {
+                "label": "EQ",
+                "value": {
+                  "id": 1,
+                  "label": "EQ"
+                }
+              },
+              "comparedString": "$node",
+              "comparedValue": {},
+              "nestingType": 0,
+              "type": 2
+            }
+          ],
+          "datasource": {
+            "type": "opennms-entity-datasource",
+            "uid": "${DS_OPENNMS_ENTITIES}"
+          },
+          "filter": {
+            "clauses": [
+              {
+                "restriction": {
+                  "attribute": "node.label",
+                  "comparator": {
+                    "id": 1,
+                    "label": "EQ"
+                  },
+                  "value": "$node"
+                },
+                "operator": {
+                  "id": 1,
+                  "label": "AND"
+                }
+              }
+            ],
+            "limit": 10,
+            "orderBy": []
+          },
+          "refId": "A",
+          "selectType": {
+            "label": "Alarms"
+          }
+        }
+      ],
+      "title": "Panel Title",
+      "type": "opennms-alarm-table-panel"
+    },
+    {
+      "datasource": {
+        "type": "opennms-performance-datasource",
+        "uid": "${DS_OPENNMS_PERFORMANCE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 16
+      },
+      "id": 1,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "attribute": {
+            "attribute": {
+              "label": "tcpRetransSegs",
+              "name": "tcpRetransSegs",
+              "relativePath": "snmp/fs/ftwidley1/FTWIDLEY1-VIGOR2927L-VIRTUAL",
+              "rrdFile": "tcpRetransSegs.rrd"
+            },
+            "node": {
+              "id": "$node",
+              "label": "$node"
+            },
+            "resource": {
+              "id": "nodeSnmp[]",
+              "label": "Node-level Performance Data"
+            },
+            "subAttribute": ""
+          },
+          "datasource": {
+            "type": "opennms-performance-datasource",
+            "uid": "${DS_OPENNMS_PERFORMANCE}"
+          },
+          "performanceType": {
+            "label": "Attribute",
+            "value": 1
+          },
+          "refId": "A"
+        }
+      ],
+      "title": "Panel Title",
+      "type": "timeseries"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {},
+        "datasource": {
+          "type": "opennms-performance-datasource",
+          "uid": "${DS_OPENNMS_PERFORMANCE}"
+        },
+        "definition": "nodeFilter(location='$location')",
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "node",
+        "options": [],
+        "query": "nodeFilter(location='$location')",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "opennms-performance-datasource",
+          "uid": "${DS_OPENNMS_PERFORMANCE}"
+        },
+        "definition": "locations()",
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "location",
+        "options": [],
+        "query": "locations()",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-30d",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "site",
+  "uid": "eb50b494-f3eb-4936-8116-c2ff0bcc49b8",
+  "version": 5,
+  "weekStart": ""
+}

@@ -63,7 +63,30 @@ echo "<14>sourcehost message text" | nc -v -u -w 10 localhost 1514
 or 
 
 ```
+
+ echo "<14>sourcehost message text" | nc -v -u -w 1 minion1 1514
+ 
  echo "<14>sourcehost message text" | nc -v -u -w 1 minion1.minimal-minion-grpc-radio_frontend 1514
+ 
+ echo "<166>Mar 24 17:26:40 Widley_Sec: [4G]<7> Max Channel Rate: TX 50000000 bps, RX 300000000 bps" | nc -v -u -w 1 minion1 1514
+
+```
+
+# install dig 
+
+reverse dns lookup
+
+```
+dig -x 8.8.8.8
+
+```
+
+```
+apt-get install dnsutils
+```
+
+```
+microdnf install dnsutils
 ```
 
 # installation

@@ -4,7 +4,7 @@
 
 # added pattern 
 # Draytek syslog pattern - based off # RFC 3164 with time
-<%{INT:facilityPriority}>%{MONTH:month} %{INT:day} %{INT:hour}:%{INT:minute}:%{INT:second} %{HOSTNAMEORIP:hostname}: %{STRING:message}
+<%{INT:facilityPriority}>%{MONTH:month}%{WHITESPACE:ignore}%{INT:day} %{INT:hour}:%{INT:minute}:%{INT:second} %{HOSTNAMEORIP:hostname}: %{STRING:message}
 
 # original patterns
 
