@@ -141,6 +141,12 @@ services:
       GF_SERVER_DOMAIN: localhost:80
       GF_SERVER_ROOT_URL: http://localhost:80/grafana/
       GF_SERVER_SERVER_FROM_SUB_PATH: true
+      
+      # datasources - should match variable substitution in datasources
+      ONMS_GRAFANA_USERNAME: admin
+      ONMS_GRAFANA_PASSWORD: admin
+      POSTGRES_GRAFANA_USERNAME: postgres
+      POSTGRES_GRAFANA_PASSWORD: postgres
 
     volumes:
       - data-grafana:/var/lib/grafana
