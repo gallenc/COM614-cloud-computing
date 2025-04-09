@@ -56,6 +56,10 @@
             <mename>specific</mename>
             <mevalue>2</mevalue>
          </maskelement>
+         <varbind>
+            <vbnumber>1</vbnumber>
+            <vbvalue>1</vbvalue>
+         </varbind>
       </mask>
       <uei>uei.opennms.org/traps/CARDINAL-MIB/outputFuseChangeNotificationAlarmRaiseV2</uei>
       <event-label>CARDINAL-MIB defined trap event: outputFuseChangeNotificationAlarmRaiseV2</event-label>
@@ -75,7 +79,7 @@
 	outputName=%parm[#1]%
 	fuseState=%parm[#2]%&lt;/p>
 	</logmsg>
-      <severity>Warning</severity>
+      <severity>Major</severity>
 
       <alarm-data reduction-key="%uei%:%dpname%:%nodeid%:%parm[#1]%" alarm-type="1" auto-clean="false"/>
    </event>
@@ -97,6 +101,10 @@
             <mename>specific</mename>
             <mevalue>2</mevalue>
          </maskelement>
+         <varbind>
+            <vbnumber>1</vbnumber>
+            <vbvalue>0</vbvalue>
+         </varbind>
       </mask>
       <uei>uei.opennms.org/traps/CARDINAL-MIB/outputFuseChangeNotificationAlarmClearV2</uei>
       <event-label>CARDINAL-MIB defined trap event: outputFuseChangeNotificationAlarmClearV2</event-label>
@@ -577,12 +585,12 @@
             <mevalue>2</mevalue>
          </maskelement>
          <varbind>
-            <vbnumber>2</vbnumber>
+            <vbnumber>1</vbnumber>
             <vbvalue>1</vbvalue>
          </varbind>
       </mask>
-      <uei>uei.opennms.org/traps/CARDINAL-MIB/outputFuseChangeEventAlarmRaise</uei>
-      <event-label>CARDINAL-MIB defined trap event: outputFuseChangeEventAlarmRaise</event-label>
+      <uei>uei.opennms.org/traps/CARDINAL-MIB/outputFuseChangeEventAlarmRaiseV1</uei>
+      <event-label>CARDINAL-MIB defined trap event: outputFuseChangeEventAlarmRaiseV1</event-label>
       <descr>
 &lt;p>This trap indicates an output fuse has changed state.&lt;/p>&lt;table>
 	&lt;tr>&lt;td>&lt;b>
@@ -622,11 +630,11 @@
             <mevalue>2</mevalue>
          </maskelement>
          <varbind>
-            <vbnumber>2</vbnumber>
+            <vbnumber>1</vbnumber>
             <vbvalue>0</vbvalue>
          </varbind>
       </mask>
-      <uei>uei.opennms.org/traps/CARDINAL-MIB/outputFuseChangeEventAlarmClear</uei>
+      <uei>uei.opennms.org/traps/CARDINAL-MIB/outputFuseChangeEventAlarmClearV1</uei>
       <descr>
 &lt;p>This trap indicates an output fuse has changed state.&lt;/p>&lt;table>
     &lt;tr>&lt;td>&lt;b>
@@ -647,7 +655,7 @@
       
       <alarm-data reduction-key="%uei%:%dpname%:%nodeid%:%parm[#1]%"
                   alarm-type="2"
-                  clear-key="uei.opennms.org/traps/CARDINAL-MIB/outputFuseChangeEventAlarmRaise:%dpname%:%nodeid%:%parm[#1]%"
+                  clear-key="uei.opennms.org/traps/CARDINAL-MIB/outputFuseChangeEventAlarmRaiseV1:%dpname%:%nodeid%:%parm[#1]%"
                   auto-clean="false"/>
    </event>
    
