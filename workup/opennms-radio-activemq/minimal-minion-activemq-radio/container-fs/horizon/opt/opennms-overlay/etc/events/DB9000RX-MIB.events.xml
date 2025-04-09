@@ -32,7 +32,7 @@
 	snmpAgentID=%parm[#1]%
 	serial=%parm[#2]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Warning</severity>
    </event>
    <event>
       <mask>
