@@ -39,9 +39,9 @@
       <severity>Warning</severity>
    </event>
 
-<!-- ***************************** -->
-<!-- outputFuseChangeNotification  -->
-<!-- ***************************** -->
+<!-- ************************************************* -->
+<!-- outputFuseChangeNotification alarm raise snmp v2  -->
+<!-- ************************************************* -->
    <event>
       <mask>
          <maskelement>
@@ -56,9 +56,13 @@
             <mename>specific</mename>
             <mevalue>2</mevalue>
          </maskelement>
+         <varbind>
+            <vbnumber>1</vbnumber>
+            <vbvalue>1</vbvalue>
+         </varbind>
       </mask>
-      <uei>uei.opennms.org/traps/CARDINAL-MIB/outputFuseChangeNotification</uei>
-      <event-label>CARDINAL-MIB defined trap event: outputFuseChangeNotification</event-label>
+      <uei>uei.opennms.org/traps/CARDINAL-MIB/outputFuseChangeNotificationAlarmRaiseV2</uei>
+      <event-label>CARDINAL-MIB defined trap event: outputFuseChangeNotificationAlarmRaiseV2</event-label>
       <descr>
 &lt;p>This notification indicates an output fuse has changed state.&lt;/p>&lt;table>
 	&lt;tr>&lt;td>&lt;b>
@@ -75,12 +79,62 @@
 	outputName=%parm[#1]%
 	fuseState=%parm[#2]%&lt;/p>
 	</logmsg>
-      <severity>Warning</severity>
+      <severity>Major</severity>
+
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%:%parm[#1]%" alarm-type="1" auto-clean="false"/>
    </event>
    
-<!-- *********************************** -->
-<!-- outputCurrentThresholdNotification  -->
-<!-- *********************************** -->
+<!-- ************************************************* -->
+<!-- outputFuseChangeNotification alarm clear snmp v2  -->
+<!-- ************************************************* -->
+   <event>
+      <mask>
+         <maskelement>
+            <mename>id</mename>
+            <mevalue>.1.3.6.1.4.1.8890.2.2002.3</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>generic</mename>
+            <mevalue>6</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>specific</mename>
+            <mevalue>2</mevalue>
+         </maskelement>
+         <varbind>
+            <vbnumber>1</vbnumber>
+            <vbvalue>0</vbvalue>
+         </varbind>
+      </mask>
+      <uei>uei.opennms.org/traps/CARDINAL-MIB/outputFuseChangeNotificationAlarmClearV2</uei>
+      <event-label>CARDINAL-MIB defined trap event: outputFuseChangeNotificationAlarmClearV2</event-label>
+      <descr>
+&lt;p>This notification indicates an output fuse has changed state.&lt;/p>&lt;table>
+    &lt;tr>&lt;td>&lt;b>
+
+    outputName&lt;/b>&lt;/td>&lt;td>
+    %parm[#1]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+    &lt;tr>&lt;td>&lt;b>
+
+    fuseState&lt;/b>&lt;/td>&lt;td>
+    %parm[#2]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>&lt;/table>
+    </descr>
+      <logmsg dest="logndisplay">&lt;p>
+    outputFuseChangeNotification trap received
+    outputName=%parm[#1]%
+    fuseState=%parm[#2]%&lt;/p>
+    </logmsg>
+      <severity>Cleared</severity>
+
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%:%parm[#1]%"
+                  alarm-type="2"
+                  clear-key="uei.opennms.org/traps/CARDINAL-MIB/outputFuseChangeNotificationAlarmRaiseV2:%dpname%:%nodeid%:%parm[#1]%"
+                  auto-clean="false"/>
+   </event>
+   
+<!-- ********************************** -->
+<!-- outputCurrentThresholdNotification -->
+<!-- ********************************** -->
    <event>
       <mask>
          <maskelement>
@@ -96,7 +150,7 @@
             <mevalue>3</mevalue>
          </maskelement>
       </mask>
-      <uei>uei.opennms.org/traps/CARDINAL-MIB/outputCurrentThresholdNotification</uei>
+      <uei>uei.opennms.org/traps/CARDINAL-MIB/outputCurrentThresholdNotificationAlarmClear</uei>
       <event-label>CARDINAL-MIB defined trap event: outputCurrentThresholdNotification</event-label>
       <descr>
 &lt;p>This notification indicates the current in an output  &#xd;
@@ -514,7 +568,7 @@
    </event>
 
 <!-- ****************************************** -->
-<!-- outputFuseChangeEvent -fuse fail           -->
+<!-- outputFuseChangeEvent -fuse fail snmp v1   -->
 <!-- ****************************************** -->
    <event>
       <mask>
@@ -531,12 +585,12 @@
             <mevalue>2</mevalue>
          </maskelement>
          <varbind>
-            <vbnumber>2</vbnumber>
+            <vbnumber>1</vbnumber>
             <vbvalue>1</vbvalue>
          </varbind>
       </mask>
-      <uei>uei.opennms.org/traps/CARDINAL-MIB/outputFuseChangeEventAlarmRaise</uei>
-      <event-label>CARDINAL-MIB defined trap event: outputFuseChangeEventAlarmRaise</event-label>
+      <uei>uei.opennms.org/traps/CARDINAL-MIB/outputFuseChangeEventAlarmRaiseV1</uei>
+      <event-label>CARDINAL-MIB defined trap event: outputFuseChangeEventAlarmRaiseV1</event-label>
       <descr>
 &lt;p>This trap indicates an output fuse has changed state.&lt;/p>&lt;table>
 	&lt;tr>&lt;td>&lt;b>
@@ -555,11 +609,11 @@
 	</logmsg>
       <severity>Major</severity>
       
-      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%:%parm[#2]%" alarm-type="1" auto-clean="false"/>
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%:%parm[#1]%" alarm-type="1" auto-clean="false"/>
    </event>
    
 <!-- ****************************************** -->
-<!-- outputFuseChangeEvent -fuse clear           -->
+<!-- outputFuseChangeEvent -fuse clear snmp v1  -->
 <!-- ****************************************** -->
    <event>
       <mask>
@@ -576,11 +630,11 @@
             <mevalue>2</mevalue>
          </maskelement>
          <varbind>
-            <vbnumber>2</vbnumber>
+            <vbnumber>1</vbnumber>
             <vbvalue>0</vbvalue>
          </varbind>
       </mask>
-      <uei>uei.opennms.org/traps/CARDINAL-MIB/outputFuseChangeEventAlarmClear</uei>
+      <uei>uei.opennms.org/traps/CARDINAL-MIB/outputFuseChangeEventAlarmClearV1</uei>
       <descr>
 &lt;p>This trap indicates an output fuse has changed state.&lt;/p>&lt;table>
     &lt;tr>&lt;td>&lt;b>
@@ -599,9 +653,9 @@
     </logmsg>
       <severity>Cleared</severity>
       
-      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%:%parm[#2]%"
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%:%parm[#1]%"
                   alarm-type="2"
-                  clear-key="uei.opennms.org/traps/CARDINAL-MIB/outputFuseChangeEventAlarmRaise:%dpname%:%nodeid%:%parm[#2]%"
+                  clear-key="uei.opennms.org/traps/CARDINAL-MIB/outputFuseChangeEventAlarmRaiseV1:%dpname%:%nodeid%:%parm[#1]%"
                   auto-clean="false"/>
    </event>
    
