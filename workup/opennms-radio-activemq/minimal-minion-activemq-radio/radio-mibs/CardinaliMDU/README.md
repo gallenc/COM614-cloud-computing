@@ -20,9 +20,11 @@ Note that the original file supplied by the manufacturer (Cardinal-MIB 200814155
 
 ## CardinalMDU Test Events (netsnmp)
 
+Note that events arc defiend as SNMP v1 and SNMP v2
+
 this is only trap that makes sense as an alarm
 
-###   outputFuseChangeNotification clear
+###   outputFuseChangeNotification V2 clear
 
 oid: .1.3.6.1.4.1.8890.2.2002.3.2
 
@@ -36,9 +38,38 @@ varbind2 - fuseState .1.3.6.1.4.1.8890.2.2002.1.3.1.1.4
 snmptrap -v 2c -c public horizon:1162 ""  .1.3.6.1.4.1.8890.2.2002.3.2   .1.3.6.1.4.1.8890.2.2002.1.4.1.1.2 s 'Fuse 1'  .1.3.6.1.4.1.8890.2.2002.1.3.1.1.4  i 0
 
 ```
-###   outputFuseChangeNotification raise
+###   outputFuseChangeNotification V2 raise
 
 oid: .1.3.6.1.4.1.8890.2.2002.3.2
+
+varbind1 - outputName .1.3.6.1.4.1.8890.2.2002.1.4.1.1.2
+           (  OutputName (OCTET STRING) (SIZE(1..8)). Hint: 8a A label assigned to this output to allow it to be easily identified. Upto 8 characters long.)
+
+varbind2 - fuseState .1.3.6.1.4.1.8890.2.2002.1.3.1.1.4 
+           ( FuseStates (Integer32) {ok(0), fail(1) }. Hint: d) 
+
+```
+snmptrap -v 2c -c public horizon:1162 ""  .1.3.6.1.4.1.8890.2.2002.3.2   .1.3.6.1.4.1.8890.2.2002.1.4.1.1.2 s 'Fuse 1'  .1.3.6.1.4.1.8890.2.2002.1.3.1.1.4  i 1
+
+```
+
+###   outputFuseChangeNotification V1 clear
+
+oid: .1.3.6.1.4.1.8890.2.2002.2.0.2
+
+varbind1 - outputName .1.3.6.1.4.1.8890.2.2002.1.4.1.1.2
+           (  OutputName (OCTET STRING) (SIZE(1..8)). Hint: 8a A label assigned to this output to allow it to be easily identified. Upto 8 characters long.)
+
+varbind2 - fuseState .1.3.6.1.4.1.8890.2.2002.1.3.1.1.4 
+           ( FuseStates (Integer32) {ok(0), fail(1) }. Hint: d) 
+
+```
+snmptrap -v 2c -c public horizon:1162 ""  .1.3.6.1.4.1.8890.2.2002.3.2   .1.3.6.1.4.1.8890.2.2002.1.4.1.1.2 s 'Fuse 1'  .1.3.6.1.4.1.8890.2.2002.1.3.1.1.4  i 0
+
+```
+###   outputFuseChangeNotification V1 raise
+
+oid: .1.3.6.1.4.1.8890.2.2002.2.0.2
 
 varbind1 - outputName .1.3.6.1.4.1.8890.2.2002.1.4.1.1.2
            (  OutputName (OCTET STRING) (SIZE(1..8)). Hint: 8a A label assigned to this output to allow it to be easily identified. Upto 8 characters long.)
