@@ -1,4 +1,8 @@
+# DB9000-RX 
 
+Professional IP Audio Decoder https://www.devabroadcast.com/db9000-rx
+
+The DB9000-RX is a reliable IP to Audio decoder, designed to support HE-AAC and MPEG-1 Layer 3 compressed audio streams and PCM uncompressed stream for audio transmission without quality loss.
 
 
 ## SNMP WALK DB9000RX

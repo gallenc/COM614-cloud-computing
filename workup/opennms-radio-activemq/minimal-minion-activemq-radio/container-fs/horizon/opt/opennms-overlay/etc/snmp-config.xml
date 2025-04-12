@@ -24,4 +24,9 @@
    <definition version="v2c"  write-community="private" read-community="public" location="ftwidley1">
       <specific>192.168.105.250</specific>
    </definition>
+   
+   <!--  used to force snmp collection initialisation -->
+   <definition version="v2c"  write-community="private" read-community="cardinalImdu" location="default">
+      <specific>192.168.105.250</specific>
+   </definition>
 </snmp-config>

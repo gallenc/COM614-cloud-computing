@@ -1,4 +1,9 @@
 
+# DB7012 DAB receiver
+
+https://www.devabroadcast.com/products/db7012
+
+Professional DSP-based DAB/DAB+ Monitoring Receiver
 
 ## DB7012 SNMP Walk
 

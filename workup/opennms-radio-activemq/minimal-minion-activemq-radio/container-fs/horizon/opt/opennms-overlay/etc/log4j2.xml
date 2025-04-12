@@ -227,7 +227,7 @@
         <KeyValuePair key="passive"              value="WARN" />
         <KeyValuePair key="perspectivepollerd"   value="WARN" />
         <KeyValuePair key="poller"               value="WARN" />
-        <KeyValuePair key="provisiond"           value="WARN" />
+        <KeyValuePair key="provisiond"           value="DEBUG" />
         <KeyValuePair key="queued"               value="WARN" />
         <KeyValuePair key="reportd"              value="WARN" />
         <KeyValuePair key="reports"              value="WARN" />
