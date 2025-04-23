@@ -69,3 +69,12 @@ snmpwalk -v1 -On cardinalImdu -c public .1.3
 ## rrd tool
 
 https://oss.oetiker.ch/rrdtool/tut/cdeftutorial.en.html
+
+## queries
+
+```
+-- SELECT id, node.nodeid, node.location, node.nodelabel, latitude, longitude FROM assets INNER JOIN node ON assets.nodeid = node.nodeid  WHERE latitude IS NOT NULL; 
+--SELECT DISTINCT node.location, latitude, longitude FROM node
+
+SELECT DISTINCT ON (node.location) node.location, latitude, longitude FROM assets INNER JOIN node ON assets.nodeid = node.nodeid  WHERE latitude IS NOT NULL; 
+```
