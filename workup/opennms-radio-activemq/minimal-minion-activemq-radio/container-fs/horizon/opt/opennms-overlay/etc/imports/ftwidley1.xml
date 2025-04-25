@@ -6,7 +6,7 @@
       </interface>
       <asset name="longitude" value="-1.067246"/>
       <asset name="latitude" value="50.854836"/>
-      <asset name="category" value="VIGOR2927"/>
+      <asset name="category" value="vigor2927-1"/>
       <asset name="displayCategory" value="Customer1"/>
    </node>
    <node location="ftwidley1" foreign-id="FTWIDLEY-VIGOR2927-PRI" node-label="FTWIDLEY-VIGOR2927-PRI">
@@ -16,7 +16,7 @@
       </interface>
       <asset name="longitude" value="-1.067246"/>
       <asset name="latitude" value="50.854836"/>
-      <asset name="category" value="VIGOR2927"/>
+      <asset name="category" value="vigor2927-1"/>
       <asset name="displayCategory" value="Customer1"/>
    </node>
    <node location="ftwidley1" foreign-id="FTWIDLEY-VIGOR2927L-VIRTUAL" node-label="FTWIDLEY-VIGOR2927L-VIRTUAL">
@@ -27,7 +27,7 @@
       </interface>
       <asset name="longitude" value="-1.067246"/>
       <asset name="latitude" value="50.854836"/>
-      <asset name="category" value="VIGOR2927"/>
+      <asset name="category" value="vigor2927-1"/>
       <asset name="displayCategory" value="Customer1"/>
       <meta-data context="requisition" key="primarysnmproutername" value="Widley_Pri"/>
    </node>
@@ -38,7 +38,7 @@
       </interface>
       <asset name="longitude" value="-1.067246"/>
       <asset name="latitude" value="50.854836"/>
-      <asset name="category" value="DB8008"/>
+      <asset name="category" value="db8008-1"/>
       <asset name="displayCategory" value="Customer1"/>
    </node>
    <node location="ftwidley1" foreign-id="FTWIDLEY-DB7012" node-label="FTWIDLEY-DB7012">
@@ -48,7 +48,7 @@
       </interface>
       <asset name="longitude" value="-1.067246"/>
       <asset name="latitude" value="50.854836"/>
-      <asset name="category" value="DB7012"/>
+      <asset name="category" value="db7012-1"/>
       <asset name="displayCategory" value="Customer1"/>
    </node>
    <node location="ftwidley1" foreign-id="FTWIDLEY-DB9000RX" node-label="FTWIDLEY-DB9000RX">
@@ -58,7 +58,7 @@
       </interface>
       <asset name="longitude" value="-1.067246"/>
       <asset name="latitude" value="50.854836"/>
-      <asset name="category" value="DB9000RX"/>
+      <asset name="category" value="db9000rx-1"/>
       <asset name="displayCategory" value="Customer1"/>
    </node>
    <node location="ftwidley1" foreign-id="FTWIDLEY-TX1000" node-label="FTWIDLEY-TX1000">
@@ -68,7 +68,7 @@
       </interface>
       <asset name="longitude" value="-1.067246"/>
       <asset name="latitude" value="50.854836"/>
-      <asset name="category" value="TX1000"/>
+      <asset name="category" value="tx1000-1"/>
       <asset name="displayCategory" value="Customer1"/>
    </node>
    <node location="ftwidley1" foreign-id="FTWIDLEY-ODR-DABMOD" node-label="FTWIDLEY-ODR-DABMOD">
@@ -77,7 +77,7 @@
       </interface>
       <asset name="longitude" value="-1.067246"/>
       <asset name="latitude" value="50.854836"/>
-      <asset name="category" value="ODR-DABMOD"/>
+      <asset name="category" value="odr-dabmod-1"/>
       <asset name="displayCategory" value="Customer1"/>
    </node>
    <node location="ftwidley1" foreign-id="FTWIDLEY-cardinalImdu" node-label="FTWIDLEY-cardinalImdu">
@@ -87,7 +87,7 @@
       </interface>
       <asset name="longitude" value="-1.067246"/>
       <asset name="latitude" value="50.854836"/>
-      <asset name="category" value="db IMDU"/>
+      <asset name="category" value="cardinal-imdbu-1"/>
       <asset name="displayCategory" value="Customer1"/>
    </node>
 </model-import>
