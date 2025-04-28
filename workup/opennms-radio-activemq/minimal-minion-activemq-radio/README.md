@@ -78,3 +78,15 @@ https://oss.oetiker.ch/rrdtool/tut/cdeftutorial.en.html
 
 SELECT DISTINCT ON (node.location) node.location, latitude, longitude FROM assets INNER JOIN node ON assets.nodeid = node.nodeid  WHERE latitude IS NOT NULL; 
 ```
+
+https://grafana.com/grafana/dashboards/5053-opennms-network-interfaces-report/
+
+https://docs.opennms.com/helm/8/datasources/performance_datasource.html#filter-queries
+
+https://docs.opennms.com/helm/8/panel_configuration/dynamic-dashboard.html#pc-template-filters
+
+https://docs.opennms.com/helm/8/datasources/performance_datasource.html#filter-queries
+
+https://docs.opennms.com/horizon/33/reference/configuration/filters/filters.html
+
+https://grafana.com/docs/grafana/latest/panels-visualizations/visualizations/geomap/
