@@ -15,11 +15,11 @@
       }
     ]
   },
-  "description": "VIGOR2927 dashboard of values",
+  "description": "generic dashboard with alarms and ping",
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 13,
+  "id": 15,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -405,10 +405,9 @@
     "list": [
       {
         "current": {
-          "isNone": true,
           "selected": false,
-          "text": "None",
-          "value": ""
+          "text": "ftwidley1:FTWIDLEY-DB8008",
+          "value": "ftwidley1:FTWIDLEY-DB8008"
         },
         "datasource": {
           "type": "postgres",
@@ -460,10 +459,9 @@
       },
       {
         "current": {
-          "isNone": true,
           "selected": false,
-          "text": "None",
-          "value": ""
+          "text": "dfdf",
+          "value": "dfdf"
         },
         "datasource": {
           "type": "opennms-performance-datasource",
@@ -485,13 +483,13 @@
     ]
   },
   "time": {
-    "from": "now-24h",
+    "from": "now-5d",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
-  "title": "vigor2927-1",
-  "uid": "vigor2927-1",
-  "version": 20,
+  "title": "generic-1",
+  "uid": "generic-1",
+  "version": 3,
   "weekStart": ""
 }
