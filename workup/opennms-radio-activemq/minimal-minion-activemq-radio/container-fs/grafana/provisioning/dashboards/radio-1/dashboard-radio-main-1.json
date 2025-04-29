@@ -15,7 +15,7 @@
       }
     ]
   },
-  "editable": true,
+  "editable": false,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 12,
@@ -343,7 +343,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT  node.nodelabel,assets.category FROM assets INNER JOIN node ON assets.nodeid = node.nodeid  WHERE node.location = '${nodelocation}'\r\n",
+          "rawSql": "SELECT  node.nodelabel,LOWER(assets.category) AS category FROM assets INNER JOIN node ON assets.nodeid = node.nodeid  WHERE node.location = '${nodelocation}'\r\n",
           "refId": "A",
           "sql": {
             "columns": [
@@ -558,7 +558,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT DISTINCT ON (node.nodeid)  node.nodelabel, assets.category, a.severity,  ( CASE a.severity WHEN 7 THEN 'Critical' WHEN 6 THEN 'Major'   WHEN 5 THEN 'Minor'  WHEN 4 THEN 'Warning' WHEN 3 THEN 'Cleared' ELSE 'Indeterminate' END ) AS severityLabel\r\nFROM node LEFT JOIN assets ON assets.nodeid = node.nodeid  LEFT JOIN alarms a ON a.nodeid = node.nodeid \r\nWHERE node.location = '${nodelocation}' AND  a.severity= (\r\n    SELECT MAX(severity)\r\n    FROM alarms\r\n    WHERE nodeid = a.nodeid\r\n) ;\r\n",
+          "rawSql": "SELECT DISTINCT ON (node.nodeid)  node.nodelabel, LOWER(assets.category) AS category, a.severity,  ( CASE a.severity WHEN 7 THEN 'Critical' WHEN 6 THEN 'Major'   WHEN 5 THEN 'Minor'  WHEN 4 THEN 'Warning' WHEN 3 THEN 'Cleared' ELSE 'Indeterminate' END ) AS severityLabel\r\nFROM node LEFT JOIN assets ON assets.nodeid = node.nodeid  LEFT JOIN alarms a ON a.nodeid = node.nodeid \r\nWHERE node.location = '${nodelocation}' AND  a.severity= (\r\n    SELECT MAX(severity)\r\n    FROM alarms\r\n    WHERE nodeid = a.nodeid\r\n) ;\r\n",
           "refId": "A",
           "sql": {
             "columns": [

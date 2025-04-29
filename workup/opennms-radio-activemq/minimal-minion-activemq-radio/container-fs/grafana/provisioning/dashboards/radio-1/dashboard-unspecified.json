@@ -15,7 +15,7 @@
       }
     ]
   },
-  "description": "generic dashboard with alarms and ping",
+  "description": "dashboard to show when category is Unspecified",
   "editable": false,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
@@ -488,8 +488,8 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "generic-1",
-  "uid": "generic-1",
+  "title": "unspecified",
+  "uid": "unspecified",
   "version": 3,
   "weekStart": ""
 }

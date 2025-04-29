@@ -16,7 +16,7 @@
     ]
   },
   "description": "DB7012 dashboard of values",
-  "editable": true,
+  "editable": false,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "links": [],
