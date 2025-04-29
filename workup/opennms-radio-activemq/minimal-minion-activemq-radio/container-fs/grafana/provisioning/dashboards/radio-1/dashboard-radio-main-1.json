@@ -223,7 +223,7 @@
             {
               "targetBlank": true,
               "title": "link to dashboard for equipment",
-              "url": "https://localhost/grafana/d/${__data.fields.category}/${__data.fields.category}?orgId=1&var-nodeLabel=${__data.fields.nodelabel}"
+              "url": "../grafana/d/${__data.fields.category}/${__data.fields.category}?orgId=1&var-nodeLabel=${__data.fields.nodelabel}"
             }
           ],
           "mappings": [
@@ -388,7 +388,7 @@
             {
               "targetBlank": true,
               "title": "link to dashboard for equipment",
-              "url": "https://localhost/grafana/d/${__data.fields.category}/${__data.fields.category}?orgId=1&var-nodeLabel=${__data.fields.nodelabel}"
+              "url": "../grafana/d/${__data.fields.category}/${__data.fields.category}?orgId=1&var-nodeLabel=${__data.fields.nodelabel}"
             }
           ],
           "mappings": [
