@@ -16,7 +16,7 @@
     ]
   },
   "description": "VIGOR2927 dashboard of values",
-  "editable": false,
+  "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 13,

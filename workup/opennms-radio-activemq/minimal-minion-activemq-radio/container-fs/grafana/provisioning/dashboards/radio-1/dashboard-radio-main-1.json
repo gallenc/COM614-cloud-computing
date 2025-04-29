@@ -15,7 +15,7 @@
       }
     ]
   },
-  "editable": false,
+  "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 12,
@@ -54,7 +54,7 @@
           },
           "links": [
             {
-              "targetBlank": false,
+              "targetBlank": true,
               "title": "site details",
               "url": "../grafana/d/radio-main-1/radio-main-1?orgId=1?&var-location=${__data.fields.location}"
             }
