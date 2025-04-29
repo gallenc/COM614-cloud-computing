@@ -1,7 +1,7 @@
 # README
 
 
-## Usage
+## Setting up as systemd service
 
 ```
 sudo cp docker-compose@.service /etc/systemd/system/docker-compose@.service
@@ -28,12 +28,14 @@ systemctl stop docker-compose@minion-remote-grpc-pi
 
 ```
 to see logs for systemctl startup
+
 ```
 journalctl -xeu docker-compose@minion-remote-grpc-pi.service
 
 ```
 
 to enable on startup boot
+
 ```
 systemctl enable docker-compose@minion-remote-grpc-pi
 
@@ -60,6 +62,7 @@ note that startup takes several minutes - be patient
 
 ```
 To check connectivity try
+
 ```
 admin@minion()> opennms:health-check                                                                                                     
 Verifying the health of the container
@@ -73,11 +76,14 @@ Connecting to gRPC IPC Server   [ Success  ]
 ```
 
 ## setting up netsnmp on pi
+
+```
 sudo apt update
 sudo apt -y  install snmpd snmp
 
 cp pisnmpd.conf /etc/snmp/snmpd.conf.d
 
+```
 change listening address in /etc/snmp/snmpd.conf
 
 ```

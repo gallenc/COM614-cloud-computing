@@ -3,6 +3,46 @@
 
 This docker compose project contains configurations to test OpenNMS with simulated data (using snmpsim 0.4.x) for broadcast radio equipment.
 
+## Setting up as systemd service
+
+```
+sudo cp docker-compose@.service /etc/systemd/system/docker-compose@.service
+
+sudo chmod 644 /etc/systemd/system/docker-compose@.service
+```
+
+Place the docker compose project in a folder named after the service.
+
+e.g. place the project as a folder in `/opt/docker/compose/`
+
+The project needs a docker-compose.yaml file in the project folder
+
+```
+/opt/docker/compose/minimal-minion-activemq-radio
+```
+
+starting / stopping service
+
+```
+systemctl start docker-compose@minimal-minion-activemq-radio
+
+systemctl stop docker-compose@minimal-minion-activemq-radio
+
+```
+to see logs for systemctl startup
+
+```
+journalctl -xeu docker-compose@minimal-minion-activemq-radio.service
+
+```
+
+to enable on startup boot
+
+```
+systemctl enable docker-compose@minimal-minion-activemq-radio
+
+```
+
 ## connecting to vpn
 
 Two docker compose files are provided. 
