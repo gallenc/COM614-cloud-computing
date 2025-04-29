@@ -290,7 +290,7 @@ maintained
     <invoke at="status" pass="0" method="status"/>
     <invoke at="stop" pass="0" method="stop"/>
   </service>
-  <service>
+  <service enabled="true">
     <name>OpenNMS:Name=Trapd</name>
     <class-name>org.opennms.netmgt.trapd.jmx.Trapd</class-name>
     <invoke at="start" pass="0" method="init"/>

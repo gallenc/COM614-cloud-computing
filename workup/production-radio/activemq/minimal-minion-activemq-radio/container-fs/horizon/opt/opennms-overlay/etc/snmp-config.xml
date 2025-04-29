@@ -24,8 +24,16 @@
    <definition version="v2c"  write-community="private" read-community="public" location="ftwidley1">
       <specific>192.168.105.250</specific>
    </definition>
+   <definition version="v2c"  write-community="private" read-community="public" location="ftwidley1">
+      <specific>192.168.105.98</specific>
+   </definition>
    <definition version="v2c"  write-community="private" read-community="piminion" location="ftwidley1">
       <specific>192.168.105.245</specific>
+   </definition>
+   
+   <!--  used to force snmp collection initialisation -->
+   <definition version="v2c"  write-community="private" read-community="cardinalImdu" location="default">
+      <specific>192.168.105.250</specific>
    </definition>
    
    <definition  version="v2c" write-community="private" read-community="DEVA8008" location="ftwidley2">

@@ -1,64 +1,98 @@
 <model-import xmlns="http://xmlns.opennms.org/xsd/config/model-import" date-stamp="2025-02-25T08:36:42.108-05:00" foreign-source="ftwidley1" last-import="2025-02-25T08:36:49.007-05:00">
-   <node location="ftwidley1" foreign-id="FTWIDLEY1-VIGOR2927L-SEC" node-label="FTWIDLEY1-VIGOR2927L-SEC">
+   <node location="ftwidley1" foreign-id="FTWIDLEY-VIGOR2927L-SEC" node-label="FTWIDLEY-VIGOR2927L-SEC">
       <interface ip-addr="192.168.105.2" status="1" snmp-primary="P">
          <monitored-service service-name="ICMP"/>
          <monitored-service service-name="SNMP"/>
-         <monitored-service service-name="DNS"/>
       </interface>
-      <meta-data context="requisition" key="lookup" value="www.google.com"/>
+      <asset name="longitude" value="-1.067246"/>
+      <asset name="latitude" value="50.854836"/>
+      <asset name="category" value="vigor2927-1"/>
+      <asset name="displayCategory" value="Customer1"/>
    </node>
-   <node location="ftwidley1" foreign-id="FTWIDLEY1-VIGOR2927-PRI" node-label="FTWIDLEY1-VIGOR2927-PRI">
+   <node location="ftwidley1" foreign-id="FTWIDLEY-VIGOR2927-PRI" node-label="FTWIDLEY-VIGOR2927-PRI">
       <interface ip-addr="192.168.105.1" status="1" snmp-primary="P">
          <monitored-service service-name="ICMP"/>
          <monitored-service service-name="SNMP"/>
-         <monitored-service service-name="DNS"/>
       </interface>
-      <meta-data context="requisition" key="lookup" value="www.google.com"/>
+      <asset name="longitude" value="-1.067246"/>
+      <asset name="latitude" value="50.854836"/>
+      <asset name="category" value="vigor2927-1"/>
+      <asset name="displayCategory" value="Customer1"/>
    </node>
-   <node location="ftwidley1" foreign-id="FTWIDLEY1-VIGOR2927L-VIRTUAL" node-label="FTWIDLEY1-VIGOR2927L-VIRTUAL">
+   <node location="ftwidley1" foreign-id="FTWIDLEY-VIGOR2927L-VIRTUAL" node-label="FTWIDLEY-VIGOR2927L-VIRTUAL">
       <interface ip-addr="192.168.105.254" status="1" snmp-primary="P">
          <monitored-service service-name="ICMP"/>
          <monitored-service service-name="SNMP"/>
          <monitored-service service-name="VIGOR2927L-VIRTUAL"/>
-         <monitored-service service-name="DNS"/>
       </interface>
+      <asset name="longitude" value="-1.067246"/>
+      <asset name="latitude" value="50.854836"/>
+      <asset name="category" value="vigor2927-1"/>
+      <asset name="displayCategory" value="Customer1"/>
       <meta-data context="requisition" key="primarysnmproutername" value="Widley_Pri"/>
-      <meta-data context="requisition" key="lookup" value="www.google.com"/>
    </node>
-   <node location="ftwidley1" foreign-id="FTWIDLEY1-DB8008" node-label="FTWIDLEY1-DB8008">
+   <node location="ftwidley1" foreign-id="FTWIDLEY-DB8008" node-label="FTWIDLEY-DB8008">
       <interface ip-addr="192.168.105.100" status="1" snmp-primary="P">
          <monitored-service service-name="ICMP"/>
          <monitored-service service-name="SNMP"/>
       </interface>
+      <asset name="longitude" value="-1.067246"/>
+      <asset name="latitude" value="50.854836"/>
+<!--       <asset name="category" value="db8008-1"/> -->
+      <asset name="category" value="generic-1"/>
+      <asset name="displayCategory" value="Customer1"/>
    </node>
-   <node location="ftwidley1" foreign-id="FTWIDLEY1-DB7012" node-label="FTWIDLEY1-DB7012">
+   <node location="ftwidley1" foreign-id="FTWIDLEY-DB7012" node-label="FTWIDLEY-DB7012">
       <interface ip-addr="192.168.105.101" status="1" snmp-primary="P">
          <monitored-service service-name="ICMP"/>
          <monitored-service service-name="SNMP"/>
       </interface>
+      <asset name="longitude" value="-1.067246"/>
+      <asset name="latitude" value="50.854836"/>
+      <asset name="category" value="db7012-1"/>
+      <asset name="displayCategory" value="Customer1"/>
    </node>
-   <node location="ftwidley1" foreign-id="FTWIDLEY1-DB9000RX" node-label="FTWIDLEY1-DB9000RX">
+   <node location="ftwidley1" foreign-id="FTWIDLEY-DB9000RX" node-label="FTWIDLEY-DB9000RX">
       <interface ip-addr="192.168.105.99" status="1" snmp-primary="P">
          <monitored-service service-name="ICMP"/>
          <monitored-service service-name="SNMP"/>
       </interface>
+      <asset name="longitude" value="-1.067246"/>
+      <asset name="latitude" value="50.854836"/>
+<!--       <asset name="category" value="db9000rx-1"/> -->
+      <asset name="category" value="generic-1"/>
+      <asset name="displayCategory" value="Customer1"/>
    </node>
-   <node location="ftwidley1" foreign-id="FTWIDLEY1-cardinalImdu" node-label="FTWIDLEY1-cardinalImdu">
-      <interface ip-addr="192.168.105.250" status="1" snmp-primary="P">
-         <monitored-service service-name="ICMP"/>
-         <monitored-service service-name="SNMP"/>
-      </interface>
-   </node>
-   <node location="ftwidley1" foreign-id="FTWIDLEY1-TX1000" node-label="FTWIDLEY1-TX1000">
+   <node location="ftwidley1" foreign-id="FTWIDLEY-TX1000" node-label="FTWIDLEY-TX1000">
       <interface ip-addr="192.168.105.98" status="1" snmp-primary="P">
          <monitored-service service-name="ICMP"/>
          <monitored-service service-name="SNMP"/>
       </interface>
+      <asset name="longitude" value="-1.067246"/>
+      <asset name="latitude" value="50.854836"/>
+<!--       <asset name="category" value="tx1000-1"/> -->
+      <asset name="category" value="generic-1"/>
+      <asset name="displayCategory" value="Customer1"/>
    </node>
-   <node location="ftwidley1" foreign-id="FTWIDLEY1-minion-remote-pi-01-host" node-label="FTWIDLEY1-minion-remote-pi-01-host">
-      <interface ip-addr="192.168.105.11" status="1" snmp-primary="P">
+   <node location="ftwidley1" foreign-id="FTWIDLEY-ODR-DABMOD" node-label="FTWIDLEY-ODR-DABMOD">
+      <interface ip-addr="192.168.105.240" status="1" snmp-primary="P">
+         <monitored-service service-name="ICMP"/>
+      </interface>
+      <asset name="longitude" value="-1.067246"/>
+      <asset name="latitude" value="50.854836"/>
+<!--       <asset name="category" value="odr-dabmod-1"/> -->
+      <asset name="category" value="generic-1"/>
+      <asset name="displayCategory" value="Customer1"/>
+   </node>
+   <node location="ftwidley1" foreign-id="FTWIDLEY-cardinalImdu" node-label="FTWIDLEY-cardinalImdu">
+      <interface ip-addr="192.168.105.250" status="1" snmp-primary="P">
          <monitored-service service-name="ICMP"/>
          <monitored-service service-name="SNMP"/>
       </interface>
+      <asset name="longitude" value="-1.067246"/>
+      <asset name="latitude" value="50.854836"/>
+<!--       <asset name="category" value="cardinal-imdbu-1"/> -->
+      <asset name="category" value="generic-1"/>
+      <asset name="displayCategory" value="Customer1"/>
    </node>
 </model-import>

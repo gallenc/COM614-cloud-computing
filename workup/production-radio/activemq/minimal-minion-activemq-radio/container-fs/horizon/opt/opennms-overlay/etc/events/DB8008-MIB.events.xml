@@ -1,4 +1,8 @@
 <events xmlns="http://xmlns.opennms.org/xsd/eventconf">
+
+   <!-- *************************** -->
+   <!-- NOTIFY TEST                 -->
+   <!-- *************************** -->
    <event>
       <mask>
          <maskelement>
@@ -32,8 +36,12 @@
 	alias=%parm[#1]%
 	snmpaid=%parm[#2]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Normal</severity>
    </event>
+
+   <!-- *************************** -->
+   <!-- NOTIFY INPUT SOURCE CHANGED -->
+   <!-- *************************** -->
    <event>
       <mask>
          <maskelement>
@@ -96,7 +104,7 @@
 	alias=%parm[#3]%
 	snmpaid=%parm[#4]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Warning</severity>
       <varbindsdecode>
          <parmid>parm[#1]</parmid>
          <decode varbindvalue="1" varbinddecodedstring="insel2MainAudio"/>
@@ -121,6 +129,11 @@
          <decode varbindvalue="4" varbinddecodedstring="appliedForcedByGPI"/>
       </varbindsdecode>
    </event>
+   
+   <!-- ******************************** -->
+   <!-- NOTIFY DIGITAL SYNC LOSS         -->
+   <!-- ******************************** -->
+   
    <event>
       <mask>
          <maskelement>
@@ -172,7 +185,7 @@
 	alias=%parm[#2]%
 	snmpaid=%parm[#3]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Warning</severity>
       <varbindsdecode>
          <parmid>parm[#1]</parmid>
          <decode varbindvalue="1" varbinddecodedstring="insel2MainAudio"/>
@@ -188,7 +201,14 @@
          <decode varbindvalue="16" varbinddecodedstring="insel2AUXDigital"/>
          <decode varbindvalue="128" varbinddecodedstring="insel2Auto"/>
       </varbindsdecode>
+      
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%:%parm[#1]%" alarm-type="1" auto-clean="false"/>
    </event>
+   
+   <!-- ******************************** -->
+   <!-- NOTIFY DIGITAL SYNC RECOVER      -->
+   <!-- ******************************** -->
+   
    <event>
       <mask>
          <maskelement>
@@ -240,7 +260,7 @@
 	alias=%parm[#2]%
 	snmpaid=%parm[#3]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Cleared</severity>
       <varbindsdecode>
          <parmid>parm[#1]</parmid>
          <decode varbindvalue="1" varbinddecodedstring="insel2MainAudio"/>
@@ -256,7 +276,17 @@
          <decode varbindvalue="16" varbinddecodedstring="insel2AUXDigital"/>
          <decode varbindvalue="128" varbinddecodedstring="insel2Auto"/>
       </varbindsdecode>
+
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%:%parm[#1]%"
+                  alarm-type="2"
+                  clear-key="uei.opennms.org/traps/DB8008-MIB/notifDigitalSyncLoss:%dpname%:%nodeid%:%parm[#1]%"
+                  auto-clean="false"/>
    </event>
+   
+   <!-- ******************************** -->
+   <!-- NOTIFY AUDIO LOSS                -->
+   <!-- ******************************** -->
+   
    <event>
       <mask>
          <maskelement>
@@ -308,7 +338,7 @@
 	alias=%parm[#2]%
 	snmpaid=%parm[#3]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Warning</severity>
       <varbindsdecode>
          <parmid>parm[#1]</parmid>
          <decode varbindvalue="1" varbinddecodedstring="insel2MainAudio"/>
@@ -324,7 +354,14 @@
          <decode varbindvalue="16" varbinddecodedstring="insel2AUXDigital"/>
          <decode varbindvalue="128" varbinddecodedstring="insel2Auto"/>
       </varbindsdecode>
+      
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%:%parm[#1]%" alarm-type="1" auto-clean="false"/>
    </event>
+   
+      
+   <!-- ******************************** -->
+   <!-- NOTIFY AUDIO RECOVER             -->
+   <!-- ******************************** -->
    <event>
       <mask>
          <maskelement>
@@ -376,7 +413,7 @@
 	alias=%parm[#2]%
 	snmpaid=%parm[#3]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Cleared</severity>
       <varbindsdecode>
          <parmid>parm[#1]</parmid>
          <decode varbindvalue="1" varbinddecodedstring="insel2MainAudio"/>
@@ -392,5 +429,10 @@
          <decode varbindvalue="16" varbinddecodedstring="insel2AUXDigital"/>
          <decode varbindvalue="128" varbinddecodedstring="insel2Auto"/>
       </varbindsdecode>
+      
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%:%parm[#1]%"
+                  alarm-type="2"
+                  clear-key="uei.opennms.org/traps/DB8008-MIB/notifAudioLoss:%dpname%:%nodeid%:%parm[#1]%"
+                  auto-clean="false"/>
    </event>
 </events>

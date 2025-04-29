@@ -2,6 +2,12 @@
 # Note: Ordering is important in this file. Patterns should be ordered from most specific to least specific. The first
 # pattern found to match will be the one used.
 
+# added pattern 
+# Draytek syslog pattern - based off # RFC 3164 with time
+<%{INT:facilityPriority}>%{MONTH:month} %{INT:day} %{INT:hour}:%{INT:minute}:%{INT:second} %{HOSTNAMEORIP:hostname}: %{STRING:message}
+
+# original patterns
+
 # Support for Cisco syslog message patterns
 <%{INT:facilityPriority}>%{INT:parmSequenceNum}: %{MONTH:month}%{WHITESPACE:ignore}%{INT:day} %{INT:hour}:%{INT:minute}:%{INT:second}: %{STRING:message}
 <%{INT:facilityPriority}>%{INT:parmSequenceNum}: %{NOSPACE:ignore}: %{MONTH:month}%{WHITESPACE:ignore}%{INT:day} %{INT:hour}:%{INT:minute}:%{INT:second}.%{INT:secondFraction} %{STRING:timezone}: %{STRING:message}

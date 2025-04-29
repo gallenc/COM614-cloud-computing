@@ -32,7 +32,7 @@
 	snmpAgentID=%parm[#1]%
 	serial=%parm[#2]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Warning</severity>
    </event>
    <event>
       <mask>
@@ -74,7 +74,7 @@
 	snmpAgentID=%parm[#1]%
 	currentSource=%parm[#2]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Warning</severity>
       <varbindsdecode>
          <parmid>parm[#2]</parmid>
          <decode varbindvalue="0" varbinddecodedstring="url1"/>

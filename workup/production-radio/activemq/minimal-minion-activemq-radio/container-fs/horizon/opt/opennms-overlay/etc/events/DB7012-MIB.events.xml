@@ -1,4 +1,8 @@
 <events xmlns="http://xmlns.opennms.org/xsd/eventconf">
+
+   <!-- *************************** -->
+   <!-- NOTIFY TEST                 -->
+   <!-- *************************** -->
    <event>
       <mask>
          <maskelement>
@@ -32,8 +36,13 @@
 	alias=%parm[#1]%
 	snmpaid=%parm[#2]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Normal</severity>
    </event>
+   
+   <!-- ******************************************* -->
+   <!-- notifRflvlOk  threshold alarm clear         -->
+   <!-- note same uei so that any raise is cleared  -->
+   <!-- ******************************************* -->
    <event>
       <mask>
          <maskelement>
@@ -72,8 +81,18 @@
 	alias=%parm[#2]%
 	snmpaid=%parm[#3]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Cleared</severity>
+      
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%"
+                  alarm-type="2"
+                  clear-key="uei.opennms.org/traps/DB7012-MIB/notifRflvThresholdException:%dpname%:%nodeid%"
+                  auto-clean="false"/>
    </event>
+   
+   <!-- ************************************ -->
+   <!-- notifRflvlLow  threshold alarm raise -->
+   <!-- note same uei for all raises         -->
+   <!-- ************************************ -->
    <event>
       <mask>
          <maskelement>
@@ -89,7 +108,8 @@
             <mevalue>3</mevalue>
          </maskelement>
       </mask>
-      <uei>uei.opennms.org/traps/DB7012-MIB/notifRflvlLow</uei>
+      <uei>uei.opennms.org/traps/DB7012-MIB/notifRflvThresholdException</uei>
+      <!-- uei.opennms.org/traps/DB7012-MIB/notifRflvlLow</uei> -->
       <event-label>DB7012-MIB defined trap event: notifRflvlLow</event-label>
       <descr>
 &lt;p>notif RFLvl Low&lt;/p>&lt;table>
@@ -111,9 +131,15 @@
 	mntrRflvlValue=%parm[#1]%
 	alias=%parm[#2]%
 	snmpaid=%parm[#3]%&lt;/p>
-	</logmsg>
-      <severity>Indeterminate</severity>
+	  </logmsg>
+      <severity>Warning</severity>
+      
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%" alarm-type="1" auto-clean="false"/>
    </event>
+   
+   <!-- ************************************ -->
+   <!-- notifRflvlHigh threshold alarm raise -->
+   <!-- ************************************ -->
    <event>
       <mask>
          <maskelement>
@@ -129,7 +155,8 @@
             <mevalue>4</mevalue>
          </maskelement>
       </mask>
-      <uei>uei.opennms.org/traps/DB7012-MIB/notifRflvlHigh</uei>
+      <uei>uei.opennms.org/traps/DB7012-MIB/notifRflvThresholdException</uei>
+      <!-- uei.opennms.org/traps/DB7012-MIB/notifRflvlHigh</uei> -->
       <event-label>DB7012-MIB defined trap event: notifRflvlHigh</event-label>
       <descr>
 &lt;p>notif RFLvl High&lt;/p>&lt;table>
@@ -152,8 +179,14 @@
 	alias=%parm[#2]%
 	snmpaid=%parm[#3]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Warning</severity>
+
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%" alarm-type="1" auto-clean="false"/>
    </event>
+   
+   <!-- ****************************************** -->
+   <!-- notifRflvlWarningLow threshold alarm raise -->
+   <!-- ****************************************** -->
    <event>
       <mask>
          <maskelement>
@@ -169,7 +202,8 @@
             <mevalue>5</mevalue>
          </maskelement>
       </mask>
-      <uei>uei.opennms.org/traps/DB7012-MIB/notifRflvlWarningLow</uei>
+      <uei>uei.opennms.org/traps/DB7012-MIB/notifRflvThresholdException</uei>
+      <!-- uei.opennms.org/traps/DB7012-MIB/notifRflvlWarningLow</uei> -->
       <event-label>DB7012-MIB defined trap event: notifRflvlWarningLow</event-label>
       <descr>
 &lt;p>notif RFLvl Warning Low&lt;/p>&lt;table>
@@ -192,8 +226,14 @@
 	alias=%parm[#2]%
 	snmpaid=%parm[#3]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Warning</severity>
+      
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%" alarm-type="1" auto-clean="false"/>
    </event>
+   
+   <!-- ******************************************* -->
+   <!-- notifRflvlWarningHigh threshold alarm raise -->
+   <!-- ******************************************* -->
    <event>
       <mask>
          <maskelement>
@@ -209,7 +249,8 @@
             <mevalue>6</mevalue>
          </maskelement>
       </mask>
-      <uei>uei.opennms.org/traps/DB7012-MIB/notifRflvlWarningHigh</uei>
+      <uei>uei.opennms.org/traps/DB7012-MIB/notifRflvThresholdException</uei>
+      <!-- <uei>uei.opennms.org/traps/DB7012-MIB/notifRflvlWarningHigh</uei> -->
       <event-label>DB7012-MIB defined trap event: notifRflvlWarningHigh</event-label>
       <descr>
 &lt;p>notif RFLvl Warning High&lt;/p>&lt;table>
@@ -232,8 +273,15 @@
 	alias=%parm[#2]%
 	snmpaid=%parm[#3]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Warning</severity>
+      
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%" alarm-type="1" auto-clean="false"/>
    </event>
+
+   
+   <!-- ******************************************* -->
+   <!-- notifDabOk alarm clear                      -->
+   <!-- ******************************************* -->
    <event>
       <mask>
          <maskelement>
@@ -275,13 +323,24 @@
 	alias=%parm[#2]%
 	snmpaid=%parm[#3]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Cleared</severity>
       <varbindsdecode>
          <parmid>parm[#1]</parmid>
          <decode varbindvalue="0" varbinddecodedstring="sigDown"/>
          <decode varbindvalue="1" varbinddecodedstring="sigUp"/>
       </varbindsdecode>
+      
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%"
+                  alarm-type="2"
+                  clear-key="uei.opennms.org/traps/DB7012-MIB/notifDabLoss:%dpname%:%nodeid%"
+                  auto-clean="false"/>
+
    </event>
+   
+   
+   <!-- ******************************************* -->
+   <!-- notifDabLoss alarm raise                    -->
+   <!-- ******************************************* -->
    <event>
       <mask>
          <maskelement>
@@ -323,13 +382,20 @@
 	alias=%parm[#2]%
 	snmpaid=%parm[#3]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Major</severity>
       <varbindsdecode>
          <parmid>parm[#1]</parmid>
          <decode varbindvalue="0" varbinddecodedstring="sigDown"/>
          <decode varbindvalue="1" varbinddecodedstring="sigUp"/>
       </varbindsdecode>
+
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%" alarm-type="1" auto-clean="false"/>
    </event>
+   
+   
+   <!-- ******************************************* -->
+   <!-- notifSnrOk threshold alarm clear            -->
+   <!-- ******************************************* -->
    <event>
       <mask>
          <maskelement>
@@ -368,8 +434,17 @@
 	alias=%parm[#2]%
 	snmpaid=%parm[#3]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Cleared</severity>
+      
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%"
+                  alarm-type="2"
+                  clear-key="uei.opennms.org/traps/DB7012-MIB/SNRThresholdException:%dpname%:%nodeid%"
+                  auto-clean="false"/>
    </event>
+   
+   <!-- ******************************************* -->
+   <!-- notifSnrLow threshold alarm raise           -->
+   <!-- ******************************************* -->
    <event>
       <mask>
          <maskelement>
@@ -385,7 +460,8 @@
             <mevalue>10</mevalue>
          </maskelement>
       </mask>
-      <uei>uei.opennms.org/traps/DB7012-MIB/notifSnrLow</uei>
+      <uei>uei.opennms.org/traps/DB7012-MIB/SNRThresholdException</uei>
+<!--       <uei>uei.opennms.org/traps/DB7012-MIB/notifSnrLow</uei> -->
       <event-label>DB7012-MIB defined trap event: notifSnrLow</event-label>
       <descr>
 &lt;p>notif SNR Low&lt;/p>&lt;table>
@@ -408,8 +484,15 @@
 	alias=%parm[#2]%
 	snmpaid=%parm[#3]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Warning</severity>
+
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%" alarm-type="1" auto-clean="false"/>
    </event>
+   
+         
+   <!-- ******************************************* -->
+   <!-- notifSnrHigh threshold alarm raise          -->
+   <!-- ******************************************* -->
    <event>
       <mask>
          <maskelement>
@@ -425,7 +508,8 @@
             <mevalue>11</mevalue>
          </maskelement>
       </mask>
-      <uei>uei.opennms.org/traps/DB7012-MIB/notifSnrHigh</uei>
+      <uei>uei.opennms.org/traps/DB7012-MIB/SNRThresholdException</uei>
+<!--       <uei>uei.opennms.org/traps/DB7012-MIB/notifSnrHigh</uei> -->
       <event-label>DB7012-MIB defined trap event: notifSnrHigh</event-label>
       <descr>
 &lt;p>notif SNR High&lt;/p>&lt;table>
@@ -448,8 +532,14 @@
 	alias=%parm[#2]%
 	snmpaid=%parm[#3]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Warning</severity>
+
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%" alarm-type="1" auto-clean="false"/>
    </event>
+   
+   <!-- ******************************************* -->
+   <!-- notifSnrWarningLow threshold alarm raise    -->
+   <!-- ******************************************* -->
    <event>
       <mask>
          <maskelement>
@@ -465,7 +555,8 @@
             <mevalue>12</mevalue>
          </maskelement>
       </mask>
-      <uei>uei.opennms.org/traps/DB7012-MIB/notifSnrWarningLow</uei>
+      <uei>uei.opennms.org/traps/DB7012-MIB/SNRThresholdException</uei>
+<!--       <uei>uei.opennms.org/traps/DB7012-MIB/notifSnrWarningLow</uei> -->
       <event-label>DB7012-MIB defined trap event: notifSnrWarningLow</event-label>
       <descr>
 &lt;p>notif SNR Warning Low&lt;/p>&lt;table>
@@ -488,8 +579,14 @@
 	alias=%parm[#2]%
 	snmpaid=%parm[#3]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Warning</severity>
+
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%" alarm-type="1" auto-clean="false"/>
    </event>
+   
+   <!-- ******************************************* -->
+   <!-- notifSnrWarningHigh threshold alarm raise   -->
+   <!-- ******************************************* -->
    <event>
       <mask>
          <maskelement>
@@ -505,7 +602,8 @@
             <mevalue>13</mevalue>
          </maskelement>
       </mask>
-      <uei>uei.opennms.org/traps/DB7012-MIB/notifSnrWarningHigh</uei>
+      <uei>uei.opennms.org/traps/DB7012-MIB/SNRThresholdException</uei>
+<!--       <uei>uei.opennms.org/traps/DB7012-MIB/notifSnrWarningHigh</uei> -->
       <event-label>DB7012-MIB defined trap event: notifSnrWarningHigh</event-label>
       <descr>
 &lt;p>notif SNR Warning High&lt;/p>&lt;table>
@@ -528,8 +626,14 @@
 	alias=%parm[#2]%
 	snmpaid=%parm[#3]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Warning</severity>
+
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%" alarm-type="1" auto-clean="false"/>
    </event>
+   
+   <!-- ******************************************* -->
+   <!-- notifCnrOk threshold alarm clear            -->
+   <!-- ******************************************* -->
    <event>
       <mask>
          <maskelement>
@@ -568,8 +672,17 @@
 	alias=%parm[#2]%
 	snmpaid=%parm[#3]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Cleared</severity>
+      
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%"
+                  alarm-type="2"
+                  clear-key="uei.opennms.org/traps/DB7012-MIB/CNRThresholdException:%dpname%:%nodeid%"
+                  auto-clean="false"/>
    </event>
+   
+   <!-- ******************************************* -->
+   <!-- notifCnrLow threshold alarm raise           -->
+   <!-- ******************************************* -->
    <event>
       <mask>
          <maskelement>
@@ -585,7 +698,8 @@
             <mevalue>15</mevalue>
          </maskelement>
       </mask>
-      <uei>uei.opennms.org/traps/DB7012-MIB/notifCnrLow</uei>
+      <uei>uei.opennms.org/traps/DB7012-MIB/CNRThresholdException</uei>
+<!--       <uei>uei.opennms.org/traps/DB7012-MIB/notifCnrLow</uei> -->
       <event-label>DB7012-MIB defined trap event: notifCnrLow</event-label>
       <descr>
 &lt;p>notif CNR Low&lt;/p>&lt;table>
@@ -608,8 +722,13 @@
 	alias=%parm[#2]%
 	snmpaid=%parm[#3]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Warning</severity>
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%" alarm-type="1" auto-clean="false"/>
    </event>
+   
+   <!-- ******************************************* -->
+   <!-- notifCnrHigh threshold alarm raise          -->
+   <!-- ******************************************* -->
    <event>
       <mask>
          <maskelement>
@@ -625,7 +744,8 @@
             <mevalue>16</mevalue>
          </maskelement>
       </mask>
-      <uei>uei.opennms.org/traps/DB7012-MIB/notifCnrHigh</uei>
+      <uei>uei.opennms.org/traps/DB7012-MIB/CNRThresholdException</uei>
+<!--       <uei>uei.opennms.org/traps/DB7012-MIB/notifCnrHigh</uei> -->
       <event-label>DB7012-MIB defined trap event: notifCnrHigh</event-label>
       <descr>
 &lt;p>notif CNR High&lt;/p>&lt;table>
@@ -648,8 +768,13 @@
 	alias=%parm[#2]%
 	snmpaid=%parm[#3]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Warning</severity>
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%" alarm-type="1" auto-clean="false"/>
    </event>
+   
+   <!-- ******************************************* -->
+   <!-- notifCnrWarningLow threshold alarm raise    -->
+   <!-- ******************************************* -->
    <event>
       <mask>
          <maskelement>
@@ -665,7 +790,8 @@
             <mevalue>17</mevalue>
          </maskelement>
       </mask>
-      <uei>uei.opennms.org/traps/DB7012-MIB/notifCnrWarningLow</uei>
+      <uei>uei.opennms.org/traps/DB7012-MIB/CNRThresholdException</uei>
+<!--       <uei>uei.opennms.org/traps/DB7012-MIB/notifCnrWarningLow</uei> -->
       <event-label>DB7012-MIB defined trap event: notifCnrWarningLow</event-label>
       <descr>
 &lt;p>notif CNR Warning Low&lt;/p>&lt;table>
@@ -688,8 +814,13 @@
 	alias=%parm[#2]%
 	snmpaid=%parm[#3]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Warning</severity>
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%" alarm-type="1" auto-clean="false"/>
    </event>
+   
+   <!-- ******************************************* -->
+   <!-- notifCnrWarningHigh threshold alarm raise   -->
+   <!-- ******************************************* -->
    <event>
       <mask>
          <maskelement>
@@ -705,7 +836,8 @@
             <mevalue>18</mevalue>
          </maskelement>
       </mask>
-      <uei>uei.opennms.org/traps/DB7012-MIB/notifCnrWarningHigh</uei>
+      <uei>uei.opennms.org/traps/DB7012-MIB/CNRThresholdException</uei>
+<!--       <uei>uei.opennms.org/traps/DB7012-MIB/notifCnrWarningHigh</uei> -->
       <event-label>DB7012-MIB defined trap event: notifCnrWarningHigh</event-label>
       <descr>
 &lt;p>notif CNR Warning High&lt;/p>&lt;table>
@@ -728,8 +860,13 @@
 	alias=%parm[#2]%
 	snmpaid=%parm[#3]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Warning</severity>
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%" alarm-type="1" auto-clean="false"/>
    </event>
+   
+   <!-- ******************************************* -->
+   <!-- notifLeftOk threshold alarm clear           -->
+   <!-- ******************************************* -->
    <event>
       <mask>
          <maskelement>
@@ -768,8 +905,18 @@
 	alias=%parm[#2]%
 	snmpaid=%parm[#3]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Cleared</severity>
+      
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%"
+                  alarm-type="2"
+                  clear-key="uei.opennms.org/traps/DB7012-MIB/notifLeftThresholdException:%dpname%:%nodeid%"
+                  auto-clean="false"/>
    </event>
+   
+   
+   <!-- ******************************************* -->
+   <!-- notifLeftLow threshold alarm raise          -->
+   <!-- ******************************************* -->
    <event>
       <mask>
          <maskelement>
@@ -785,7 +932,8 @@
             <mevalue>20</mevalue>
          </maskelement>
       </mask>
-      <uei>uei.opennms.org/traps/DB7012-MIB/notifLeftLow</uei>
+      <uei>uei.opennms.org/traps/DB7012-MIB/notifLeftThresholdException</uei>
+<!--       <uei>uei.opennms.org/traps/DB7012-MIB/notifLeftLow</uei> -->
       <event-label>DB7012-MIB defined trap event: notifLeftLow</event-label>
       <descr>
 &lt;p>notif Left Low&lt;/p>&lt;table>
@@ -808,8 +956,14 @@
 	alias=%parm[#2]%
 	snmpaid=%parm[#3]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Warning</severity>
+
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%" alarm-type="1" auto-clean="false"/>
    </event>
+   
+   <!-- ******************************************* -->
+   <!-- notifLeftHigh threshold alarm raise         -->
+   <!-- ******************************************* -->
    <event>
       <mask>
          <maskelement>
@@ -825,7 +979,8 @@
             <mevalue>21</mevalue>
          </maskelement>
       </mask>
-      <uei>uei.opennms.org/traps/DB7012-MIB/notifLeftHigh</uei>
+      <uei>uei.opennms.org/traps/DB7012-MIB/notifLeftThresholdException</uei>
+<!--       <uei>uei.opennms.org/traps/DB7012-MIB/notifLeftHigh</uei> -->
       <event-label>DB7012-MIB defined trap event: notifLeftHigh</event-label>
       <descr>
 &lt;p>notif Left High&lt;/p>&lt;table>
@@ -848,8 +1003,14 @@
 	alias=%parm[#2]%
 	snmpaid=%parm[#3]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Warning</severity>
+
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%" alarm-type="1" auto-clean="false"/>
    </event>
+   
+   <!-- ******************************************* -->
+   <!-- notifLeftWarningLow threshold alarm raise   -->
+   <!-- ******************************************* -->
    <event>
       <mask>
          <maskelement>
@@ -865,7 +1026,8 @@
             <mevalue>22</mevalue>
          </maskelement>
       </mask>
-      <uei>uei.opennms.org/traps/DB7012-MIB/notifLeftWarningLow</uei>
+      <uei>uei.opennms.org/traps/DB7012-MIB/notifLeftThresholdException</uei>
+<!--       <uei>uei.opennms.org/traps/DB7012-MIB/notifLeftWarningLow</uei> -->
       <event-label>DB7012-MIB defined trap event: notifLeftWarningLow</event-label>
       <descr>
 &lt;p>notif Left Warning Low&lt;/p>&lt;table>
@@ -888,8 +1050,14 @@
 	alias=%parm[#2]%
 	snmpaid=%parm[#3]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Warning</severity>
+
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%" alarm-type="1" auto-clean="false"/>
    </event>
+   
+   <!-- ******************************************* -->
+   <!-- notifLeftWarningHigh threshold alarm raise  -->
+   <!-- ******************************************* -->
    <event>
       <mask>
          <maskelement>
@@ -905,7 +1073,8 @@
             <mevalue>23</mevalue>
          </maskelement>
       </mask>
-      <uei>uei.opennms.org/traps/DB7012-MIB/notifLeftWarningHigh</uei>
+      <uei>uei.opennms.org/traps/DB7012-MIB/notifLeftThresholdException</uei>
+<!--       <uei>uei.opennms.org/traps/DB7012-MIB/notifLeftWarningHigh</uei> -->
       <event-label>DB7012-MIB defined trap event: notifLeftWarningHigh</event-label>
       <descr>
 &lt;p>notif Left Warning High&lt;/p>&lt;table>
@@ -928,8 +1097,15 @@
 	alias=%parm[#2]%
 	snmpaid=%parm[#3]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Warning</severity>
+
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%" alarm-type="1" auto-clean="false"/>
    </event>
+ 
+   
+   <!-- ******************************************* -->
+   <!-- notifRightOk threshold alarm clear          -->
+   <!-- ******************************************* -->
    <event>
       <mask>
          <maskelement>
@@ -968,8 +1144,17 @@
 	alias=%parm[#2]%
 	snmpaid=%parm[#3]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Cleared</severity>
+
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%"
+                  alarm-type="2"
+                  clear-key="uei.opennms.org/traps/DB7012-MIB/notifRightThresholdException:%dpname%:%nodeid%"
+                  auto-clean="false"/>
    </event>
+   
+   <!-- ******************************************* -->
+   <!-- notifRightLow threshold alarm raise         -->
+   <!-- ******************************************* -->
    <event>
       <mask>
          <maskelement>
@@ -985,7 +1170,9 @@
             <mevalue>25</mevalue>
          </maskelement>
       </mask>
-      <uei>uei.opennms.org/traps/DB7012-MIB/notifRightLow</uei>
+      
+      <uei>uei.opennms.org/traps/DB7012-MIB/notifRightThresholdException</uei>
+<!--       <uei>uei.opennms.org/traps/DB7012-MIB/notifRightLow</uei> -->
       <event-label>DB7012-MIB defined trap event: notifRightLow</event-label>
       <descr>
 &lt;p>notif Right Low&lt;/p>&lt;table>
@@ -1008,8 +1195,14 @@
 	alias=%parm[#2]%
 	snmpaid=%parm[#3]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Warning</severity>
+
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%" alarm-type="1" auto-clean="false"/>
    </event>
+   
+   <!-- ******************************************* -->
+   <!-- notifRightHigh threshold alarm raise        -->
+   <!-- ******************************************* -->
    <event>
       <mask>
          <maskelement>
@@ -1025,7 +1218,8 @@
             <mevalue>26</mevalue>
          </maskelement>
       </mask>
-      <uei>uei.opennms.org/traps/DB7012-MIB/notifRightHigh</uei>
+      <uei>uei.opennms.org/traps/DB7012-MIB/notifRightThresholdException</uei>
+<!--       <uei>uei.opennms.org/traps/DB7012-MIB/notifRightHigh</uei> -->
       <event-label>DB7012-MIB defined trap event: notifRightHigh</event-label>
       <descr>
 &lt;p>notif Right High&lt;/p>&lt;table>
@@ -1048,8 +1242,14 @@
 	alias=%parm[#2]%
 	snmpaid=%parm[#3]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Warning</severity>
+
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%" alarm-type="1" auto-clean="false"/>
    </event>
+   
+   <!-- ******************************************* -->
+   <!-- notifRightWarningLow threshold alarm raise  -->
+   <!-- ******************************************* -->
    <event>
       <mask>
          <maskelement>
@@ -1065,7 +1265,8 @@
             <mevalue>27</mevalue>
          </maskelement>
       </mask>
-      <uei>uei.opennms.org/traps/DB7012-MIB/notifRightWarningLow</uei>
+            <uei>uei.opennms.org/traps/DB7012-MIB/notifRightThresholdException</uei>
+<!--       <uei>uei.opennms.org/traps/DB7012-MIB/notifRightWarningLow</uei> -->
       <event-label>DB7012-MIB defined trap event: notifRightWarningLow</event-label>
       <descr>
 &lt;p>notif Right Warning Low&lt;/p>&lt;table>
@@ -1088,8 +1289,14 @@
 	alias=%parm[#2]%
 	snmpaid=%parm[#3]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Warning</severity>
+
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%" alarm-type="1" auto-clean="false"/>
    </event>
+   
+   <!-- ******************************************* -->
+   <!-- notifRightWarningHigh threshold alarm raise -->
+   <!-- ******************************************* -->
    <event>
       <mask>
          <maskelement>
@@ -1105,7 +1312,8 @@
             <mevalue>28</mevalue>
          </maskelement>
       </mask>
-      <uei>uei.opennms.org/traps/DB7012-MIB/notifRightWarningHigh</uei>
+      <uei>uei.opennms.org/traps/DB7012-MIB/notifRightThresholdException</uei>
+<!--       <uei>uei.opennms.org/traps/DB7012-MIB/notifRightWarningHigh</uei> -->
       <event-label>DB7012-MIB defined trap event: notifRightWarningHigh</event-label>
       <descr>
 &lt;p>notif Right Warning High&lt;/p>&lt;table>
@@ -1128,8 +1336,14 @@
 	alias=%parm[#2]%
 	snmpaid=%parm[#3]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Warning</severity>
+
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%" alarm-type="1" auto-clean="false"/>
    </event>
+
+   <!-- ******************************************* -->
+   <!-- notifFicQualityOk threshold alarm clear     -->
+   <!-- ******************************************* -->
    <event>
       <mask>
          <maskelement>
@@ -1168,8 +1382,17 @@
 	alias=%parm[#2]%
 	snmpaid=%parm[#3]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Cleared</severity>
+      
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%"
+                  alarm-type="2"
+                  clear-key="uei.opennms.org/traps/DB7012-MIB/notifFicQualityThresholdException:%dpname%:%nodeid%"
+                  auto-clean="false"/>
    </event>
+   
+   <!-- ******************************************* -->
+   <!-- notifFicQualityLow threshold alarm raise    -->
+   <!-- ******************************************* -->
    <event>
       <mask>
          <maskelement>
@@ -1185,7 +1408,8 @@
             <mevalue>30</mevalue>
          </maskelement>
       </mask>
-      <uei>uei.opennms.org/traps/DB7012-MIB/notifFicQualityLow</uei>
+      <uei>uei.opennms.org/traps/DB7012-MIB/notifFicQualityThresholdException</uei>
+<!--       <uei>uei.opennms.org/traps/DB7012-MIB/notifFicQualityLow</uei> -->
       <event-label>DB7012-MIB defined trap event: notifFicQualityLow</event-label>
       <descr>
 &lt;p>notif FIC Quality Low&lt;/p>&lt;table>
@@ -1208,8 +1432,14 @@
 	alias=%parm[#2]%
 	snmpaid=%parm[#3]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Warning</severity>
+
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%" alarm-type="1" auto-clean="false"/>
    </event>
+   
+   <!-- ******************************************* -->
+   <!-- notifFicQualityHigh threshold alarm raise   -->
+   <!-- ******************************************* -->
    <event>
       <mask>
          <maskelement>
@@ -1225,7 +1455,8 @@
             <mevalue>31</mevalue>
          </maskelement>
       </mask>
-      <uei>uei.opennms.org/traps/DB7012-MIB/notifFicQualityHigh</uei>
+      <uei>uei.opennms.org/traps/DB7012-MIB/notifFicQualityThresholdException</uei>
+<!--       <uei>uei.opennms.org/traps/DB7012-MIB/notifFicQualityHigh</uei> -->
       <event-label>DB7012-MIB defined trap event: notifFicQualityHigh</event-label>
       <descr>
 &lt;p>notif FIC Quality High&lt;/p>&lt;table>
@@ -1248,8 +1479,14 @@
 	alias=%parm[#2]%
 	snmpaid=%parm[#3]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Warning</severity>
+
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%" alarm-type="1" auto-clean="false"/>
    </event>
+   
+   <!-- *********************************************** -->
+   <!-- notifFicQualityWarningLow threshold alarm raise -->
+   <!-- *********************************************** -->
    <event>
       <mask>
          <maskelement>
@@ -1265,7 +1502,8 @@
             <mevalue>32</mevalue>
          </maskelement>
       </mask>
-      <uei>uei.opennms.org/traps/DB7012-MIB/notifFicQualityWarningLow</uei>
+      <uei>uei.opennms.org/traps/DB7012-MIB/notifFicQualityThresholdException</uei>
+<!--       <uei>uei.opennms.org/traps/DB7012-MIB/notifFicQualityWarningLow</uei> -->
       <event-label>DB7012-MIB defined trap event: notifFicQualityWarningLow</event-label>
       <descr>
 &lt;p>notif FIC Quality Warning Low&lt;/p>&lt;table>
@@ -1288,8 +1526,14 @@
 	alias=%parm[#2]%
 	snmpaid=%parm[#3]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Warning</severity>
+
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%" alarm-type="1" auto-clean="false"/>
    </event>
+
+   <!-- ************************************************ -->
+   <!-- notifFicQualityWarningHigh threshold alarm raise -->
+   <!-- ************************************************ -->
    <event>
       <mask>
          <maskelement>
@@ -1305,7 +1549,8 @@
             <mevalue>33</mevalue>
          </maskelement>
       </mask>
-      <uei>uei.opennms.org/traps/DB7012-MIB/notifFicQualityWarningHigh</uei>
+      <uei>uei.opennms.org/traps/DB7012-MIB/notifFicQualityThresholdException</uei>
+<!--       <uei>uei.opennms.org/traps/DB7012-MIB/notifFicQualityWarningHigh</uei> -->
       <event-label>DB7012-MIB defined trap event: notifFicQualityWarningHigh</event-label>
       <descr>
 &lt;p>notif FIC Quality Warning High&lt;/p>&lt;table>
@@ -1328,6 +1573,8 @@
 	alias=%parm[#2]%
 	snmpaid=%parm[#3]%&lt;/p>
 	</logmsg>
-      <severity>Indeterminate</severity>
+      <severity>Warning</severity>
+
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%" alarm-type="1" auto-clean="false"/>
    </event>
 </events>

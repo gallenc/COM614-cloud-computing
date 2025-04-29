@@ -94,9 +94,9 @@ services:
       - ./container-fs/horizon/etc/conf.d/confd.toml:/etc/confd/confd.toml
     command: ["-s"]
     ports:
-      - "8101:8101/tcp"
-      - "8980:8980/tcp"
-      - "10162:1162/udp"  # trap
+      - "8101:8101/tcp"   # karaf ssh
+      - "8980:8980/tcp"   # web ui
+      - "10162:1162/udp"  # snmp trap
       - "10514:10514/udp" # syslog
       - "61616:61616/tcp" # activemq
       - "8990:8990" # grpc
@@ -129,6 +129,12 @@ services:
       GF_SERVER_ROOT_URL: http://localhost:80/grafana/
       GF_SERVER_SERVER_FROM_SUB_PATH: true
 
+      # datasources - should match variable substitution in datasources
+      ONMS_GRAFANA_USERNAME: admin
+      ONMS_GRAFANA_PASSWORD: admin
+      POSTGRES_GRAFANA_USERNAME: postgres
+      POSTGRES_GRAFANA_PASSWORD: postgres
+
     volumes:
       - data-grafana:/var/lib/grafana
       - ./container-fs/grafana/provisioning:/etc/grafana/provisioning/
@@ -143,3 +149,31 @@ services:
     networks:
       frontend:
         ipv4_address: 172.20.0.20
+
+  # snmpsim container in network default - all radio mibs
+  snmpsim:
+#    image: ${DOCKER_REGISTRY:-docker.io}/tandrup/snmpsim:${SNMPSIM_VERSION:-v0.4}
+    image: onms-training/snmpsim
+    build: ./container-fs/snmpsim/
+    container_name: snmpsim
+    hostname: snmpsim
+    environment:
+      EXTRA_FLAGS: "--v3-user=testing --v3-auth-key=testing123"
+    volumes:
+      - ./container-fs/snmpsim/data/cardinalImdu.snmprec:/usr/local/snmpsim/data/cardinalImdu.snmprec
+      - ./container-fs/snmpsim/data/DEVA7012.snmprec:/usr/local/snmpsim/data/DEVA7012.snmprec
+      - ./container-fs/snmpsim/data/DEVA8008.snmprec:/usr/local/snmpsim/data/DEVA8008.snmprec
+      - ./container-fs/snmpsim/data/DEVA9000.snmprec:/usr/local/snmpsim/data/DEVA9000.snmprec
+      - ./container-fs/snmpsim/data/draytek2860-pri.snmprec:/usr/local/snmpsim/data/draytek2860-pri.snmprec
+      - ./container-fs/snmpsim/data/draytek2860-sec.snmprec:/usr/local/snmpsim/data/draytek2860-sec.snmprec
+      - ./container-fs/snmpsim/data/draytek2860-virtual.snmprec:/usr/local/snmpsim/data/draytek2860-virtual.snmprec
+
+      # note empty public.snmprec so that there is no response to a community name public request
+      - ./container-fs/snmpsim/data/public.snmprec:/usr/local/snmpsim/data/public.snmprec
+      # mibs folder so we can compile mibs if needed
+      - ./container-fs/snmpsim/mibs:/usr/local/snmpsim/mibs
+    ports:
+      - "11761:161/udp"
+    networks:
+      frontend:
+        ipv4_address: 172.20.0.100
