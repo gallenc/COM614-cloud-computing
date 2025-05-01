@@ -163,6 +163,26 @@ services:
       frontend:
         ipv4_address: 172.20.0.20
 
+  pris:
+    container_name: pris
+    image: ${DOCKER_REGISTRY:-docker.io}/${DOCKER_ORG:-opennms}/${MINION_OCI:-pris}:${PRIS_VERSION:-latest}
+    environment:
+      - TZ=Europe/Berlin
+      - JAVA_OPTS=-XX:+PrintGCDetails -XX:+UnlockExperimentalVMOptions
+    volumes:
+      - ./container-fs/pris/requisitions:/opt/opennms-pris/requisitions
+      - ./container-fs/pris/scriptsteps:/opt/opennms-pris/scriptsteps
+    healthcheck:
+      test: ["CMD", "curl", "-f", "-I", "http://localhost:8000/documentation/index.html"]
+      interval: 30s
+      timeout: 5s
+      retries: 1
+    ports:
+      - "8000:8000"
+    networks:
+      frontend:
+        ipv4_address: 172.20.0.35
+
 # minion1 is a simulation of the minion on site. Used to access devices simulated using snmpsim
 #  minion1:
 #    image: ${DOCKER_REGISTRY:-docker.io}/${DOCKER_ORG:-opennms}/${MINION_OCI:-minion}:${ONMS_VERSION:-bleeding}

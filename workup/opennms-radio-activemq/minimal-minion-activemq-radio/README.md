@@ -65,6 +65,15 @@ snmpwalk -v1 -On VIGOR2927L-VIRTUAL -c public .1.3
 snmpwalk -v1 -On cardinalImdu -c public .1.3
 ```
 
+## Pris
+
+Provisioning tool is available locally at
+
+http://localhost:8000/
+
+http://pris:8000/
+
+requisition at http://localhost:8000/requisitions/requisition1
 
 ## rrd tool
 

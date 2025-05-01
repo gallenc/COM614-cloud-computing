@@ -1,0 +1,10 @@
+Node_Label,ID_,Location,Parent_Foreign_Id,Parent_Foreign_Source,IP_Management,MgmtType_,svc_Forced,cat_,Asset_region,Asset_serialNumber,Asset_assetNumber,Asset_latitude,Asset_longitude,Asset_category,Asset_thresholdCategory,Asset_notifyCategory,Asset_pollerCategory,Asset_displayCategory,Asset_managedObjectType,Asset_managedObjectInstance,Asset_circuitId,Asset_description
+TEST1-VIGOR2927L-SEC,TEST1-VIGOR2927L-SEC,testradiosite1,,,192.168.105.2,P,ICMP;SNMP,,,,,50.854836,-1.067246,vigor2927-1,,,,Customer1,,,,
+TEST1-VIGOR2927-PRI,TEST1-VIGOR2927-PRI,testradiosite1,,,192.168.105.10,P,ICMP;SNMP,,,,,50.854836,-1.067246,vigor2927-1,,,,Customer1,,,,
+TEST1-VIGOR2927L-VIRTUAL,TEST1-VIGOR2927L-VIRTUAL,testradiosite1,,,192.168.105.254,P,ICMP;SNMP;VIGOR2927L-VIRTUAL,,,,,50.854836,-1.067246,vigor2927-1,,,,Customer1,,,,
+TEST1-DB8008,TEST1-DB8008,testradiosite1,,,192.168.105.100,P,ICMP;SNMP,,,,,50.854836,-1.067246,generic-1,,,,Customer1,,,,
+TEST1-DB7012,TEST1-DB7012,testradiosite1,,,192.168.105.101,P,ICMP;SNMP,,,,,50.854836,-1.067246,generic-1,,,,Customer1,,,,
+TEST1-DB9000RX,TEST1-DB9000RX,testradiosite1,,,192.168.105.99,P,ICMP;SNMP,,,,,50.854836,-1.067246,generic-1,,,,Customer1,,,,
+TEST1-TX1000,TEST1-TX1000,testradiosite1,,,192.168.105.98,P,ICMP;SNMP,,,,,50.854836,-1.067246,generic-1,,,,Customer1,,,,
+TEST1-ODR-DABMOD,TEST1-ODR-DABMOD,testradiosite1,,,192.168.105.240,P,ICMP;SNMP,,,,,50.854836,-1.067246,generic-1,,,,Customer1,,,,
+TEST1-cardinalImdu,TEST1-cardinalImdu,testradiosite1,,,192.168.105.250,P,ICMP;SNMP,,,,,50.854836,-1.067246,generic-1,,,,Customer1,,,,
