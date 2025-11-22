@@ -81,7 +81,7 @@ code
 
 generated [OpenNMSIpcGrpc.java](https://github.com/OpenNMS/opennms/blob/develop/core/ipc/grpc/common/src/main/java/org/opennms/core/ipc/grpc/common/OpenNMSIpcGrpc.java)
 
-protouf definition [ipc.proto}(https://github.com/OpenNMS/opennms/blob/develop/core/ipc/grpc/common/src/main/proto/ipc.proto)
+protobuf definition [ipc.proto}(https://github.com/OpenNMS/opennms/blob/develop/core/ipc/grpc/common/src/main/proto/ipc.proto)
 
 
 https://docs.opennms.com/meridian/2023/deployment/minion/install.html
