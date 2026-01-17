@@ -6,6 +6,9 @@
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
 Vagrant.configure("2") do |config|
+
+ config.vm.define "alma-1" do |alma1| 
+ 
   # The most common configuration options are documented and commented below.
   # For a complete reference, please see the online documentation at
   # https://docs.vagrantup.com.
@@ -38,6 +41,7 @@ Vagrant.configure("2") do |config|
   
   # doesn't work # config.vm.network "private_network", type: "dhcp", name: "VirtualBox Host-Only Ethernet Adapter"
   
+  # see commands at https://docs.oracle.com/en/virtualization/virtualbox/6.0/user/vboxmanage-modifyvm.html
   config.vm.provider "virtualbox" do |vb|
      vb.customize ["modifyvm", :id, "--nic2", "hostonly"]
      vb.customize ["modifyvm", :id, "--hostonlyadapter2", "VirtualBox Host-Only Ethernet Adapter"] #use proper network name here
@@ -84,4 +88,36 @@ Vagrant.configure("2") do |config|
   #   apt-get update
   #   apt-get install -y apache2
   # SHELL
+  
+  
+  config.vm.provision "shell", path: "provision.sh"
+  
+  end # alma1
+  
+  # just the commands without the comments
+  config.vm.define "alma-2" do |alma-2|
+  
+     config.vm.box = "almalinux/10"
+     config.vm.box_version = "10.1.20260110"
+  
+     config.vm.provider "virtualbox" do |vb|
+        vb.customize ["modifyvm", :id, "--nic2", "hostonly"]
+        vb.customize ["modifyvm", :id, "--hostonlyadapter2", "VirtualBox Host-Only Ethernet Adapter"] #use proper network name here
+        vb.customize ["modifyvm", :id, "--cableconnected2", "on"]
+     end
+  
+     config.vm.provider "virtualbox" do |vb|
+        # Display the VirtualBox GUI when booting the machine
+        vb.gui = true
+  
+        # Customize the amount of memory on the VM:
+        vb.memory = "1024"
+     end
+  
+     config.vm.provision "shell", path: "provision.sh"
+   
+  end
+  
+  
+  
 end
