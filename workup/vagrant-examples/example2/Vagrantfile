@@ -7,7 +7,7 @@
 # you're doing.
 Vagrant.configure("2") do |config|
 
- config.vm.define "alma-1" do |alma1| 
+ config.vm.define "alma_1" do |alma_1| 
  
   # The most common configuration options are documented and commented below.
   # For a complete reference, please see the online documentation at
@@ -15,8 +15,12 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
-  config.vm.box = "almalinux/10"
-  config.vm.box_version = "10.1.20260110"
+  alma_1.vm.box = "almalinux/10"
+  alma_1.vm.box_version = "10.1.20260110"
+  
+  alma_1.vm.hostname = "alma-1"
+  
+  alma_1.vm.disk :disk, size: "50GB", primary: true
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -42,7 +46,7 @@ Vagrant.configure("2") do |config|
   # doesn't work # config.vm.network "private_network", type: "dhcp", name: "VirtualBox Host-Only Ethernet Adapter"
   
   # see commands at https://docs.oracle.com/en/virtualization/virtualbox/6.0/user/vboxmanage-modifyvm.html
-  config.vm.provider "virtualbox" do |vb|
+  alma_1.vm.provider "virtualbox" do |vb|
      vb.customize ["modifyvm", :id, "--nic2", "hostonly"]
      vb.customize ["modifyvm", :id, "--hostonlyadapter2", "VirtualBox Host-Only Ethernet Adapter"] #use proper network name here
      vb.customize ["modifyvm", :id, "--cableconnected2", "on"]
@@ -65,17 +69,20 @@ Vagrant.configure("2") do |config|
   # If you use this you may want to enable additional shared subfolders as
   # shown above.
   # config.vm.synced_folder ".", "/vagrant", disabled: true
+  
+  # alma_1.vm.synced_folder ".", "/vagrant", disabled: true
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
   #
-  config.vm.provider "virtualbox" do |vb|
+  alma_1.vm.provider "virtualbox" do |vb|
      # Display the VirtualBox GUI when booting the machine
      vb.gui = true
   
      # Customize the amount of memory on the VM:
-     vb.memory = "1024"
+     vb.memory = "8192"
+     vb.cpus = 2
   end
   #
   # View the documentation for the provider you are using for more
@@ -90,33 +97,53 @@ Vagrant.configure("2") do |config|
   # SHELL
   
   
-  config.vm.provision "shell", path: "provision.sh"
+  alma_1.vm.provision "shell", path: "provision.sh"
   
-  end # alma1
+  # This shell provisioner will trigger a reboot
+  alma_1.vm.provision "shell", reboot: true, inline: "echo 'Rebooting now...'"
+  
+  # This runs AFTER the reboot
+  alma_1.vm.provision "shell", inline: "echo 'Machine is back up!'"
+  
+  
+  end # alma_1
   
   # just the commands without the comments
-  config.vm.define "alma-2" do |alma-2|
+  config.vm.define "alma_2" do |alma_2|
   
-     config.vm.box = "almalinux/10"
-     config.vm.box_version = "10.1.20260110"
+     alma_2.vm.box = "almalinux/10"
+     alma_2.vm.box_version = "10.1.20260110"
+     
+     alma_2.vm.disk :disk, size: "50GB", primary: true
+     
+     # alma_2.vm.synced_folder ".", "/vagrant", disabled: true
+     
+     alma_2.vm.hostname = "alma-2"
   
-     config.vm.provider "virtualbox" do |vb|
+     alma_2.vm.provider "virtualbox" do |vb|
         vb.customize ["modifyvm", :id, "--nic2", "hostonly"]
         vb.customize ["modifyvm", :id, "--hostonlyadapter2", "VirtualBox Host-Only Ethernet Adapter"] #use proper network name here
         vb.customize ["modifyvm", :id, "--cableconnected2", "on"]
      end
   
-     config.vm.provider "virtualbox" do |vb|
+     alma_2.vm.provider "virtualbox" do |vb|
         # Display the VirtualBox GUI when booting the machine
         vb.gui = true
   
         # Customize the amount of memory on the VM:
         vb.memory = "1024"
+        vb.cpus = 2
      end
   
-     config.vm.provision "shell", path: "provision.sh"
+     alma_2.vm.provision "shell", path: "provision.sh"
+     
+     # This shell provisioner will trigger a reboot
+     alma_2.vm.provision "shell", reboot: true, inline: "echo 'Rebooting now...'"
+  
+     # This runs AFTER the reboot
+     alma_2.vm.provision "shell", inline: "echo 'Machine is back up!'"
    
-  end
+  end  # alma_2
   
   
   
