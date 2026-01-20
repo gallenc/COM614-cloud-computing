@@ -16,13 +16,15 @@ Vagrant.configure("2") do |config|
      # do not insert key. Use default key insecure key in the box
      alma10_base1.ssh.insert_key = false
      
-     # problems resizing disk 
-     #alma10_base1.vm.disk :disk, size: "50GB", primary: true
+     # problems resizing disk when building - dont use here
+     # the default disk is about 20G
+     # alma10_base1.vm.disk :disk, size: "50GB", primary: true
      
      # alma10_base1.vm.synced_folder ".", "/vagrant", disabled: true
      
      alma10_base1.vm.hostname = "alma10-base1"
   
+     # this creates a second netowrk card on the machien which is linked to the widows host only adaptor
      alma10_base1.vm.provider "virtualbox" do |vb|
         vb.customize ["modifyvm", :id, "--nic2", "hostonly"]
         vb.customize ["modifyvm", :id, "--hostonlyadapter2", "VirtualBox Host-Only Ethernet Adapter"] #use proper network name here
@@ -56,7 +58,5 @@ Vagrant.configure("2") do |config|
      alma10_base1.vm.provision "shell", inline: "echo 'Machine is back up with updated kernel and virtual box tools!'"
    
   end  # alma10_base1
-  
-  
   
 end
