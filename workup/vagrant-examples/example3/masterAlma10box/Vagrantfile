@@ -1,0 +1,62 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+Vagrant.configure("2") do |config|
+  
+  # just the commands without the comments
+  config.vm.define "alma10_base1" do |alma10_base1|
+  
+     alma10_base1.vm.box = "almalinux/10"
+     alma10_base1.vm.box_version = "10.1.20260110"
+     
+     # do not insert key. Use default key insecure key in the box
+     alma10_base1.ssh.insert_key = false
+     
+     # problems resizing disk 
+     #alma10_base1.vm.disk :disk, size: "50GB", primary: true
+     
+     # alma10_base1.vm.synced_folder ".", "/vagrant", disabled: true
+     
+     alma10_base1.vm.hostname = "alma10-base1"
+  
+     alma10_base1.vm.provider "virtualbox" do |vb|
+        vb.customize ["modifyvm", :id, "--nic2", "hostonly"]
+        vb.customize ["modifyvm", :id, "--hostonlyadapter2", "VirtualBox Host-Only Ethernet Adapter"] #use proper network name here
+        vb.customize ["modifyvm", :id, "--cableconnected2", "on"]
+     end
+  
+     alma10_base1.vm.provider "virtualbox" do |vb|
+        # Display the VirtualBox GUI when booting the machine
+        vb.gui = true
+        
+        vb.name = "alma10_base1" # name of machine in virtual box - no timestamp
+  
+        # Customize the amount of memory on the VM:
+        vb.memory = "1024"
+        vb.cpus = 2
+     end
+  
+     # This shell provisioner provisions basic development features and updates kernel with provison.sh
+     alma10_base1.vm.provision "shell", path: "provision.sh"
+     
+     # This shell provisioner will trigger a reboot
+     alma10_base1.vm.provision "shell", reboot: true, inline: "echo 'Rebooting now...'"
+
+     # This shell provisioner provisions virtual box guest additions after kernel update
+     alma10_base1.vm.provision "shell", path: "provision-vboxtools.sh"
+     
+     # This shell provisioner will trigger a reboot
+     alma10_base1.vm.provision "shell", reboot: true, inline: "echo 'Rebooting now...'"
+  
+     # This runs AFTER the reboot
+     alma10_base1.vm.provision "shell", inline: "echo 'Machine is back up with updated kernel and virtual box tools!'"
+   
+  end  # alma10_base1
+  
+  
+  
+end

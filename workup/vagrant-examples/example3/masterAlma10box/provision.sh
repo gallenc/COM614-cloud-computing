@@ -36,21 +36,6 @@ dnf -y update
 # needed for virtual-box guest additions kernel update
 dnf -y install kernel-devel kernel-headers gcc make bzip2 perl dkms
 
-# update and install VBoxGuestAdditions
-echo installing VBoxGuestAdditions. This my take some time. Ignore errors if no video drivers in image
-
-# match the image version to your virtualbox version
-# note you will need to restart your vm to use guest additions
-wget -O ./VBoxGuestAdditions.iso https://download.virtualbox.org/virtualbox/7.2.4/VBoxGuestAdditions_7.2.4.iso
-
-sudo mkdir /media/VBoxGuestAdditions
-sudo mount -o loop,ro VBoxGuestAdditions.iso /media/VBoxGuestAdditions
-sudo sh /media/VBoxGuestAdditions/VBoxLinuxAdditions.run
-rm VBoxGuestAdditions.iso
-sudo umount /media/VBoxGuestAdditions
-sudo rmdir /media/VBoxGuestAdditions
-echo finished installing VBoxGuestAdditions
-
 ## add docker
 sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 sudo dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
@@ -68,6 +53,10 @@ sudo usermod -aG docker ansible
 # add java and maven
 dnf -y install java-21-openjdk-devel
 dnf -y install maven
+
+# clean up old packages and headers
+dnf -y clean all
+
 
 
 

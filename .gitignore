@@ -28,5 +28,5 @@ replay_pid*
 # General
 .vagrant/
 
-### Vagrant Patch ###
+### Vagrant Patch or crteated box ###
 *.box
