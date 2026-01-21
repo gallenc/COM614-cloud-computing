@@ -33,3 +33,8 @@ The [additional-config.sh](../additional-config.sh) file should be run within th
 sh /vagrant/additional-config.sh
 ```
 
+Note that `vagrant halt` may not work on these machines because of a problem with shutting down the guest additions. 
+`shutdown now` may also not complete.
+This is a known problem. 
+You may need to manually stop the machines in the VirtualBox gui.
+Make sure you backup your work to github because you may need to destroy and recreate these machines. 
