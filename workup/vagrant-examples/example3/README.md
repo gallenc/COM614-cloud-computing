@@ -41,28 +41,62 @@ Vagrant provide a number of pre-built `boxes` which are the starting point for c
 
 See for instance [Alma Linux 10](alma linux  https://portal.cloud.hashicorp.com/vagrant/discover/almalinux/10)
 
-Create a new empty folder and name it with no spaces .
+Create a new empty folder and name it WITH NO SPACES IN THE NAME .
 
-Initialise a new vagrant project using
+in the new folder, Initialise a new vagrant project using the pre-defined Alma Linux 10 bx
 
 ```
 vagrant init almalinux/10 --box-version 10.1.20260110
 ```
+This will create a `Vagrantfile` and a `.vagrant` folder in your folder. 
 
-This will create a .vagrant folder and a Vagrantfile in your folder
+The `Vagrantfile` is a recipe (written in the ruby language) for building your machine. 
+Look in the file and see the various options which you can modify. 
 
-lookat vagrant up
+To start the VM use
+
+```
+vagrant up
+```
+It will take a while to download and start the machine.
+Once it has started, try logging in using.
+
+```
+vagrant ssh 
+```
+
+Once logged in look for the injected `/vagrant` folder which should contain the contents of your project folder in which you started vagrant.
+
+```
+ls /vagrant
+```
+
+Exit the shell .
+
+```
+exit
+```
+
+List the boxes in your system.
+You should see the downloaded box.
+
+```
 vagrant box list
+```
+Shut down the virtual machine
 
-TBD
+```
+vagrant halt # will halt the machine
+             # vagrant suspend will hibernate the machine
+```
 
-this example vagrant file does the networking in windows
-see https://stackoverflow.com/questions/43203203/virtualbox-networking-using-vagrant
+Delete the box and check it is deleted in VirtualBox
 
-in powershell 
+```
+vagrant destroy
+```
 
+Note that while this may remove the machine from the VirtualBox gui, it may not remove it from the actual folder `C:\devel\virtualbox-machines`
 
-
-
-This example builds a box and then packages it as new master box which can be used for development
+If it is still there, delete it manually.
 
