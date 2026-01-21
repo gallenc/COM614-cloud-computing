@@ -7,7 +7,7 @@
 
 |Session      |Subject  |Details|
 | -------- | ------- | ------|
-| [Session 1](../sessions/session1) |Introduction|Course overview<br>Assessment overview|
+| [Session 1](../sessions/session1) |Introduction|Course overview<br>Assessment overview<br>Vagrant|
 | [Session 2](../sessions/session2) |xxx|xxx|
 | [Session 3](../sessions/session3)|xxx|xxx|
 | [Session 4](../sessions/session4)|Consolidate|Catch up|
