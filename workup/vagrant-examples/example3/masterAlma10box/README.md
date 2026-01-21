@@ -14,11 +14,12 @@ vagrant init almalinux/10 --box-version 10.1.20260110
 
 The [Vagrantfile](../Vagrantfile) has the following configurations
 
-we need to create a second host only network which operates along side the NAT connection to the Internet.
+We need to create a second host only network which operates along side the NAT connection to the Internet.
 
 The virtual box on windows specific configuration is derived from this post [virtualbox-networking-using-vagrant](https://stackoverflow.com/questions/43203203/virtualbox-networking-using-vagrant)
 
 The windows networking is set up here 
+
 ```
      alma10_base1.vm.provider "virtualbox" do |vb|
         vb.customize ["modifyvm", :id, "--nic2", "hostonly"]
@@ -159,6 +160,7 @@ The insecure keys are here https://github.com/hashicorp/vagrant/tree/main/keys
 The new machine will have these keys replaced with new generated keys found in the generated .vagrant folder
 
 Stop the box and delete the vm using 
+
 ```
 vagrant box halt
 

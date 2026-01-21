@@ -32,18 +32,44 @@ Wen you install VirtualBox, I recommend that you also need to set the preference
 
 ![alt text](../vagrant-examples/images/virtaulBoxPreferences.png "Figure virtaulBoxPreferences.png")
 
+# Building a VirtualBox machine from a .iso file
 
-# Building your first machine
+It is perfectly possible to build virtual box machines from a downloaded DVD iso file using the VirtualBox gui.
+You may already have done this. 
+Lots of tutorials are available on line and the [VirtualBox documentation](https://www.virtualbox.org/wiki/Documentation) is quite useful
+
+Here is a tutorial for installing Rocky Linux on VirtualBox manually from an iso
+[Guide to Rocky on VirtualBox](https://docs.rockylinux.org/10/guides/virtualization/vbox-rocky/)
+The basis steps will be the same for RHEL, Centos, Alma linux.
+
+The isos for various releases are available on line and can be downloaded directly or faster by using `bittorrent` if it is not blocked on your network.
+
+Alma Liux:
+
+[https://almalinux.org/get-almalinux/](https://almalinux.org/get-almalinux/)
+
+[https://repo.almalinux.org/almalinux/10/isos/x86_64/](https://repo.almalinux.org/almalinux/10/isos/x86_64/)
+
+Rocky Linux:
+
+[https://rockylinux.org/download](https://rockylinux.org/download)
+
+[https://download.rockylinux.org/pub/rocky/10/isos/x86_64/](https://download.rockylinux.org/pub/rocky/10/isos/x86_64/)
+
+# Building your first vagrant machine
+
+If you have installed VM's manually, you will realise that it is time consuming and error prone. 
+Vagrant provides a way to automate the process of getting started with a standard configuration of virtual machine.
 
 Vagrant is very easy to get started. 
 
-Vagrant provide a number of pre-built `boxes` which are the starting point for creating a local machine.
+Vagrant provide a number of pre-built `boxes` in the 'vagrant cloud' which are the starting point for creating a local machine.
 
 See for instance [Alma Linux 10](alma linux  https://portal.cloud.hashicorp.com/vagrant/discover/almalinux/10)
 
 Create a new empty folder and name it WITH NO SPACES IN THE NAME .
 
-in the new folder, Initialise a new vagrant project using the pre-defined Alma Linux 10 bx
+In the new folder, Initialise a new vagrant project using the pre-defined Alma Linux 10 bx
 
 ```
 vagrant init almalinux/10 --box-version 10.1.20260110
