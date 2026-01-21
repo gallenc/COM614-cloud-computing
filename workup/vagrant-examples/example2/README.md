@@ -1,9 +1,14 @@
-alma linux  https://portal.cloud.hashicorp.com/vagrant/discover/almalinux/10
+# Dual machine alma linux example
 
+This example installs 2 alma linux machines using box https://portal.cloud.hashicorp.com/vagrant/discover/almalinux/10
 
+the initial vagrant file came from 
 
+```
 vagrant init almalinux/10 --box-version 10.1.20260110
+```
 
-this example vagrant file does the netowrking in windows 
+Additional netowrking was provided to allow a private netowrk in windows 
+
 see https://stackoverflow.com/questions/43203203/virtualbox-networking-using-vagrant
 

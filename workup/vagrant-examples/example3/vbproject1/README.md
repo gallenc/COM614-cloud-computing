@@ -23,5 +23,13 @@ We need to change its configuration from DHCP to a static address using nmcli
        nmcli connection down "Wired connection 2"
        nmcli connection up "Wired connection 2"
      SHELL
-`
+```
+
+An extra script is injected into the machine which can be done to clone this repo in the machine to run as an example
+
+The [additional-config.sh](../additional-config.sh) file should be run within the virtual machine using 
+
+```
+sh /vagrant/additional-config.sh
+```
 
