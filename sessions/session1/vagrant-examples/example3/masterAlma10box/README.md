@@ -151,7 +151,7 @@ This will create a new machine base on this image with a name tmpproject_default
 
 You will be able to log into the machine using the credentials above.
 
-THere is quite a good post here if you want to [change the default machine name](https://stackoverflow.com/questions/17845637/how-to-change-vagrant-default-machine-name)
+There is quite a good post here if you want to [change the default machine name](https://stackoverflow.com/questions/17845637/how-to-change-vagrant-default-machine-name)
 
 Note that is was important to use the default insecure SSH keys in the base image because vagrant needs this ssh access in order to change the ssh key for your created box.
 
