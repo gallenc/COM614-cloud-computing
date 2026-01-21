@@ -1,6 +1,6 @@
 # Setting up two virtual machines 
 
-This configuration sets up two virtual machines based upon the [masterAlma10Box](../masterAlma10Box)
+This configuration sets up two virtual machines based upon the [masterAlma10Box](../example3/masterAlma10Box)
 
 Having configured the second ethnernet connection using
 
