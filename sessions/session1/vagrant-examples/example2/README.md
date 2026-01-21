@@ -8,7 +8,7 @@ the initial vagrant file came from
 vagrant init almalinux/10 --box-version 10.1.20260110
 ```
 
-Additional netowrking was provided to allow a private netowrk in windows 
+Additional networking was provided to allow a private network in windows 
 
 see https://stackoverflow.com/questions/43203203/virtualbox-networking-using-vagrant
 
