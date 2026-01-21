@@ -130,13 +130,13 @@ If it is still there, delete it manually.
 
 I have provided three example projects.
 Review the first two projects but you dont have to build them. 
-However have a real go at [example3](../session1/example3) as it will create a base box for use later.
+However have a real go at [example3](../vagrant-examples/example3) as it will create a base box for use later.
 
-[example1](../session1/example1) is a simple debian 11 project - very similar to what you have done above.
+[example1](../vagrant-examples/example1) is a simple debian 11 project - very similar to what you have done above.
 
-[example2](../session1/example2) is an alma linux 10 project which uses the same vagrant file to create two machines. 
+[example2](../vagrant-examples/example2) is an alma linux 10 project which uses the same vagrant file to create two machines. 
 
-[example3](../session1/example3) creates an alma linux 10 base project to create a box which is used by a downsteam project. 
+[example3](../vagrant-examples/xample3) creates an alma linux 10 base project to create a box which is used by a downsteam project. 
 This is the most important project as it is the basis for further work with Ansible. 
 
 
