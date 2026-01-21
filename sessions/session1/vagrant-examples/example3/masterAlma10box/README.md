@@ -12,7 +12,7 @@ vagrant init almalinux/10 --box-version 10.1.20260110
 
 ## Vagrantfile
 
-The [Vagrantfile](../Vagrantfile) has the following configurations
+The [Vagrantfile](../masterAlma10box/Vagrantfile) has the following configurations
 
 We need to create a second host only network which operates along side the NAT connection to the Internet.
 
@@ -49,14 +49,14 @@ vb.gui = true
 ## provisioning
 The provisioning happens in stages after the first boot
 
-[provision.sh](../provision.sh) 
+[provision.sh](../masterAlma10box/provision.sh) 
 * install basic utils
 * update to latest kernel
 * add development tools to allow build of virtual box
 * add docker , java, maven ,git etc
 * reboot server to use the latest kernel
 
-[provision-vboxtools.sh](provision-vboxtools.sh)
+[provision-vboxtools.sh](../masterAlma10box/provision-vboxtools.sh)
 * download latest virtual box guest additions iso matching the virtual box we are running on
 * mount the VBoxGuestAdditions.iso and run the build script
 * reboot server to ensure latest guest additions are installed
