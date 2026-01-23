@@ -51,17 +51,20 @@ The project needs to have a docker-compose.yaml file in the project folder
 starting / stopping service
 
 ```
-systemctl start docker-compose@wordpress-stack
+sudo systemctl start docker-compose@wordpress-stack
 
-systemctl stop docker-compose@wordpress-stack
+sudo systemctl stop docker-compose@wordpress-stack
 
 ```
 to see logs for systemctl startup
 
 ```
-journalctl -xeu docker-compose@wordpress-stack.service
+sudo journalctl -xeu docker-compose@wordpress-stack.service
 
 ```
+
+Note - we may want to be cleverer with thsi because systemctl currently waits while any download is happening 
+
 #  which restarts every time the system restarts
 
 to enable on startup boot

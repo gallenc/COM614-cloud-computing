@@ -29,7 +29,8 @@ echo updated repo in directory $DIRECTORY/$REPO
 
 # this adds the simlinks to the compose projects in the repo
 
-mkdir -p /opt/docker/compose
+sudo mkdir -p /opt/docker/compose
+sudo chown -R vagrant:vagrant /opt/docker/compose
 
 ln -sf /home/vagrant/devel/gitrepos/COM614-cloud-computing/workup/ansible-examples/docker-compose-services /opt/docker/compose/docker-compose-services
 
