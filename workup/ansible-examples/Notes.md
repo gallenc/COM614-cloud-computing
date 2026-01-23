@@ -43,3 +43,11 @@ All of these options are discussed in the following posts.
 * Vagrant with Ansible Provisioner on Windows https://gist.github.com/tknerr/291b765df23845e56a29  
 
 The vagrant documentation provides examples of running ansible as part of a vagrant build see https://developer.hashicorp.com/vagrant/docs/provisioning/ansible_intro
+
+
+# docker compose 
+
+see https://unix.stackexchange.com/questions/206315/whats-the-difference-between-usr-lib-systemd-system-and-etc-systemd-system
+The expectation is that /usr/lib/systemd/system is a directory that should only contain systemd unit files which were put there by the package manager (YUM/DNF/RPM/APT/etc).
+
+Files in /etc/systemd/system are manually placed here by the operator of the system for ad-hoc software installations that are not in the form of a package
