@@ -23,14 +23,14 @@ if sudo bash -c ' ! [ -d "$ANSIBLE_USER_HOME/.ssh" ]'
    sudo mkdir -p $ANSIBLE_USER_HOME/.ssh
    sudo chmod 700 $ANSIBLE_USER_HOME/.ssh
 
-   sudo cp .ssh-ansible/id_rsa $ANSIBLE_USER_HOME/.ssh
+   sudo cp $ANSIBLE_KEYS/id_rsa $ANSIBLE_USER_HOME/.ssh
    
    sudo chmod 600 $ANSIBLE_USER_HOME/.ssh/id_rsa
 
-   sudo cp .ssh-ansible/id_rsa.pub $ANSIBLE_USER_HOME/.ssh/authorized_keys
+   sudo cp $ANSIBLE_KEYS/id_rsa.pub $ANSIBLE_USER_HOME/.ssh/authorized_keys
    sudo chmod 644 $ANSIBLE_USER_HOME/.ssh/authorized_keys
 
-   sudo cp .ssh-ansible/id_rsa.pub $ANSIBLE_USER_HOME/.ssh
+   sudo cp $ANSIBLE_KEYS/id_rsa.pub $ANSIBLE_USER_HOME/.ssh
    sudo chmod 644 $ANSIBLE_USER_HOME/.ssh/id_rsa.pub
 
    sudo chown -R ansible:ansible $ANSIBLE_USER_HOME/.ssh

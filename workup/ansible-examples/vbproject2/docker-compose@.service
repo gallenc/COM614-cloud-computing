@@ -4,7 +4,7 @@ After=docker.service
 Requires=docker.service
 
 [Service]
-User=vagrant
+User=ansible
 Type=oneshot
 RemainAfterExit=true
 WorkingDirectory=/opt/docker/compose/docker-compose-services/%i

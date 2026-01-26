@@ -42,6 +42,9 @@ Vagrant.configure("2") do |config|
        nmcli connection down "Wired connection 2"
        nmcli connection up "Wired connection 2"
      SHELL
+     
+     # this shell provisioner will run the ansible ssh provisioning file
+     alma_1.vm.provision "shell", path: "generate-ansible-ssh.sh"
    
   end  # alma_1
   
@@ -80,6 +83,9 @@ Vagrant.configure("2") do |config|
        nmcli connection down "Wired connection 2"
        nmcli connection up "Wired connection 2"
      SHELL
+     
+     # this shell provisioner will run the ansible ssh provisioning file
+     alma_2.vm.provision "shell", path: "generate-ansible-ssh.sh"
    
   end  # alma_2
   
@@ -119,6 +125,19 @@ Vagrant.configure("2") do |config|
        nmcli connection up "Wired connection 2"
      SHELL
      
+     # install ansible from rpm
+     alma_controller.vm.provision "shell", inline: <<-SHELL
+        sudo dnf install -y epel-release
+        sudo dnf install ansible-core -y
+     SHELL
+     
+     # this shell provisioner will run the ansible ssh provisioning file which sets up an ansible ssh login for all hosts
+     alma_controller.vm.provision "shell", path: "generate-ansible-ssh.sh"
+     
+     # this shell provisioner will run the git repo docker-compose service provisioning as ansible user
+     alma_controller.vm.provision "shell", inline: <<-SHELL
+       sudo /bin/su -c "/vagrant/git-docker-ansible-config.sh" - ansible
+     SHELL
 
    
   end  # alma_controller

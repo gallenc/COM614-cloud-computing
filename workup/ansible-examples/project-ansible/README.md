@@ -1,14 +1,18 @@
 # README
 
 To run this in virtual machine go to the location of project in the repo
+(somewhat based on hhttps://www.liquidweb.com/blog/install-ansible-almalinux/)
+
 
 ```
-cd /home/vagrant/devel/gitrepos/COM614-cloud-computing/workup/ansible-examples/project-ansible
+# become an ansible user 
+sudo su ansible
 
-# install ansible
-sudo sh ansible-controller-config.sh
+cd /home/ansible/devel/gitrepos/COM614-cloud-computing/workup/ansible-examples/project-ansible
+
 
 # run exercise
+ansible -i inventory all -m ping
 
 ```
 

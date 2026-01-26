@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This script could be included in initial machine configuration Vagrantfile.
+# This script should be run as ansible user
 # It contains some extra configurations to pull in git repo
 
 #set -x
@@ -19,7 +19,7 @@ fi
 cd "$DIRECTORY"
 
 if ! [ -d "$REPO" ]; then
-  echo cloning repository
+  echo cloning repository $REPO_URL
   git clone $REPO_URL
 else
   echo repo "$REPO" already exists
@@ -34,9 +34,10 @@ echo updated repo in directory $DIRECTORY/$REPO
 # this adds the simlinks to the compose projects in the repo
 
 sudo mkdir -p /opt/docker/compose
-sudo chown -R vagrant:vagrant /opt/docker/compose
 
-ln -sf /home/vagrant/devel/gitrepos/COM614-cloud-computing/workup/ansible-examples/docker-compose-services /opt/docker/compose/docker-compose-services
+sudo ln -sf $DIRECTORY/COM614-cloud-computing/workup/ansible-examples/docker-compose-services /opt/docker/compose/docker-compose-services
+
+sudo chown -h ansible:ansible /opt/docker/compose/docker-compose-services
 
 # set up service to start docker compose
 

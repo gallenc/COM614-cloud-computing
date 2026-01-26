@@ -135,6 +135,7 @@ Vagrant.configure("2") do |config|
         vb.cpus = 2
      end
   
+     # this shell provisioner will run the provisioning file
      alma_2.vm.provision "shell", path: "provision.sh"
      
      # This shell provisioner will trigger a reboot
