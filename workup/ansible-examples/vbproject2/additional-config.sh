@@ -12,6 +12,8 @@ REPO_URL="https://github.com/gallenc/COM614-cloud-computing.git"
 if ! [ -d "$DIRECTORY" ]; then
   echo creating "$DIRECTORY"
   mkdir -p "$DIRECTORY"
+else
+  echo $DIRECTORY already exists
 fi
 
 cd "$DIRECTORY"
@@ -19,6 +21,8 @@ cd "$DIRECTORY"
 if ! [ -d "$REPO" ]; then
   echo cloning repository
   git clone $REPO_URL
+else
+  echo repo "$REPO" already exists
 fi
 
 cd "$REPO"

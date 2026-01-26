@@ -28,5 +28,8 @@ replay_pid*
 # General
 .vagrant/
 
+# prevent chekcin of ssh files
+*.ssh*
+
 ### Vagrant Patch or crteated box ###
 *.box
