@@ -38,3 +38,39 @@ Note that `vagrant halt` may not work on these machines because of a problem wit
 This is a known problem. 
 You may need to manually stop the machines in the VirtualBox gui.
 Make sure you backup your work to github because you may need to destroy and recreate these machines. 
+
+
+## additional notes and gotchas
+
+### virtual machine fails to restart
+
+sometimes the virtual machines will fail shut down with
+
+```
+vagrant halt
+```
+This is a known problem with Virtual Box guest additions and I havent found a satisfactory answer.
+In this case you will have to shutdown the machines manually using the VirtualBox gui.
+
+It is also possible after manually shutting down as above, `vagrant up` will not complete
+In this case, again you will have to shut down the machines manually and retry `vagrant up`
+
+### wrong file endings in files imported with shared `\vagrant` folder
+sometimes the /vagrant directory which is shared with a windows host may have problems with the wrong line endings on the files (windows uses new line \ carriage return while linux only uses carriage return)
+
+if this is the case for a file you will see errors like
+
+```
+sh additional-config.sh
+additional-config.sh: line 2: $'\r': command not found
+```
+
+This can be fixed in the virtual machine using sed with option -i for in-place editing, we delete the trailing \r directly in the input file.
+
+```
+sed -i 's/\r$//' filename
+```
+
+
+
+
