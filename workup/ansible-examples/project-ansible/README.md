@@ -12,7 +12,7 @@ cd /home/ansible/devel/gitrepos/COM614-cloud-computing/workup/ansible-examples/p
 
 
 # run exercise
-ansible -i inventory all -m ping
+ansible -i inventory.ini all -m ping
 
 ```
 

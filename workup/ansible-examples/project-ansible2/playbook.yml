@@ -1,7 +1,7 @@
-- name: Configure Web and DB Servers
+- name: configure cloud and edge servers
   hosts: all
-  become: yes
+  become: true
   roles:
-    - { role: cloud, when: "'alma_1' in group_names" }
-    - { role: edge,  when: "'alma_2' in group_names" }
+    - { role: cloud, when: "'cloud' in group_names" }
+    - { role: edge,  when: "'cloud' in group_names" }
 
