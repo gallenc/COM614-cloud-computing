@@ -13,7 +13,7 @@
   register: out
 
 - name: Execute the script
-  command: sh /home/ansible/scripts/git-docker-ansible-config.sh 
+  command: sh /home/ansible/devel/scripts/git-docker-ansible-config.sh 
   register: out
 
 - debug: var=out.stdout_lines
