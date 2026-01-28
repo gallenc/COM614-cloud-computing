@@ -1,0 +1,8 @@
+- name: Transfer the script
+  copy: 
+      src:  scripts/git-docker-ansible-config.sh
+      dest: /home/ansible/ 
+      mode: 0777
+
+- name: Execute the script
+  command: sh echo /home/ansible/git-docker-ansible-config.sh 

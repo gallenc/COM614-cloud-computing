@@ -1,7 +1,7 @@
 # README
 
 To run this in virtual machine go to the location of project in the repo
-(somewhat based on hhttps://www.liquidweb.com/blog/install-ansible-almalinux/)
+(somewhat based on https://www.liquidweb.com/blog/install-ansible-almalinux/)
 
 
 ```
