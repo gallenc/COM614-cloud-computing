@@ -3,6 +3,12 @@
       src:  scripts/git-docker-ansible-config.sh
       dest: /home/ansible/ 
       mode: 0777
+      
+- name: Transfer the service script
+  copy: 
+      src:  scripts/docker-compose@.service
+      dest: /home/ansible/ 
+      mode: 0777
 
 - name: Execute the script
-  command: sh echo /home/ansible/git-docker-ansible-config.sh 
+  command: sh /home/ansible/git-docker-ansible-config.sh 

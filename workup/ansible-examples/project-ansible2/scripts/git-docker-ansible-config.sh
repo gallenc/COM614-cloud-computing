@@ -5,7 +5,7 @@
 
 #set -x
 
-DIRECTORY="$HOME/devel/gitrepos"
+DIRECTORY="/home/ansible/devel/gitrepos"
 REPO="COM614-cloud-computing"
 REPO_URL="https://github.com/gallenc/COM614-cloud-computing.git"
 
@@ -41,7 +41,7 @@ sudo chown -h ansible:ansible /opt/docker/compose/docker-compose-services
 
 # set up service to start docker compose
 
-sudo cp /vagrant/docker-compose@.service /etc/systemd/system/docker-compose@.service
+sudo cp /home/ansible/docker-compose@.service /etc/systemd/system/docker-compose@.service
 
 sudo chmod 644 /etc/systemd/system/docker-compose@.service
 
