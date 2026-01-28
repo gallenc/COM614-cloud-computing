@@ -41,7 +41,7 @@ sudo chown -h ansible:ansible /opt/docker/compose/docker-compose-services
 
 # set up service to start docker compose
 
-sudo cp /home/ansible/docker-compose@.service /etc/systemd/system/docker-compose@.service
+sudo cp /home/ansible/devel/scripts/docker-compose@.service /etc/systemd/system/docker-compose@.service
 
 sudo chmod 644 /etc/systemd/system/docker-compose@.service
 
