@@ -3,14 +3,14 @@
       src:  scripts/git-docker-ansible-config.sh
       dest: /home/ansible/devel/scripts/
       mode: 0777
-      register: out
+  register: out
       
 - name: Transfer the systemd service script
   copy: 
       src:  scripts/docker-compose@.service
       dest: /home/ansible/devel/scripts/ 
       mode: 0777
-      register: out
+  register: out
 
 - name: Execute the script
   command: sh /home/ansible/git-docker-ansible-config.sh 
