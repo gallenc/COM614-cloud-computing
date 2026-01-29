@@ -8,7 +8,7 @@
 |Session      |Subject  |Details|
 | -------- | ------- | ------|
 | [Session 1](../sessions/session1) |Introduction|Course overview<br>Assessment overview<br>Vagrant|
-| [Session 2](../sessions/session2) |xxx|xxx|
+| [Session 2](../sessions/session2) |Introducing Ansible with Vagrant|Vagrant<BR>Docker Compose<BR>Ansble<BR>|
 | [Session 3](../sessions/session3)|xxx|xxx|
 | [Session 4](../sessions/session4)|Consolidate|Catch up|
 | [Session 5](../sessions/session5)|xxx|xxx|
