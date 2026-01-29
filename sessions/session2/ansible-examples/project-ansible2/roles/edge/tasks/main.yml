@@ -1,0 +1,19 @@
+- name: Transfer the git docker compose script
+  copy: 
+      src:  scripts/git-docker-ansible-config.sh
+      dest: /home/ansible/devel/scripts/
+      mode: 0777
+  register: out
+      
+- name: Transfer the systemd service script
+  copy: 
+      src:  scripts/docker-compose@.service
+      dest: /home/ansible/devel/scripts/ 
+      mode: 0777
+  register: out
+
+- name: Execute the script
+  command: sh /home/ansible/devel/scripts/git-docker-ansible-config.sh 
+  register: out
+
+- debug: var=out.stdout_lines

@@ -1,0 +1,145 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+Vagrant.configure("2") do |config|
+
+  # first machine
+  config.vm.define "alma_1" do |alma_1|
+  
+     # note local box defined in another project
+     alma_1.vm.box = "entimoss/alma10_base1"
+     
+     # problems with this
+     # alma_1.vm.disk :disk, size: "50GB", primary: true
+     
+     # alma_1.vm.synced_folder ".", "/vagrant", disabled: true
+     
+     alma_1.vm.hostname = "alma-1"
+  
+     alma_1.vm.provider "virtualbox" do |vb|
+        vb.customize ["modifyvm", :id, "--nic2", "hostonly"]
+        vb.customize ["modifyvm", :id, "--hostonlyadapter2", "VirtualBox Host-Only Ethernet Adapter"] #use proper network name here
+        vb.customize ["modifyvm", :id, "--cableconnected2", "on"]
+     end
+  
+     alma_1.vm.provider "virtualbox" do |vb|
+        # Display the VirtualBox GUI when booting the machine
+        vb.gui = true
+  
+        # Customize the amount of memory on the VM:
+        vb.memory = "4096"
+        vb.cpus = 2
+     end
+     
+     # set eth 1 to a static ip address below DHCP range of virtual box
+     alma_1.vm.provision "shell", inline: <<-SHELL
+       echo script setting static ip address 
+       nmcli connection modify "Wired connection 2"  ipv4.method manual   ipv4.addresses 192.168.56.10/24
+       nmcli connection down "Wired connection 2"
+       nmcli connection up "Wired connection 2"
+     SHELL
+     
+     # this shell provisioner will run the ansible ssh provisioning file
+     alma_1.vm.provision "shell", path: "generate-ansible-ssh.sh"
+   
+  end  # alma_1
+  
+  # Second machine
+  config.vm.define "alma_2" do |alma_2|
+  
+     # note local box defined in another project
+     alma_2.vm.box = "entimoss/alma10_base1"
+     
+     # problems with this
+     # alma_2.vm.disk :disk, size: "50GB", primary: true
+     
+     # alma_2.vm.synced_folder ".", "/vagrant", disabled: true
+     
+     alma_2.vm.hostname = "alma-2"
+  
+     alma_2.vm.provider "virtualbox" do |vb|
+        vb.customize ["modifyvm", :id, "--nic2", "hostonly"]
+        vb.customize ["modifyvm", :id, "--hostonlyadapter2", "VirtualBox Host-Only Ethernet Adapter"] #use proper network name here
+        vb.customize ["modifyvm", :id, "--cableconnected2", "on"]
+     end
+  
+     alma_2.vm.provider "virtualbox" do |vb|
+        # Display the VirtualBox GUI when booting the machine
+        vb.gui = true
+  
+        # Customize the amount of memory on the VM:
+        vb.memory = "1024"
+        vb.cpus = 2
+     end
+     
+     # set eth 1 to a static ip address below DHCP range of virtual box
+     alma_2.vm.provision "shell", inline: <<-SHELL
+       echo script setting static ip address 
+       nmcli connection modify "Wired connection 2"  ipv4.method manual   ipv4.addresses 192.168.56.20/24
+       nmcli connection down "Wired connection 2"
+       nmcli connection up "Wired connection 2"
+     SHELL
+     
+     # this shell provisioner will run the ansible ssh provisioning file
+     alma_2.vm.provision "shell", path: "generate-ansible-ssh.sh"
+   
+  end  # alma_2
+  
+   # Ansible Controller
+  config.vm.define "alma_controller" do |alma_controller|
+  
+     # note local box defined in another project
+     alma_controller.vm.box = "entimoss/alma10_base1"
+     
+     # problems with this
+     # alma_controller.vm.disk :disk, size: "50GB", primary: true
+     
+     # alma_controller.vm.synced_folder ".", "/vagrant", disabled: true
+     
+     alma_controller.vm.hostname = "alma-controller"
+  
+     alma_controller.vm.provider "virtualbox" do |vb|
+        vb.customize ["modifyvm", :id, "--nic2", "hostonly"]
+        vb.customize ["modifyvm", :id, "--hostonlyadapter2", "VirtualBox Host-Only Ethernet Adapter"] #use proper network name here
+        vb.customize ["modifyvm", :id, "--cableconnected2", "on"]
+     end
+  
+     alma_controller.vm.provider "virtualbox" do |vb|
+        # Display the VirtualBox GUI when booting the machine
+        vb.gui = true
+  
+        # Customize the amount of memory on the VM:
+        vb.memory = "1024"
+        vb.cpus = 2
+     end
+     
+     # set eth 1 to a static ip address below DHCP range of virtual box
+     alma_controller.vm.provision "shell", inline: <<-SHELL
+       echo script setting static ip address 
+       nmcli connection modify "Wired connection 2"  ipv4.method manual   ipv4.addresses 192.168.56.30/24
+       nmcli connection down "Wired connection 2"
+       nmcli connection up "Wired connection 2"
+     SHELL
+     
+     # install ansible from rpm
+     alma_controller.vm.provision "shell", inline: <<-SHELL
+        sudo dnf install -y epel-release
+        sudo dnf install ansible-core -y
+     SHELL
+     
+     # this shell provisioner will run the ansible ssh provisioning file which sets up an ansible ssh login for all hosts
+     alma_controller.vm.provision "shell", path: "generate-ansible-ssh.sh"
+     
+     # this shell provisioner will run the git repo docker-compose service provisioning as ansible user
+     alma_controller.vm.provision "shell", inline: <<-SHELL
+       sudo /bin/su -c "/vagrant/git-docker-ansible-config.sh" - ansible
+     SHELL
+
+   
+  end  # alma_controller
+  
+end

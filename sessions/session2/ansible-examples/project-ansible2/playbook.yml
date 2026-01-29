@@ -1,0 +1,8 @@
+- name: configure cloud and edge servers
+  hosts: all
+  become: true
+  become_user: ansible
+  roles:
+    - { role: cloud, when: "'cloud' in group_names" }
+    - { role: edge,  when: "'edge' in group_names" }
+
