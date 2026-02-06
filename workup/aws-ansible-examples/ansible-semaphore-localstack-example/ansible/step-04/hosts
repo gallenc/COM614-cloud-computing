@@ -1,0 +1,2 @@
+[web]
+host1 ansible_host=172.20.0.22 ansible_user=root  ansible_password=your_password

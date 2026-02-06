@@ -8,7 +8,7 @@ To run this in virtual machine go to the location of project in the repo
 # become an ansible user 
 sudo su ansible
 
-cd /home/ansible/devel/gitrepos/COM614-cloud-computing/workup/ansible-examples/project-ansible
+cd /home/ansible/devel/gitrepos/COM614-cloud-computing/sessions/session2/ansible-examples/project-ansible
 
 
 # run exercise

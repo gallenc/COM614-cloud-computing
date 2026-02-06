@@ -22,10 +22,10 @@ The `git-docker-ansible-config.sh` script runs as user `ansible` and
 mkdir -p /opt/docker/compose
 
 # use this if you only want to create a link
-ln -s /home/ansible/devel/gitrepos/COM614-cloud-computing/workup/ansible-examples/docker-compose-services /opt/docker/compose/docker-compose-services
+ln -s /home/ansible/devel/gitrepos/COM614-cloud-computing/sessions/session2/ansible-examples/docker-compose-services /opt/docker/compose/docker-compose-services
 
 # or use this option to create a new link or replace the old link with a new one
-sudo ln -sf /opt/docker/compose/docker-compose-services /home/ansible/devel/gitrepos/COM614-cloud-computing/workup/ansible-examples/docker-compose-services
+sudo ln -sf /opt/docker/compose/docker-compose-services /home/ansible/devel/gitrepos/COM614-cloud-computing/sessions/session2/ansible-examples/docker-compose-services
 
 ```
 Once the link is created, you should be able to run docker compose commands from the `/opt/docker/compose/docker-compose-services/` folder
