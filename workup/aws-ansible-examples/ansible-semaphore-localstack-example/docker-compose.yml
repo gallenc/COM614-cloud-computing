@@ -12,14 +12,16 @@ networks:
 volumes:
   #semaphore-mysql: # to use postgres, switch to: semaphore-postgres
   semaphore-postgres:
+  localstack-data:
 
 services:
   # uncomment this section and comment out the mysql section to use postgres instead of mysql
-  postgres:
+  postgres-semaphore:
+    container_name: postgres-semaphore
     restart: unless-stopped
     image: postgres:15
     #image: postgres:14
-    hostname: postgres
+    hostname: postgres-semaphore
     volumes:
       - semaphore-postgres:/var/lib/postgresql/data
     environment:
@@ -43,6 +45,7 @@ services:
 #      MYSQL_PASSWORD: semaphore
 
   semaphore:
+    container_name: semaphore
     restart: unless-stopped
     ports:
       - 3000:3000
@@ -54,7 +57,7 @@ services:
       SEMAPHORE_DB_USER: semaphore
       SEMAPHORE_DB_PASS: semaphore
       #SEMAPHORE_DB_HOST: mysql # for postgres, change to: postgres
-      SEMAPHORE_DB_HOST: postgres # for postgres, change to: postgres
+      SEMAPHORE_DB_HOST: postgres-semaphore # for postgres, change to: postgres
       #SEMAPHORE_DB_PORT: 3306 # change to 5432 for postgres
       SEMAPHORE_DB_PORT: 5432 
       # SEMAPHORE_DB_DIALECT: mysql # for postgres, change to: postgres
@@ -80,7 +83,7 @@ services:
       TZ: UTC
     depends_on:
       #- mysql # for postgres, change to: postgres
-      -  postgres
+      -  postgres-semaphore
     networks:
       N020:
         ipv4_address: 172.20.0.21
@@ -88,7 +91,7 @@ services:
   # Localstack AWS simulation     
   localstack:
     container_name: "${LOCALSTACK_DOCKER_NAME:-localstack-main}"
-    image: localstack/localstack
+    image: localstack/localstack:4.13.1
     ports:
       - "127.0.0.1:4566:4566"            # LocalStack Gateway
       - "127.0.0.1:4510-4559:4510-4559"  # external services port range
@@ -96,7 +99,7 @@ services:
       # LocalStack configuration: https://docs.localstack.cloud/references/configuration/
       - DEBUG=${DEBUG:-0}
     volumes:
-      - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
+      - localstack-data:/var/lib/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
       
   ## test container
