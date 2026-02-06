@@ -84,7 +84,8 @@ services:
     networks:
       N020:
         ipv4_address: 172.20.0.21
-        
+  
+  # Localstack AWS simulation     
   localstack:
     container_name: "${LOCALSTACK_DOCKER_NAME:-localstack-main}"
     image: localstack/localstack
