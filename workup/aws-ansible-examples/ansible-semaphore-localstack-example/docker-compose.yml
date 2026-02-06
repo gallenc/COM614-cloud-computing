@@ -102,6 +102,21 @@ services:
       - localstack-data:/var/lib/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
       
+  # see https://stackoverflow.com/questions/69735582/aws-cli-image-rrun-from-docker-compose-and-its-shutdon-after-one-second
+  # try docker compose exec aws-cli bash
+  # aws help
+  aws-cli:
+    image: amazon/aws-cli:latest
+    container_name: aws-cli
+    stdin_open: true # equivalent of -i
+    tty: true        # equivalent of -t
+    entrypoint: tail -f /dev/null
+    environment:
+      - HTTP_PROXY=http://ipadresses:port
+      - HTTPS_PROXY=https://ipadresses:port
+    ports:
+      - "8080:8080"
+      
   ## test container
   ubuntu1:
     container_name: ubuntu1
