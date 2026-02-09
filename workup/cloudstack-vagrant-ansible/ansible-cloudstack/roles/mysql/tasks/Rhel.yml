@@ -1,0 +1,27 @@
+---
+- name: Set MySQL service name variable
+  set_fact:
+    mysql_service_name: "mysqld"
+    mysql_conf_path: "/etc/my.cnf.d/cloudstack.cnf"
+
+- name: Install MySQL Server
+  dnf:
+    name:
+      - mysql-server
+      - python3-PyMySQL
+    state: present
+
+- name: Start MySQL (Initial)
+  service:
+    name: mysqld
+    state: started
+    enabled: yes
+
+- name: Set MySQL Root Password (if already set, update ensures compliance)
+  mysql_user:
+    name: root
+    host: localhost
+    password: "{{ mysql_root_password }}"
+    login_unix_socket: /var/lib/mysql/mysql.sock
+    state: present
+  ignore_errors: yes

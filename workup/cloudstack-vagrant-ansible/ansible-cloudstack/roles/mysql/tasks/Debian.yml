@@ -1,0 +1,18 @@
+---
+- name: Set MySQL service name variable
+  set_fact:
+    mysql_service_name: "mysql"
+    mysql_conf_path: "/etc/mysql/conf.d/cloudstack.cnf"
+
+- name: Install MySQL Server
+  apt:
+    name:
+      - mysql-server
+      - python3-pymysql
+    state: present
+
+- name: Start MySQL (Initial)
+  service:
+    name: mysql
+    state: started
+    enabled: yes

@@ -1,0 +1,112 @@
+---
+- name: Purge CloudStack Installation
+  hosts: cloudstack
+  become: yes
+  vars:
+    # SAFETY LOCK: Set to true to execute dangerous cleanups
+    perform_purge: true
+
+  tasks:
+    - name: Safety Check
+      fail:
+        msg: "SAFETY LOCK: Variable 'perform_purge' is set to False. Edit purge.yml to True to proceed."
+      when: not perform_purge
+
+    - name: Stop Services
+      service:
+        name: "{{ item }}"
+        state: stopped
+        enabled: no
+      ignore_errors: yes
+      loop:
+        - cloudstack-management
+        - cloudstack-agent
+        - libvirtd
+        - nfs-server
+        - rpcbind
+
+    # CloudStack Management
+    - name: Remove CloudStack Packages
+      package:
+        name:
+          - cloudstack-management
+          - cloudstack-common
+          - ipmitool
+        state: absent
+
+    - name: Clean Package Cache (RedHat)
+      command: dnf clean all
+      when: ansible_os_family == 'RedHat'
+
+    # CloudStack Agent & KVM Cleanup
+    - name: Remove CloudStack Agent & KVM Packages
+      package:
+        name:
+          - cloudstack-agent
+          - libvirt
+          - libvirt-daemon
+          - libvirt-daemon-driver-qemu
+          - qemu-kvm
+        state: absent
+
+    - name: Remove CloudStack Directories
+      file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /etc/cloudstack
+        - /var/log/cloudstack
+        - /usr/share/cloudstack-management
+        - /usr/share/cloudstack-common
+        - /usr/share/cloudstack-agent
+        - /var/lib/cloudstack
+        - /etc/libvirt
+        - /var/lib/libvirt
+
+
+    # Database Cleanup
+    - name: Ensure MySQL is running for cleanup
+      service:
+        name: mysqld
+        state: started
+
+    - name: Drop CloudStack Databases
+      mysql_db:
+        name: "{{ item }}"
+        state: absent
+        login_user: root
+        login_password: "{{ mysql_root_password }}"
+      loop:
+        - cloud
+        - cloud_usage
+        - simulator
+
+    - name: Drop Cloud User
+      mysql_user:
+        name: cloud
+        host: localhost
+        state: absent
+        login_user: root
+        login_password: "{{ mysql_root_password }}"
+
+    # NFS Cleanup
+    - name: Unexport directories
+      shell: exportfs -ua
+      ignore_errors: yes
+
+    - name: Remove Export Directories
+      file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - "{{ primary_storage_path }}"
+        - "{{ secondary_storage_path }}"
+
+    - name: Clean NFS Exports
+      copy:
+        content: ""
+        dest: "{{ nfs_exports_file | default('/etc/exports') }}"
+
+    # Network cleanup removed to prevent SSH lockout
+    # If network reset is needed, it must be done via console
+

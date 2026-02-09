@@ -17,6 +17,8 @@ SEMAPHORE_ADMIN_NAME: admin
 
 some references:
 
+Note that localstack will not create aws simulation without localstack-pro
+
 [A guide to LocalStack with docker-compose](https://medium.com/@muthomititus/a-guide-to-localstack-with-docker-compose-e1487e3a776f)
 
 [Using LocalStack with Docker Compose to mock AWS services.](https://whattodevnow.medium.com/using-localstack-with-docker-compose-to-mock-aws-services-bb25a5b01d4b)   
@@ -25,7 +27,7 @@ This shows how to Here you mount a setup file so it will be executed when the lo
 localstack ui missing depricated 
 https://stackoverflow.com/questions/57554575/localstack-cant-access-dashboard
 
-https://linuxtechlab.com/install-localstack-gui-interface-for-local-aws-part-2/   using localstack pro
+https://linuxtechlab.com/install-localstack-gui-interface-for-local-aws-part-2/   using localstack pro  - SHOULD ALL OW Ui but doent work
 
 
 # aws cli docker

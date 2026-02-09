@@ -1,0 +1,28 @@
+---
+- name: Install Bridge Dependencies
+  apt:
+    name:
+      - bridge-utils
+      - ifupdown
+    state: present
+
+- name: Get default interface
+  shell: "ip route | grep default | awk '{print $5}'"
+  register: net_interface
+  changed_when: false
+
+- name: Configure Bridge in /etc/network/interfaces
+  blockinfile:
+    path: /etc/network/interfaces
+    block: |
+      auto cloudbr0
+      iface cloudbr0 inet static
+          address {{ management_server_ip }}
+          netmask 255.255.255.0
+          gateway {{ gateway }}
+          dns-nameservers {{ dns1 }} {{ dns2 }}
+          bridge_ports {{ net_interface.stdout }}
+          bridge_fd 5
+          bridge_stp off
+          bridge_maxwait 1
+  notify: Restart Networking (Debian)

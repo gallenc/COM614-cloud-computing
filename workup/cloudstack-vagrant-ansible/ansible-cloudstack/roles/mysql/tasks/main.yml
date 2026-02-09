@@ -1,0 +1,61 @@
+---
+- name: Load OS specific tasks (RHEL)
+  include_tasks: Rhel.yml
+  when: ansible_os_family == 'RedHat'
+
+- name: Load OS specific tasks (Debian)
+  include_tasks: Debian.yml
+  when: ansible_os_family == 'Debian'
+
+- name: Deploy MySQL configuration
+  template:
+    src: my.cnf.j2
+    dest: "{{ mysql_conf_path }}"
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart MySQL
+
+- name: Start and Enable MySQL Service
+  service:
+    name: "{{ mysql_service_name }}"
+    state: started
+    enabled: yes
+
+- name: Create MySQL Data Directory (if not exists)
+  file:
+    path: /var/lib/mysql
+    state: directory
+    owner: mysql
+    group: mysql
+    mode: '0755'
+
+# Nota: Em MySQL 8, 'GRANT IDENTIFIED BY' foi removido.
+- name: Create 'cloud' user in MySQL
+  mysql_user:
+    name: cloud
+    host: "%"
+    password: "{{ mysql_cloud_password }}"
+    priv: "*.*:ALL"
+    state: present
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+  ignore_errors: yes
+
+- name: Create 'cloud' user for localhost
+  mysql_user:
+    name: cloud
+    host: "localhost"
+    password: "{{ mysql_cloud_password }}"
+    priv: "*.*:ALL"
+    state: present
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+  ignore_errors: yes
+
+- name: Create 'cloud' database
+  mysql_db:
+    name: cloud
+    state: present
+    login_user: root
+    login_password: "{{ mysql_root_password }}"

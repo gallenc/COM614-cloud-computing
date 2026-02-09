@@ -1,0 +1,9 @@
+---
+- name: Add CloudStack Repository (RedHat)
+  yum_repository:
+    name: cloudstack
+    description: CloudStack Repo
+    baseurl: http://download.cloudstack.org/centos/$releasever/4.22/
+    enabled: yes
+    gpgcheck: no
+    repo_gpgcheck: no

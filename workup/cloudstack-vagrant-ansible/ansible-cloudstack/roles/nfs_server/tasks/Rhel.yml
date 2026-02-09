@@ -1,0 +1,43 @@
+---
+- name: Install NFS Server packages (RedHat)
+  dnf:
+    name:
+      - nfs-utils
+      - rpcbind
+    state: present
+  when: enable_nfs_server | default(true)
+
+- name: Enable rpcbind service (RedHat)
+  service:
+    name: rpcbind
+    state: started
+    enabled: yes
+  when: enable_nfs_server | default(true)
+
+- name: Enable NFS server service
+  service:
+    name: nfs-server
+    state: started
+    enabled: yes
+  when: enable_nfs_server | default(true)
+
+- name: Ensure Firewalld is running (RedHat)
+  service:
+    name: firewalld
+    state: started
+    enabled: yes
+  when: enable_nfs_server | default(true)
+  ignore_errors: yes
+
+- name: Open NFS Services in Firewall
+  firewalld:
+    service: "{{ item }}"
+    permanent: yes
+    state: enabled
+    immediate: yes
+  loop:
+    - nfs
+    - mountd
+    - rpc-bind
+  when: enable_nfs_server | default(true)
+  ignore_errors: yes

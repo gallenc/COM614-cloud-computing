@@ -1,0 +1,30 @@
+---
+- name: Load OS specific tasks (RHEL)
+  include_tasks: Rhel.yml
+  when: (ansible_os_family == 'RedHat') and (enable_nfs_server | default(true))
+
+- name: Load OS specific tasks (Debian)
+  include_tasks: Debian.yml
+  when: (ansible_os_family == 'Debian') and (enable_nfs_server | default(true))
+
+- name: Create NFS export directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+    owner: root
+    group: root
+  loop:
+    - "{{ primary_storage_path }}"
+    - "{{ secondary_storage_path }}"
+  when: enable_nfs_server | default(true)
+
+- name: Configure NFS exports
+  template:
+    src: exports.j2
+    dest: "{{ nfs_exports_file }}"
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Reload NFS Exports
+  when: enable_nfs_server | default(true)

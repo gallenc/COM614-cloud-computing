@@ -1,0 +1,12 @@
+---
+- name: restart libvirtd
+  service:
+    name: libvirtd
+    state: restarted
+    enabled: yes
+
+- name: restart cloudstack-agent
+  service:
+    name: cloudstack-agent
+    state: restarted
+    enabled: yes

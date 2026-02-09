@@ -1,0 +1,17 @@
+---
+- name: Update APT Cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Install basic dependencies (Debian)
+  apt:
+    name:
+      - chrony
+      - net-tools
+      - vim
+      - htop
+      - dnsutils
+      - bridge-utils
+      - open-vm-tools
+    state: present

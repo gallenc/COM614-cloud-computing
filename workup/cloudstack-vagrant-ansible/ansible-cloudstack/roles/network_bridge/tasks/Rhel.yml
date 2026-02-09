@@ -1,0 +1,52 @@
+---
+- name: Install Bridge Utils
+  dnf:
+    name: bridge-utils
+    state: present
+
+- name: Get default gateway
+  shell: "ip route | grep default | awk '{print $3}'"
+  register: default_gateway
+  changed_when: false
+
+- name: Get current network interface name
+  shell: "ip route | grep default | awk '{print $5}'"
+  register: net_interface
+  changed_when: false
+
+- name: Check if cloudbr0 already exists
+  command: nmcli connection show cloudbr0
+  register: cloudbr0_exists
+  ignore_errors: yes
+  changed_when: false
+
+- name: Check if bridge slave exists
+  shell: "nmcli -t -f NAME,TYPE con show | grep ':bridge-slave$' | grep '{{ net_interface.stdout }}'"
+  register: bridge_slave_exists
+  ignore_errors: yes
+  changed_when: false
+
+- name: Create cloudbr0 bridge (if not exists)
+  command: nmcli connection add type bridge autoconnect yes con-name cloudbr0 ifname cloudbr0
+  when: cloudbr0_exists.rc != 0
+
+- name: Add interface to bridge (slave)
+  command: nmcli connection add type bridge-slave autoconnect yes con-name bridge-slave-{{ net_interface.stdout }} ifname {{ net_interface.stdout }} master cloudbr0
+  when: cloudbr0_exists.rc != 0
+
+- name: Configure cloudbr0 with static IP
+  command: >
+    nmcli connection modify cloudbr0
+    ipv4.addresses '{{ management_server_ip }}/24'
+    ipv4.gateway '{{ default_gateway.stdout }}'
+    ipv4.dns '{{ dns1 }} {{ dns2 }}'
+    ipv4.method manual
+  when: cloudbr0_exists.rc != 0
+
+- name: Bring down old interface connection
+  command: nmcli connection down {{ net_interface.stdout }}
+  when: cloudbr0_exists.rc != 0
+  ignore_errors: yes
+
+- name: Bring up cloudbr0
+  command: nmcli connection up cloudbr0

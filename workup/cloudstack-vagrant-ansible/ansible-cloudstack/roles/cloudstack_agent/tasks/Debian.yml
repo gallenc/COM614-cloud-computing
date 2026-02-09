@@ -1,0 +1,58 @@
+---
+- name: Install KVM and Agent Dependencies (Debian)
+  apt:
+    name:
+      - cloudstack-agent
+      - qemu-kvm
+      - libvirt-daemon-system
+      - libvirt-clients
+      - bridge-utils
+    state: present
+    update_cache: yes
+
+- name: Configure Libvirt (Debian)
+  lineinfile:
+    path: /etc/libvirt/libvirtd.conf
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  loop:
+    - { regexp: '^#?listen_tls', line: 'listen_tls = 0' }
+    - { regexp: '^#?listen_tcp', line: 'listen_tcp = 1' }
+    - { regexp: '^#?tcp_port', line: 'tcp_port = "16509"' }
+    - { regexp: '^#?auth_tcp', line: 'auth_tcp = "none"' }
+  notify: restart libvirtd
+
+- name: Stop libvirtd Service (before socket activation)
+  service:
+    name: libvirtd
+    state: stopped
+    enabled: yes
+
+- name: Mask libvirtd socket to prevent conflict (Ubuntu 20+)
+  systemd:
+    name: libvirtd.socket
+    state: stopped
+    masked: yes
+  ignore_errors: yes
+
+- name: Enable Libvirt TCP Socket
+  service:
+    name: libvirtd-tcp.socket
+    state: started
+    enabled: yes
+
+- name: Configure QEMU VNC Listen (Debian)
+  lineinfile:
+    path: /etc/libvirt/qemu.conf
+    regexp: '^#?vnc_listen'
+    line: 'vnc_listen = "0.0.0.0"'
+    state: present
+  notify: restart libvirtd
+
+- name: Ensure Services
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  loop:
+    - cloudstack-agent

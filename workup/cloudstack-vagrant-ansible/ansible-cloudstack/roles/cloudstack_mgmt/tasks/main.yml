@@ -1,0 +1,84 @@
+---
+- name: Load OS specific tasks (RHEL)
+  include_tasks: Rhel.yml
+  when: ansible_os_family == 'RedHat'
+
+- name: Load OS specific tasks (Debian)
+  include_tasks: Debian.yml
+  when: ansible_os_family == 'Debian'
+
+- name: Import CloudStack GPG key
+  rpm_key:
+    state: present
+    key: http://download.cloudstack.org/release.asc
+  when: ansible_os_family == "RedHat"
+
+- name: Install CloudStack Management Server and dependencies
+  package:
+    name:
+      - cloudstack-management
+      - ipmitool
+    state: present
+
+- name: Open CloudStack Management UI Port (8080)
+  firewalld:
+    port: 8080/tcp
+    permanent: yes
+    state: enabled
+    immediate: yes
+  when: ansible_os_family == 'RedHat'
+
+- name: Init CloudStack Databases
+  command: >
+    cloudstack-setup-databases cloud:{{ mysql_cloud_password }}@localhost 
+    --deploy-as=root:{{ mysql_root_password }} 
+    -i {{ management_server_ip }} 
+    --force-recreate
+    -e file
+  register: db_setup
+  changed_when: "'Database setup complete' in db_setup.stdout"
+
+- name: Setup CloudStack Management
+  command: cloudstack-setup-management
+  notify: Restart CloudStack Management
+
+- name: Configure Entropy Source (Fix Slow Startup)
+  lineinfile:
+    path: /etc/default/cloudstack-management
+    regexp: '^JAVA_OPTS='
+    line: 'JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom -Djava.security.properties=/etc/cloudstack/management/java.security.ciphers -Djava.awt.headless=true -Xmx2G -XX:+UseParallelGC -XX:MaxGCPauseMillis=500 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/var/log/cloudstack/management/ -XX:ErrorFile=/var/log/cloudstack/management/cloudstack-management.err --add-opens=java.base/java.lang=ALL-UNNAMED --add-exports=java.base/sun.security.x509=ALL-UNNAMED"'
+  notify: Restart CloudStack Management
+
+
+
+- name: Create Secondary Storage Directory
+  file:
+    path: "{{ secondary_storage_path }}/template/tmpl/1/1/"
+    state: directory
+    recurse: yes
+    mode: '0755'
+
+- name: Download vhd-util
+  get_url:
+    url: http://download.cloudstack.org/tools/vhd-util
+    dest: /usr/share/cloudstack-common/scripts/vm/hypervisor/xenserver/vhd-util
+    mode: '0755'
+  ignore_errors: yes
+
+- name: Download and Install System VM Template
+  shell: |
+    /usr/share/cloudstack-common/scripts/storage/secondary/cloud-install-sys-tmplt \
+    -m {{ secondary_storage_path }} \
+    -u http://download.cloudstack.org/systemvm/4.22/systemvmtemplate-4.22.0-x86_64-kvm.qcow2.bz2 \
+    -h kvm \
+    -F
+  args:
+    creates: "{{ secondary_storage_path }}/template/tmpl/1/1/template.properties"
+
+- name: Wait for CloudStack Management Server to be UP
+  wait_for:
+    port: 8080
+    host: "{{ management_server_ip }}"
+    delay: 10
+    timeout: 600
+    msg: "CloudStack Management Server did not start within 10 minutes"

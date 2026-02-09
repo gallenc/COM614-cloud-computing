@@ -1,0 +1,21 @@
+---
+# Network Configuration
+management_server_ip: "{{ groups['cloudstack_management'][0] }}"
+utility_server_ip: "{{ groups['cloudstack_management'][0] }}"
+gateway: "10.0.30.1"
+dns1: "8.8.8.8"
+dns2: "8.8.4.4"
+
+# CloudStack paths
+primary_storage_path: "/home/storage/primary"
+secondary_storage_path: "/home/storage/secondary"
+
+# NFS Server Toggle
+enable_nfs_server: true
+nfs_exports_file: "/etc/exports"
+install_vagrant: false
+github_runner_token: "ENTER_YOUR_TOKEN_HERE"
+
+# Passwords
+mysql_root_password: "password"
+mysql_cloud_password: "password"

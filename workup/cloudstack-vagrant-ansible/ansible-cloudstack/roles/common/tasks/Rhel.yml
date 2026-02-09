@@ -1,0 +1,21 @@
+---
+- name: Install EPEL Release
+  dnf:
+    name: epel-release
+    state: present
+
+- name: Install basic dependencies (RedHat)
+  dnf:
+    name:
+      - chrony
+      - net-tools
+      - vim
+      - htop
+      - bind-utils
+      - python3-libselinux
+    state: present
+
+- name: Set SELinux to permissive
+  selinux:
+    policy: targeted
+    state: permissive

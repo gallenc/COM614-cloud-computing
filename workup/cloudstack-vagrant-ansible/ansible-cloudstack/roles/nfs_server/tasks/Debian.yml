@@ -1,0 +1,30 @@
+---
+- name: Install NFS Server packages (Debian)
+  apt:
+    name: nfs-kernel-server
+    state: present
+  when: enable_nfs_server | default(true)
+
+- name: Enable NFS kernel server service
+  service:
+    name: nfs-kernel-server
+    state: started
+    enabled: yes
+  when: enable_nfs_server | default(true)
+
+- name: Install UFW (Debian/Ubuntu)
+  apt:
+    name: ufw
+    state: present
+  when: enable_nfs_server | default(true)
+
+- name: Allow NFS ports in UFW
+  ufw:
+    rule: allow
+    port: "{{ item }}"
+    proto: tcp
+  loop:
+    - '2049'
+    - '111'
+  when: enable_nfs_server | default(true)
+

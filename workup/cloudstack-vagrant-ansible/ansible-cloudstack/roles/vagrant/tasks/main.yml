@@ -1,0 +1,16 @@
+---
+- name: Install Vagrant on RedHat/Rocky
+  include_tasks: redhat.yml
+  when: ansible_os_family == "RedHat"
+
+- name: Install Vagrant on Debian/Ubuntu
+  include_tasks: debian.yml
+  when: ansible_os_family == "Debian"
+
+- name: Copy Vagrantfile to Management Host
+  template:
+    src: Vagrantfile.j2
+    dest: "{{ ansible_user_dir }}/Vagrantfile"
+    mode: '0644'
+  when: "'cloudstack_management' in group_names"
+

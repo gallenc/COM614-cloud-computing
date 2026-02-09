@@ -1,0 +1,11 @@
+---
+- debug:
+    msg: "Agent Role Started. OS Family: {{ ansible_os_family }}"
+
+- name: Load OS specific tasks (RHEL)
+  include_tasks: Rhel.yml
+  when: ansible_os_family == 'RedHat'
+
+- name: Load OS specific tasks (Debian)
+  include_tasks: Debian.yml
+  when: ansible_os_family == 'Debian'

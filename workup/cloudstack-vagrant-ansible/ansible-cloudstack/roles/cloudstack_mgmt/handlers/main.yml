@@ -1,0 +1,5 @@
+---
+- name: Restart CloudStack Management
+  service:
+    name: cloudstack-management
+    state: restarted

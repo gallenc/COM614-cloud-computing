@@ -1,0 +1,104 @@
+---
+- name: Ensure Firewalld is running
+  service:
+    name: firewalld
+    state: started
+    enabled: yes
+
+- name: Add cloudbr0 to trusted zone
+  firewalld:
+    zone: trusted
+    interface: cloudbr0
+    permanent: yes
+    state: enabled
+    immediate: yes
+
+- name: Open KVM VNC ports
+  firewalld:
+    port: 5900-6100/tcp
+    permanent: yes
+    state: enabled
+    immediate: yes
+    zone: public
+
+- name: Install KVM and Agent Dependencies (RedHat)
+  dnf:
+    name:
+      - cloudstack-agent
+      - qemu-kvm
+      - libvirt
+      - libvirt-daemon
+      - libvirt-daemon-driver-qemu
+      - virt-install
+      - virt-viewer
+      - bridge-utils
+    state: present
+
+- name: Configure Libvirt to listen on TCP (libvirtd.conf)
+  lineinfile:
+    path: /etc/libvirt/libvirtd.conf
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+  loop:
+    - { regexp: '^#?listen_tls', line: 'listen_tls = 0' }
+    - { regexp: '^#?listen_tcp', line: 'listen_tcp = 1' }
+    - { regexp: '^#?tcp_port', line: 'tcp_port = "16509"' }
+    - { regexp: '^#?auth_tcp', line: 'auth_tcp = "none"' }
+    - { regexp: '^#?mdns_adv', line: 'mdns_adv = 0' }
+  notify: restart libvirtd
+
+- name: Clear Libvirt Launch Arguments (incompatible with socket activation)
+  copy:
+    dest: /etc/sysconfig/libvirtd
+    content: ''
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Configure QEMU VNC Listen (qemu.conf)
+  lineinfile:
+    path: /etc/libvirt/qemu.conf
+    regexp: '^#?vnc_listen'
+    line: 'vnc_listen = "0.0.0.0"'
+    state: present
+  notify: restart libvirtd
+
+- name: Configure CloudStack Agent (agent.properties)
+  lineinfile:
+    path: /etc/cloudstack/agent/agent.properties
+    regexp: '^host='
+    line: "host={{ management_server_ip }}"
+    state: present
+  notify: restart cloudstack-agent
+
+- name: Stop libvirtd service (required before enabling socket activation)
+  service:
+    name: libvirtd
+    state: stopped
+  ignore_errors: yes
+
+- name: Unmask libvirtd sockets (RedHat)
+  systemd:
+    name: "{{ item }}"
+    masked: no
+  loop:
+    - libvirtd.socket
+    - libvirtd-tcp.socket
+
+- name: Enable and start libvirtd-tcp.socket (for TCP/16509 listening)
+  service:
+    name: libvirtd-tcp.socket
+    state: started
+    enabled: yes
+
+- name: Ensure Libvirtd service is enabled (will be activated by socket)
+  service:
+    name: libvirtd
+    enabled: yes
+
+- name: Ensure CloudStack Agent is enabled and running
+  service:
+    name: cloudstack-agent
+    state: started
+    enabled: yes

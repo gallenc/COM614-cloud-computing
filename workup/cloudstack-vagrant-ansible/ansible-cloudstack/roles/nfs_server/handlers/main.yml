@@ -1,0 +1,4 @@
+---
+- name: Reload NFS Exports
+  command: exportfs -ra
+  when: enable_nfs_server | default(true)

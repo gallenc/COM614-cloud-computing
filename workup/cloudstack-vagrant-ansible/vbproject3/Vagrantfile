@@ -1,0 +1,64 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+Vagrant.configure("2") do |config|
+
+
+  # Cloud Stack Ansible Controller
+  config.vm.define "cloudstack_controller" do |cloudstack_controller|
+  
+     # note local box defined in another project
+     cloudstack_controller.vm.box = "entimoss/alma10_base1"
+     
+     # problems with this
+     # cloudstack_controller.vm.disk :disk, size: "50GB", primary: true
+     
+     # cloudstack_controller.vm.synced_folder ".", "/vagrant", disabled: true
+     
+     cloudstack_controller.vm.hostname = "cloudstack-controller"
+  
+     cloudstack_controller.vm.provider "virtualbox" do |vb|
+        vb.customize ["modifyvm", :id, "--nic2", "hostonly"]
+        vb.customize ["modifyvm", :id, "--hostonlyadapter2", "VirtualBox Host-Only Ethernet Adapter"] #use proper network name here
+        vb.customize ["modifyvm", :id, "--cableconnected2", "on"]
+     end
+  
+     cloudstack_controller.vm.provider "virtualbox" do |vb|
+        # Display the VirtualBox GUI when booting the machine
+        vb.gui = true
+  
+        # Customize the amount of memory on the VM:
+        vb.memory = "1024"
+        vb.cpus = 2
+     end
+     
+     # set eth 1 to a static ip address below DHCP range of virtual box
+     cloudstack_controller.vm.provision "shell", inline: <<-SHELL
+       echo script setting static ip address 
+       nmcli connection modify "Wired connection 2"  ipv4.method manual   ipv4.addresses 192.168.56.35/24
+       nmcli connection down "Wired connection 2"
+       nmcli connection up "Wired connection 2"
+     SHELL
+     
+     # install ansible from rpm
+     cloudstack_controller.vm.provision "shell", inline: <<-SHELL
+        sudo dnf install -y epel-release
+        sudo dnf install ansible-core -y
+     SHELL
+     
+     # this shell provisioner will run the ansible ssh provisioning file which sets up an ansible ssh login for all hosts
+     cloudstack_controller.vm.provision "shell", path: "generate-ansible-ssh.sh"
+     
+     # this shell provisioner will run the git repo docker-compose service provisioning as ansible user
+     cloudstack_controller.vm.provision "shell", inline: <<-SHELL
+       sudo /bin/su -c "/vagrant/cloudstack-config.sh" - ansible
+     SHELL
+
+   
+  end  # cloudstack_controller
+  
+end
