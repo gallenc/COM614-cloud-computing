@@ -2,7 +2,7 @@
 # Network Configuration
 management_server_ip: "{{ groups['cloudstack_management'][0] }}"
 utility_server_ip: "{{ groups['cloudstack_management'][0] }}"
-gateway: "10.0.30.1"
+gateway: "10.0.2.2"
 dns1: "8.8.8.8"
 dns2: "8.8.4.4"
 

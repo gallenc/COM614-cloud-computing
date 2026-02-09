@@ -1,9 +1,0 @@
-[cloudstack_management]
-10.0.30.251 ansible_user=matheus ansible_become_password=matheus
-
-[cloudstack_kvm]
-10.0.30.251 ansible_user=matheus ansible_become_password=matheus
-
-[cloudstack:children]
-cloudstack_management
-cloudstack_kvm
