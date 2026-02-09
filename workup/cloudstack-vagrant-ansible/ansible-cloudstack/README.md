@@ -42,8 +42,10 @@ cloudstack_kvm
 Edit `group_vars/all.yml` to match your network environment.
 
 **File:** `group_vars/all.yml`
+
 ```yaml
 # Network Configuration
+
 management_server_ip: "{{ groups['cloudstack_management'][0] }}" # Automatically picks the first IP from inventory
 utility_server_ip: "{{ groups['cloudstack_management'][0] }}"
 gateway: "<network gateway>"          # Ex: 10.0.0.1
@@ -69,7 +71,7 @@ mysql_cloud_password: "password"      # Password for 'cloud' DB user
 Execute the playbook to start the installation:
 
 ```bash
-ansible-playbook -i inventory cloudstack-install.yml
+ansible-playbook -i inventory.ini cloudstack-install.yml
 ```
 
 **The playbook performs the following actions:**
