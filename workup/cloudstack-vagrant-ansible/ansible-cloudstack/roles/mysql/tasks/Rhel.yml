@@ -7,7 +7,8 @@
 - name: Install MySQL Server
   dnf:
     name:
-      - mysql-server
+      # - mysql-server # not in alma 10 repo
+      - mariadb-server
       - python3-PyMySQL
     state: present
 

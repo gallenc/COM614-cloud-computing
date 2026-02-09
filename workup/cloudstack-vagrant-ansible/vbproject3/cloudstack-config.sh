@@ -32,8 +32,9 @@ git pull
 echo updated repo in directory $DIRECTORY/$REPO
 
 ## add ansible modules needed
+ansible-galaxy collection install ansible.posix    # fix couldn't resolve module/action 'firewalld' 
 ansible-galaxy collection install community.mysql  # fix couldn't resolve module/action 'mysql_user'
-ansible-galaxy collection install community.posix  --pre  # fix couldn't resolve module/action 'firewalld' note had to add --pre
+
 
 
 
