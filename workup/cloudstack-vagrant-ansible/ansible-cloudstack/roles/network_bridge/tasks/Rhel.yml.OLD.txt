@@ -13,11 +13,6 @@
   shell: "ip route | grep default | awk '{print $5}'"
   register: net_interface
   changed_when: false
-  
-- name: Get current private interface name
-  shell: "ip route | grep '{{management_server_ip}}' | awk '{print $5}'"
-  register: net_private
-  changed_when: false
 
 - name: Check if cloudbr0 already exists
   command: nmcli connection show cloudbr0
@@ -26,7 +21,7 @@
   changed_when: false
 
 - name: Check if bridge slave exists
-  shell: "nmcli -t -f NAME,TYPE con show | grep ':bridge-slave$' | grep '{{ net_private.stdout }}'"
+  shell: "nmcli -t -f NAME,TYPE con show | grep ':bridge-slave$' | grep '{{ net_interface.stdout }}'"
   register: bridge_slave_exists
   ignore_errors: yes
   changed_when: false
@@ -36,7 +31,7 @@
   when: cloudbr0_exists.rc != 0
 
 - name: Add interface to bridge (slave)
-  command: nmcli connection add type bridge-slave autoconnect yes con-name bridge-slave-{{ net_private.stdout }} ifname {{ net_private.stdout }} master cloudbr0
+  command: nmcli connection add type bridge-slave autoconnect yes con-name bridge-slave-{{ net_interface.stdout }} ifname {{ net_interface.stdout }} master cloudbr0
   when: cloudbr0_exists.rc != 0
 
 - name: Configure cloudbr0 with static IP
@@ -49,7 +44,7 @@
   when: cloudbr0_exists.rc != 0
 
 - name: Bring down old interface connection
-  command: nmcli connection down {{ net_private.stdout }}
+  command: nmcli connection down {{ net_interface.stdout }}
   when: cloudbr0_exists.rc != 0
   ignore_errors: yes
 
