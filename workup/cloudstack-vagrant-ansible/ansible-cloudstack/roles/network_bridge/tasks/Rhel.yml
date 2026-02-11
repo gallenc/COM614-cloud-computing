@@ -31,7 +31,7 @@
   
 - name: echo network interface names
   debug:
-    msg: "Network Interfaces: default_gateway {{ default_gateway.stdout }} net_interface {{ net_interface.stdout }} net_interface_connection {{ net_interface_connection.stdout }}  net_private {{ net_private.stdout }} net_private_connection {{ net_private_connection.stdout }} management_server_ip {{ management_server_ip }}"
+    msg: "Network Interfaces: default_gateway '{{ default_gateway.stdout }}' net_interface '{{ net_interface.stdout }}' net_interface_connection '{{ net_interface_connection.stdout }}'  net_private '{{ net_private.stdout }}' net_private_connection '{{ net_private_connection.stdout }}' management_server_ip '{{ management_server_ip }}'"
 
 - name: Check if cloudbr0 already exists
   command: nmcli connection show cloudbr0
