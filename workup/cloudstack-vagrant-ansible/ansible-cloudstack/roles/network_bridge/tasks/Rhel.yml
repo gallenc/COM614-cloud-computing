@@ -18,6 +18,10 @@
   shell: "ip route | grep '{{management_server_ip}}' | awk '{print $5}'"
   register: net_private
   changed_when: false
+  
+- name: echo network interface name
+  debug:
+    msg: "Network Interfaces: default_gateway {{ default_gateway.stdout }} net_interface {{ net_interface.stdout }} net_private {{ net_private.stdout }} management_server_ip {{ management_server_ip }}"
 
 - name: Check if cloudbr0 already exists
   command: nmcli connection show cloudbr0
@@ -43,7 +47,6 @@
   command: >
     nmcli connection modify cloudbr0
     ipv4.addresses '{{ management_server_ip }}/24'
-    ipv4.gateway '{{ default_gateway.stdout }}'
     ipv4.dns '{{ dns1 }} {{ dns2 }}'
     ipv4.method manual
   when: cloudbr0_exists.rc != 0

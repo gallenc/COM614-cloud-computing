@@ -35,6 +35,13 @@ echo updated repo in directory $DIRECTORY/$REPO
 ansible-galaxy collection install ansible.posix    # fix couldn't resolve module/action 'firewalld' 
 ansible-galaxy collection install community.mysql  # fix couldn't resolve module/action 'mysql_user'
 
+## set crypto policies to allow cloudstack install
+# see SHA1 policies https://github.com/apache/cloudstack/issues/10133
+# see https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/security_hardening/using-the-system-wide-cryptographic-policies_security-hardening
+
+sudo update-crypto-policies --set LEGACY
+
+
 
 
 
