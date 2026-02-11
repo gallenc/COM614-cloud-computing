@@ -8,17 +8,17 @@
     - role: vagrant
       when: install_vagrant | bool
 
-- name: Components for Management Server
-  hosts: cloudstack_management
-  become: yes
-  roles:
-    - nfs_server
-    - mysql
-    - cloudstack_mgmt
-
-- name: Components for KVM Agent
-  hosts: cloudstack_kvm
-  become: yes
-  tags: [cloudstack_agent]
-  roles:
-    - cloudstack_agent
+#- name: Components for Management Server
+#  hosts: cloudstack_management
+#  become: yes
+#  roles:
+#    - nfs_server
+#    - mysql
+#    - cloudstack_mgmt
+#
+#- name: Components for KVM Agent
+#  hosts: cloudstack_kvm
+#  become: yes
+#  tags: [cloudstack_agent]
+#  roles:
+#    - cloudstack_agent
