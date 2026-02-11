@@ -12,6 +12,10 @@
     state: present
     key: http://download.cloudstack.org/release.asc
   when: ansible_os_family == "RedHat"
+  
+- name: echo - ready to install cloudstack
+  debug:
+    msg: "ready to begin installing cloudstack"
 
 - name: Install CloudStack Management Server and dependencies
   package:
@@ -27,6 +31,8 @@
     state: enabled
     immediate: yes
   when: ansible_os_family == 'RedHat'
+  # firewalld may not be active
+  ignore_errors: yes
 
 - name: Init CloudStack Databases
   command: >

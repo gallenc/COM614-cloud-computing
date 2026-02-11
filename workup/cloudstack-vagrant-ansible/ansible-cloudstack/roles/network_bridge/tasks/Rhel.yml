@@ -5,17 +5,17 @@
     state: present
 
 - name: Get default gateway
-  shell: "ip route | grep default | awk '{print $3}'"
+  shell: "ip route | grep -m 1 'default' | awk '{print $3}'"
   register: default_gateway
   changed_when: false
 
 - name: Get current network interface name
-  shell: "ip route | grep default | awk '{print $5}'"
+  shell: "ip route | grep -m 1 'default' | awk '{print $5}'"
   register: net_interface
   changed_when: false
   
 - name: Get current private interface name
-  shell: "ip route | grep '{{management_server_ip}}' | awk '{print $3}'"
+  shell: "ip route | grep -m 1 '{{management_server_ip}}' | awk '{print $3}'"
   register: net_private
   changed_when: false
   
