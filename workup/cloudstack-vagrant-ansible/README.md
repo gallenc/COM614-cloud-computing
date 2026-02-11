@@ -12,7 +12,13 @@ ansible-playbook -i inventory.ini cloudstack-install.yml
 
 ```
 
-Modified ip addresses and usernames etc
+when running 
+
+http://192.168.56.35:8080/client/
+
+username admin
+
+password password
 
 
 
