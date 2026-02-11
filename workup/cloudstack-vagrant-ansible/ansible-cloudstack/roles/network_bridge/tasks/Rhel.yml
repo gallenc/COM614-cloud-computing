@@ -15,7 +15,7 @@
   changed_when: false
 
 - name: Get current network interface connection name
-  shell: "nmcli -t -f NAME,DEVICE | grep -m 1 '{{net_interface.stdout}}' | awk -F\":\" '{print $1}'"
+  shell: "nmcli -t -f NAME,DEVICE con | grep -m 1 '{{net_interface.stdout}}' | awk -F\":\" '{print $1}'"
   register: net_interface_connection
   changed_when: false
   
@@ -25,7 +25,7 @@
   changed_when: false
   
 - name: Get current private interface connection name
-  shell: "nmcli -t -f NAME,DEVICE | grep -m 1 '{{net_private.stdout}}' | awk -F\":\" '{print $1}'"
+  shell: "nmcli -t -f NAME,DEVICE con | grep -m 1 '{{net_private.stdout}}' | awk -F\":\" '{print $1}'"
   register: net_private_connection
   changed_when: false
   
