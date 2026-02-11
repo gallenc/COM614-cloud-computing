@@ -42,7 +42,7 @@ ansible-galaxy collection install community.mysql  # fix couldn't resolve module
 sudo update-crypto-policies --set LEGACY
 
 ## install python firewall
-sudo npm -y install python3-firewall
+sudo dnf -y install python3-firewall
 
 
 
