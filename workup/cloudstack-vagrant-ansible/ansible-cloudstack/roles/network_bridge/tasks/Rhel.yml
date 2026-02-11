@@ -15,7 +15,7 @@
   changed_when: false
   
 - name: Get current private interface name
-  shell: "ip route | grep '{{management_server_ip}}' | awk '{print $5}'"
+  shell: "ip route | grep '{{management_server_ip}}' | awk '{print $3}'"
   register: net_private
   changed_when: false
   
