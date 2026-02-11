@@ -1,10 +1,9 @@
 ---
-- name: Ensure Firewalld is running
-  service:
-    name: firewalld
-    state: started
-    enabled: yes
-    ignore_errors: yes
+#- name: Ensure Firewalld is running
+#  service:
+#    name: firewalld
+#    state: started
+#    enabled: yes
 
 - name: Add cloudbr0 to trusted zone
   firewalld:
