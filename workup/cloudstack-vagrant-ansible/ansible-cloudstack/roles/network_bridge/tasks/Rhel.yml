@@ -13,15 +13,25 @@
   shell: "ip route | grep -m 1 'default' | awk '{print $5}'"
   register: net_interface
   changed_when: false
+
+- name: Get current network interface connection name
+  shell: "nmcli -t -t NAME,DEVICE | grep -m 1 '{{net_interface.stdout}}' | awk -F\":\" '{print $1}'"
+  register: net_interface_connection
+  changed_when: false
   
 - name: Get current private interface name
   shell: "ip route | grep -m 1 '{{management_server_ip}}' | awk '{print $3}'"
   register: net_private
   changed_when: false
   
-- name: echo network interface name
+- name: Get current private interface connection name
+  shell: "nmcli -t -t NAME,DEVICE | grep -m 1 '{{net_private.stdout}}' | awk -F\":\" '{print $1}'"
+  register: net_private_connection
+  changed_when: false
+  
+- name: echo network interface names
   debug:
-    msg: "Network Interfaces: default_gateway {{ default_gateway.stdout }} net_interface {{ net_interface.stdout }} net_private {{ net_private.stdout }} management_server_ip {{ management_server_ip }}"
+    msg: "Network Interfaces: default_gateway {{ default_gateway.stdout }} net_interface {{ net_interface.stdout }} net_interface_connection {{ net_interface_connection.stdout }}  net_private {{ net_private.stdout }} net_private_connection {{ net_private_connection.stdout }} management_server_ip {{ management_server_ip }}"
 
 - name: Check if cloudbr0 already exists
   command: nmcli connection show cloudbr0
@@ -52,7 +62,7 @@
   when: cloudbr0_exists.rc != 0
 
 - name: Bring down old interface connection
-  command: nmcli connection down {{ net_private.stdout }}
+  command: nmcli connection down {{ net_private_connection.stdout }}
   when: cloudbr0_exists.rc != 0
   ignore_errors: yes
 
