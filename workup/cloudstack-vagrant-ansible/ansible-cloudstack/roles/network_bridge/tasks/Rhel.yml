@@ -61,7 +61,7 @@
     ipv4.method manual
   when: cloudbr0_exists.rc != 0
   
-# note bringing up bridge before disconnecting
+# note bringing up bridge before disconnecting old interface
 - name: Bring up cloudbr0
   command: nmcli connection up cloudbr0
 
