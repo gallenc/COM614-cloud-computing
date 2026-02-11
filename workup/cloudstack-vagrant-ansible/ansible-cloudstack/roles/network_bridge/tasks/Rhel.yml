@@ -62,7 +62,7 @@
   when: cloudbr0_exists.rc != 0
 
 - name: Bring down old interface connection
-  command: nmcli connection down {{ net_private_connection.stdout }}
+  command: nmcli connection down '{{ net_private_connection.stdout }}'
   when: cloudbr0_exists.rc != 0
   ignore_errors: yes
 
