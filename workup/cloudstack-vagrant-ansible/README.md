@@ -21,6 +21,10 @@ username admin
 password password
 
 
+aws api mapping https://docs.cloudstack.apache.org/en/4.17.0.0/installguide/optional_installation.html
+
+
+
 
 
 
