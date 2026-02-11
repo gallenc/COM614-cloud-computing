@@ -5,23 +5,23 @@
 #    state: started
 #    enabled: yes
 
-- name: Add cloudbr0 to trusted zone
-  firewalld:
-    zone: trusted
-    interface: cloudbr0
-    permanent: yes
-    state: enabled
-    immediate: yes
-    ignore_errors: yes
-
-- name: Open KVM VNC ports
-  firewalld:
-    port: 5900-6100/tcp
-    permanent: yes
-    state: enabled
-    immediate: yes
-    zone: public
-    ignore_errors: yes
+#- name: Add cloudbr0 to trusted zone
+#  firewalld:
+#    zone: trusted
+#    interface: cloudbr0
+#    permanent: yes
+#    state: enabled
+#    immediate: yes
+#    ignore_errors: yes
+#
+#- name: Open KVM VNC ports
+#  firewalld:
+#    port: 5900-6100/tcp
+#    permanent: yes
+#    state: enabled
+#    immediate: yes
+#    zone: public
+#    ignore_errors: yes
 
 - name: Install KVM and Agent Dependencies (RedHat)
   dnf:
