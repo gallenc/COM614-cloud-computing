@@ -51,7 +51,7 @@
 
 - name: Add interface to bridge (slave)
   command: nmcli connection add type bridge-slave autoconnect yes con-name bridge-slave-{{ net_private.stdout }} ifname {{ net_private.stdout }} master cloudbr0
-  when: cloudbr0_exists.rc != 0
+  when: bridge_slave_exists != 0
 
 - name: Configure cloudbr0 with static IP
   command: >
@@ -60,11 +60,13 @@
     ipv4.dns '{{ dns1 }} {{ dns2 }}'
     ipv4.method manual
   when: cloudbr0_exists.rc != 0
+  
+# note bringing up bridge before disconnecting
+- name: Bring up cloudbr0
+  command: nmcli connection up cloudbr0
 
 - name: Bring down old interface connection
   command: nmcli connection down '{{ net_private_connection.stdout }}'
   when: cloudbr0_exists.rc != 0
   ignore_errors: yes
 
-- name: Bring up cloudbr0
-  command: nmcli connection up cloudbr0
