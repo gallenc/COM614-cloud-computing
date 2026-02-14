@@ -49,7 +49,9 @@ services:
     restart: unless-stopped
     ports:
       - 3000:3000
-    image: semaphoreui/semaphore:v2.16.43
+    # image: semaphoreui/semaphore:v2.17.0
+    image: entimoss/semaphore:v2.17.0
+    build: ./container-fs/semaphore
     hostname: semaphore
     volumes:
       - ./container-fs/ansible:/opt/ansible/inventory
