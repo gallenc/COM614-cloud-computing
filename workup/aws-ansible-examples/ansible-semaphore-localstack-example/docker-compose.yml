@@ -53,6 +53,7 @@ services:
     hostname: semaphore
     volumes:
       - ./container-fs/ansible:/opt/ansible/inventory
+      - ./container-fs/ansible/share:/share
     environment:
       SEMAPHORE_DB_USER: semaphore
       SEMAPHORE_DB_PASS: semaphore
