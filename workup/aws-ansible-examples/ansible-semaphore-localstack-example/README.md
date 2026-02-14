@@ -38,3 +38,22 @@ It can be installed directly on your host machine or as in this example, run as 
 [AWS CLI Getting Started](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-docker.html)
 
 https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-proxy.html   Using an HTTP proxy for the AWS CLI
+
+
+## test machines
+ideally we could use  linux as test container. 
+
+THere are two test containers provided with SSH access but with NO SYSTEMD
+
+so what we can do with these and Ansible is limited.
+
+getting systemd to run in docker is problematic but can be done when using podman
+
+some discussion here https://developers.redhat.com/blog/2019/04/24/how-to-run-systemd-in-a-container#
+
+There are system d containers here - but problems trying to run in docker desktop !!.
+
+https://hub.docker.com/r/antmelekhin/docker-systemd/tags?name=almalinux
+
+https://github.com/antmelekhin/docker-systemd/tree/main
+

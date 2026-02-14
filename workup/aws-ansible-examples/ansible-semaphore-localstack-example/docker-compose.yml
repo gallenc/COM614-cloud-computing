@@ -105,6 +105,7 @@ services:
       - localstack-data:/var/lib/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
       
+
   # see https://stackoverflow.com/questions/69735582/aws-cli-image-rrun-from-docker-compose-and-its-shutdon-after-one-second
   # try docker compose exec aws-cli bash
   # aws help
@@ -119,12 +120,30 @@ services:
       - HTTPS_PROXY=https://ipadresses:port
     ports:
       - "8080:8080"
+
+  # IMAGES WITH SYSTEMD
+  # USING https://github.com/antmelekhin/docker-systemd IMAGES
+  
+  # https://hub.docker.com/layers/antmelekhin/docker-systemd/almalinux-10/
+  ## test container - no systemd
+#  almas1:
+#    container_name: almas1
+#    image: antmelekhin/docker-systemd:almalinux-10
+#    restart: on-failure
+#    #environment:
+#    #  ROOT_PASSWORD: semaphore
+#    networks:
+#      N020:
+#        ipv4_address: 172.20.0.26
+        
+  
       
-  ## test container
+  # IMAGES WITH SSH BUT NO SYSTEMD
+  ## test container - no systemd
   ubuntu1:
     container_name: ubuntu1
     image: ubuntu-local
-    build: ./container-fs/ubuntu
+    build: ./container-fs/nosystemd/ubuntu
     restart: on-failure
     environment:
       ROOT_PASSWORD: semaphore
@@ -132,11 +151,11 @@ services:
       N020:
         ipv4_address: 172.20.0.22
         
-  ## test container
+  ## test container - no systemd
   alma1:
     container_name: alma1
     image: alma10-local
-    build: ./container-fs/almalinux
+    build: ./container-fs/nosystemd/almalinux
     restart: on-failure
     environment:
       ROOT_PASSWORD: semaphore
