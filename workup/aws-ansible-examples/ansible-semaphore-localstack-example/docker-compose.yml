@@ -55,7 +55,9 @@ services:
     hostname: semaphore
     volumes:
       - ./container-fs/ansible:/opt/ansible/inventory
-      - ./container-fs/ansible/share:/share
+      - ./container-fs/share:/share
+    post_start:
+      - command: ["sh", "-c", "/share/generate-ansible-user-ssh.sh"]
     environment:
       SEMAPHORE_DB_USER: semaphore
       SEMAPHORE_DB_PASS: semaphore
@@ -146,7 +148,11 @@ services:
     build: ./container-fs/nosystemd/ubuntu
     restart: on-failure
     environment:
-      ROOT_PASSWORD: semaphore
+      ROOT_PASSWORD: minad1234
+    volumes:
+      - ./container-fs/share:/share
+    post_start:
+      - command: ["sh", "-c", "/share/generate-ansible-user-ssh.sh"]
     networks:
       N020:
         ipv4_address: 172.20.0.22
@@ -158,7 +164,11 @@ services:
     build: ./container-fs/nosystemd/almalinux
     restart: on-failure
     environment:
-      ROOT_PASSWORD: semaphore
+      ROOT_PASSWORD: minad1234
+    volumes:
+      - ./container-fs/share:/share
+    post_start:
+      - command: ["sh", "-c", "/share/generate-ansible-user-ssh.sh"]
     networks:
       N020:
         ipv4_address: 172.20.0.23

@@ -2,7 +2,7 @@
 
 FROM almalinux:10.1
 
-RUN dnf update -y && dnf install -y openssh-server openssh-clients
+RUN dnf update -y && dnf install -y openssh-server openssh-clients whois sudo
 
 RUN mkdir /var/run/sshd
 

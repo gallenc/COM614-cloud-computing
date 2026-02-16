@@ -15,7 +15,10 @@ if getent passwd | grep -c '^ansible:' > /dev/null ;
     echo "ansible user already exists"; 
   else 
     echo creating ansible user; 
-    sudo useradd -m -s /bin/bash -U ansible -u 800 --groups wheel --password "$(mkpasswd minad1234)"
+    sudo groupadd -f ansible
+    sudo groupadd -f sudo   # ubuntu
+    sudo groupadd -f wheel  # rhel
+     sudo useradd -m -s /bin/bash  -u 800 --groups sudo,wheel  -g ansible --password "$(mkpasswd minad1234)"  ansible
     sudo echo "%ansible ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/ansible
 fi
 

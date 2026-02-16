@@ -57,3 +57,26 @@ https://hub.docker.com/r/antmelekhin/docker-systemd/tags?name=almalinux
 
 https://github.com/antmelekhin/docker-systemd/tree/main
 
+## clone this repo into semaphore container ansible account
+
+```
+docker compose up -d
+
+
+docker compose exec semaphore bash
+
+mkdir -p /home/ansible/devel/gitrepos
+
+cd /home/ansible/devel/gitrepos
+
+git clone https://github.com/gallenc/COM614-cloud-computing.git
+
+cd /home/ansible/devel/COM614-cloud-computing/workup/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/ansible-aws-example
+
+```
+
+
+
+
+```
+
