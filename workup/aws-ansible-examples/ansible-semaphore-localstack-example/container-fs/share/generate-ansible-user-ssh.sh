@@ -2,7 +2,7 @@
 
 set -x
 
-# script to generate and copy new ansible keys
+# script to set up new ansible user and generate and copy new ansible keys
 
 ANSIBLE_KEYS="/share/.ssh-ansible"
 ANSIBLE_USER_HOME="/home/ansible"
@@ -18,7 +18,7 @@ if getent passwd | grep -c '^ansible:' > /dev/null ;
     sudo groupadd -f ansible
     sudo groupadd -f sudo   # ubuntu
     sudo groupadd -f wheel  # rhel
-     sudo useradd -m -s /bin/bash  -u 800 --groups sudo,wheel  -g ansible --password "$(mkpasswd minad1234)"  ansible
+    sudo useradd -m -s /bin/bash  -u 800 --groups sudo,wheel  -g ansible --password "$(mkpasswd minad1234)"  ansible
     sudo echo "%ansible ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/ansible
 fi
 

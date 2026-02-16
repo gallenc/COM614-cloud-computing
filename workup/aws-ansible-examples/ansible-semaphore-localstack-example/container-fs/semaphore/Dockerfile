@@ -21,6 +21,16 @@ RUN echo "$ANSIBLE_USER ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$ANSIBLE_USER 
 
 RUN echo "$SEMAPHORE_USER ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$SEMAPHORE_USER && chmod 0440 /etc/sudoers.d/$SEMAPHORE_USER
 
+## adds ansible to profile for ansible user - not needed see below
+# NOTE this will change if version of semaphore changes
+# ARG ANSIBLE_PATH="/opt/semaphore/apps/ansible/11.1.0/venv/bin"
+# RUN echo "export PATH=$PATH:${ANSIBLE_PATH}" >> /home/ansible/.profile
+
+# note path is set as an ENV in parent docker file
+RUN echo "export PATH=$PATH" >> /home/ansible/.profile
+RUN chown $ANSIBLE_USER:$ANSIBLE_USER /home/ansible/.profile
+RUN chmod 644 /home/ansible/.profile
+
 # back to original user
 USER 1001  
 
