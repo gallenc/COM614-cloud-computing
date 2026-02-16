@@ -1,8 +1,8 @@
 # see https://www.cherryservers.com/blog/ssh-into-docker-container
 
-FROM ubuntu:16.04
-RUN apt-get update && apt-get install -y openssh-server whois sudo
-RUN mkdir /var/run/sshd
+FROM ubuntu:26.04
+RUN apt-get update && apt-get install -y openssh-server whois sudo python3 python3-pip python3-venv
+RUN mkdir -p /var/run/sshd
 
 
 # Set root password for SSH access (change 'your_password' to your desired password)
