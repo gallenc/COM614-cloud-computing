@@ -3,4 +3,4 @@
   hosts: web
   become: yes
   roles:
-    - install-apache2
+    - uninstall-apache2

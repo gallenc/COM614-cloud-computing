@@ -2,9 +2,10 @@
 - name: Install apache web server on debian/ubuntu
   apt:
     pkg: apache2
-    state: present
+    state: absent
     update_cache: true
         
+# cant work with no systemd in container
 #- name: Enable and start the apache2
 #  systemd:
 #    name: httpd
