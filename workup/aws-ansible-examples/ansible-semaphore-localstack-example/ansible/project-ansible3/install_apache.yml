@@ -1,0 +1,22 @@
+---
+- hosts: web
+  tasks:
+    - name: Install apache web server on debian/ubuntu
+      apt:
+        pkg: apache2
+        state: present
+        update_cache: true
+        when: ansible_os_family == 'Debian'
+        
+    - name: Install apache web server on RHEL
+      yum:
+        name: httpd
+        state: latest
+        update_cache: true
+        when: ansible_os_family == 'RedHat'
+        
+    - name: Enable and start the apache2
+      systemd:
+        name: httpd
+        enabled: true
+        state: started
