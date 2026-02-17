@@ -1,0 +1,12 @@
+---
+- name: Install apache web server on RHEL
+  yum:
+    name: httpd
+    state: latest
+    update_cache: true
+
+- name: Enable and start the apache2
+  systemd:
+    name: httpd
+    enabled: true
+    state: started
