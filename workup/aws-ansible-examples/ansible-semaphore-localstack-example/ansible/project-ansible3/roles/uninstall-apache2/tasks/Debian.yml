@@ -1,5 +1,5 @@
 ---
-- name: Install apache web server on debian/ubuntu
+- name: Uninstall apache web server on debian/ubuntu
   apt:
     pkg: apache2
     state: absent

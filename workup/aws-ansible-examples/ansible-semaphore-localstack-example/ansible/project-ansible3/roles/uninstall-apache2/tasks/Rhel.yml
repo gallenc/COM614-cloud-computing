@@ -1,5 +1,5 @@
 ---
-- name: Install apache web server on RHEL
+- name: Uninstall apache web server on RHEL
   yum:
     name: httpd
     state: absent
