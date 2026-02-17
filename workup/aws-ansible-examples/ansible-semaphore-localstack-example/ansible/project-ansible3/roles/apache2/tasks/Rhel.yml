@@ -5,8 +5,8 @@
     state: latest
     update_cache: true
 
-- name: Enable and start the apache2
-  systemd:
-    name: httpd
-    enabled: true
-    state: started
+#- name: Enable and start the apache2
+#  systemd:
+#    name: httpd
+#    enabled: true
+#    state: started
