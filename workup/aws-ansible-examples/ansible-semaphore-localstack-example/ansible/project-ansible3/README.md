@@ -27,6 +27,12 @@ ansible-playbook -i inventory.ini install_apache.yml
 
 ansible-playbook -i inventory.ini uninstall_apache.yml
 
+# see https://stackoverflow.com/questions/57919339/how-to-run-ansible-playbook-using-a-public-ssh-key
+# running within semaphore account but using sudo/root allows ansible keys to be used from ansible account
+cd /home/ansible/devel/gitrepos/COM614-cloud-computing/workup/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/project-ansible3
+
+sudo /opt/semaphore/apps/ansible/11.1.0/venv/bin/ansible  -i inventory.ini all -m ping
+
 ```
 
 
