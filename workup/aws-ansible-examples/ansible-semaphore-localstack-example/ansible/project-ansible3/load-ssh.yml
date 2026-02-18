@@ -3,4 +3,4 @@
   hosts: web
   become: yes
   roles:
-    - load_ssh_keys
+    - load-ssh-keys
