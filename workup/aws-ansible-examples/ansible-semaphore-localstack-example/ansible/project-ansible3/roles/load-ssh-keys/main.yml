@@ -7,7 +7,7 @@
   pre_tasks:
   
     - name: remove ssh-agent
-      command: ssh-agent -k" 
+      command: ssh-agent -k
       delegate_to: 127.0.0.1
       become: no
       changed_when: no
