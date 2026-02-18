@@ -10,6 +10,7 @@
       delegate_to: 127.0.0.1
       become: no
       changed_when: no
+      ignore_errors: yes
       
     - name: Unlock SSH key "{{ ssh_key_file }}"
       command: echo "$(sudo cat /home/ansible/.ssh/id_rsa)" | ssh-add -
