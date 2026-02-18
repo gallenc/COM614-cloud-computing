@@ -14,7 +14,7 @@
       ignore_errors: yes
       
     - name: set up ssh-agent
-      command: eval $(ssh-agent -s) 
+      command: "eval $(ssh-agent -s)"
       delegate_to: 127.0.0.1
       become: no
       changed_when: no
