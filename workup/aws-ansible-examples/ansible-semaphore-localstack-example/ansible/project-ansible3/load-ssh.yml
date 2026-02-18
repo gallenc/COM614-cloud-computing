@@ -1,6 +1,7 @@
 ---
 - name: load ssh
   hosts: web
+  gather_facts: no
   become: yes
   roles:
     - load-ssh-keys
