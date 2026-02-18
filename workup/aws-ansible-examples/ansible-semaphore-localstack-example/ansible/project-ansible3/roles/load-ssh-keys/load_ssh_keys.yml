@@ -1,0 +1,32 @@
+# see https://stackoverflow.com/questions/54991392/using-ansible-vault-for-ansibles-ssh-keyfile
+
+- hosts: all
+  # Postpone facts gathering until SSH keys have been unlocked
+  gather_facts: no
+
+  pre_tasks:
+    - name: Unlock SSH key "{{ ssh_key_file }}"
+      command: echo "$(sudo cat /home/ansible/.ssh/id_rsa)" | ssh-add -
+      #expect:
+      #  command: ssh-add "{{ ssh_key_file }}"
+      #  responses:
+      #    passphrase: "{{ ssh_key_pass }}"
+      delegate_to: 127.0.0.1
+      become: no
+      changed_when: no
+      no_log: true
+
+    - name: Gathering facts
+      setup:
+
+  tasks:
+    # Do some stuff...
+    # ...
+
+  post_tasks:
+    # Optional, to remove the keys from the agent at the end:
+    - name: Lock SSH key "{{ ssh_key_file }}"
+      command: ssh-add -d "{{ ssh_key_file }}"
+      delegate_to: 127.0.0.1
+      become: no
+      changed_when: no

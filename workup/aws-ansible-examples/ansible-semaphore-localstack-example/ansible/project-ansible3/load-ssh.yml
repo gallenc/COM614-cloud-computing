@@ -1,0 +1,6 @@
+---
+- name: load ssh
+  hosts: web
+  become: yes
+  roles:
+    - load_ssh_keys
