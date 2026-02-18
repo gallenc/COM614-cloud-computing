@@ -21,7 +21,8 @@
 
   tasks:
     # Do some stuff...
-    # ...
+    - debug:
+      msg: "Agent Role Started. OS Family: {{ ansible_os_family }}"
 
   post_tasks:
     # Optional, to remove the keys from the agent at the end:
