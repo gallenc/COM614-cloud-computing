@@ -33,6 +33,8 @@ cd /home/ansible/devel/gitrepos/COM614-cloud-computing/workup/aws-ansible-exampl
 
 sudo /opt/semaphore/apps/ansible/11.1.0/venv/bin/ansible  -i inventory.ini all -m ping
 
+
+ansible-playbook -i inventory.ini roles/load-ssh-keys/main.yml
 ```
 
 
