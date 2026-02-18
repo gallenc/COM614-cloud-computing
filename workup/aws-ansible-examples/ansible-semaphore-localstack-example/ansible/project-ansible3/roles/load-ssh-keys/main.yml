@@ -5,12 +5,19 @@
   gather_facts: no
 
   pre_tasks:
-    - name: set up ssh-agent
-      command: ssh-agent -k ; eval "$(ssh-agent)" 
+  
+    - name: remove ssh-agent
+      command: ssh-agent -k" 
       delegate_to: 127.0.0.1
       become: no
       changed_when: no
       ignore_errors: yes
+      
+    - name: set up ssh-agent
+      command: eval "$(ssh-agent)" 
+      delegate_to: 127.0.0.1
+      become: no
+      changed_when: no
       
     - name: Unlock SSH key "{{ ssh_key_file }}"
       command: echo "$(sudo cat /home/ansible/.ssh/id_rsa)" | ssh-add -
