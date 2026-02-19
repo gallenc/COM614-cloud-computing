@@ -90,6 +90,8 @@ services:
       SEMAPHORE_LDAP_DN_SEARCH: 'dc=local,dc=example,dc=com'
       SEMAPHORE_LDAP_SEARCH_FILTER: "(\u0026(uid=%s)(memberOf=cn=ipausers,cn=groups,cn=accounts,dc=local,dc=example,dc=com))"
       TZ: UTC
+      # https://semaphoreui.com/docs/administration-guide/configuration/env-vars
+      SEMAPHORE_FORWARDED_ENV_VARS: '["SSH_AUTH_SOCK","SSH_AGENT_PID"]'
     depends_on:
       #- mysql # for postgres, change to: postgres
       -  postgres-semaphore
