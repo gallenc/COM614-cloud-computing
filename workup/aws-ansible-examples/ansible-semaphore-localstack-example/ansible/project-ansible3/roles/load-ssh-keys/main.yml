@@ -29,23 +29,18 @@
       become: no
       changed_when: no
       no_log: false
-      register: sshkeys1
       
     - name: print key variables
       shell: ssh-add -l
-      #expect:
-      #  command: ssh-add "{{ ssh_key_file }}"
-      #  responses:
-      #    passphrase: "{{ ssh_key_pass }}"
       delegate_to: 127.0.0.1
       become: no
       changed_when: no
       no_log: false
-      register: sshkeys2
+      register: ssh-agent-keys
       
     - name: Debug output
       debug:
-         msg: "sshkeys1 '{{ sshkeys1.stdout }}'  sshkeys2 '{{ sshkeys2.stdout }}'"
+         msg: "ssh-agent-keys '{{ ssh-agent-keys.stdout }}'"
 
     - name: Gathering facts
       setup:
