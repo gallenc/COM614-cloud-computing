@@ -32,7 +32,7 @@
       register: sshkeys1
       
     - name: print key variables
-      shell: echo ssh-add -l
+      shell: ssh-add -l
       #expect:
       #  command: ssh-add "{{ ssh_key_file }}"
       #  responses:
