@@ -28,15 +28,35 @@
       delegate_to: 127.0.0.1
       become: no
       changed_when: no
+      no_log: false
+      register: sshkeys1
+      
+    - name: print key variables
+      command: echo ssh-add -l
+      #expect:
+      #  command: ssh-add "{{ ssh_key_file }}"
+      #  responses:
+      #    passphrase: "{{ ssh_key_pass }}"
+      delegate_to: 127.0.0.1
+      become: no
+      changed_when: no
+      no_log: false
+      register: sshkeys2
+      
+    - name: Debug output
+      debug:
+         msg: "sshkeys1 '{{ sshkeys1.stdout }}'  sshkeys2 '{{ sshkeys2.stdout }}' 
+         
+         
 
 
     - name: Gathering facts
       setup:
 
   tasks:
-    # Do some stuff...
-   # - debug:
-    #  msg: "Agent Role Started. OS Family: {{ ansible_os_family }}"
+     - name: another debug
+       debug:
+          msg: "Agent Role Started. OS Family: {{ ansible_os_family }}"
 
   post_tasks:
     # Optional, to remove the keys from the agent at the end:
