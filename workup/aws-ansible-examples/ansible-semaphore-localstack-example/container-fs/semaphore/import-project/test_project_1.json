@@ -1,0 +1,74 @@
+{
+  "environments": [
+    {
+      "env": "{}",
+      "json": "{}",
+      "name": "Empty"
+    }
+  ],
+  "integration_aliases": [],
+  "integrations": [],
+  "inventories": [
+    {
+      "inventory": "workup/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/project-ansible3/inventory.ini",
+      "name": "project-ansible3-inventory",
+      "ssh_key": "None",
+      "type": "file"
+    }
+  ],
+  "keys": [
+    {
+      "name": "None",
+      "owner": "",
+      "type": "none"
+    }
+  ],
+  "meta": {
+    "alert": false,
+    "max_parallel_tasks": 1,
+    "name": "test_project1",
+    "type": ""
+  },
+  "repositories": [
+    {
+      "git_branch": "main",
+      "git_url": "https://github.com/gallenc/COM614-cloud-computing.git",
+      "name": "COM614-cloud-computing",
+      "ssh_key": "None"
+    }
+  ],
+  "roles": [],
+  "schedules": [],
+  "secret_storages": [],
+  "templates": [
+    {
+      "allow_override_args_in_task": false,
+      "allow_override_branch_in_task": false,
+      "allow_parallel_tasks": false,
+      "app": "ansible",
+      "arguments": "[]",
+      "autorun": false,
+      "environment": "Empty",
+      "inventory": "project-ansible3-inventory",
+      "name": "load-ssh",
+      "playbook": "workup/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/project-ansible3/load-ssh.yml",
+      "repository": "COM614-cloud-computing",
+      "roles": [],
+      "suppress_success_alerts": false,
+      "survey_vars": [],
+      "task_params": {},
+      "type": "",
+      "vaults": [],
+      "view": "All"
+    }
+  ],
+  "views": [
+    {
+      "hidden": false,
+      "position": 0,
+      "sort_reverse": false,
+      "title": "All",
+      "type": "all"
+    }
+  ]
+}

@@ -54,6 +54,7 @@ services:
     build: ./container-fs/semaphore
     hostname: semaphore
     volumes:
+      - ./container-fs/semaphore/import-project:/home/semaphore/import-project
       - ./container-fs/ansible:/opt/ansible/inventory
       - ./container-fs/share:/share
       
@@ -62,6 +63,8 @@ services:
     command: ["/usr/bin/ssh-agent", "/usr/local/bin/server-wrapper"]
     post_start:
       - command: ["sh", "-c", "/share/generate-ansible-user-ssh.sh"]
+       # note this command will exit wth a signal if the project already exists. Hoewver the container will still start
+      - command: ["sh", "-c","/share/wait-for-it.sh localhost:3000 -- /usr/local/bin/semaphore project import --file /home/semaphore/import-project/test_project_1.json"]
     environment:
       SEMAPHORE_DB_USER: semaphore
       SEMAPHORE_DB_PASS: semaphore
@@ -92,6 +95,11 @@ services:
       TZ: UTC
       # https://semaphoreui.com/docs/administration-guide/configuration/env-vars
       SEMAPHORE_FORWARDED_ENV_VARS: '["SSH_AUTH_SOCK","SSH_AGENT_PID"]'
+      
+      # see https://github.com/semaphoreui/semaphore/blob/develop/deployment/docker/server/server-wrapper
+      # doent seem to work
+      # SEMAPHORE_IMPORT_PROJECT_NAME: "Test_Project_1"
+      # SEMAPHORE_IMPORT_PROJECT_FILE: /home/semaphore/import-project/test_project_1.json
     depends_on:
       #- mysql # for postgres, change to: postgres
       -  postgres-semaphore

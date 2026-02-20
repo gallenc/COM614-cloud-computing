@@ -77,4 +77,4 @@ ansible-playbook -i inventory.ini roles/load-ssh-keys/main.yml
 ```
 
 
-
+https://github.com/semaphoreui/semaphore/pull/1748
