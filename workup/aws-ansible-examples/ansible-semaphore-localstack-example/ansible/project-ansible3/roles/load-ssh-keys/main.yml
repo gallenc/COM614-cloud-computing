@@ -20,7 +20,7 @@
 #      changed_when: no
       
     - name: Unlock SSH key "{{ ssh_key_file }}"
-      command: echo "$(sudo cat /home/ansible/.ssh/id_rsa)" | ssh-add -
+      shell: echo "$(sudo cat /home/ansible/.ssh/id_rsa)" | ssh-add -
       #expect:
       #  command: ssh-add "{{ ssh_key_file }}"
       #  responses:
@@ -32,7 +32,7 @@
       register: sshkeys1
       
     - name: print key variables
-      command: echo ssh-add -l
+      shell: echo ssh-add -l
       #expect:
       #  command: ssh-add "{{ ssh_key_file }}"
       #  responses:
