@@ -45,10 +45,7 @@
       
     - name: Debug output
       debug:
-         msg: "sshkeys1 '{{ sshkeys1.stdout }}'  sshkeys2 '{{ sshkeys2.stdout }}' 
-         
-         
-
+         msg: "sshkeys1 '{{ sshkeys1.stdout }}'  sshkeys2 '{{ sshkeys2.stdout }}'"
 
     - name: Gathering facts
       setup:
