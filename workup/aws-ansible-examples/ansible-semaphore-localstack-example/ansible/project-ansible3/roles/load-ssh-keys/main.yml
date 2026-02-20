@@ -40,7 +40,7 @@
       
     - name: Debug output
       debug:
-         msg: "ssh-agent-keys '{{ ssh-agent-keys.stdout }}'"
+         msg: "ssh agent keys '{{ ssh-agent-keys.stdout }}'"
 
     - name: Gathering facts
       setup:
