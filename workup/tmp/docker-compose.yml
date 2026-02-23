@@ -1,0 +1,189 @@
+
+# using fixed ip addresses
+# to see all network use docker network ls
+# to see config use docker network inspect minimal-minion-activemq_N000
+# note gateway is 172.20.0.1 
+networks:
+  N020:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
+
+volumes:
+  #semaphore-mysql: # to use postgres, switch to: semaphore-postgres
+  semaphore-postgres:
+  localstack-data:
+
+services:
+  # uncomment this section and comment out the mysql section to use postgres instead of mysql
+  postgres-semaphore:
+    container_name: postgres-semaphore
+    restart: unless-stopped
+    image: postgres:15
+    #image: postgres:14
+    hostname: postgres-semaphore
+    volumes:
+      - semaphore-postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: semaphore
+      POSTGRES_PASSWORD: semaphore
+      POSTGRES_DB: semaphore
+    networks:
+      N020:
+        ipv4_address: 172.20.0.27
+  # if you wish to use postgres, comment the mysql service section below
+#  mysql:
+#    restart: unless-stopped
+#    image: mysql:8.0
+#    hostname: mysql
+#    volumes:
+#      - semaphore-mysql:/var/lib/mysql
+#    environment:
+#      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+#      MYSQL_DATABASE: semaphore
+#      MYSQL_USER: semaphore
+#      MYSQL_PASSWORD: semaphore
+
+  semaphore:
+    container_name: semaphore
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    # image: semaphoreui/semaphore:v2.17.0
+    image: entimoss/semaphore:v2.17.0
+    build: ./container-fs/semaphore
+    hostname: semaphore
+    volumes:
+      - ./container-fs/semaphore/import-project:/home/semaphore/import-project
+      - ./container-fs/ansible:/opt/ansible/inventory
+      - ./container-fs/share:/share
+      
+    # override https://github.com/semaphoreui/semaphore/blob/develop/deployment/docker/server/Dockerfile
+    # see https://stackoverflow.com/questions/68931421/how-to-start-ssh-agent-in-dockerfile
+    command: ["/usr/bin/ssh-agent", "/usr/local/bin/server-wrapper"]
+    post_start:
+      - command: ["sh", "-c", "/share/generate-ansible-user-ssh.sh ${PASSPHRASE-}"]
+       # note this command will exit wth a signal if the project already exists. Hoewver the container will still start
+      - command: ["sh", "-c","/share/wait-for-it.sh localhost:3000 -- /usr/local/bin/semaphore project import --file /home/semaphore/import-project/test_project_1.json"]
+    environment:
+      SEMAPHORE_DB_USER: semaphore
+      SEMAPHORE_DB_PASS: semaphore
+      #SEMAPHORE_DB_HOST: mysql # for postgres, change to: postgres
+      SEMAPHORE_DB_HOST: postgres-semaphore # for postgres, change to: postgres
+      #SEMAPHORE_DB_PORT: 3306 # change to 5432 for postgres
+      SEMAPHORE_DB_PORT: 5432 
+      # SEMAPHORE_DB_DIALECT: mysql # for postgres, change to: postgres
+      SEMAPHORE_DB_DIALECT: postgres
+      SEMAPHORE_DB: semaphore
+      # To use SQLite instead of MySQL/Postgres (v2.16+)
+      # SEMAPHORE_DB_DIALECT: sqlite
+      # SEMAPHORE_DB: "/etc/semaphore/semaphore.sqlite"
+      SEMAPHORE_PLAYBOOK_PATH: /tmp/semaphore/
+      SEMAPHORE_ADMIN_PASSWORD: changeme
+      SEMAPHORE_ADMIN_NAME: admin
+      SEMAPHORE_ADMIN_EMAIL: admin@localhost
+      SEMAPHORE_ADMIN: admin
+      SEMAPHORE_ACCESS_KEY_ENCRYPTION: gs72mPntFATGJs9qK0pQ0rKtfidlexiMjYCH9gWKhTU=
+      SEMAPHORE_LDAP_ACTIVATED: 'no' # if you wish to use ldap, set to: 'yes'
+      SEMAPHORE_LDAP_HOST: dc01.local.example.com
+      SEMAPHORE_LDAP_PORT: '636'
+      SEMAPHORE_LDAP_NEEDTLS: 'yes'
+      SEMAPHORE_LDAP_DN_BIND: 'uid=bind_user,cn=users,cn=accounts,dc=local,dc=shiftsystems,dc=net'
+      SEMAPHORE_LDAP_PASSWORD: 'ldap_bind_account_password'
+      SEMAPHORE_LDAP_DN_SEARCH: 'dc=local,dc=example,dc=com'
+      SEMAPHORE_LDAP_SEARCH_FILTER: "(\u0026(uid=%s)(memberOf=cn=ipausers,cn=groups,cn=accounts,dc=local,dc=example,dc=com))"
+      TZ: UTC
+      # https://semaphoreui.com/docs/administration-guide/configuration/env-vars
+      SEMAPHORE_FORWARDED_ENV_VARS: '["SSH_AUTH_SOCK","SSH_AGENT_PID"]'
+      
+      # see https://github.com/semaphoreui/semaphore/blob/develop/deployment/docker/server/server-wrapper
+      # doent seem to work
+      # SEMAPHORE_IMPORT_PROJECT_NAME: "Test_Project_1"
+      # SEMAPHORE_IMPORT_PROJECT_FILE: /home/semaphore/import-project/test_project_1.json
+    depends_on:
+      #- mysql # for postgres, change to: postgres
+      -  postgres-semaphore
+    networks:
+      N020:
+        ipv4_address: 172.20.0.21
+  
+  # Localstack AWS simulation     
+  localstack:
+    container_name: "${LOCALSTACK_DOCKER_NAME:-localstack-main}"
+    image: localstack/localstack:4.13.1
+    ports:
+      - "127.0.0.1:4566:4566"            # LocalStack Gateway
+      - "127.0.0.1:4510-4559:4510-4559"  # external services port range
+    environment:
+      # LocalStack configuration: https://docs.localstack.cloud/references/configuration/
+      - DEBUG=${DEBUG:-0}
+    volumes:
+      - localstack-data:/var/lib/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      
+
+  # see https://stackoverflow.com/questions/69735582/aws-cli-image-rrun-from-docker-compose-and-its-shutdon-after-one-second
+  # try docker compose exec aws-cli bash
+  # aws help
+  aws-cli:
+    image: amazon/aws-cli:latest
+    container_name: aws-cli
+    stdin_open: true # equivalent of -i
+    tty: true        # equivalent of -t
+    entrypoint: tail -f /dev/null
+    environment:
+      - HTTP_PROXY=http://ipadresses:port
+      - HTTPS_PROXY=https://ipadresses:port
+    ports:
+      - "8080:8080"
+
+  # IMAGES WITH SYSTEMD
+  # USING https://github.com/antmelekhin/docker-systemd IMAGES
+  
+  # https://hub.docker.com/layers/antmelekhin/docker-systemd/almalinux-10/
+  ## test container - no systemd
+#  almas1:
+#    container_name: almas1
+#    image: antmelekhin/docker-systemd:almalinux-10
+#    restart: on-failure
+#    #environment:
+#    #  ROOT_PASSWORD: semaphore
+#    networks:
+#      N020:
+#        ipv4_address: 172.20.0.26
+        
+  
+      
+  # IMAGES WITH SSH BUT NO SYSTEMD
+  ## test container - no systemd
+  ubuntu1:
+    container_name: ubuntu1
+    image: ubuntu-local
+    build: ./container-fs/nosystemd/ubuntu
+    restart: on-failure
+    environment:
+      ROOT_PASSWORD: minad1234
+    volumes:
+      - ./container-fs/share:/share
+    post_start:
+      - command: ["sh", "-c", "/share/generate-ansible-user-ssh.sh ${PASSPHRASE-}"]
+    networks:
+      N020:
+        ipv4_address: 172.20.0.22
+        
+  ## test container - no systemd
+  alma1:
+    container_name: alma1
+    image: alma10-local
+    build: ./container-fs/nosystemd/almalinux
+    restart: on-failure
+    environment:
+      ROOT_PASSWORD: minad1234
+    volumes:
+      - ./container-fs/share:/share
+    post_start:
+      - command: ["sh", "-c", "/share/generate-ansible-user-ssh.sh ${PASSPHRASE-}"]
+    networks:
+      N020:
+        ipv4_address: 172.20.0.23
+      
