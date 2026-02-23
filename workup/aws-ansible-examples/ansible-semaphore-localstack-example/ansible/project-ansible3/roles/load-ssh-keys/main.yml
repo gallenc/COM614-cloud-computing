@@ -52,7 +52,7 @@
 
   post_tasks:
     # Optional, to remove the keys from the agent at the end:
-    - name: Lock SSH key "{{ ssh_key_file }}"
+    - name: Remove ssh keys
       command: ssh-add -D
       delegate_to: 127.0.0.1
       become: no
