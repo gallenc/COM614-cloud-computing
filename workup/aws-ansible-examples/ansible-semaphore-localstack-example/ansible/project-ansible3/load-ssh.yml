@@ -21,7 +21,8 @@
 #      changed_when: no
       
     - name: Unlock SSH key "{{ ssh_key_file }}"
-      shell: echo "$(sudo cat /home/ansible/.ssh/id_rsa)" | ssh-add -
+      # shell: echo "$(sudo cat /home/ansible/.ssh/id_rsa)" | ssh-add -
+      shell: echo "$(sudo cat {{ ssh_key_file }})" | ssh-add -
       #expect:
       #  command: ssh-add "{{ ssh_key_file }}"
       #  responses:
