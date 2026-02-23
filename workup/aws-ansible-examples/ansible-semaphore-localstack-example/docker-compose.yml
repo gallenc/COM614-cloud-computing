@@ -167,6 +167,8 @@ services:
       - ./container-fs/share:/share
     post_start:
       - command: ["sh", "-c", "/share/generate-ansible-user-ssh.sh"]
+    depends_on:
+      -  semaphore
     networks:
       N020:
         ipv4_address: 172.20.0.22
@@ -183,6 +185,8 @@ services:
       - ./container-fs/share:/share
     post_start:
       - command: ["sh", "-c", "/share/generate-ansible-user-ssh.sh"]
+    depends_on:
+      -  ubuntu1
     networks:
       N020:
         ipv4_address: 172.20.0.23
