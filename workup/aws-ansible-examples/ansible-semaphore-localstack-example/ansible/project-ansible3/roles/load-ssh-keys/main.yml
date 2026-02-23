@@ -36,11 +36,11 @@
       become: no
       changed_when: no
       no_log: false
-      register: ssh-agent-keys
+      register: ssh_agent_keys
       
     - name: Debug output
       debug:
-         msg: "ssh agent keys '{{ ssh-agent-keys.stdout }}'"
+         msg: "ssh agent keys '{{ ssh_agent_keys.stdout }}'"
 
     - name: Gathering facts
       setup:
