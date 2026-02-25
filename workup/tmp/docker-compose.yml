@@ -13,6 +13,7 @@ volumes:
   #semaphore-mysql: # to use postgres, switch to: semaphore-postgres
   semaphore-postgres:
   localstack-data:
+  ssh-keys:
 
 services:
   # uncomment this section and comment out the mysql section to use postgres instead of mysql
@@ -57,6 +58,7 @@ services:
       - ./container-fs/semaphore/import-project:/home/semaphore/import-project
       - ./container-fs/ansible:/opt/ansible/inventory
       - ./container-fs/share:/share
+      - ssh-keys:/ssh-keys
       
     # override https://github.com/semaphoreui/semaphore/blob/develop/deployment/docker/server/Dockerfile
     # see https://stackoverflow.com/questions/68931421/how-to-start-ssh-agent-in-dockerfile
@@ -165,6 +167,7 @@ services:
       ROOT_PASSWORD: minad1234
     volumes:
       - ./container-fs/share:/share
+      - ssh-keys:/ssh-keys
     post_start:
       - command: ["sh", "-c", "/share/generate-ansible-user-ssh.sh ${PASSPHRASE-}"]
     networks:
@@ -181,6 +184,7 @@ services:
       ROOT_PASSWORD: minad1234
     volumes:
       - ./container-fs/share:/share
+      - ssh-keys:/ssh-keys
     post_start:
       - command: ["sh", "-c", "/share/generate-ansible-user-ssh.sh ${PASSPHRASE-}"]
     networks:
