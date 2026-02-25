@@ -60,6 +60,26 @@
       "type": "",
       "vaults": [],
       "view": "All"
+    },
+    {
+      "allow_override_args_in_task": false,
+      "allow_override_branch_in_task": false,
+      "allow_parallel_tasks": false,
+      "app": "ansible",
+      "arguments": "[]",
+      "autorun": false,
+      "environment": "Empty",
+      "inventory": "project-ansible3-inventory",
+      "name": "load-ssh-password",
+      "playbook": "workup/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/project-ansible3/load-ssh-withpass.yml",
+      "repository": "COM614-cloud-computing",
+      "roles": [],
+      "suppress_success_alerts": false,
+      "survey_vars": [],
+      "task_params": {},
+      "type": "",
+      "vaults": [],
+      "view": "All"
     }
   ],
   "views": [
