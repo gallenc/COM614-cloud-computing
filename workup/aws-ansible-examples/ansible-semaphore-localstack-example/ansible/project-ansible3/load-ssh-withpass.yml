@@ -24,7 +24,7 @@
       shell: |
         set timeout 300
         spawn echo "$(sudo cat {{ ssh_key_file }})" | ssh-add -
-        expect "Enter passphrase for (stdin):"
+        expect "Enter passphrase for (stdin): "
         send "minad1234\n"
         expect eof
         exit 0
