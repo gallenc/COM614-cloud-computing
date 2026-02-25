@@ -13,6 +13,7 @@ volumes:
   #semaphore-mysql: # to use postgres, switch to: semaphore-postgres
   semaphore-postgres:
   localstack-data:
+  ssh-keys:
 
 services:
   # uncomment this section and comment out the mysql section to use postgres instead of mysql
@@ -57,13 +58,14 @@ services:
       - ./container-fs/semaphore/import-project:/home/semaphore/import-project
       - ./container-fs/ansible:/opt/ansible/inventory
       - ./container-fs/share:/share
+      - ssh-keys:/ssh-keys
       
     # override https://github.com/semaphoreui/semaphore/blob/develop/deployment/docker/server/Dockerfile
     # see https://stackoverflow.com/questions/68931421/how-to-start-ssh-agent-in-dockerfile
     command: ["/usr/bin/ssh-agent", "/usr/local/bin/server-wrapper"]
     post_start:
       - command: ["sh", "-c", "/share/generate-ansible-user-ssh.sh ${PASSPHRASE-}"]
-       # note this command will exit wth a signal if the project already exists. Hoewver the container will still start
+       # note this command will exit wth a signal if the project already exists in semaphore. However the container will still start
       - command: ["sh", "-c","/share/wait-for-it.sh localhost:3000 -- /usr/local/bin/semaphore project import --file /home/semaphore/import-project/test_project_1.json"]
     environment:
       SEMAPHORE_DB_USER: semaphore
@@ -97,7 +99,7 @@ services:
       SEMAPHORE_FORWARDED_ENV_VARS: '["SSH_AUTH_SOCK","SSH_AGENT_PID"]'
       
       # see https://github.com/semaphoreui/semaphore/blob/develop/deployment/docker/server/server-wrapper
-      # doent seem to work
+      # dosent seem to work - see command above for startup
       # SEMAPHORE_IMPORT_PROJECT_NAME: "Test_Project_1"
       # SEMAPHORE_IMPORT_PROJECT_FILE: /home/semaphore/import-project/test_project_1.json
     depends_on:
@@ -165,6 +167,7 @@ services:
       ROOT_PASSWORD: minad1234
     volumes:
       - ./container-fs/share:/share
+      - ssh-keys:/ssh-keys
     post_start:
       - command: ["sh", "-c", "/share/generate-ansible-user-ssh.sh ${PASSPHRASE-}"]
     depends_on:
@@ -183,6 +186,7 @@ services:
       ROOT_PASSWORD: minad1234
     volumes:
       - ./container-fs/share:/share
+      - ssh-keys:/ssh-keys
     post_start:
       - command: ["sh", "-c", "/share/generate-ansible-user-ssh.sh ${PASSPHRASE-}"]
     depends_on:
