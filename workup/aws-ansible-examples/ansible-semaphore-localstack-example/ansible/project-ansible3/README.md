@@ -78,3 +78,30 @@ ansible-playbook -i inventory.ini roles/load-ssh-keys/main.yml
 
 
 https://github.com/semaphoreui/semaphore/pull/1748
+
+
+https://stackoverflow.com/questions/13033799/how-to-make-ssh-add-read-passphrase-from-a-file  red passphrase from file
+
+```
+#!/bin/bash
+
+if [ $# -ne 2 ] ; then
+  echo "Usage: ssh-add-pass keyfile passfile"
+  exit 1
+fi
+
+eval $(ssh-agent)
+pass=$(cat $2)
+
+expect << EOF
+  spawn ssh-add $1
+  expect "Enter passphrase"
+  send "$pass\r"
+  expect eof
+EOF
+
+The usage is simply: ssh-add-pass keyfile passfile
+
+https://docs.oracle.com/cd/E35328_01/E35336/html/vmcli-script.html
+
+```
