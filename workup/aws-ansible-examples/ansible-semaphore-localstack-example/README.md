@@ -86,6 +86,7 @@ Create a script (e.g. ps.sh with executable flags) which prints your passphrase,
 echo 'my_passphrase'
 Then specify this script via SSH_ASKPASS variable, so it can be used for the authentication, e.g. :
 
+```
 $ cat id_rsa | SSH_ASKPASS=./ps.sh ssh-add -
 
 ```

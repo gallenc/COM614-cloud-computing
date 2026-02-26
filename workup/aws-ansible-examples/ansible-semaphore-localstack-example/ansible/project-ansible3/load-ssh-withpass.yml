@@ -21,14 +21,8 @@
 #      changed_when: no
       
     - name: Unlock SSH key "{{ ssh_key_file }}"      
-      shell: |
-        set timeout 300
-        spawn echo "$(sudo cat {{ ssh_key_file }})" | ssh-add -
-        expect "Enter passphrase for (stdin): "
-        send "minad1234\n"
-        expect eof
-        exit 0
-      # Enter passphrase for (stdin):
+      # shell: echo "$(sudo cat /home/ansible/.ssh/id_rsa)" | SSH_ASKPASS=/share/ssh-pass.sh ssh-add -
+      shell: echo "$(sudo cat {{ ssh_key_file }})" | ssh-add -
       #expect:
       #  command: ssh-add "{{ ssh_key_file }}"
       #  responses:
