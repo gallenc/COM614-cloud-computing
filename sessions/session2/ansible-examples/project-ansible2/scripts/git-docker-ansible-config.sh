@@ -35,7 +35,7 @@ echo updated repo in directory $DIRECTORY/$REPO
 
 sudo mkdir -p /opt/docker/compose
 
-sudo ln -sf $DIRECTORY/COM614-cloud-computing/workup/ansible-examples/docker-compose-services /opt/docker/compose/docker-compose-services
+sudo ln -sf $DIRECTORY/COM614-cloud-computing/session2/ansible-examples/docker-compose-services /opt/docker/compose/docker-compose-services
 
 sudo chown -h ansible:ansible /opt/docker/compose/docker-compose-services
 
