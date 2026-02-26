@@ -78,3 +78,5 @@ ansible-playbook -i inventory.ini roles/load-ssh-keys/main.yml
 
 
 https://github.com/semaphoreui/semaphore/pull/1748
+
+https://blog.devops.dev/ansible-playbooks-for-aws-creating-managing-and-terminating-ec2-instances-5d383ac4ffd9  REALY GOOD AND SIMPLE
