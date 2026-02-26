@@ -1,0 +1,15 @@
+- name: Start EC2 instance in us-east-1
+  hosts: localhost
+  gather_facts: False
+  tasks:
+    - name: Stop the EC2 instance
+      amazon.aws.ec2_instance:
+        region: us-east-1
+        instance_ids: 
+          - i-0b655e62bbecef52c
+        state: started
+      register: ec2
+
+    - name: Display EC2 instance state
+      debug:
+        var: ec2
