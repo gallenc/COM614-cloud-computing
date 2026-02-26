@@ -79,6 +79,7 @@ ansible-playbook -i inventory.ini roles/load-ssh-keys/main.yml
 
 https://github.com/semaphoreui/semaphore/pull/1748
 
+<<<<<<< HEAD
 
 https://stackoverflow.com/questions/13033799/how-to-make-ssh-add-read-passphrase-from-a-file  red passphrase from file
 
@@ -105,3 +106,7 @@ The usage is simply: ssh-add-pass keyfile passfile
 https://docs.oracle.com/cd/E35328_01/E35336/html/vmcli-script.html
 
 ```
+
+https://blog.devops.dev/ansible-playbooks-for-aws-creating-managing-and-terminating-ec2-instances-5d383ac4ffd9  REALY GOOD AND SIMPLE
+
+

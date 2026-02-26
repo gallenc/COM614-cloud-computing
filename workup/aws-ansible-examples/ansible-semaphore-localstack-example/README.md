@@ -75,5 +75,18 @@ git clone https://github.com/gallenc/COM614-cloud-computing.git
 cd /home/ansible/devel/gitrepos/COM614-cloud-computing/workup/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/ansible-aws-example
 
 ```
+# better ssh-add command
+see https://stackoverflow.com/questions/33055819/automate-ssh-add-passphrase-using-expect
 
+Here is a better way to automate it.
+
+Create a script (e.g. ps.sh with executable flags) which prints your passphrase, e.g.:
+```
+#!/bin/sh
+echo 'my_passphrase'
+Then specify this script via SSH_ASKPASS variable, so it can be used for the authentication, e.g. :
+
+$ cat id_rsa | SSH_ASKPASS=./ps.sh ssh-add -
+
+```
 
