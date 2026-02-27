@@ -21,7 +21,7 @@
 #      changed_when: no
       
     - name: Unlock SSH key "{{ ssh_key_file }}"
-      shell: echo "$(sudo cat {{ ssh_key_file }})" | ssh-add -
+      shell: timeout 20 echo "$(sudo cat {{ ssh_key_file }})" | ssh-add -
       #async: 20
       #poll: 5
       #expect:
