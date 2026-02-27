@@ -22,8 +22,8 @@
       
     - name: Unlock SSH key "{{ ssh_key_file }}"
       shell: echo "$(sudo cat {{ ssh_key_file }})" | ssh-add -
-      async: 20
-      poll: 5
+      #async: 20
+      #poll: 5
       #expect:
       #  command: ssh-add "{{ ssh_key_file }}"
       #  responses:
