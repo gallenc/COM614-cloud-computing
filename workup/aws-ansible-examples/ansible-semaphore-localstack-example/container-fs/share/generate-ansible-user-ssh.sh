@@ -25,7 +25,7 @@ if getent passwd | grep -c '^ansible:' > /dev/null ;
 fi
 
 # only generate once but share among machines
-if sudo bash -c ' ! [ -d "$ANSIBLE_KEYS" ] '; 
+if ! [ -d "$ANSIBLE_KEYS" ] ; 
   then
    echo creating ansible keys for stack in "$ANSIBLE_KEYS"
    sudo mkdir -p "$ANSIBLE_KEYS"
@@ -41,12 +41,12 @@ if sudo bash -c ' ! [ -d "$ANSIBLE_KEYS" ] ';
         sudo ssh-keygen -t rsa -b 4096 -N "" -f "$ANSIBLE_KEYS/id_rsa"
      fi
 
-  else
-   echo repo "$ANSIBLE_KEYS" already exists so not regenerating
-  fi
+else
+  echo repo "$ANSIBLE_KEYS" already exists so not regenerating
+fi
 
 # test if local machine already has keys
-if sudo bash -c ' ! [ -d "$ANSIBLE_USER_HOME/.ssh" ]' 
+if  ! [ -d "$ANSIBLE_USER_HOME/.ssh" ]
  then
    echo copying ansible keys to "$ANSIBLE_USER_HOME/.ssh"
    sudo mkdir -p $ANSIBLE_USER_HOME/.ssh
