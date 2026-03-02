@@ -1,5 +1,5 @@
 ---
-- name: install apache
+- name: uninstall apache
   hosts: web
   become: yes
   
