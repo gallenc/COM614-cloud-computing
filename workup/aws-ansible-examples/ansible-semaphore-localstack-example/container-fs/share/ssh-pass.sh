@@ -9,4 +9,4 @@ if [ -f "/tmp/ansible_add_ssh_run_pid" ];
   echo "returning passphrase and creating /tmp/ansible_add_ssh_run_pid "  >> /tmp/ssh-pass.log
   echo "add-ssh_running_$(date '+%F_%H:%M:%S')" > /tmp/ansible_add_ssh_run_pid
 fi
-echo 'minad1234'
+cat /run/secrets/ANSIBLE_SSH_PASSPHRASE

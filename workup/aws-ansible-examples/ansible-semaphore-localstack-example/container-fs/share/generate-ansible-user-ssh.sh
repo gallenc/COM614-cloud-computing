@@ -3,11 +3,12 @@
 set -x
 
 # script to set up new ansible user and generate and copy new ansible keys
-# if variable passed to script, uses that word as a passphrase for the keys
+# if environment variable ANSIBLE_SSH_PASSPHRASE is set, then used in generating the key
 
 ANSIBLE_KEYS="/ssh-keys/.ssh-ansible"
 ANSIBLE_USER_HOME="/home/ansible"
 ANSIBLE_KEY_PASSPHRASE=""
+
 
 # create ansible user (insecure password)
 # The graphical login managers do not show users with UID below 1000
@@ -20,7 +21,7 @@ if getent passwd | grep -c '^ansible:' > /dev/null ;
     sudo groupadd -f ansible
     sudo groupadd -f sudo   # ubuntu
     sudo groupadd -f wheel  # rhel
-    sudo useradd -m -s /bin/bash  -u 800 --groups sudo,wheel  -g ansible --password "$(mkpasswd minad1234)"  ansible
+    sudo useradd -m -s /bin/bash  -u 800 --groups sudo,wheel  -g ansible --password "$(mkpasswd $ANSIBLE_ROOT_PASSWORD )"  ansible
     sudo echo "%ansible ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/ansible
 fi
 
@@ -30,11 +31,10 @@ if ! [ -d "$ANSIBLE_KEYS" ] ;
    echo creating ansible keys for stack in "$ANSIBLE_KEYS"
    sudo mkdir -p "$ANSIBLE_KEYS"
    
-   if [ $# -ne 0 ]; 
+   if [ -v ANSIBLE_SSH_PASSPHRASE ];
      then
-        ANSIBLE_KEY_PASSPHRASE=$1 
+        ANSIBLE_KEY_PASSPHRASE=$ANSIBLE_SSH_PASSPHRASE 
         echo "using ansible keys with pass phrase" ;
-        echo "remote key passphrase= $ANSIBLE_KEY_PASSPHRASE"
         sudo ssh-keygen -t rsa -b 4096 -N "$ANSIBLE_KEY_PASSPHRASE" -f "$ANSIBLE_KEYS/id_rsa"
      else
         echo "using ansible keys with no pass phrase" ;
