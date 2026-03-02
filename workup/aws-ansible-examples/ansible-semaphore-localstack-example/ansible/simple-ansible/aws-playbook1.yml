@@ -14,7 +14,7 @@
 
     ami: ami-041f62d0737a0fbd1
 
-    key_name: ansible-demo
+    key_name: ansible-demo1
 
     vpc_name: ansible-vpc-test
 
