@@ -3,3 +3,21 @@
 based upon https://developers.redhat.com/articles/2023/06/05/how-create-ec2-instance-aws-using-ansible-cli
 
 see also https://medium.datadriveninvestor.com/devops-using-ansible-to-provision-aws-ec2-instances-3d70a1cb155f
+
+```
+docker compose up -d
+
+docker compose exec semaphore bash
+
+sudo su - ansible # this logs in as ansible with correct path
+
+mkdir -p /home/ansible/devel/gitrepos
+
+cd /home/ansible/devel/gitrepos
+
+git clone https://github.com/gallenc/COM614-cloud-computing.git
+
+cd /home/ansible/devel/gitrepos/COM614-cloud-computing/workup/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/simple-ansible
+
+
+```
