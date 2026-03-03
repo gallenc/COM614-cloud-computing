@@ -70,6 +70,7 @@ services:
     secrets:
       - ANSIBLE_SSH_PASSPHRASE
       - ANSIBLE_ROOT_PASSWORD
+      - VAULT_PASSWORD_FILE
       
     # override https://github.com/semaphoreui/semaphore/blob/develop/deployment/docker/server/Dockerfile
     # see https://stackoverflow.com/questions/68931421/how-to-start-ssh-agent-in-dockerfile
