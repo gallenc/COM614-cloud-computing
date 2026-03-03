@@ -26,7 +26,7 @@
 #    aws_secret_key: "{{ lookup('ansible.builtin.env', 'AWS_SECRET_KEY') }}" 
 
   vars_files:
-    - ..vault.yml
+    - ./vault.yml
 
   tasks:
 

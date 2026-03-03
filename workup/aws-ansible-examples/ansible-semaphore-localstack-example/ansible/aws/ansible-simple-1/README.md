@@ -24,7 +24,7 @@ cd /home/ansible/devel/gitrepos
 
 git clone https://github.com/gallenc/COM614-cloud-computing.git
 
-cd /home/ansible/devel/gitrepos/COM614-cloud-computing/workup/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/aws/simple-ansible
+cd /home/ansible/devel/gitrepos/COM614-cloud-computing/workup/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/aws/ansible-simple-1
 
 
 ```
