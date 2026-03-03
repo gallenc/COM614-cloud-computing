@@ -20,6 +20,8 @@ secrets:
     file: ./.secrets/ansible_ssh_passphrase.txt
   ANSIBLE_ROOT_PASSWORD:
     file: ./.secrets/ansible_root_password.txt
+  VAULT_PASSWORD_FILE:
+    file: ./.secrets/vault_password_file.txt
 
 services:
   # uncomment this section and comment out the mysql section to use postgres instead of mysql
