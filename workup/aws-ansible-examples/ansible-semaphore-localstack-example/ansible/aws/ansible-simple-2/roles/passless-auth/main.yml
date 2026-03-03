@@ -1,0 +1,56 @@
+---
+- name: Set up Passwordless SSH Access
+  hosts: all
+  gather_facts: no
+  vars:
+    ssh_key_type: ed25519
+    ssh_key_path: "~/.ssh/id_{{ ssh_key_type }}"
+
+  tasks:
+    - name: Check if SSH key exists
+      become: no
+      delegate_to: localhost
+      ansible.builtin.stat:
+        path: "{{ ssh_key_path }}"
+      register: ssh_key_check
+
+    - name: Generate SSH Key Pair on Control Node
+      become: no
+      delegate_to: localhost
+      ansible.builtin.shell: |
+        ssh-keygen -t {{ ssh_key_type }} -f {{ ssh_key_path }} -N '' -q
+      when: not ssh_key_check.stat.exists
+      changed_when: false
+
+    - name: Ensure .ssh directory exists on remote hosts
+      ansible.builtin.file:
+        path: "/home/{{ ansible_user }}/.ssh"
+        state: directory
+        mode: '0700'
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+
+    - name: Ensure authorized_keys file exists
+      ansible.builtin.file:
+        path: "/home/{{ ansible_user }}/.ssh/authorized_keys"
+        state: touch
+        mode: '0600'
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+
+    - name: Add SSH Public Key to Authorized Keys
+      ansible.posix.authorized_key:
+        user: "{{ ansible_user }}"
+        state: present
+        key: "{{ lookup('file', ssh_key_path + '.pub') }}"
+
+    - name: Display SSH Connection Test Results
+      ansible.builtin.debug:
+        msg: "{{ inventory_hostname }}: {{ ssh_test.stdout | default('SSH connection failed') }}"
+      when: ssh_test is defined
+
+  handlers:
+    - name: Restart SSH Service
+      ansible.builtin.service:
+        name: sshd  
+        state: restarted

@@ -21,3 +21,12 @@ cd /home/ansible/devel/gitrepos/COM614-cloud-computing/workup/aws-ansible-exampl
 
 ```
 
+```
+ansible-playbook create-aws-instance.yml --ask-vault-pass
+```
+
+VERY IMPORTANT LOG IN TO AMAZON AND  DELETE THIS INSTANCE !!!
+
+```
+ansible-playbook terminate-aws-instance.yml --vault-password-file /share/password-client.sh
+```

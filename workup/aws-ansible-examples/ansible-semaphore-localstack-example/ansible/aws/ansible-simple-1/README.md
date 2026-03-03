@@ -38,5 +38,5 @@ ansible-playbook aws-playbook1.yml --ask-vault-pass
 VERY IMPORTANT LOG IN TO AMAZON AND  DELETE THIS INSTANCE !!!
 
 ```
-ansible-playbook aws-playbook1.yml --vault-password-file ./password-client.sh
+ansible-playbook aws-playbook1.yml --vault-password-file /share/password-client.sh
 ```
