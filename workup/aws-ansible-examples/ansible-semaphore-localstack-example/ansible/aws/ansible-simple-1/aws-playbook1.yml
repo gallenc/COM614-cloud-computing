@@ -5,24 +5,16 @@
   hosts: localhost
 
   vars:
-
     region: eu-west-2
-
     instance_type: t3.micro
-
     # AlmaLinux OS 10 (x86_64) AlmaLinux OS Foundation 
     ami: ami-041f62d0737a0fbd1
-
     key_name: ansible-demo1
-
     vpc_name: ansible-vpc-test
-
     cidr_block: "10.10.0.0/16"
-
     cidr: "10.10.0.0/24"
 
 #    aws_access_key: "{{ lookup('ansible.builtin.env', 'AWS_ACCESS_KEY') }}"
-
 #    aws_secret_key: "{{ lookup('ansible.builtin.env', 'AWS_SECRET_KEY') }}" 
 
   vars_files:
@@ -31,97 +23,55 @@
   tasks:
 
     - name: Create a new VPC 
-
       amazon.aws.ec2_vpc_net:
-
         name: "Ansible-Test"
-
         cidr_block: "{{ cidr_block }}"
-
         aws_access_key: "{{ aws_access_key }}"
-
         aws_secret_key: "{{ aws_secret_key }}"
-
         region: "{{ region }}"
-
       register: vpc
 
 
     - name: Create a new Subnet
-
       amazon.aws.ec2_vpc_subnet:
-
         aws_access_key: "{{ aws_access_key }}"
-
         aws_secret_key: "{{ aws_secret_key }}"
-
         cidr: "{{ cidr }}"
-
         region: "{{ region }}"
-
         vpc_id: "{{ vpc.vpc.id }}"
-
       register: subnet
     
 
     - name: Create a Security Group  
-
       amazon.aws.ec2_security_group:
-
         name: "Ansible-Test-Security-Group"
-
         description: "Ansible-Testing"
-
         aws_access_key: "{{ aws_access_key }}"
-
         aws_secret_key: "{{ aws_secret_key }}"
-
         vpc_id: "{{ vpc.vpc.id }}"
-
         region: "{{ region }}"
-
         rules:
-
           - proto: tcp
-
             ports:
-
             - 80
-
             cidr_ip: 0.0.0.0/0
-
             rule_desc: "allow all on port 80"
-
       register: security_group
    
 
     - name: Launch an EC2 Instance
-
       amazon.aws.ec2_instance:
-
         name: "Test-Ansible"
-
         key_name: "{{ key_name }}"
-
         aws_access_key: "{{ aws_access_key }}"
-
         aws_secret_key: "{{ aws_secret_key }}"
-
         vpc_subnet_id: "{{ subnet.subnet.id }}"
-
         instance_type: "{{ instance_type }}"
-
         security_group: "{{ security_group.group_id  }}"
-
         count: 1
-
         wait: yes
-
         aws_region: "{{ region }}"
-
         network:
-
           assign_public_ip: true
-
         image_id: "{{ ami }}"
         

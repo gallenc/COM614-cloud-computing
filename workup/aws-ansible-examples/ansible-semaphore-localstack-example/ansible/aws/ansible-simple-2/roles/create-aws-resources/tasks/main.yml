@@ -1,10 +1,31 @@
-- name: Create EC2 SG
-  amazon.aws.ec2_security_group:
-    name: ec2-group
-    description: SG for EC2 instances using Ansible
-    vpc_id: "{{ VPC_ID }}"
+---
+
+- name: Create a new VPC 
+  amazon.aws.ec2_vpc_net:
+    name: "Ansible-Test"
+    cidr_block: "{{ cidr_block }}"
     aws_access_key: "{{ aws_access_key }}"
     aws_secret_key: "{{ aws_secret_key }}"
+    region: "{{ region }}"
+  register: vpc
+
+- name: Create a new Subnet
+  amazon.aws.ec2_vpc_subnet:
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    cidr: "{{ cidr }}"
+    region: "{{ region }}"
+    vpc_id: "{{ vpc.vpc.id }}"
+  register: subnet
+
+- name: Create EC2 SG
+  amazon.aws.ec2_security_group:
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    name: ec2-group
+    description: SG for EC2 instances using Ansible
+    vpc_id: "{{ vpc.vpc.id }}"
+    region: "{{ region }}"
     rules:
       - proto: tcp
         from_port: 22
@@ -29,42 +50,32 @@
 
 - name: Launch EC2 Instance 1
   amazon.aws.ec2_instance:
-    region: "{{ REGION }}"
-    key_name: "{{ KEYNAME }}" 
     name: "{{ INSTANCE_NAME_1 }}"
-    vpc_subnet_id: "{{ SUBNET_ID }}"
-    instance_type: "{{ INSTANCE_TYPE }}"
-    security_groups: [ "{{ ec2_sg.group_id }}" ]
+    key_name: "{{ key_name }}"
     aws_access_key: "{{ aws_access_key }}"
     aws_secret_key: "{{ aws_secret_key }}"
-    network_interfaces:
-      - assign_public_ip: true
-    image_id: "{{ UBUNTU_AMI }}"
+    vpc_subnet_id: "{{ subnet.subnet.id }}"
+    instance_type: "{{ instance_type }}"
+    security_group: "{{ ec2_sg.group_id  }}"
+    count: 1
+    wait: yes
+    aws_region: "{{ region }}"
+    network:
+      assign_public_ip: true
+    image_id: "{{ ami }}"
 
 - name: Launch EC2 Instance 2
   amazon.aws.ec2_instance:
-    region: "{{ REGION }}"
-    key_name: "{{ KEYNAME }}" 
     name: "{{ INSTANCE_NAME_2 }}"
-    vpc_subnet_id: "{{ SUBNET_ID }}"
-    instance_type: "{{ INSTANCE_TYPE }}"
-    security_groups: [ "{{ ec2_sg.group_id }}" ]
+    key_name: "{{ key_name }}"
     aws_access_key: "{{ aws_access_key }}"
     aws_secret_key: "{{ aws_secret_key }}"
-    network_interfaces:
-      - assign_public_ip: true
-    image_id: "{{ UBUNTU_AMI }}"
-
-- name: Launch EC2 Instance 3
-  amazon.aws.ec2_instance:
-    region: "{{ REGION }}"
-    key_name: "{{ KEYNAME }}" 
-    name: "{{ INSTANCE_NAME_3 }}"
-    vpc_subnet_id: "{{ SUBNET_ID }}"
-    instance_type: "{{ INSTANCE_TYPE }}"
-    security_groups: [ "{{ ec2_sg.group_id }}" ]
-    aws_access_key: "{{ aws_access_key }}"
-    aws_secret_key: "{{ aws_secret_key }}"
-    network_interfaces:
-      - assign_public_ip: true
-    image_id: "{{ RHEL_AMI }}"
+    vpc_subnet_id: "{{ subnet.subnet.id }}"
+    instance_type: "{{ instance_type }}"
+    security_group: "{{ ec2_sg.group_id  }}"
+    count: 1
+    wait: yes
+    aws_region: "{{ region }}"
+    network:
+      assign_public_ip: true
+    image_id: "{{ ami }}"

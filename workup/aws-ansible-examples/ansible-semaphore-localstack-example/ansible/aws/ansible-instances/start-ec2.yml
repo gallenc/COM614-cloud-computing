@@ -2,7 +2,7 @@
   hosts: localhost
   gather_facts: False
   tasks:
-    - name: Stop the EC2 instance
+    - name: Start the EC2 instance
       amazon.aws.ec2_instance:
         region: us-east-1
         instance_ids: 
