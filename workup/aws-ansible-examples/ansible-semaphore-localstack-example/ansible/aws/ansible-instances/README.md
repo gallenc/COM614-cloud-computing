@@ -14,7 +14,7 @@ cd /home/ansible/devel/gitrepos
 
 git clone https://github.com/gallenc/COM614-cloud-computing.git
 
-cd /home/ansible/devel/gitrepos/COM614-cloud-computing/workup/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/ansible-instances
+cd /home/ansible/devel/gitrepos/COM614-cloud-computing/workup/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/aws/ansible-instances
 ```
 
 see also https://github.com/Jaraxal/ansible-aws-example#

@@ -4,6 +4,13 @@ based upon https://developers.redhat.com/articles/2023/06/05/how-create-ec2-inst
 
 see also https://medium.datadriveninvestor.com/devops-using-ansible-to-provision-aws-ec2-instances-3d70a1cb155f
 
+to run this playbook import the keys as environment variables
+
+```
+export AWS_ACCESS_KEY=xxx
+export AWS_SECRET_KEY=yyy
+```
+
 ```
 docker compose up -d
 
@@ -17,7 +24,7 @@ cd /home/ansible/devel/gitrepos
 
 git clone https://github.com/gallenc/COM614-cloud-computing.git
 
-cd /home/ansible/devel/gitrepos/COM614-cloud-computing/workup/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/simple-ansible
+cd /home/ansible/devel/gitrepos/COM614-cloud-computing/workup/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/aws/simple-ansible
 
 
 ```

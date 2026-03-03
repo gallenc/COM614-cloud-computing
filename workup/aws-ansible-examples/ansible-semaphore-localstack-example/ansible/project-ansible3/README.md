@@ -1,4 +1,11 @@
-cd /home/ansible/devel/gitrepos/COM614-cloud-computing/workup/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/ansible-aws-example# README
+# README project-ansible3
+
+This project looks at process of importing ansible ssh keys into semaphore before running a playbook.
+
+load-ssh-withpass.yml shows how to pre-load ansible ssh keys
+
+install_apache.yml and uninstall_apache.yml take this further with some yum install and uninstall commands  
+
 
 To run this in virtual machine go to the location of project in the repo
 
@@ -59,8 +66,6 @@ killall ssh-agent; eval "$(ssh-agent)"   or ssh-agent -k
 
 ```
 
-
-
 https://aws.plainenglish.io/best-practices-for-ssh-key-management-in-ansible-from-lab-to-10-000-nodes-bcb50324b272
 
 
@@ -79,7 +84,6 @@ ansible-playbook -i inventory.ini roles/load-ssh-keys/main.yml
 
 https://github.com/semaphoreui/semaphore/pull/1748
 
-<<<<<<< HEAD
 
 https://stackoverflow.com/questions/13033799/how-to-make-ssh-add-read-passphrase-from-a-file  red passphrase from file
 
