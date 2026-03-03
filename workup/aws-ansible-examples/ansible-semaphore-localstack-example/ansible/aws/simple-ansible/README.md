@@ -28,3 +28,7 @@ cd /home/ansible/devel/gitrepos/COM614-cloud-computing/workup/aws-ansible-exampl
 
 
 ```
+
+ansible-playbook aws-playbook1.yml --ask-vault-pass
+
+
