@@ -72,9 +72,10 @@ cd /home/ansible/devel/gitrepos
 
 git clone https://github.com/gallenc/COM614-cloud-computing.git
 
-cd /home/ansible/devel/gitrepos/COM614-cloud-computing/workup/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/ansible-aws-example
+cd /home/ansible/devel/gitrepos/COM614-cloud-computing/workup/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/aws/ansible-aws-example
 
 ```
+
 # better ssh-add command
 see https://stackoverflow.com/questions/33055819/automate-ssh-add-passphrase-using-expect
 
