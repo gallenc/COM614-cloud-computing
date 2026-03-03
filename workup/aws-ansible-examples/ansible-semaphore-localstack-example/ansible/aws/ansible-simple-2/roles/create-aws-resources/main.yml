@@ -1,0 +1,70 @@
+- name: Create EC2 SG
+  amazon.aws.ec2_security_group:
+    name: ec2-group
+    description: SG for EC2 instances using Ansible
+    vpc_id: "{{ VPC_ID }}"
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    rules:
+      - proto: tcp
+        from_port: 22
+        to_port: 22
+        cidr_ip: 0.0.0.0/0
+
+      - proto: tcp
+        from_port: 80
+        to_port: 9000
+        cidr_ip: 0.0.0.0/0
+
+    rules_egress:
+      - proto: -1
+        from_port: 0
+        to_port: 0
+        cidr_ip: 0.0.0.0/0
+  register: ec2_sg
+
+- name: Output SG ID
+  debug:
+    msg: "Security Group ID is {{ ec2_sg.group_id }}"
+
+- name: Launch EC2 Instance 1
+  amazon.aws.ec2_instance:
+    region: "{{ REGION }}"
+    key_name: "{{ KEYNAME }}" 
+    name: "{{ INSTANCE_NAME_1 }}"
+    vpc_subnet_id: "{{ SUBNET_ID }}"
+    instance_type: "{{ INSTANCE_TYPE }}"
+    security_groups: [ "{{ ec2_sg.group_id }}" ]
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    network_interfaces:
+      - assign_public_ip: true
+    image_id: "{{ UBUNTU_AMI }}"
+
+- name: Launch EC2 Instance 2
+  amazon.aws.ec2_instance:
+    region: "{{ REGION }}"
+    key_name: "{{ KEYNAME }}" 
+    name: "{{ INSTANCE_NAME_2 }}"
+    vpc_subnet_id: "{{ SUBNET_ID }}"
+    instance_type: "{{ INSTANCE_TYPE }}"
+    security_groups: [ "{{ ec2_sg.group_id }}" ]
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    network_interfaces:
+      - assign_public_ip: true
+    image_id: "{{ UBUNTU_AMI }}"
+
+- name: Launch EC2 Instance 3
+  amazon.aws.ec2_instance:
+    region: "{{ REGION }}"
+    key_name: "{{ KEYNAME }}" 
+    name: "{{ INSTANCE_NAME_3 }}"
+    vpc_subnet_id: "{{ SUBNET_ID }}"
+    instance_type: "{{ INSTANCE_TYPE }}"
+    security_groups: [ "{{ ec2_sg.group_id }}" ]
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    network_interfaces:
+      - assign_public_ip: true
+    image_id: "{{ RHEL_AMI }}"

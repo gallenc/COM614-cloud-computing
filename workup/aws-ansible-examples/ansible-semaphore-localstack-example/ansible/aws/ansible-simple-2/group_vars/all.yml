@@ -1,0 +1,14 @@
+---
+
+REGION: "us-east-1"
+VPC_ID: "vpc-12345678"
+SUBNET_ID: "subnet-12345678"
+SG_NAME: "sg-ec2"
+SG_DESCRIPTION: "SG for EC2 instances using Ansible"
+INSTANCE_NAME_1: "EC2_Instance_1"
+INSTANCE_NAME_2: "EC2_Instance_2"
+INSTANCE_NAME_3: "EC2_Instance_3"
+INSTANCE_TYPE: "t2.micro"
+KEYNAME: "your_key_pair_name"
+UBUNTU_AMI: "ami-0abcdef1234567890"
+RHEL_AMI: "ami-0abcdef1234567890"

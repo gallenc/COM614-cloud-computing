@@ -1,0 +1,39 @@
+---
+- name: Deleting AWS EC2 Instances
+  hosts: localhost
+  connection: local
+  vars:
+    ec2_instance_ids:
+      - i-01234567890abcdef
+      - i-09876543210fedcba
+      - i-0123456789abcdef0
+
+  tasks:
+    - name: Terminate EC2 instances
+      block:
+        - name: Terminate individual EC2 instance
+          amazon.aws.ec2_instance:
+            region: us-east-1
+            aws_access_key: "{{ aws_access_key }}"
+            aws_secret_key: "{{ aws_secret_key }}"
+            state: absent
+            instance_ids: "{{ item }}"
+          loop: "{{ ec2_instance_ids }}"
+          register: termination_results
+          loop_control:
+            label: "Terminating instance {{ item }}"
+
+      rescue:
+        - name: Handle termination errors
+          ansible.builtin.debug:
+            msg: "Failed to terminate some instances. Check the error details."
+
+      always:
+        - name: Display termination results
+          ansible.builtin.debug:
+            var: termination_results
+    
+    - name: "Delete group by its id"
+      amazon.aws.ec2_security_group:
+        group_id: sg-33b4ee5b
+        state: absent
