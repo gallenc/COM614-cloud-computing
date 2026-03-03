@@ -1,5 +1,7 @@
 # Readme - simple aws playbook
 
+This a very simple ansible playbook for creating a single AWS EC2 instance
+
 based upon https://developers.redhat.com/articles/2023/06/05/how-create-ec2-instance-aws-using-ansible-cli
 
 see also https://medium.datadriveninvestor.com/devops-using-ansible-to-provision-aws-ec2-instances-3d70a1cb155f
