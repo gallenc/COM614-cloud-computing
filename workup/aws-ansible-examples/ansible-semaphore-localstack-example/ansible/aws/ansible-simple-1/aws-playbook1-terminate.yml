@@ -34,9 +34,9 @@
         
    - name: Grab VPC details
      amazon.aws.ec2_vpc_net_info:
-     aws_region: "{{ region }}"
-     filters:
-        tag:usage: ansible-simple-1
+       aws_region: "{{ region }}"
+       filters:
+          tag:usage: ansible-simple-1
      register: all_vpcs
      
    - name: remove subnets and route tables from VPC
