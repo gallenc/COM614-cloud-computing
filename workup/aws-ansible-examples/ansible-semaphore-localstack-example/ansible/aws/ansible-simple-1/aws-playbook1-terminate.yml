@@ -27,28 +27,28 @@
       aws_region: "{{ region }}"
       state: absent
       filters:
-        tag:usage: ansible-simple-1
+        tag:Usage: ansible-simple-1
         
    - name: delete aws security group
      amazon.aws.ec2_security_group:
        aws_region: "{{ region }}"
        state: absent
        filters:
-        tag:usage: ansible-simple-1
+        tag:Usage: ansible-simple-1
              
    - name: delete aws subnets
      amazon.aws.ec2_vpc_subnet:
       aws_region: "{{ region }}"
       state: absent
       filters:
-        tag:usage: ansible-simple-1
+        tag:Usage: ansible-simple-1
    
    - name: delete aws vpc 
      amazon.aws.ec2_vpc_net:
       aws_region: "{{ region }}"
       state: absent
       filters:
-        tag:usage: ansible-simple-1
+        tag:Usage: ansible-simple-1
    
    
    
