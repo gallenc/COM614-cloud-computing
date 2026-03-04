@@ -18,7 +18,8 @@ docker compose up -d
 
 docker compose exec semaphore bash
 
-sudo su - ansible # this logs in as ansible with correct path
+# this logs in as ansible with correct path
+sudo su - ansible 
 
 mkdir -p /home/ansible/devel/gitrepos
 
