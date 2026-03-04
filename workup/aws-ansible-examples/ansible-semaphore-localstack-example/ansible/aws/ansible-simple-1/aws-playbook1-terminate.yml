@@ -55,7 +55,7 @@
         route_tables: []
         wait: yes
      loop: "{{ all_vpcs.vpcs }}"
-     when: item.is-default != true
+     when: item.is_default != true
       
       
 #   - name: Delete Security Groups in VPC {{ all_vpcs.vpcs[0].vpc_id }} by ID
