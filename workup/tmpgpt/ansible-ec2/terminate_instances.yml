@@ -1,0 +1,43 @@
+---
+# ──────────────────────────────────────────────────────────────────────
+#  Playbook: terminate_instances.yml
+#  Purpose : Terminate EC2 instances – by explicit ID or by tag filter.
+#
+#  Usage (tag-based – terminates all Ansible-managed instances in env):
+#    ansible-playbook playbooks/terminate_instances.yml
+#    ansible-playbook playbooks/terminate_instances.yml -e "ec2_env=staging"
+#
+#  Usage (by ID):
+#    ansible-playbook playbooks/terminate_instances.yml \
+#      -e "instance_ids=['i-0abc123','i-0def456']"
+#
+#  Dry-run (discovery only, no termination):
+#    ansible-playbook playbooks/terminate_instances.yml -e "dry_run=true"
+# ──────────────────────────────────────────────────────────────────────
+
+- name: "Terminate AWS EC2 Instances"
+  hosts: local
+  gather_facts: false
+
+  vars_prompt:
+    - name: confirm_terminate
+      prompt: |
+        ┌─────────────────────────────────────────────────────────┐
+        │  ⚠️   WARNING: You are about to TERMINATE EC2 instances │
+        │  Region  : {{ ec2_region }}                             │
+        │  Env tag : {{ ec2_env }}                                │
+        │  dry_run : {{ dry_run | default(false) }}               │
+        │                                                         │
+        │  This action is IRREVERSIBLE.                           │
+        │  Type  yes  to continue, anything else to abort.        │
+        └─────────────────────────────────────────────────────────┘
+      private: false
+
+  pre_tasks:
+    - name: "Abort if not confirmed"
+      ansible.builtin.fail:
+        msg: "Aborted by user."
+      when: confirm_terminate | lower != 'yes'
+
+  roles:
+    - role: ec2_terminate

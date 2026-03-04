@@ -1,0 +1,111 @@
+---
+# ─────────────────────────────────────────────────────────
+#  Role: ec2_create
+#  Tasks: launch one or more EC2 instances and report back
+# ─────────────────────────────────────────────────────────
+
+- name: "Validate required variables"
+  ansible.builtin.assert:
+    that:
+      - ami_id is defined and ami_id | length > 0
+      - key_name is defined and key_name | length > 0
+      - instance_type is defined
+      - instance_count | int >= 1
+    fail_msg: "Missing required variable(s). Check ami_id, key_name, instance_type, and instance_count."
+  tags: [create, validate]
+
+# ── Optional: look up default VPC subnet when none is specified ──────────────
+
+- name: "Gather default VPC info (when vpc_subnet_id is not set)"
+  amazon.aws.ec2_vpc_subnet_info:
+    region: "{{ ec2_region }}"
+    filters:
+      default-for-az: "true"
+  register: default_subnets
+  when: vpc_subnet_id == ""
+  tags: [create]
+
+- name: "Set subnet to first default subnet (when vpc_subnet_id is not set)"
+  ansible.builtin.set_fact:
+    resolved_subnet_id: "{{ default_subnets.subnets[0].subnet_id }}"
+  when:
+    - vpc_subnet_id == ""
+    - default_subnets.subnets | length > 0
+  tags: [create]
+
+- name: "Use provided vpc_subnet_id"
+  ansible.builtin.set_fact:
+    resolved_subnet_id: "{{ vpc_subnet_id }}"
+  when: vpc_subnet_id != ""
+  tags: [create]
+
+# ── Launch instances ─────────────────────────────────────────────────────────
+
+- name: "Launch {{ instance_count }} EC2 instance(s)"
+  amazon.aws.ec2_instance:
+    region: "{{ ec2_region }}"
+    name: "{{ instance_name }}"
+    key_name: "{{ key_name }}"
+    instance_type: "{{ instance_type }}"
+    image_id: "{{ ami_id }}"
+    count: "{{ instance_count | int }}"
+    vpc_subnet_id: "{{ resolved_subnet_id | default(omit) }}"
+    security_group: "{{ security_group_ids | default(omit) }}"
+    network:
+      assign_public_ip: "{{ assign_public_ip }}"
+    volumes:
+      - device_name: /dev/xvda
+        ebs:
+          volume_size: "{{ root_volume_size_gb }}"
+          volume_type: "{{ root_volume_type }}"
+          delete_on_termination: "{{ root_volume_delete_on_termination }}"
+    tags: "{{ common_tags | combine({'Name': instance_name, 'Environment': ec2_env}) }}"
+    wait: "{{ wait_for_instance }}"
+    wait_timeout: "{{ wait_timeout }}"
+    state: present
+  register: ec2_result
+  tags: [create]
+
+# ── Wait until instances are reachable ──────────────────────────────────────
+
+- name: "Wait for instances to pass status checks"
+  amazon.aws.ec2_instance_info:
+    region: "{{ ec2_region }}"
+    instance_ids: "{{ ec2_result.instance_ids }}"
+  register: instance_info
+  until: >
+    instance_info.instances | selectattr('state.name', 'equalto', 'running') | list | length
+    == ec2_result.instance_ids | length
+  retries: 30
+  delay: 10
+  when: wait_for_instance
+  tags: [create]
+
+# ── Report ───────────────────────────────────────────────────────────────────
+
+- name: "Display created instance details"
+  ansible.builtin.debug:
+    msg: |
+      ✅ EC2 Instance launched successfully
+         ID          : {{ item.instance_id }}
+         Type        : {{ item.instance_type }}
+         State       : {{ item.state.name }}
+         Private IP  : {{ item.private_ip_address | default('N/A') }}
+         Public IP   : {{ item.public_ip_address | default('N/A') }}
+         AZ          : {{ item.placement.availability_zone }}
+         AMI         : {{ item.image_id }}
+  loop: "{{ instance_info.instances | default(ec2_result.instances) }}"
+  loop_control:
+    label: "{{ item.instance_id }}"
+  tags: [create, info]
+
+- name: "Save instance IDs to file (created_instances.txt)"
+  ansible.builtin.copy:
+    content: |
+      # Instances created by Ansible on {{ ansible_date_time.iso8601 }}
+      # Region: {{ ec2_region }} | Environment: {{ ec2_env }}
+      {% for id in ec2_result.instance_ids %}
+      {{ id }}
+      {% endfor %}
+    dest: "created_instances.txt"
+  tags: [create, info]

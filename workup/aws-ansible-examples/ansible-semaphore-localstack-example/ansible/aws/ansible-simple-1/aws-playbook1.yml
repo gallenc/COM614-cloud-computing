@@ -29,6 +29,8 @@
         aws_access_key: "{{ aws_access_key }}"
         aws_secret_key: "{{ aws_secret_key }}"
         region: "{{ region }}"
+        tag:
+            usage: ansible-simple-1
       register: vpc
 
 
@@ -39,6 +41,8 @@
         cidr: "{{ cidr }}"
         region: "{{ region }}"
         vpc_id: "{{ vpc.vpc.id }}"
+        tags:
+           usage: ansible-simple-1
       register: subnet
     
 
@@ -50,6 +54,8 @@
         aws_secret_key: "{{ aws_secret_key }}"
         vpc_id: "{{ vpc.vpc.id }}"
         region: "{{ region }}"
+        tags:
+           usage: ansible-simple-1
         rules:
           - proto: tcp
             ports:
@@ -74,4 +80,19 @@
         network:
           assign_public_ip: true
         image_id: "{{ ami }}"
+        tags:
+           usage: ansible-simple-1
+      register: ec2
+        
+#ansible debug
+    - name: debug ec2 instance
+      debug:
+        var: ec2.instances
+        
+        
+        
+        
+        
+        
+        
         

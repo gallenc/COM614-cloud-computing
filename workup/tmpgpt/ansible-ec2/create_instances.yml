@@ -1,0 +1,37 @@
+---
+# ──────────────────────────────────────────────────────────────────────
+#  Playbook: create_instances.yml
+#  Purpose : Launch one or more EC2 instances in the target AWS region.
+#
+#  Usage:
+#    ansible-playbook playbooks/create_instances.yml
+#    ansible-playbook playbooks/create_instances.yml \
+#      -e "instance_count=2 instance_type=t3.small ec2_env=staging"
+# ──────────────────────────────────────────────────────────────────────
+
+- name: "Create AWS EC2 Instances"
+  hosts: local
+  gather_facts: true   # provides ansible_date_time for the output file
+
+  vars_prompt:
+    - name: confirm_create
+      prompt: |
+        ┌─────────────────────────────────────────────────────────┐
+        │  You are about to CREATE EC2 instances.                 │
+        │  Region : {{ ec2_region }}                              │
+        │  Env    : {{ ec2_env }}                                 │
+        │  Count  : {{ instance_count | default(1) }}             │
+        │  Type   : {{ instance_type | default('t3.micro') }}     │
+        │                                                         │
+        │  Type  yes  to continue, anything else to abort.        │
+        └─────────────────────────────────────────────────────────┘
+      private: false
+
+  pre_tasks:
+    - name: "Abort if not confirmed"
+      ansible.builtin.fail:
+        msg: "Aborted by user."
+      when: confirm_create | lower != 'yes'
+
+  roles:
+    - role: ec2_create

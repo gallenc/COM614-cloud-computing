@@ -1,0 +1,16 @@
+---
+# ──────────────────────────────────────────────
+#  Global AWS / EC2 defaults shared across roles
+# ──────────────────────────────────────────────
+
+# AWS region
+ec2_region: "us-east-1"
+
+# Environment tag – used to scope create & terminate operations
+ec2_env: "dev"
+
+# Common tags applied to every resource this project touches
+common_tags:
+  ManagedBy: "Ansible"
+  Environment: "{{ ec2_env }}"
+  Project: "ansible-ec2"

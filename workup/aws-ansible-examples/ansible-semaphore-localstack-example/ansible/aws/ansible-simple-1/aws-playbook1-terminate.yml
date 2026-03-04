@@ -1,0 +1,60 @@
+--- # Creating an EC2 Instance 
+
+- name: Creating an EC2 Instance with ansible cli
+
+  hosts: localhost
+
+  vars:
+    region: eu-west-2
+    instance_type: t3.micro
+    # AlmaLinux OS 10 (x86_64) AlmaLinux OS Foundation 
+    ami: ami-041f62d0737a0fbd1
+    key_name: ansible-demo1
+    vpc_name: ansible-vpc-test
+    cidr_block: "10.10.0.0/16"
+    cidr: "10.10.0.0/24"
+
+#    aws_access_key: "{{ lookup('ansible.builtin.env', 'AWS_ACCESS_KEY') }}"
+#    aws_secret_key: "{{ lookup('ansible.builtin.env', 'AWS_SECRET_KEY') }}" 
+
+  vars_files:
+    - ./vault.yml
+
+  tasks:
+
+   - name: delete ec2 instances
+     amazon.aws.ec2_instance:
+      state: absent
+      filters:
+        tags:
+           usage: ansible-simple-1
+        
+   - name: delete aws security group
+     amazon.aws.ec2_security_group:
+       state: absent
+       filters:
+           tags:
+             usage: ansible-simple-1
+             
+   - name: delete aws subnets
+     amazon.aws.ec2_vpc_subnet:
+      state: absent
+      filters:
+        tags:
+           usage: ansible-simple-1   
+   
+   - name: delete aws vpc 
+     amazon.aws.ec2_vpc_net:
+      state: absent
+      filters:
+        tags:
+           usage: ansible-simple-1
+   
+   
+   
+   
+   
+   
+   
+   
+   

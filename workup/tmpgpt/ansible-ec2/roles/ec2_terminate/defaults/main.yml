@@ -1,0 +1,20 @@
+---
+# ────────────────────────────────────────
+#  ec2_terminate role – default values
+# ────────────────────────────────────────
+
+# Explicit instance IDs to terminate (list).
+# When empty the role falls back to tag-based discovery.
+instance_ids: []
+
+# Tag filters used when instance_ids is empty.
+# Instances matching ALL filters will be terminated.
+terminate_tag_filters:
+  "tag:Environment": "{{ ec2_env }}"
+  "tag:ManagedBy": "Ansible"
+
+# Safety switch – set to true to do a dry run (no termination)
+dry_run: false
+
+# Seconds to wait for instances to reach 'terminated' state
+terminate_wait_timeout: 300

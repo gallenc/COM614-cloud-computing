@@ -1,0 +1,113 @@
+---
+# ─────────────────────────────────────────────────────────────────────
+#  Role: ec2_terminate
+#  Tasks: safely discover and terminate EC2 instances
+# ─────────────────────────────────────────────────────────────────────
+
+# ── Discovery path A: explicit IDs provided ──────────────────────────
+
+- name: "Gather info for explicitly provided instance IDs"
+  amazon.aws.ec2_instance_info:
+    region: "{{ ec2_region }}"
+    instance_ids: "{{ instance_ids }}"
+  register: explicit_instances
+  when: instance_ids | length > 0
+  tags: [terminate, discover]
+
+- name: "Set target instances from explicit IDs"
+  ansible.builtin.set_fact:
+    target_instances: "{{ explicit_instances.instances | default([]) }}"
+  when: instance_ids | length > 0
+  tags: [terminate, discover]
+
+# ── Discovery path B: tag-based lookup ───────────────────────────────
+
+- name: "Discover instances by tag filters"
+  amazon.aws.ec2_instance_info:
+    region: "{{ ec2_region }}"
+    filters: "{{ terminate_tag_filters }}"
+  register: tagged_instances
+  when: instance_ids | length == 0
+  tags: [terminate, discover]
+
+- name: "Set target instances from tag discovery"
+  ansible.builtin.set_fact:
+    target_instances: >-
+      {{
+        tagged_instances.instances
+        | default([])
+        | selectattr('state.name', 'in', ['pending','running','stopping','stopped'])
+        | list
+      }}
+  when: instance_ids | length == 0
+  tags: [terminate, discover]
+
+# ── Safety checks ────────────────────────────────────────────────────
+
+- name: "Abort when no instances were found"
+  ansible.builtin.fail:
+    msg: "No matching EC2 instances found. Nothing to terminate."
+  when: target_instances | length == 0
+  tags: [terminate]
+
+- name: "Show instances that WILL be terminated"
+  ansible.builtin.debug:
+    msg: |
+      ⚠️  Instance scheduled for termination:
+         ID         : {{ item.instance_id }}
+         Name       : {{ item.tags.Name | default('(no name)') }}
+         Type       : {{ item.instance_type }}
+         State      : {{ item.state.name }}
+         Private IP : {{ item.private_ip_address | default('N/A') }}
+         Public IP  : {{ item.public_ip_address | default('N/A') }}
+  loop: "{{ target_instances }}"
+  loop_control:
+    label: "{{ item.instance_id }}"
+  tags: [terminate]
+
+- name: "DRY RUN – skipping actual termination"
+  ansible.builtin.debug:
+    msg: "dry_run=true → no instances were terminated."
+  when: dry_run | bool
+  tags: [terminate]
+
+# ── Terminate ────────────────────────────────────────────────────────
+
+- name: "Terminate instances"
+  amazon.aws.ec2_instance:
+    region: "{{ ec2_region }}"
+    instance_ids: "{{ target_instances | map(attribute='instance_id') | list }}"
+    state: absent
+    wait: true
+    wait_timeout: "{{ terminate_wait_timeout }}"
+  register: terminate_result
+  when: not (dry_run | bool)
+  tags: [terminate]
+
+# ── Confirm ──────────────────────────────────────────────────────────
+
+- name: "Verify instances reached 'terminated' state"
+  amazon.aws.ec2_instance_info:
+    region: "{{ ec2_region }}"
+    instance_ids: "{{ target_instances | map(attribute='instance_id') | list }}"
+  register: post_terminate_info
+  until: >
+    post_terminate_info.instances
+    | selectattr('state.name', 'equalto', 'terminated')
+    | list | length == target_instances | length
+  retries: 30
+  delay: 10
+  when: not (dry_run | bool)
+  tags: [terminate]
+
+- name: "Report termination results"
+  ansible.builtin.debug:
+    msg: |
+      🗑️  Instance terminated:
+         ID    : {{ item.instance_id }}
+         State : {{ item.state.name }}
+  loop: "{{ post_terminate_info.instances | default([]) }}"
+  loop_control:
+    label: "{{ item.instance_id }}"
+  when: not (dry_run | bool)
+  tags: [terminate, info]
