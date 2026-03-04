@@ -74,8 +74,6 @@
       debug:
          msg: "created security group {{ security_group.group_id }} with name {{ security_group.group_name }}"
 
-   
-
     - name: Launch an EC2 Instance
       amazon.aws.ec2_instance:
         name: "Test-Ansible"
@@ -93,12 +91,11 @@
         image_id: "{{ ami }}"
         tags:
            usage: ansible-simple-1
-      register: ec2
+      register: ec2_result
         
     - name: print the public ip and instance id of the created ec2 instance
       debug:
-         msg: "created ec2 instance {{ ec2.instances[0].id }} with public ip {{ ec2.instances[0].public_ip_address }}"
-        
+         msg: "created ec2 instance with id {{ ec2_result.instances[0].instance_id  }} and public ip {{ ec2_result.instances[0].public_ip_address }}"
         
         
         
