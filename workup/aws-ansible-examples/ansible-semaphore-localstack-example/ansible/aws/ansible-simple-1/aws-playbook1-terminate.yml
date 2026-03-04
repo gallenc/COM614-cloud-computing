@@ -34,6 +34,8 @@
         
    - name: Grab VPC details
      amazon.aws.ec2_vpc_net_info:
+       aws_access_key: "{{ aws_access_key }}"
+       aws_secret_key: "{{ aws_secret_key }}"
        aws_region: "{{ region }}"
        filters:
           tag:usage: ansible-simple-1
@@ -41,15 +43,17 @@
      
    - name: remove subnets and route tables from VPC
      local_action:
-         module: ec2_vpc
-         vpc_id: "{{ item.vpc_id }}"
-         region: "{{ region }}"
-         state: present
-         resource_tags: "{}"
-         subnets: []
-         internet_gateway: False
-         route_tables: []
-         wait: yes
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        module: ec2_vpc
+        vpc_id: "{{ item.vpc_id }}"
+        region: "{{ region }}"
+        state: present
+        resource_tags: "{}"
+        subnets: []
+        internet_gateway: False
+        route_tables: []
+        wait: yes
      loop: "{{ all_vpcs.vpcs }}"
      when: item.is-default != true
       
