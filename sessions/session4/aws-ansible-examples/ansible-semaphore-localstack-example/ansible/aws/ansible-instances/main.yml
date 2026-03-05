@@ -1,0 +1,19 @@
+- name: Launch EC2 instance in us-east-1
+  hosts: localhost
+  gather_facts: False
+  tasks:
+    - name: Launch an EC2 instance
+      amazon.aws.ec2_instance:
+        key_name: levelup2keys
+        instance_type: t2.micro
+        image_id: ami-0fe630eb857a6ec83
+        wait: yes
+        region: us-east-1
+        count: 1
+        tags:
+          Name: MyInstance
+      register: ec2
+
+    - name: Display EC2 instance information
+      debug:
+        var: ec2

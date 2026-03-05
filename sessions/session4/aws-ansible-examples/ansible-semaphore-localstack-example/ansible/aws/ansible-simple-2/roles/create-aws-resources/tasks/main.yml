@@ -1,0 +1,81 @@
+---
+
+- name: Create a new VPC 
+  amazon.aws.ec2_vpc_net:
+    name: "Ansible-Test"
+    cidr_block: "{{ cidr_block }}"
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    region: "{{ region }}"
+  register: vpc
+
+- name: Create a new Subnet
+  amazon.aws.ec2_vpc_subnet:
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    cidr: "{{ cidr }}"
+    region: "{{ region }}"
+    vpc_id: "{{ vpc.vpc.id }}"
+  register: subnet
+
+- name: Create EC2 SG
+  amazon.aws.ec2_security_group:
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    name: ec2-group
+    description: SG for EC2 instances using Ansible
+    vpc_id: "{{ vpc.vpc.id }}"
+    region: "{{ region }}"
+    rules:
+      - proto: tcp
+        from_port: 22
+        to_port: 22
+        cidr_ip: 0.0.0.0/0
+
+      - proto: tcp
+        from_port: 80
+        to_port: 9000
+        cidr_ip: 0.0.0.0/0
+
+    rules_egress:
+      - proto: -1
+        from_port: 0
+        to_port: 0
+        cidr_ip: 0.0.0.0/0
+  register: ec2_sg
+
+- name: Output SG ID
+  debug:
+    msg: "Security Group ID is {{ ec2_sg.group_id }}"
+
+- name: Launch EC2 Instance 1
+  amazon.aws.ec2_instance:
+    name: "{{ INSTANCE_NAME_1 }}"
+    key_name: "{{ key_name }}"
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    vpc_subnet_id: "{{ subnet.subnet.id }}"
+    instance_type: "{{ instance_type }}"
+    security_group: "{{ ec2_sg.group_id  }}"
+    count: 1
+    wait: yes
+    aws_region: "{{ region }}"
+    network:
+      assign_public_ip: true
+    image_id: "{{ ami }}"
+
+- name: Launch EC2 Instance 2
+  amazon.aws.ec2_instance:
+    name: "{{ INSTANCE_NAME_2 }}"
+    key_name: "{{ key_name }}"
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    vpc_subnet_id: "{{ subnet.subnet.id }}"
+    instance_type: "{{ instance_type }}"
+    security_group: "{{ ec2_sg.group_id  }}"
+    count: 1
+    wait: yes
+    aws_region: "{{ region }}"
+    network:
+      assign_public_ip: true
+    image_id: "{{ ami }}"

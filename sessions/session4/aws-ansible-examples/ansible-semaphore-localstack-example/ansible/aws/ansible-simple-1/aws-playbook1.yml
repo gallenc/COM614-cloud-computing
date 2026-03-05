@@ -1,0 +1,105 @@
+--- # Creating an EC2 Instance 
+
+- name: Creating an EC2 Instance with ansible cli
+
+  hosts: localhost
+
+  vars:
+    region: eu-west-2
+    instance_type: t3.micro
+    # AlmaLinux OS 10 (x86_64) AlmaLinux OS Foundation 
+    ami: ami-041f62d0737a0fbd1
+    key_name: ansible-demo1
+    vpc_name: ansible-vpc-test
+    cidr_block: "10.10.0.0/16"
+    cidr: "10.10.0.0/24"
+
+#    aws_access_key: "{{ lookup('ansible.builtin.env', 'AWS_ACCESS_KEY') }}"
+#    aws_secret_key: "{{ lookup('ansible.builtin.env', 'AWS_SECRET_KEY') }}" 
+
+  vars_files:
+    - ./vault.yml
+
+  tasks:
+
+    - name: Create a new VPC 
+      amazon.aws.ec2_vpc_net:
+        name: "Ansible-Test"
+        cidr_block: "{{ cidr_block }}"
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        region: "{{ region }}"
+        tags:
+            usage: ansible-simple-1
+      register: vpc
+
+    - name: print vpc details
+      debug:
+         msg: "created vpc {{ vpc.vpc.id }} with cidr {{ vpc.vpc.cidr_block }}"
+      
+    - name: Create a new Subnet
+      amazon.aws.ec2_vpc_subnet:
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        cidr: "{{ cidr }}"
+        region: "{{ region }}"
+        vpc_id: "{{ vpc.vpc.id }}"
+        tags:
+           usage: ansible-simple-1
+      register: subnet
+      
+    - name: print subnet details
+      debug:
+         msg: "created subnet {{ subnet.subnet.id }} with cidr {{ subnet.subnet.cidr_block }}"
+
+    - name: Create a Security Group  
+      amazon.aws.ec2_security_group:
+        name: "Ansible-Test-Security-Group"
+        description: "Ansible-Testing"
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        vpc_id: "{{ vpc.vpc.id }}"
+        region: "{{ region }}"
+        tags:
+           usage: ansible-simple-1
+        rules:
+          - proto: tcp
+            ports:
+            - 80
+            cidr_ip: 0.0.0.0/0
+            rule_desc: "allow all on port 80"
+      register: security_group
+      
+    - name: print security group details
+      debug:
+         msg: "created security group {{ security_group.group_id }} with name {{ security_group.group_name }}"
+
+    - name: Launch an EC2 Instance
+      amazon.aws.ec2_instance:
+        name: "Test-Ansible"
+        key_name: "{{ key_name }}"
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        vpc_subnet_id: "{{ subnet.subnet.id }}"
+        instance_type: "{{ instance_type }}"
+        security_group: "{{ security_group.group_id  }}"
+        count: 1
+        wait: yes
+        aws_region: "{{ region }}"
+        network:
+          assign_public_ip: true
+        image_id: "{{ ami }}"
+        tags:
+           usage: ansible-simple-1
+      register: ec2_result
+        
+    - name: print the public ip and instance id of the created ec2 instance
+      debug:
+         msg: "created ec2 instance with id {{ ec2_result.instances[0].instance_id  }} and public ip {{ ec2_result.instances[0].public_ip_address }}"
+        
+        
+        
+        
+        
+        
+        
