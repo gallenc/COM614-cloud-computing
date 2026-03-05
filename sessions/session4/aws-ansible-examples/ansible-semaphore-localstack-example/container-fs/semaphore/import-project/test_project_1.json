@@ -10,7 +10,7 @@
   "integrations": [],
   "inventories": [
     {
-      "inventory": "workup/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/project-ansible3/inventory.ini",
+      "inventory": "sessions/session4/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/project-ansible3/inventory.ini",
       "name": "project-ansible3-inventory",
       "ssh_key": "None",
       "type": "file"
@@ -51,7 +51,7 @@
       "environment": "Empty",
       "inventory": "project-ansible3-inventory",
       "name": "install-apache",
-      "playbook": "workup/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/project-ansible3/install_apache.yml",
+      "playbook": "sessions/session4/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/project-ansible3/install_apache.yml",
       "repository": "COM614-cloud-computing",
       "roles": [],
       "suppress_success_alerts": false,
@@ -71,7 +71,7 @@
       "environment": "Empty",
       "inventory": "project-ansible3-inventory",
       "name": "load-ssh-password",
-      "playbook": "workup/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/project-ansible3/load-ssh-withpass.yml",
+      "playbook": "sessions/session4/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/project-ansible3/load-ssh-withpass.yml",
       "repository": "COM614-cloud-computing",
       "roles": [],
       "suppress_success_alerts": false,
@@ -91,7 +91,7 @@
       "environment": "Empty",
       "inventory": "project-ansible3-inventory",
       "name": "unistall-apache",
-      "playbook": "workup/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/project-ansible3/uninstall_apache.yml",
+      "playbook": "sessions/session4/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/project-ansible3/uninstall_apache.yml",
       "repository": "COM614-cloud-computing",
       "roles": [],
       "suppress_success_alerts": false,
