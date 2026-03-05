@@ -25,7 +25,7 @@ cd /home/ansible/devel/gitrepos
 
 git clone https://github.com/gallenc/COM614-cloud-computing.git
 
-cd /home/ansible/devel/gitrepos/COM614-cloud-computing/workup/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/project-ansible3
+cd /home/ansible/devel/gitrepos/COM614-cloud-computing/session4/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/project-ansible3
 
 # run exercise
 ansible -i inventory.ini all -m ping
@@ -73,7 +73,7 @@ see https://stackoverflow.com/questions/57919339/how-to-run-ansible-playbook-usi
 
 running within semaphore account but using sudo/root allows ansible keys to be used from ansible account
 
-cd /home/ansible/devel/gitrepos/COM614-cloud-computing/workup/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/project-ansible3
+cd /home/ansible/devel/gitrepos/COM614-cloud-computing/session4/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/project-ansible3
 
 sudo /opt/semaphore/apps/ansible/11.1.0/venv/bin/ansible  -i inventory.ini all -m ping
 
