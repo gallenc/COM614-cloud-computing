@@ -14,6 +14,9 @@
        changed_when: no
        no_log: false
        run_once: true
+       
+     - name: Gathering facts
+       setup:
       
   roles:
     - uninstall-apache2
