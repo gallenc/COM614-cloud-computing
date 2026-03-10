@@ -11,6 +11,7 @@
        become: no
        changed_when: no
        no_log: false
+       run_once: true
       
   roles:
     - install-apache2
@@ -22,4 +23,5 @@
       delegate_to: 127.0.0.1
       become: no
       changed_when: no
+      run_once: true
 
