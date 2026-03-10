@@ -19,7 +19,7 @@
        setup:
       
   roles:
-    - uninstall-apache2
+    - install-apache2
 
   post_tasks:
     # Optional, to remove the keys from the agent at the end:
