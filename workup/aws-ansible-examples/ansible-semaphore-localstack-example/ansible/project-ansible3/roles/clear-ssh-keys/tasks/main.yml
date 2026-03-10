@@ -1,0 +1,10 @@
+##---
+#- hosts: all
+#  # Postpone facts gathering until SSH keys have been unlocked
+#  gather_facts: no
+
+ - name: another debug
+   debug:
+          msg: "running my great task. OS Family: {{ ansible_os_family }}"
+
+
