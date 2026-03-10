@@ -1,6 +1,8 @@
 ---
-- name: install apache
+- name: uninstall apache
   hosts: web
+  # Postpone facts gathering until SSH keys have been unlocked
+  gather_facts: no
   become: yes
   
   pre_tasks:
@@ -14,7 +16,7 @@
        run_once: true
       
   roles:
-    - install-apache2
+    - uninstall-apache2
 
   post_tasks:
     # Optional, to remove the keys from the agent at the end:
@@ -24,4 +26,3 @@
       become: no
       changed_when: no
       run_once: true
-

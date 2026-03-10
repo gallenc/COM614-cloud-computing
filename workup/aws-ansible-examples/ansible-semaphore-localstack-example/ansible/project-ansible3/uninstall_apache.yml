@@ -1,6 +1,8 @@
 ---
 - name: uninstall apache
   hosts: web
+  # Postpone facts gathering until SSH keys have been unlocked
+  gather_facts: no
   become: yes
   
   pre_tasks:
