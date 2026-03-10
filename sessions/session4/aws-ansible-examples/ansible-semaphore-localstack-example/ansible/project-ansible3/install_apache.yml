@@ -1,19 +1,25 @@
 ---
 - name: install apache
   hosts: web
+  # Postpone facts gathering until SSH keys have been unlocked
+  gather_facts: no
   become: yes
   
   pre_tasks:
   
      - name: Unlock SSH key "{{ ssh_key_file }}"
-       shell: rm -f /tmp/ansible_add_ssh_run_pid; echo "$(sudo cat /home/ansible/.ssh/id_rsa)" | SSH_ASKPASS_REQUIRE=force  SSH_ASKPASS=/share/ssh-pass.sh ssh-add -
+       shell: sudo rm -f "/tmp/ansible_add_ssh_run_pid" ; echo "$(sudo cat /home/ansible/.ssh/id_rsa)" | SSH_ASKPASS_REQUIRE=force  SSH_ASKPASS=/share/ssh-pass.sh ssh-add -
        delegate_to: 127.0.0.1
        become: no
        changed_when: no
        no_log: false
+       run_once: true
+       
+     - name: Gathering facts
+       setup:
       
   roles:
-    - install-apache2
+    - uninstall-apache2
 
   post_tasks:
     # Optional, to remove the keys from the agent at the end:
@@ -22,4 +28,5 @@
       delegate_to: 127.0.0.1
       become: no
       changed_when: no
+      run_once: true
 

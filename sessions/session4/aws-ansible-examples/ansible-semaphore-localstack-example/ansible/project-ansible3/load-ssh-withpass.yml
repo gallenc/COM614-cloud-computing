@@ -22,7 +22,7 @@
       
     - name: Unlock SSH key "{{ ssh_key_file }}"
       # shell: echo "$(sudo cat {{ ssh_key_file }})" | ssh-add -
-      shell: rm -f /tmp/ansible_add_ssh_run_pid; echo "$(sudo cat /home/ansible/.ssh/id_rsa)" | SSH_ASKPASS_REQUIRE=force  SSH_ASKPASS=/share/ssh-pass.sh ssh-add -
+      shell: sudo rm -f "/tmp/ansible_add_ssh_run_pid" ; echo "$(sudo cat /home/ansible/.ssh/id_rsa)" | SSH_ASKPASS_REQUIRE=force  SSH_ASKPASS=/share/ssh-pass.sh ssh-add -
       #async: 20
       #poll: 5
       #expect:
@@ -33,6 +33,7 @@
       become: no
       changed_when: no
       no_log: false
+      run_once: true
       
     - name: print key variables
       shell: ssh-add -l
@@ -59,3 +60,4 @@
       delegate_to: 127.0.0.1
       become: no
       changed_when: no
+      run_once: true

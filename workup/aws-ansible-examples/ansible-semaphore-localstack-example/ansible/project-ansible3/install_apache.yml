@@ -1,5 +1,5 @@
 ---
-- name: uninstall apache
+- name: install apache
   hosts: web
   # Postpone facts gathering until SSH keys have been unlocked
   gather_facts: no
