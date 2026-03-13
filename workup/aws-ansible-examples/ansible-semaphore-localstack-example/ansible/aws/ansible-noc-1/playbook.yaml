@@ -42,6 +42,7 @@
     ansible.builtin.debug:
       msg:
       - "project_name: {{ project_name }}"
+      - "aws_region: {{ aws_region }}"
       - "ami_id: {{ ami_id }}"
       - "instance_type: {{ instance_type }}"
       - "vpc_cidr: {{ vpc_cidr }}"
