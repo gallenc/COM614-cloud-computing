@@ -53,6 +53,7 @@
 
   - name: Create SSH Key Pair - required for SSH to instance as `ec2-user`
     amazon.aws.ec2_key:
+      region: "{{ aws_region }}"
       name: "{{ project_name }}.public_key"
       state: present
     register: key_pair
