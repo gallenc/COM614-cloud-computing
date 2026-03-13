@@ -301,7 +301,7 @@
           delegate_to: localhost
           run_once: true
           ansible.builtin.command: 
-            cmd: sudo cat /home/ansible/.ssh/id_rsa.pub"
+            cmd: sudo cat /home/ansible/.ssh/id_rsa.pub
           register: ansible_pub_key
 
           
