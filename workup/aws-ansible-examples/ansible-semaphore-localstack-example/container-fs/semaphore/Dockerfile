@@ -4,7 +4,7 @@ FROM semaphoreui/semaphore:v2.17.0
 
 USER root
 
-RUN apk add --no-cache  sudo nano
+RUN apk add --no-cache sudo nano py3-paramiko
     
 # see https://github.com/semaphoreui/semaphore/blob/develop/deployment/docker/server/Dockerfile
 # The graphical login managers do not show users with UID below 1000

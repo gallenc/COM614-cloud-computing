@@ -27,12 +27,13 @@
 - name: AWS EC2 Instance Playbook
   hosts: localhost
   gather_facts: true   # required for `ansible_date_time`
-  vars:
-    project_name: AWS_EC2_Instance_Test
-    ami_id: ami-041f62d0737a0fbd1 #alma 10  # ami-04b6c97b14c54de18   # Amazon Linux 2 AMI (HVM), SSD Volume Type
-    instance_type: t2.micro
-    vpc_cidr: 172.31.0.0/16
-    sub_cidr: 172.31.1.0/24
+#  vars:
+#    project_name: AWS_EC2_Instance_Test
+#    ami_id: ami-041f62d0737a0fbd1 #alma 10  # ami-04b6c97b14c54de18   # Amazon Linux 2 AMI (HVM), SSD Volume Type
+#    instance_type: t2.micro
+#    vpc_cidr: 172.31.0.0/16
+#    sub_cidr: 172.31.1.0/24
+
   tasks:
 
 
@@ -136,7 +137,7 @@
 
 
 
-  - name: Create a Security Group for SSH
+  - name: Create a Security Group for NOC
     amazon.aws.ec2_group:
       name: SSH
       description: SSH
