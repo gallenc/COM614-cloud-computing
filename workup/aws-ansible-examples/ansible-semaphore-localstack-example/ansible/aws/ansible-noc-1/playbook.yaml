@@ -300,7 +300,7 @@
             home: "/home/ansible"
            
         - name: get ansible keys from local machine
-          delegate_to: localhost
+          delegate_to: 127.0.0.1
           run_once: true
           ansible.builtin.command: 
             cmd: sudo cat /home/ansible/.ssh/id_rsa.pub

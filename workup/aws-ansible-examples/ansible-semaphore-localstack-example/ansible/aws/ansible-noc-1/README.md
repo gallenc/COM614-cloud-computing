@@ -1,5 +1,7 @@
 # Scripts for creating a NOC
 
+file layout based upon https://oneuptime.com/blog/post/2026-02-21-how-to-organize-ansible-inventory-with-group-vars-directory/view
+
 Create a vault file containing your aws access key and secret keys. 
 You will be prompted to enter and confirm a password and an editor will open
 
@@ -52,7 +54,8 @@ cd /home/ansible/devel/gitrepos/COM614-cloud-computing/workup/aws-ansible-exampl
 ```
 
 ```
-ansible-playbook playbook.yml --ask-vault-pass
-```
+ansible-playbook -i inventory/dev/hosts.ini playbook.yaml --ask-vault-pass
+
+ansible-inventory -i inventory/dev/hosts.ini --list   --ask-vault-pass
 
 ```
