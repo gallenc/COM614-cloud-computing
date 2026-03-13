@@ -297,15 +297,21 @@
               "{{ 'wheel' if ansible_facts['os_family'] == 'RedHat' else '' }}"
             home: "/home/ansible"
            
-            
-        - name: provision ansible's authorized_keys from local ansible account .sss
+        - name: get ansible keys from local machine
+          delegate_to: localhost
+          run_once: true
+          ansible.builtin.command: 
+            cmd: sudo cat /home/ansible/.ssh/id_rsa.pub"
+          register: ansible_pub_key
+
+          
+        - name: provision ansible's authorized_keys from local ansible account
           become: true
           become_user: "{{ 'root' if ansible_check_mode else 'ansible' }}"
           authorized_key:
             user: ansible
             path: "/home/ansible/.ssh/authorized_keys"
-            key: |
-              {{ lookup('file', '/home/ansible/.ssh/id_rsa.pub') }}
+            key: "{{ ansible_pub_key.stdout_lines[0] }}"
             exclusive: yes
 
         # This must be after setting up passwordless sudo and the authorized_keys.
