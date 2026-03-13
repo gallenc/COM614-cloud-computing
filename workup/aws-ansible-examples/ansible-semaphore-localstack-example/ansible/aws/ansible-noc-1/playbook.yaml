@@ -47,6 +47,8 @@
       - "instance_type: {{ instance_type }}"
       - "vpc_cidr: {{ vpc_cidr }}"
       - "sub_cidr: {{ sub_cidr }}"
+      - aws_access_key: "{{ aws_access_key }}" # remove
+      - aws_secret_key: "{{ aws_secret_key }}"
 
 
 
