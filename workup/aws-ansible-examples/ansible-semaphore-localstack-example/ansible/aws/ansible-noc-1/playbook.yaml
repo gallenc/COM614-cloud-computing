@@ -258,8 +258,10 @@
             state: present
           vars:
             bootstrap_packages:
-              - libselinux-python
-              - policycoreutils-python
+              - python3-policycoreutils
+              - python3-libselinux
+            #  - libselinux-python
+            #  - policycoreutils-python
           when: ansible_facts["os_family"] == "RedHat"
 
         # NOTE: It seems weird to run this so late, since other things have assumed
