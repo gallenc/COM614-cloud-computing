@@ -148,9 +148,9 @@
       name: "{{ project_name }}.public_key"
       state: absent
 
-  - name: "Delete {{ playbook_dir }}/{{ project_name }}.private_key.pem"
+  - name: "Delete local private key  ~/.ssh/{{ project_name }}.private_key.pem"
     ansible.builtin.file:
-      path: "{{ playbook_dir }}/{{ project_name }}.private_key.pem"
+      path: "~/.ssh/{{ project_name }}.private_key.pem"
       state: absent
 
 ...

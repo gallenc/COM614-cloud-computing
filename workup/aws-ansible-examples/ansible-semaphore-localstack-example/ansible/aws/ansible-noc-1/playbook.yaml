@@ -63,7 +63,7 @@
     when: key_pair.changed
     ansible.builtin.copy:
       content: "{{ key_pair.key.private_key }}"
-      dest: "{{ playbook_dir }}/{{ project_name }}.private_key.pem"
+      dest: "~/.ssh/{{ project_name }}.private_key.pem"
       mode: '0400'
 
 
