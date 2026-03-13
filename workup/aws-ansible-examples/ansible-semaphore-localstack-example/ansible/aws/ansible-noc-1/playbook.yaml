@@ -26,6 +26,7 @@
 
 - name: AWS EC2 Instance Playbook
   hosts: localhost
+  connection: local
   gather_facts: true   # required for `ansible_date_time`
 #  vars:
 #    project_name: AWS_EC2_Instance_Test
