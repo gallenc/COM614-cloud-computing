@@ -79,9 +79,6 @@
       dest: "~/.ssh/{{ project_name }}.private_key.pem"
       mode: '0400'
 
-
-
-
   - name: Create a virtual private cloud (VPC)
     amazon.aws.ec2_vpc_net:
       name: "{{ project_name }}_vpc"      # required
