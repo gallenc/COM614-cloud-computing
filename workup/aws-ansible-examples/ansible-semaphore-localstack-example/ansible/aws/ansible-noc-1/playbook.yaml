@@ -58,6 +58,19 @@
 
   - name: Show key_pair
     ansible.builtin.debug: var=key_pair
+    
+  - name: ensure local .ssh folder exists
+    when: key_pair.changed
+    ansible.builtin.file:
+       path: "~/.ssh/"
+       state: directory
+       mode: 0700
+
+   #     sudo mkdir -p $ANSIBLE_USER_HOME/.ssh
+    #    sudo chmod 700 $ANSIBLE_USER_HOME/.ssh
+     #   content: "{{ key_pair.key.private_key }}"
+     #   dest: "~/.ssh/{{ project_name }}.private_key.pem"
+     #   mode: '0400'
 
   - name: Save Private Key Locally
     when: key_pair.changed
