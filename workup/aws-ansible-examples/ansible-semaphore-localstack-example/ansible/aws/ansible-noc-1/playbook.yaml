@@ -47,13 +47,12 @@
       - "instance_type: {{ instance_type }}"
       - "vpc_cidr: {{ vpc_cidr }}"
       - "sub_cidr: {{ sub_cidr }}"
-      - "aws_access_key_id: {{ aws_access_key_id }}" # remove
-      - "aws_secret_access_key: {{ aws_secret_access_key }}"
-
 
 
   - name: Create SSH Key Pair - required for SSH to instance as `ec2-user`
     amazon.aws.ec2_key:
+      aws_access_key: "{{ aws_access_key }}"
+      aws_secret_key: "{{ aws_secret_key }}"
       region: "{{ aws_region }}"
       name: "{{ project_name }}.public_key"
       state: present
@@ -84,6 +83,8 @@
 
   - name: Create a virtual private cloud (VPC)
     amazon.aws.ec2_vpc_net:
+      aws_access_key: "{{ aws_access_key }}"
+      aws_secret_key: "{{ aws_secret_key }}"
       name: "{{ project_name }}_vpc"      # required
       # Required: an IPv4 CIDR block that must be between /16 - /28
       # Default: 172.31.0.0/16
@@ -101,6 +102,8 @@
 
   - name: Create an Internet Gateway to connect VPC to Internet
     community.aws.ec2_vpc_igw:
+      aws_access_key: "{{ aws_access_key }}"
+      aws_secret_key: "{{ aws_secret_key }}"
       vpc_id: "{{ vpc.vpc.id }}"
       state: present
       tags:
@@ -117,6 +120,8 @@
 
   - name: Create a Subnet - a /24 within the VPC's /16
     amazon.aws.ec2_vpc_subnet:
+      aws_access_key: "{{ aws_access_key }}"
+      aws_secret_key: "{{ aws_secret_key }}"
       vpc_id: "{{ vpc.vpc.id }}"
       cidr: "{{ sub_cidr | default( '172.31.0.0/24' ) }}"
       tags:
@@ -133,6 +138,8 @@
 
   - name: Create Route Table and Add Route from VPC to Internet Gateway
     community.aws.ec2_vpc_route_table:
+      aws_access_key: "{{ aws_access_key }}"
+      aws_secret_key: "{{ aws_secret_key }}"
       vpc_id: "{{ vpc.vpc.id }}"
       subnets:
         - "{{ subnet.subnet.id }}"
@@ -153,6 +160,8 @@
 
   - name: Create a Security Group for NOC
     amazon.aws.ec2_group:
+      aws_access_key: "{{ aws_access_key }}"
+      aws_secret_key: "{{ aws_secret_key }}"
       name: SSH
       description: SSH
       vpc_id: "{{ vpc.vpc.id }}"
@@ -194,6 +203,8 @@
     #register: ec2
 
     amazon.aws.ec2_instance:
+       aws_access_key: "{{ aws_access_key }}"
+       aws_secret_key: "{{ aws_secret_key }}"
        state: running
        image_id: "{{ ami_id }}"
        name: AWS_EC2_Instance

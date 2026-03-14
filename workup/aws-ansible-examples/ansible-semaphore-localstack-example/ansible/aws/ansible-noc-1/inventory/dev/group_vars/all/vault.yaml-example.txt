@@ -4,6 +4,6 @@
 # add the values, keep your secret key and checkin the file. 
 # edit: nsible-vault edit inventory/dev/group_vars/all/vault/vault.yaml
 
-aws_access_key_id: XXXXXXXXXXXXXXXXXX
+aws_access_key: "XXXXXXXXXXXXXXXXXX"
 
-aws_secret_access_key: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+aws_secret_key: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
