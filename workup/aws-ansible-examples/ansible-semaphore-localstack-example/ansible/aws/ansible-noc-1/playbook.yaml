@@ -105,6 +105,7 @@
     community.aws.ec2_vpc_igw:
       aws_access_key: "{{ aws_access_key }}"
       aws_secret_key: "{{ aws_secret_key }}"
+      region: "{{ aws_region }}"
       vpc_id: "{{ vpc.vpc.id }}"
       state: present
       tags:
@@ -123,6 +124,7 @@
     amazon.aws.ec2_vpc_subnet:
       aws_access_key: "{{ aws_access_key }}"
       aws_secret_key: "{{ aws_secret_key }}"
+      region: "{{ aws_region }}"
       vpc_id: "{{ vpc.vpc.id }}"
       cidr: "{{ sub_cidr | default( '172.31.0.0/24' ) }}"
       tags:
@@ -141,6 +143,7 @@
     community.aws.ec2_vpc_route_table:
       aws_access_key: "{{ aws_access_key }}"
       aws_secret_key: "{{ aws_secret_key }}"
+      region: "{{ aws_region }}"
       vpc_id: "{{ vpc.vpc.id }}"
       subnets:
         - "{{ subnet.subnet.id }}"
@@ -163,6 +166,7 @@
     amazon.aws.ec2_group:
       aws_access_key: "{{ aws_access_key }}"
       aws_secret_key: "{{ aws_secret_key }}"
+      region: "{{ aws_region }}"
       name: SSH
       description: SSH
       vpc_id: "{{ vpc.vpc.id }}"
@@ -206,6 +210,7 @@
     amazon.aws.ec2_instance:
        aws_access_key: "{{ aws_access_key }}"
        aws_secret_key: "{{ aws_secret_key }}"
+       region: "{{ aws_region }}"
        state: running
        image_id: "{{ ami_id }}"
        name: AWS_EC2_Instance
