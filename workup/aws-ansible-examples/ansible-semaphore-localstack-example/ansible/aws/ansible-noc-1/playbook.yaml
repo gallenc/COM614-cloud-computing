@@ -85,6 +85,7 @@
     amazon.aws.ec2_vpc_net:
       aws_access_key: "{{ aws_access_key }}"
       aws_secret_key: "{{ aws_secret_key }}"
+      region: "{{ aws_region }}"
       name: "{{ project_name }}_vpc"      # required
       # Required: an IPv4 CIDR block that must be between /16 - /28
       # Default: 172.31.0.0/16
