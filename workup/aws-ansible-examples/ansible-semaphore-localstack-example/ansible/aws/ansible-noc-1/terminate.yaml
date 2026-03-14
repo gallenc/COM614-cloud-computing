@@ -14,7 +14,7 @@
 #
 
 
-- name: Terminate AWS EC2 Instances for Project "{{ project_name }}"
+- name: DANGER Terminate all AWS EC2 Instances for Project "{{ project_name }}"
   hosts: localhost
   connection: local
   vars_prompt:
