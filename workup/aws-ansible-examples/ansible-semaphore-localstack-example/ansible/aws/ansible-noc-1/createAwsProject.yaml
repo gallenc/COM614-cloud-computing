@@ -252,13 +252,18 @@
        ttl: 300
        state: present
        overwrite: true
+    register: route53_record
+    
+  - name: Show route53_record
+    ansible.builtin.debug:
+      msg: var=route53_record   
 
   - name: Show SSH Commands for Instance
     ansible.builtin.debug:
       msg:
-      - "ssh -i ./{{ project_name }}.private_key.pem ec2-user@{{ ec2.instances[0].public_ip_address}}"
-      - "ssh -i ./{{ project_name }}.private_key.pem ec2-user@{{ ec2.instances[0].public_dns_name}}"
-      - "ssh -i ./{{ project_name }}.private_key.pem ec2-user@{{ host_name1 }}.noc.{{ hosted_zone }}"
+      - "ssh -i ~/.ssh/{{ project_name }}.private_key.pem ec2-user@{{ ec2.instances[0].public_ip_address}}"
+      - "ssh -i ~/.ssh/{{ project_name }}.private_key.pem ec2-user@{{ ec2.instances[0].public_dns_name}}"
+      - "ssh -i ~/.ssh/{{ project_name }}.private_key.pem ec2-user@{{ host_name1 }}.noc.{{ hosted_zone }}"
 
   - name: Wait for SSH to be available
     ansible.builtin.wait_for:
