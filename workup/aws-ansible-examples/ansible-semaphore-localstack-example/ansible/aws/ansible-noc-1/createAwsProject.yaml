@@ -242,6 +242,8 @@
     ansible.builtin.debug: var=hosted_zones
     
   # Create an A record pointing to a specific IP
+  # Note: If the record already exists, it will be updated with the new IP address.
+  # todo remove the record on project termination
   - name: Create A record for web server
     amazon.aws.route53:
        aws_access_key: "{{ aws_access_key }}"
