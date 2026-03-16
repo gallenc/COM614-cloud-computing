@@ -246,7 +246,7 @@
        aws_access_key: "{{ aws_access_key }}"
        aws_secret_key: "{{ aws_secret_key }}"
       # zone:  "{{ hosted_zone }}"
-       zone: interfbn.com
+       zone: interfbn.com.
        record: "{{ host_name1 }}.noc.{{ hosted_zone }}"
        type: A
        value: "{{ ec2.instances[0].public_ip_address }}"
