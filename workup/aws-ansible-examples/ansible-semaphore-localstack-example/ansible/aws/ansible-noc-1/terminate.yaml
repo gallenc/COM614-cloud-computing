@@ -20,7 +20,7 @@
   vars_prompt:
     - name: project_name
       prompt: DANGER DELETE Project Name
-      default: {{ project_name }}
+      default: "{{ project_name }}"
       private: no
   tasks:
 
