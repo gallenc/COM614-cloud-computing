@@ -10,6 +10,6 @@ aws_region: eu-west-2
 
 vpc_name: ansible-vpc-development
 
-hosted_zone: interifbn.com
+hosted_zone: interfbn.com
 
 host_name1:  nocinstance1
