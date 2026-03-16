@@ -26,16 +26,15 @@
 
   tasks:
     
-  - pause:
+  - name: Prompt for Project Name to Delete
+    pause:
        prompt: "DANGER DELETE Project Name {{ project_name }}"
        echo: true
        register: result1
-  - set_fact:
-       project_name: "{{ result1.user_input }}"
-    when: (result1.user_input | length == 0)
        
-  - debug:
-         var: project_name
+  - name: set project name
+    project_name: "{{ result1.user_input }}"
+    when: (result1.user_input | length == 0)
     
   - name: Show Playbook Options
     ansible.builtin.debug:
