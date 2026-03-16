@@ -45,14 +45,14 @@
       - "aws_region: {{ aws_region }}"
 
 
-  - name: Stop all EC2 instances in Project "{{ project_name }}"
+  - name: Start all EC2 instances in Project "{{ project_name }}"
     community.aws.ec2_instance:
        aws_access_key: "{{ aws_access_key }}"
        aws_secret_key: "{{ aws_secret_key }}"
        region: "{{ aws_region }}"
-       state: stopped
+       state: running
        filters:
-         instance-state-name: running
+         instance-state-name: stopped
          "tag:Project": "{{ project_name }}"
 
 ...
