@@ -13,3 +13,5 @@ vpc_name: ansible-vpc-development
 hosted_zone: interfbn.com
 
 host_name1:  nocinstance1
+
+environment: dev
