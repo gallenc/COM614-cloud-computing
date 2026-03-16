@@ -218,9 +218,9 @@
        security_group: "{{ sg.group_name }}"
        network:
           assign_public_ip: true
-       count: 1
+       #count: 1
        tags:
-          Name: AWS_EC2_Instance
+          Name: "{{ host_name1 }}"
           Project: "{{ project_name }}"
           StartDate: "{{ ansible_date_time.date }}"
        wait: true
