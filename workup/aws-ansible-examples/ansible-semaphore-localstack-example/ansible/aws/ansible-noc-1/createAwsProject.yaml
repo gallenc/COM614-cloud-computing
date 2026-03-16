@@ -230,6 +230,14 @@
   - name: Show ec2
     ansible.builtin.debug: var=ec2
     
+  - name: List all hosted zones
+    amazon.aws.route53_info:
+       query: hosted_zone
+    register: hosted_zones
+    
+  - name: Show hosted zones    
+    ansible.builtin.debug: var=hosted_zones
+    
   # Create an A record pointing to a specific IP
   - name: Create A record for web server
     amazon.aws.route53:
