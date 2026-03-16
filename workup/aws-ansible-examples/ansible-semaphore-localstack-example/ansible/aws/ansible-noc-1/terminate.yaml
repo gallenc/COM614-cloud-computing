@@ -14,7 +14,7 @@
 #
 
 #
-- name: DANGER Terminate all AWS EC2 Instances for Project "{{ project_name }}"
+- name: DANGER Terminate all AWS EC2 Instances for Project
   hosts: localhost
   connection: local
   
@@ -32,7 +32,7 @@
     pause:
        prompt: "DANGER DELETE Project Name {{ project_name }}"
        echo: true
-       register: result1
+    register: result1
        
   - name: set project name
     set_fact:
