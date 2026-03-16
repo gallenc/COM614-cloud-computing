@@ -35,7 +35,7 @@
        register: result1
        
   - name: set project name
-  - set_fact:
+    set_fact:
        project_name: "{{ result1.user_input }}"
     when: (result1.user_input | length == 0)
     
