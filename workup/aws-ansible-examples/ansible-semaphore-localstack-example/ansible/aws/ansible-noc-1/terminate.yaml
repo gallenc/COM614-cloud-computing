@@ -32,12 +32,12 @@
     pause:
        prompt: "DANGER DELETE Project Name {{ project_name }}"
        echo: true
-    register: result1
+    register: pnameprompt
        
   - name: set project name
     set_fact:
-       project_name: "{{ result1.user_input }}"
-    when: (result1.user_input | length == 0)
+       project_name: "{{ pnameprompt.user_input }}"
+    when: (pnameprompt.user_input | length > 0)
     
   - name: Show Playbook Options
     ansible.builtin.debug:
