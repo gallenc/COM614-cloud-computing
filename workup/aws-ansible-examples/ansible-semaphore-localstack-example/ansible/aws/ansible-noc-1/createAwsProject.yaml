@@ -47,6 +47,8 @@
       - "instance_type: {{ instance_type }}"
       - "vpc_cidr: {{ vpc_cidr }}"
       - "sub_cidr: {{ sub_cidr }}"
+      - "hosted_zone: {{ hosted_zone }}"
+      - "host_name1:  {{ host_name1 }}"
 
 
   - name: Create SSH Key Pair - required for SSH to instance as `ec2-user`
