@@ -55,7 +55,7 @@
       region: "{{ aws_region }}"
       state: absent
       filters:
-        instance-state-name: running
+        # instance-state-name: running
         "tag:Project": "{{ project_name }}"
 
   - name: Get all VPCs in Project "{{ project_name }}"
