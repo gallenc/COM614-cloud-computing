@@ -49,7 +49,7 @@
       - "sub_cidr: {{ sub_cidr }}"
       - "hosted_zone: {{ hosted_zone }}"
       - "host_name1:  {{ host_name1 }}"
-      - "environment: {{ environment }}"
+      - "deployment: {{ deployment }}"
 
 
   - name: Create SSH Key Pair - required for SSH to instance as `ec2-user`
@@ -249,7 +249,7 @@
        aws_access_key: "{{ aws_access_key }}"
        aws_secret_key: "{{ aws_secret_key }}"
        zone:  "{{ hosted_zone }}"
-       record: "{{ host_name1 }}.noc.{{environment}}.{{ hosted_zone }}"
+       record: "{{ host_name1 }}.noc.{{deployment}}.{{ hosted_zone }}"
        type: A
        value: "{{ ec2.instances[0].public_ip_address }}"
        ttl: 300
@@ -266,7 +266,7 @@
       msg:
       - "ssh -i ~/.ssh/{{ project_name }}.private_key.pem ec2-user@{{ ec2.instances[0].public_ip_address}}"
       - "ssh -i ~/.ssh/{{ project_name }}.private_key.pem ec2-user@{{ ec2.instances[0].public_dns_name}}"
-      - "ssh -i ~/.ssh/{{ project_name }}.private_key.pem ec2-user@{{ host_name1 }}.noc.{{environment}}.{{ hosted_zone }}"
+      - "ssh -i ~/.ssh/{{ project_name }}.private_key.pem ec2-user@{{ host_name1 }}.noc.{{deployment}}.{{ hosted_zone }}"
 
   - name: Wait for SSH to be available
     ansible.builtin.wait_for:
