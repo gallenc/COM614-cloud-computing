@@ -30,7 +30,7 @@
     
   - name: Prompt for Project Name to Delete
     pause:
-       prompt: "DANGER DELETE Project Name {{ project_name }}"
+       prompt: "DANGER DELETE Project Name [{{ project_name }}]: "
        echo: true
     register: pnameprompt
        
