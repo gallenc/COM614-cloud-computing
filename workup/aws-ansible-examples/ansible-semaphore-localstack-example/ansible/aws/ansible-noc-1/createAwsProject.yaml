@@ -24,7 +24,7 @@
 #
 #------------------------------------------------------------------------------
 
-- name: AWS EC2 Instance Playbook
+- name: Create AWS EC2 Instance Project
   hosts: localhost
   connection: local
   gather_facts: true   # required for `ansible_date_time`

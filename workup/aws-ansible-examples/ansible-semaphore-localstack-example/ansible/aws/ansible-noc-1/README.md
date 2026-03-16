@@ -54,7 +54,9 @@ cd /home/ansible/devel/gitrepos/COM614-cloud-computing/workup/aws-ansible-exampl
 ```
 
 ```
-ansible-playbook -i inventory/dev/hosts.ini playbook.yaml --ask-vault-pass
+ansible-playbook -i inventory/dev/hosts.ini createAwsProject.yaml --ask-vault-pass
+
+ansible-playbook -i inventory/dev/hosts.ini terminateAwsProject.yaml --ask-vault-pass
 
 ansible-inventory -i inventory/dev/hosts.ini --list   --ask-vault-pass
 
