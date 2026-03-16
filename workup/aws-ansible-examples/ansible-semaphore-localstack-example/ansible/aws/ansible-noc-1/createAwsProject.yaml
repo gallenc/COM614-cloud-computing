@@ -233,7 +233,6 @@
     amazon.aws.route53:
        aws_access_key: "{{ aws_access_key }}"
        aws_secret_key: "{{ aws_secret_key }}"
-       region: "{{ aws_region }}"
        zone: "{{ hosted_zone }}"
        record: "{{ host_name1 }}.noc.{{ hosted_zone }}"
        type: A
