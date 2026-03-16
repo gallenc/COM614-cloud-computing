@@ -232,6 +232,8 @@
     
   - name: List all hosted zones
     amazon.aws.route53_info:
+       aws_access_key: "{{ aws_access_key }}"
+       aws_secret_key: "{{ aws_secret_key }}"
        query: hosted_zone
     register: hosted_zones
     
