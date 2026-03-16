@@ -13,17 +13,30 @@
 # Run: `ansible-playbook terminate.yaml`
 #
 
+#
+#- name: DANGER Terminate all AWS EC2 Instances for Project "{{ project_name }}"
+#  hosts: localhost
+#  connection: local
+#  vars_prompt:
+#    - name: project_name
+#      prompt: DANGER DELETE Project Name
+#      default: "AWS_EC2_Instance_Test"
+#      private: no
+      
 
-- name: DANGER Terminate all AWS EC2 Instances for Project "{{ project_name }}"
-  hosts: localhost
-  connection: local
-  vars_prompt:
-    - name: project_name
-      prompt: DANGER DELETE Project Name
-      default: "AWS_EC2_Instance_Test"
-      private: no
   tasks:
-
+    
+  - pause:
+       prompt: "DANGER DELETE Project Name {{ project_name }}"
+       echo: true
+       register: result1
+  - set_fact:
+       project_name: "{{ result1.user_input }}"
+    when: (result1.user_input | length == 0)
+       
+  - debug:
+         var: project_name
+    
   - name: Show Playbook Options
     ansible.builtin.debug:
       msg:
