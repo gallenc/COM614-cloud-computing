@@ -15,6 +15,7 @@
     - name: install semaphore ansible ssh keys
       import_tasks: tasks/load-ssh-keys.yaml
       when: (lookup('env', 'SEMAPHORE_ADMIN') | length > 0)
+      run_once: true
 
     - name: Gathering facts
       setup:
@@ -27,3 +28,4 @@
     - name: drop semaphore ansible ssh keys
       import_tasks: tasks/unload-ssh-keys.yaml
       when: (lookup('env', 'SEMAPHORE_ADMIN') | length > 0)
+      run_once: true
