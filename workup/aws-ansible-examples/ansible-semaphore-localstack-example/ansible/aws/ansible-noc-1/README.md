@@ -53,11 +53,21 @@ cd /home/ansible/devel/gitrepos/COM614-cloud-computing/workup/aws-ansible-exampl
 
 ```
 
-```
-ansible-playbook -i inventory/dev/hosts.ini createAwsProject.yaml --ask-vault-pass
-
-ansible-playbook -i inventory/dev/hosts.ini terminateAwsProject.yaml --ask-vault-pass
-
-ansible-inventory -i inventory/dev/hosts.ini --list   --ask-vault-pass
+## AWS playbooks to provision AWS ec2
 
 ```
+ansible-playbook -i aws/inventory/dev/hosts.ini aws/playbooks/createAwsProject.yaml --ask-vault-pass
+
+ansible-playbook -i aws/inventory/dev/hosts.ini aws/playbooks/startAwsProject.yaml --ask-vault-pass
+
+ansible-playbook -i aws/inventory/dev/hosts.ini aws/playbooks/stopAwsProject.yaml --ask-vault-pass
+
+ansible-playbook -i aws/inventory/dev/hosts.ini aws/playbooks/terminateAwsProject.yaml --ask-vault-pass
+
+ansible-inventory -i aws/inventory/dev/hosts.ini --list   --ask-vault-pass
+
+```
+
+## Common playbooks to provision cloud - independent of provider (post machine creation)
+
+
