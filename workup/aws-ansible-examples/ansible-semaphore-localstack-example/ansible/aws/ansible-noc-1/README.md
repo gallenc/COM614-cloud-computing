@@ -70,4 +70,8 @@ ansible-inventory -i aws/inventory/dev/hosts.ini --list   --ask-vault-pass
 
 ## Common playbooks to provision cloud - independent of provider (post machine creation)
 
+check main cloud ansible is reachable
 
+```
+ansible -i common/inventory/dev/hosts.ini all -m ping
+```
