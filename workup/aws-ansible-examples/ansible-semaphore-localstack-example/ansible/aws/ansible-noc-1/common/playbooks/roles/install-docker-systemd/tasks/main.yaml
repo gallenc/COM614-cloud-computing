@@ -1,0 +1,5 @@
+---
+    
+- name: Debug output
+  debug:
+     msg: "RUNNING INSTALL TASK"

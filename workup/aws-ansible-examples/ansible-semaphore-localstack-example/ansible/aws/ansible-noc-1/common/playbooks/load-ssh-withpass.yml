@@ -1,63 +1,29 @@
 ---
-- name: load ssh
-  hosts: all
+- name: test load ssh keys with passphrase
+  hosts: noc
   # Postpone facts gathering until SSH keys have been unlocked
   gather_facts: false
   become: true
   
   pre_tasks:
-  
-#    - name: remove ssh-agent
-#      command: ssh-agent -k
-#      delegate_to: 127.0.0.1
-#      become: no
-#      changed_when: no
-#      ignore_errors: yes
-#      
-#    - name: set up ssh-agent
-#      command: "eval $(ssh-agent -s)"
-#      delegate_to: 127.0.0.1
-#      become: no
-#      changed_when: no
-      
-    - name: Unlock SSH key "{{ ssh_key_file }}"
-      # shell: echo "$(sudo cat {{ ssh_key_file }})" | ssh-add -
-      shell: sudo rm -f "/tmp/ansible_add_ssh_run_pid" ; echo "$(sudo cat /home/ansible/.ssh/id_rsa)" | SSH_ASKPASS_REQUIRE=force  SSH_ASKPASS=/share/ssh-pass.sh ssh-add -
-      #async: 20
-      #poll: 5
-      #expect:
-      #  command: ssh-add "{{ ssh_key_file }}"
-      #  responses:
-      #    passphrase: "{{ ssh_key_pass }}"
-      delegate_to: 127.0.0.1
-      become: false
-      changed_when: no
-      no_log: false
-      run_once: true
-      
-    - name: print key variables
-      shell: ssh-add -l
-      delegate_to: 127.0.0.1
-      become: false
-      changed_when: no
-      no_log: false
-      register: ssh_agent_keys
-      
+    
     - name: Debug output
       debug:
-         msg: "ssh agent keys '{{ ssh_agent_keys.stdout }}'"
+         msg: "running in semaphore. Installing keys"
+      when: (lookup('env', 'SEMAPHORE_ADMIN') | length > 0)
+  
+    - name: install semaphore ansible ssh keys
+      import_tasks: tasks/load-ssh-keys.yaml
+      when: (lookup('env', 'SEMAPHORE_ADMIN') | length > 0)
 
     - name: Gathering facts
       setup:
 
   roles:
-    - load-ssh-keys
+    - install-docker-systemd
     
   post_tasks:
-    # Optional, to remove the keys from the agent at the end:
-    - name: Remove ssh keys
-      command: ssh-add -D
-      delegate_to: 127.0.0.1
-      become: false
-      changed_when: no
-      run_once: true
+    
+    - name: drop semaphore ansible ssh keys
+      import_tasks: tasks/unload-ssh-keys.yaml
+      when: (lookup('env', 'SEMAPHORE_ADMIN') | length > 0)

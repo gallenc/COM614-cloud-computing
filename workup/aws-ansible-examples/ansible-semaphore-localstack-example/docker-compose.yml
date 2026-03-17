@@ -108,7 +108,7 @@ services:
       SEMAPHORE_LDAP_SEARCH_FILTER: "(\u0026(uid=%s)(memberOf=cn=ipausers,cn=groups,cn=accounts,dc=local,dc=example,dc=com))"
       TZ: UTC
       # https://semaphoreui.com/docs/administration-guide/configuration/env-vars
-      SEMAPHORE_FORWARDED_ENV_VARS: '["SSH_AUTH_SOCK","SSH_AGENT_PID"]'
+      SEMAPHORE_FORWARDED_ENV_VARS: '["SSH_AUTH_SOCK","SSH_AGENT_PID","SEMAPHORE_ADMIN"]'
       
       # see https://github.com/semaphoreui/semaphore/blob/develop/deployment/docker/server/server-wrapper
       # dosent seem to work - see command above for startup
