@@ -1,6 +1,6 @@
 ---
 - name: load ssh
-  hosts: web
+  hosts: all
   # Postpone facts gathering until SSH keys have been unlocked
   gather_facts: false
   become: true
