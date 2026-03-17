@@ -366,7 +366,7 @@
           
         - name: provision ansible's authorized_keys from local ansible account
           become: true
-          become_user: "{{ 'root' if ansible_check_mode else 'ansible' }}"
+          # become_user: "{{ 'root' if ansible_check_mode else 'ansible' }}"
           authorized_key:
             user: ansible
             path: "/home/ansible/.ssh/authorized_keys"
