@@ -37,7 +37,6 @@
 
   tasks:
 
-
   - name: Show Playbook Options
     ansible.builtin.debug:
       msg:
@@ -51,6 +50,10 @@
       - "host_name1:  {{ host_name1 }}"
       - "deployment: {{ deployment }}"
 
+    # note ~/.ssh/ uses differnt home directory in semaphore than in local terminal
+  - name: Show Home Directory
+    debug:
+        msg: "USING HOME DIRECTORY: {{ lookup('env', 'HOME') }}"
 
   - name: Create SSH Key Pair - required for SSH to instance as `ec2-user`
     amazon.aws.ec2_key:
@@ -63,10 +66,6 @@
 
   - name: Show key_pair
     ansible.builtin.debug: var=key_pair
-  
-  - name: TODO Show Home Directory
-    debug:
-      msg: "USING HOME DIRECTORY: {{ lookup('env', 'HOME') }}"
     
   - name: ensure local .ssh folder exists
     when: key_pair.changed
