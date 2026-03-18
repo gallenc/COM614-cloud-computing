@@ -26,11 +26,11 @@ ansible-playbook create-aws-instances.yml --ask-vault-pass
 ```
 
 ```
-ansible-playbook create-aws-instances.yml --vault-password-file /share/password-client.sh
+ansible-playbook create-aws-instances.yml --vault-password-file /share/vault-password-client.sh
 ```
 
 VERY IMPORTANT LOG IN TO AMAZON AND  DELETE THIS INSTANCE !!!
 
 ```
-ansible-playbook terminate-aws-instances.yml --vault-password-file /share/password-client.sh
+ansible-playbook terminate-aws-instances.yml --vault-password-file /share/vault-password-client.sh
 ```

@@ -106,9 +106,10 @@ services:
       SEMAPHORE_LDAP_PASSWORD: 'ldap_bind_account_password'
       SEMAPHORE_LDAP_DN_SEARCH: 'dc=local,dc=example,dc=com'
       SEMAPHORE_LDAP_SEARCH_FILTER: "(\u0026(uid=%s)(memberOf=cn=ipausers,cn=groups,cn=accounts,dc=local,dc=example,dc=com))"
+      ANSIBLE_VAULT_PASSWORD_FILE: "/share/vault-password-client.sh" # must be executable and return vault password when run  
       TZ: UTC
       # https://semaphoreui.com/docs/administration-guide/configuration/env-vars
-      SEMAPHORE_FORWARDED_ENV_VARS: '["SSH_AUTH_SOCK","SSH_AGENT_PID","SEMAPHORE_ADMIN"]'
+      SEMAPHORE_FORWARDED_ENV_VARS: '["SSH_AUTH_SOCK","SSH_AGENT_PID","SEMAPHORE_ADMIN","ANSIBLE_VAULT_PASSWORD_FILE"]'
       
       # see https://github.com/semaphoreui/semaphore/blob/develop/deployment/docker/server/server-wrapper
       # dosent seem to work - see command above for startup
