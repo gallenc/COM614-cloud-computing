@@ -8,6 +8,7 @@ RUN apk add --no-cache sudo nano py3-paramiko
 
 # add .ssh folder for semaphore user
 RUN mkdir -p /home/semaphore/.ssh
+RUN chown semaphore:semaphore /home/semaphore/.ssh
 RUN chmod 700 /home/semaphore/.ssh
     
 # see https://github.com/semaphoreui/semaphore/blob/develop/deployment/docker/server/Dockerfile
