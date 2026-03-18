@@ -262,8 +262,7 @@
     register: route53_record
     
   - name: Show route53_record
-    ansible.builtin.debug:
-      msg: var=route53_record   
+    ansible.builtin.debug: var=route53_record   
 
   - name: Show SSH Commands for Instance
     ansible.builtin.debug:
