@@ -5,7 +5,7 @@
 
 #set -x
 
-DIRECTORY="$HOME/devel/gitrepos"
+DIRECTORY="/home/ansible/devel/gitrepos"
 REPO="COM614-cloud-computing"
 REPO_URL="https://github.com/gallenc/COM614-cloud-computing.git"
 
