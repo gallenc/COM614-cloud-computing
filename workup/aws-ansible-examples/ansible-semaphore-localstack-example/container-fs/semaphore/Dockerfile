@@ -6,17 +6,17 @@ USER root
 
 RUN apk add --no-cache sudo nano py3-paramiko
 
-# add .ssh folder for semaphore user
-RUN mkdir -p /home/semaphore/.ssh
-RUN chown semaphore:semaphore /home/semaphore/.ssh
-RUN chmod 700 /home/semaphore/.ssh
-    
-# see https://github.com/semaphoreui/semaphore/blob/develop/deployment/docker/server/Dockerfile
-# The graphical login managers do not show users with UID below 1000
-
 ARG SEMAPHORE_USER="semaphore"
 ARG ANSIBLE_USER="ansible"
 ARG ANSIBLE_PASSWORD="minad1234"
+
+# add .ssh folder for semaphore user
+RUN mkdir -p /home/semaphore/.ssh
+RUN chown -R semaphore:0 /home/semaphore/.ssh
+RUN chmod 700 /home/semaphore/.ssh
+
+# see https://github.com/semaphoreui/semaphore/blob/develop/deployment/docker/server/Dockerfile
+# The graphical login managers do not show users with UID below 1000
 
 RUN adduser --disabled-password --gecos ""  $ANSIBLE_USER 
 
