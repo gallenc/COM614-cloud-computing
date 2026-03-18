@@ -25,11 +25,7 @@
       ansible.builtin.systemd_service:
         state: started
         name: docker-compose@wordpress-stack
-      register: serviceResult
 
-    - name: Print serviceResult
-      ansible.builtin.debug:
-         msg: "{{ serviceResult.stdout }}"
     
   post_tasks:
     
