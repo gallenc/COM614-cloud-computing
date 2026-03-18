@@ -6,8 +6,8 @@
 - name: Run a script with arguments (using 'cmd' parameter)
   ansible.builtin.script:
     cmd: "{{ playbook_dir }}/files/git-docker-config.sh"
-  register: compose-service-result
+  register: composeServiceResult
 
-- name: Print compose-service-result
+- name: Print composeServiceResult
   ansible.builtin.debug:
-    msg: "{{ compose-service-result.stdout }}"
+    msg: "{{ composeServiceResult.stdout }}"
