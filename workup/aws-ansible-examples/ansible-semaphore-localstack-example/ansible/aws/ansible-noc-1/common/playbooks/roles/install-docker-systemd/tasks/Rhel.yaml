@@ -1,0 +1,17 @@
+---
+- debug:
+     msg: "tasks to install docker on debian based systems"
+#
+#- name: Install KVM and Agent Dependencies (RedHat)
+#  dnf:
+#    name:
+#      - cloudstack-agent
+#      - qemu-kvm
+#      - libvirt
+#      - libvirt-daemon
+#      - libvirt-daemon-driver-qemu
+#      - virt-install
+#      - virt-viewer
+#      - bridge-utils
+#    state: present
+

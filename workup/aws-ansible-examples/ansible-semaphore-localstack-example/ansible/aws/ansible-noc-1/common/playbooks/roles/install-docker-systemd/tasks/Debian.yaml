@@ -1,0 +1,15 @@
+---
+- debug:
+    msg: "tasks to install docker on rhel based systems"
+        
+#- name: Install KVM and Agent Dependencies (Debian)
+#  apt:
+#    name:
+#      - cloudstack-agent
+#      - qemu-kvm
+#      - libvirt-daemon-system
+#      - libvirt-clients
+#      - bridge-utils
+#    state: present
+#    update_cache: yes
+#
