@@ -7,8 +7,8 @@ USER root
 RUN apk add --no-cache sudo nano py3-paramiko
 
 # add .ssh folder for semaphore user
-mkdir -p /home/semaphore/.ssh
-chmod 700 /home/semaphore/.ssh
+RUN mkdir -p /home/semaphore/.ssh
+RUN chmod 700 /home/semaphore/.ssh
     
 # see https://github.com/semaphoreui/semaphore/blob/develop/deployment/docker/server/Dockerfile
 # The graphical login managers do not show users with UID below 1000
