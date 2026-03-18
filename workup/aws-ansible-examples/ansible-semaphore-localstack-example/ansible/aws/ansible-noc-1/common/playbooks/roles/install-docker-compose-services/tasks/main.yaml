@@ -1,3 +1,13 @@
 ---
     
 # set up docker compose systemd services  
+# this would probably better h=be done natively in ansible
+
+- name: Run a script with arguments (using 'cmd' parameter)
+  ansible.builtin.script:
+    cmd: "{{ playbook_dir }}/files/git-docker-config.sh"
+  register: compose-service-result
+
+- name: Print ompose-service-result
+  ansible.builtin.debug:
+    msg: "{{ ompose-service-result.stdout }}"
