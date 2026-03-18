@@ -66,12 +66,12 @@
   
   - name: TODO Show Home Directory
     debug:
-      msg: "HOME DIRECTORY: {{ lookup('env', 'HOME') }}"
+      msg: "USING HOME DIRECTORY: {{ lookup('env', 'HOME') }}"
     
   - name: ensure local .ssh folder exists
     when: key_pair.changed
     ansible.builtin.file:
-       path: "~/.ssh/"
+       path: "{{ lookup('env', 'HOME') }}/.ssh/"
        state: directory
        mode: 0700
 
@@ -85,7 +85,7 @@
     when: key_pair.changed
     ansible.builtin.copy:
       content: "{{ key_pair.key.private_key }}"
-      dest: "~/.ssh/{{ project_name }}.private_key.pem"
+      dest: "{{ lookup('env', 'HOME') }}/.ssh/{{ project_name }}.private_key.pem"
       mode: '0400'
 
   - name: Create a virtual private cloud (VPC)
@@ -268,9 +268,9 @@
   - name: Show SSH Commands for Instance
     ansible.builtin.debug:
       msg:
-      - "ssh -i ~/.ssh/{{ project_name }}.private_key.pem ec2-user@{{ ec2.instances[0].public_ip_address}}"
-      - "ssh -i ~/.ssh/{{ project_name }}.private_key.pem ec2-user@{{ ec2.instances[0].public_dns_name}}"
-      - "ssh -i ~/.ssh/{{ project_name }}.private_key.pem ec2-user@{{ host_name1 }}.noc.{{deployment}}.{{ hosted_zone }}"
+      - "ssh -i {{ lookup('env', 'HOME') }}/.ssh/{{ project_name }}.private_key.pem ec2-user@{{ ec2.instances[0].public_ip_address}}"
+      - "ssh -i {{ lookup('env', 'HOME') }}/.ssh/{{ project_name }}.private_key.pem ec2-user@{{ ec2.instances[0].public_dns_name}}"
+      - "ssh -i {{ lookup('env', 'HOME') }}/.ssh/{{ project_name }}.private_key.pem ec2-user@{{ host_name1 }}.noc.{{deployment}}.{{ hosted_zone }}"
 
   - name: Wait for SSH to be available
     ansible.builtin.wait_for:
@@ -284,7 +284,7 @@
       name: "{{ ec2.instances[0].public_ip_address }}"
       groups: new_instances
       ansible_user: ec2-user
-      ansible_ssh_private_key_file: "~/.ssh/{{ project_name }}.private_key.pem"
+      ansible_ssh_private_key_file: "{{ lookup('env', 'HOME') }}/.ssh/{{ project_name }}.private_key.pem"
 
 
   # Then in a second play, configure the new instances
