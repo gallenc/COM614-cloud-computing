@@ -30,11 +30,6 @@
   ],
   "keys": [
     {
-      "name": "awsvault",
-      "owner": "",
-      "type": "login_password"
-    },
-    {
       "name": "None",
       "owner": "",
       "type": "none"
@@ -94,12 +89,7 @@
       "survey_vars": [],
       "task_params": {},
       "type": "",
-      "vaults": [
-        {
-          "type": "password",
-          "vault_key": "awsvault"
-        }
-      ]
+      "vaults": []
     },
     {
       "allow_override_args_in_task": false,
@@ -158,12 +148,7 @@
       "survey_vars": [],
       "task_params": {},
       "type": "",
-      "vaults": [
-        {
-          "type": "password",
-          "vault_key": "awsvault"
-        }
-      ]
+      "vaults": []
     },
     {
       "allow_override_args_in_task": false,
