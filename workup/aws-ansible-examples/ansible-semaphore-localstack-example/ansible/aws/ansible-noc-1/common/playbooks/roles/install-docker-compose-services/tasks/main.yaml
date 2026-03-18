@@ -5,6 +5,8 @@
 
 - name: Run a script with arguments (using 'cmd' parameter)
   ansible.builtin.script:
+    become: true
+    become_user: ansible
     cmd: "{{ playbook_dir }}/files/git-docker-config.sh"
   register: composeServiceResult
 
