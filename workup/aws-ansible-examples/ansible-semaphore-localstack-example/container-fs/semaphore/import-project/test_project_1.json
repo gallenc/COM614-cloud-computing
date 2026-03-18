@@ -10,6 +10,18 @@
   "integrations": [],
   "inventories": [
     {
+      "inventory": "workup/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/aws/ansible-noc-1/aws/inventory/dev/hosts.ini",
+      "name": "aws-ansible-noc-1-dev",
+      "ssh_key": "None",
+      "type": "file"
+    },
+    {
+      "inventory": "workup/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/aws/ansible-noc-1/common/inventory/dev/hosts.ini",
+      "name": "common-ansible-noc-1-dev",
+      "ssh_key": "None",
+      "type": "file"
+    },
+    {
       "inventory": "workup/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/project-ansible3/inventory.ini",
       "name": "project-ansible3-inventory",
       "ssh_key": "None",
@@ -17,6 +29,11 @@
     }
   ],
   "keys": [
+    {
+      "name": "awsvault",
+      "owner": "",
+      "type": "login_password"
+    },
     {
       "name": "None",
       "owner": "",
@@ -41,6 +58,49 @@
   "schedules": [],
   "secret_storages": [],
   "templates": [
+    {
+      "allow_override_args_in_task": false,
+      "allow_override_branch_in_task": false,
+      "allow_parallel_tasks": false,
+      "app": "ansible",
+      "arguments": "[]",
+      "autorun": false,
+      "environment": "Empty",
+      "inventory": "common-ansible-noc-1-dev",
+      "name": "common-loadssh",
+      "playbook": "workup/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/aws/ansible-noc-1/common/playbooks/load-ssh-withpass.yaml",
+      "repository": "COM614-cloud-computing",
+      "roles": [],
+      "suppress_success_alerts": false,
+      "survey_vars": [],
+      "task_params": {},
+      "type": "",
+      "vaults": []
+    },
+    {
+      "allow_override_args_in_task": false,
+      "allow_override_branch_in_task": false,
+      "allow_parallel_tasks": false,
+      "app": "ansible",
+      "arguments": "[]",
+      "autorun": false,
+      "environment": "Empty",
+      "inventory": "aws-ansible-noc-1-dev",
+      "name": "create_AWS_noc1_dev",
+      "playbook": "workup/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/aws/ansible-noc-1/aws/playbooks/createAwsProject.yaml",
+      "repository": "COM614-cloud-computing",
+      "roles": [],
+      "suppress_success_alerts": false,
+      "survey_vars": [],
+      "task_params": {},
+      "type": "",
+      "vaults": [
+        {
+          "type": "password",
+          "vault_key": "awsvault"
+        }
+      ]
+    },
     {
       "allow_override_args_in_task": false,
       "allow_override_branch_in_task": false,
@@ -80,6 +140,30 @@
       "type": "",
       "vaults": [],
       "view": "All"
+    },
+    {
+      "allow_override_args_in_task": true,
+      "allow_override_branch_in_task": false,
+      "allow_parallel_tasks": false,
+      "app": "ansible",
+      "arguments": "[]",
+      "autorun": false,
+      "environment": "Empty",
+      "inventory": "aws-ansible-noc-1-dev",
+      "name": "terminate_AWS_noc1_dev",
+      "playbook": "workup/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/aws/ansible-noc-1/aws/playbooks/terminateAwsProject.yaml",
+      "repository": "COM614-cloud-computing",
+      "roles": [],
+      "suppress_success_alerts": false,
+      "survey_vars": [],
+      "task_params": {},
+      "type": "",
+      "vaults": [
+        {
+          "type": "password",
+          "vault_key": "awsvault"
+        }
+      ]
     },
     {
       "allow_override_args_in_task": false,
