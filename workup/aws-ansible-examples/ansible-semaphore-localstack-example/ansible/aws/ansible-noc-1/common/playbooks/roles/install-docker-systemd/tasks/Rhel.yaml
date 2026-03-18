@@ -6,13 +6,13 @@
 
 - name: Ensure dependencies are installed
   ansible.builtin.package:
-       name:
+    name:
          - bc
          - curl
          - expect
          - git
          - ca-certificates
-       state: present
+    state: present
 
 - name: Remove conflicting packages
   ansible.builtin.dnf:
