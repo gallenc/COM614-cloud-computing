@@ -173,8 +173,7 @@ services:
     networks:
       N020:
         ipv4_address: 172.20.0.26
-      
-  
+
       
   # IMAGES WITH SSH BUT NO SYSTEMD
   ## test container - no systemd
