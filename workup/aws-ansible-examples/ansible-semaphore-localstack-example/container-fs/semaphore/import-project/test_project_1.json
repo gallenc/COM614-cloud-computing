@@ -16,15 +16,14 @@
       ],
       "auth_header": "integration-token",
       "auth_method": "",
-      "auth_secret": "api-pass",
       "extract_values": [],
       "matchers": [
         {
           "body_data_type": "",
-          "key": "semaphore-template",
+          "key": "semaphore-integration-command",
           "match_type": "header",
           "method": "equals",
-          "name": "command",
+          "name": "semaphore-integration-command",
           "value": "start-docker-compose-service"
         },
         {
@@ -55,10 +54,10 @@
       "matchers": [
         {
           "body_data_type": "",
-          "key": "semaphore-template",
+          "key": "semaphore-integration-command",
           "match_type": "header",
           "method": "equals",
-          "name": "command",
+          "name": "semaphore-integration-command",
           "value": "stop-docker-compose-service"
         },
         {
@@ -71,7 +70,7 @@
         }
       ],
       "name": "stop docker compose service ",
-      "searchable": false,
+      "searchable": true,
       "task_params": {
         "environment": "{}",
         "message": "stopping docker compose service",
@@ -101,11 +100,6 @@
     }
   ],
   "keys": [
-    {
-      "name": "api-pass",
-      "owner": "",
-      "type": "login_password"
-    },
     {
       "name": "None",
       "owner": "",
