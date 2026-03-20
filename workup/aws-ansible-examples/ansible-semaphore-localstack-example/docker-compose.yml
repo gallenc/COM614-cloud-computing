@@ -157,17 +157,23 @@ services:
   # USING https://github.com/antmelekhin/docker-systemd IMAGES
   
   # https://hub.docker.com/layers/antmelekhin/docker-systemd/almalinux-10/
+  #   docker run -d --name systemd-${DISTR}-${VERSION} --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:rw --cgroupns=host docker-systemd:${DISTR}-${VERSION}
+
   ## test container - with systemd
-#  almas1:
-#    container_name: almas1
-#    image: antmelekhin/docker-systemd:almalinux-10
-#    restart: on-failure
-#    #environment:
-#    #  ROOT_PASSWORD: semaphore
-#    networks:
-#      N020:
-#        ipv4_address: 172.20.0.26
-        
+  almasd1:
+    container_name: almasd1
+    image: antmelekhin/docker-systemd:almalinux-10
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    #cgroupns: host  ## not allowed in docker compose? not needed :)
+    restart: on-failure
+    #environment:
+    #  ROOT_PASSWORD: semaphore
+    networks:
+      N020:
+        ipv4_address: 172.20.0.26
+      
   
       
   # IMAGES WITH SSH BUT NO SYSTEMD
