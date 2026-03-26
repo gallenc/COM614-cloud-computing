@@ -153,30 +153,70 @@ services:
     ports:
       - "8080:8080"
 
-  # IMAGES WITH SYSTEMD
+  #############################################################
+  # IMAGES WITH SYSTEMD INSTALLED AND SSH ENABLED
   # USING https://github.com/antmelekhin/docker-systemd IMAGES
+  #############################################################
   
   # https://hub.docker.com/layers/antmelekhin/docker-systemd/almalinux-10/
   #   docker run -d --name systemd-${DISTR}-${VERSION} --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:rw --cgroupns=host docker-systemd:${DISTR}-${VERSION}
 
-  ## test container - with systemd
+  ## alma10 test container - with systemd
   almasd1:
     container_name: almasd1
-    image: antmelekhin/docker-systemd:almalinux-10
+    # image: antmelekhin/docker-systemd:almalinux-10
+    image: alma10sd-local
+    build: ./container-fs/systemd/almalinux
     privileged: true
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    #cgroupns: host  ## not allowed in docker compose? not needed :)
+        #cgroupns: host  ## not allowed in docker compose? not needed :)
+      - ./container-fs/share:/share
+      - ssh-keys:/ssh-keys
     restart: on-failure
-    #environment:
-    #  ROOT_PASSWORD: semaphore
+    secrets:
+      - ANSIBLE_SSH_PASSPHRASE
+      - ANSIBLE_ROOT_PASSWORD
+    environment:
+      ROOT_PASSWORD: minad1234
+    post_start:
+      - command: ["sh", "-c", "/share/with-secrets.sh /share/generate-ansible-user-ssh.sh"]
+    depends_on:
+      -  semaphore
     networks:
       N020:
         ipv4_address: 172.20.0.26
+  
+  # from https://hub.docker.com/layers/antmelekhin/docker-systemd/ubuntu-24.04/
+  ## ubuntu test container - with systemd
+  ubuntusd1:
+    container_name: ubuntusd1
+    image: ubuntu24sd-local
+    build: ./container-fs/systemd/ubuntu
+    restart: on-failure
+    secrets:
+      - ANSIBLE_SSH_PASSPHRASE
+      - ANSIBLE_ROOT_PASSWORD
+    environment:
+      ROOT_PASSWORD: minad1234
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+          #cgroupns: host  ## not allowed in docker compose? not needed :)
+      - ./container-fs/share:/share
+      - ssh-keys:/ssh-keys
+    post_start:
+      - command: ["sh", "-c", "/share/with-secrets.sh /share/generate-ansible-user-ssh.sh"]
+    depends_on:
+      -  semaphore
+    networks:
+      N020:
+        ipv4_address: 172.20.0.28
 
-      
+  #################################
   # IMAGES WITH SSH BUT NO SYSTEMD
-  ## test container - no systemd
+  #################################
+  ## ubuntu test container - no systemd
   ubuntu1:
     container_name: ubuntu1
     image: ubuntu-local
@@ -215,7 +255,7 @@ services:
     post_start:
       - command: ["sh", "-c", "/share/with-secrets.sh /share/generate-ansible-user-ssh.sh"]
     depends_on:
-      -  ubuntu1
+      -  semaphore
     networks:
       N020:
         ipv4_address: 172.20.0.23
