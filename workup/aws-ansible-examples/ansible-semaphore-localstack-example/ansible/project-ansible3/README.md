@@ -35,6 +35,8 @@ ansible-playbook -i inventory.ini install_apache.yml
 ansible-playbook -i inventory.ini uninstall_apache.yml
 ```
 
+If you run `install_apache.yml` you will be able to see Apache running on your desktop at [http://localhost:8085/](http://localhost:8085/) (ubuntusd1)  [http://localhost:8084/](http://localhost:8084/) (almasd1)
+
 # using ssh-agent
 echo "$(sudo cat /home/ansible/.ssh/id_rsa)" | ssh-add -
 
