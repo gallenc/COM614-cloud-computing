@@ -238,7 +238,7 @@ services:
       N020:
         ipv4_address: 172.20.0.22
         
-  ## test container - no systemd
+  ## alma10 test container - no systemd
   alma1:
     container_name: alma1
     image: alma10-local
