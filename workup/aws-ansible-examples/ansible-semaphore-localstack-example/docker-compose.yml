@@ -183,6 +183,8 @@ services:
       - command: ["sh", "-c", "/share/with-secrets.sh /share/generate-ansible-user-ssh.sh"]
     depends_on:
       -  semaphore
+    ports:
+      - "8084:80"
     networks:
       N020:
         ipv4_address: 172.20.0.26
@@ -209,6 +211,8 @@ services:
       - command: ["sh", "-c", "/share/with-secrets.sh /share/generate-ansible-user-ssh.sh"]
     depends_on:
       -  semaphore
+    ports:
+      - "8085:80"
     networks:
       N020:
         ipv4_address: 172.20.0.28

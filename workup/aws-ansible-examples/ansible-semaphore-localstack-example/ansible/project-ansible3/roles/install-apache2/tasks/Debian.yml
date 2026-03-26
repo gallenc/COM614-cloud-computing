@@ -8,6 +8,6 @@
 # cant work with no systemd in container
 - name: Enable and start the apache2
   systemd:
-    name: httpd
+    name: apache2
     enabled: true
     state: started
