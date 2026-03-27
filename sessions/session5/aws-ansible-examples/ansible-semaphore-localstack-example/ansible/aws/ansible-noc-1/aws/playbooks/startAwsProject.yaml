@@ -51,6 +51,8 @@
        aws_secret_key: "{{ aws_secret_key }}"
        region: "{{ aws_region }}"
        state: running
+       network:
+          assign_public_ip: true
        filters:
          instance-state-name: stopped
          "tag:Project": "{{ project_name }}"
