@@ -1,0 +1,26 @@
+---
+
+region: eu-west-2
+instance_type: t3.micro
+# AlmaLinux OS 10 (x86_64) AlmaLinux OS Foundation 
+ami: ami-041f62d0737a0fbd1
+key_name: ansible-demo1
+vpc_name: ansible-vpc-test
+cidr_block: "10.10.0.0/16"
+cidr: "10.10.0.0/24"
+
+INSTANCE_NAME_1: "EC2_Instance_1"
+INSTANCE_NAME_2: "EC2_Instance_2"
+INSTANCE_NAME_3: "EC2_Instance_3"
+
+#
+#REGION: "us-east-1"
+#VPC_ID: "vpc-12345678"
+#SUBNET_ID: "subnet-12345678"
+#SG_NAME: "sg-ec2"
+#SG_DESCRIPTION: "SG for EC2 instances using Ansible"
+#
+#INSTANCE_TYPE: "t2.micro"
+#KEYNAME: "your_key_pair_name"
+#UBUNTU_AMI: "ami-0abcdef1234567890"
+#RHEL_AMI: "ami-0abcdef1234567890"

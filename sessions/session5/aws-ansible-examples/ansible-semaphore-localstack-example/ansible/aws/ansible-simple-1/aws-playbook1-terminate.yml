@@ -1,0 +1,123 @@
+--- # Creating an EC2 Instance 
+
+- name: Creating an EC2 Instance with ansible cli
+
+  hosts: localhost
+
+  vars:
+    region: eu-west-2
+    instance_type: t3.micro
+    # AlmaLinux OS 10 (x86_64) AlmaLinux OS Foundation 
+    ami: ami-041f62d0737a0fbd1
+    key_name: ansible-demo1
+    vpc_name: ansible-vpc-test
+    cidr_block: "10.10.0.0/16"
+    cidr: "10.10.0.0/24"
+
+#    aws_access_key: "{{ lookup('ansible.builtin.env', 'AWS_ACCESS_KEY') }}"
+#    aws_secret_key: "{{ lookup('ansible.builtin.env', 'AWS_SECRET_KEY') }}" 
+
+  vars_files:
+    - ./vault.yml
+
+  tasks:
+
+   - name: delete ec2 instances
+     amazon.aws.ec2_instance:
+      aws_access_key: "{{ aws_access_key }}"
+      aws_secret_key: "{{ aws_secret_key }}"
+      aws_region: "{{ region }}"
+      state: absent
+      filters:
+        tag:usage: ansible-simple-1
+        
+
+   - name: Grab VPC details
+     amazon.aws.ec2_vpc_net_info:
+       aws_access_key: "{{ aws_access_key }}"
+       aws_secret_key: "{{ aws_secret_key }}"
+       aws_region: "{{ region }}"
+       filters:
+          tag:usage: ansible-simple-1
+     register: all_vpcs
+     
+   - name: print vcp details
+     debug:
+          msg: "vcps details {{ all_vpcs.vpcs }}"
+
+     
+     # https://stackoverflow.com/questions/32370521/cannot-delete-vpc-of-aws-using-ansible
+     # amazon.aws.ec2_vpc has been dpreciated https://acozine.github.io/html/porting_guides/porting_guide_2.5.html 
+     #  ec2_vpc use ec2_vpc_net along with supporting modules ec2_vpc_igw, ec2_vpc_route_table, ec2_vpc_subnet,
+     #  ec2_vpc_dhcp_options, ec2_vpc_nat_gateway, ec2_vpc_nacl instead.
+     
+#     local_action:
+#        aws_access_key: "{{ aws_access_key }}"
+#        aws_secret_key: "{{ aws_secret_key }}"
+#        module: amazon.aws.ec2_vpc
+#        vpc_id: "{{ item.vpc_id }}"
+#        region: "{{ region }}"
+#        state: present
+#        resource_tags: "{}"
+#        subnets: []
+#        internet_gateway: False
+#        route_tables: []
+#        wait: yes
+#     loop: "{{ all_vpcs.vpcs }}"
+#     when: item.is_default != true
+
+#- name: Delete  VPC 
+#  mateothegreat.aws_vpc_delete:
+#    aws_access_key: "{{ aws_access_key }}"
+#    aws_secret_key: "{{ aws_secret_key }}"
+#    #profile: "default"            # The aws credentials file profile name.
+#    name: "{{ item.vpc_id }}"              # Name of the vpc you want to delete.
+#    region: "{{ region }}"       # AWS region.
+#    release_elastic_ip: "yes"     # Release elastic ip address(es) for any NAT gateway(s).
+#    
+      
+# https://nleiva.medium.com/a-simple-approach-to-delete-aws-resources-with-ansible-b31c796fa16d
+
+#   - name: Delete Security Groups in VPC {{ all_vpcs.vpcs[0].vpc_id }} by ID
+#     amazon.aws.ec2_group:
+#         region: "{{ ec2_region }}"
+#         group_id: "{{ item.group_id }}"
+#         state: absent
+#     loop: "{{ all_sg.security_groups }}"
+#     when: item.group_name != "default"
+        
+#   - name: delete aws security group
+#     amazon.aws.ec2_security_group:
+#       aws_access_key: "{{ aws_access_key }}"
+#       aws_secret_key: "{{ aws_secret_key }}"
+#       aws_region: "{{ region }}"
+#       state: absent
+#       filters:
+#        tag:usage: ansible-simple-1
+#             
+#   - name: delete aws subnets
+#     amazon.aws.ec2_vpc_subnet:
+#      aws_access_key: "{{ aws_access_key }}"
+#      aws_secret_key: "{{ aws_secret_key }}"
+#      aws_region: "{{ region }}"
+#      state: absent
+#      filters:
+#        tag:usage: ansible-simple-1
+#   
+#   - name: delete aws vpc 
+#     amazon.aws.ec2_vpc_net:
+#      aws_access_key: "{{ aws_access_key }}"
+#      aws_secret_key: "{{ aws_secret_key }}"
+#      aws_region: "{{ region }}"
+#      state: absent
+#      filters:
+#        tag:usage: ansible-simple-1
+   
+   
+   
+   
+   
+   
+   
+   
+   

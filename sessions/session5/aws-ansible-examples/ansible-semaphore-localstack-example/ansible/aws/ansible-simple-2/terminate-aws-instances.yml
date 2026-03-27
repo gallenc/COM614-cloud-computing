@@ -1,0 +1,6 @@
+- name: Creating SG and EC2 Instances
+  hosts: localhost
+  connection: local
+  become: true
+  roles:
+    - terminate-aws-resources

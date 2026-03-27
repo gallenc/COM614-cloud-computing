@@ -1,0 +1,35 @@
+---
+- name: test load ssh keys with passphrase
+  hosts: noc
+  # Postpone facts gathering until SSH keys have been unlocked
+  gather_facts: false
+  become: true
+  
+  pre_tasks:
+    
+    - name: Debug output
+      debug:
+         msg: "running in semaphore. Installing keys"
+      when: (lookup('env', 'SEMAPHORE_ADMIN') | length > 0)
+  
+    - name: install semaphore ansible ssh keys
+      import_tasks: tasks/load-ssh-keys.yaml
+      when: (lookup('env', 'SEMAPHORE_ADMIN') | length > 0)
+      run_once: true
+
+    - name: Gathering facts
+      setup:
+
+  tasks:
+    - name: Make sure a service unit is running
+      ansible.builtin.systemd_service:
+        state: started
+        name: docker-compose@wordpress-stack
+
+    
+  post_tasks:
+    
+    - name: drop semaphore ansible ssh keys
+      import_tasks: tasks/unload-ssh-keys.yaml
+      when: (lookup('env', 'SEMAPHORE_ADMIN') | length > 0)
+      run_once: true

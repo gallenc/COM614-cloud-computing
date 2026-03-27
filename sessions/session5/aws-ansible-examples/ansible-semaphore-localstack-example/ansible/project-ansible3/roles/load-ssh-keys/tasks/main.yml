@@ -1,0 +1,11 @@
+# see https://stackoverflow.com/questions/54991392/using-ansible-vault-for-ansibles-ssh-keyfile
+##---
+#- hosts: all
+#  # Postpone facts gathering until SSH keys have been unlocked
+#  gather_facts: no
+
+ - name: another debug
+   debug:
+          msg: "running my great task. OS Family: {{ ansible_os_family }}"
+
+

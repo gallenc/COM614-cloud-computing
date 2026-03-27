@@ -1,0 +1,401 @@
+---
+#------------------------------------------------------------------------------
+#
+# Create a simple AWS instance:
+# 1. Create SSH Key Pair
+# 2. Create VPC
+# 3. Create Internet Gateway
+# 4. Create Subnet
+# 5. Create Route Table
+# 6. Create Security Group
+# 7. Create EC2 Instance
+#
+# Assumes AWS_* environment variables for task authentication:
+#   export AWS_REGION='us-west-1'
+#   export AWS_ACCESS_KEY='AKIAIOSF/EXAMPLE+KEY'
+#   export AWS_SECRET_KEY='wJalrXUtnFEMI/K7MDENG/bPxRfi/EXAMPLE+KEY'
+#
+# Run with `ansible-playbook playbook.yaml`
+#
+# Connect with `ssh -i ./AWS_EC2_Instance_Test.private_key.pem ec2-user@hostname`
+#
+# For more AMI IDs for other images and in different regions, see
+# <https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html>
+#
+#------------------------------------------------------------------------------
+
+- name: Create AWS EC2 Instance Project
+  hosts: localhost
+  connection: local
+  gather_facts: true   # required for `ansible_date_time`
+#  vars:
+#    project_name: AWS_EC2_Instance_Test
+#    ami_id: ami-041f62d0737a0fbd1 #alma 10  # ami-04b6c97b14c54de18   # Amazon Linux 2 AMI (HVM), SSD Volume Type
+#    instance_type: t2.micro
+#    vpc_cidr: 172.31.0.0/16
+#    sub_cidr: 172.31.1.0/24
+
+  tasks:
+
+  - name: Show Playbook Options
+    ansible.builtin.debug:
+      msg:
+      - "project_name: {{ project_name }}"
+      - "aws_region: {{ aws_region }}"
+      - "ami_id: {{ ami_id }}"
+      - "instance_type: {{ instance_type }}"
+      - "vpc_cidr: {{ vpc_cidr }}"
+      - "sub_cidr: {{ sub_cidr }}"
+      - "hosted_zone: {{ hosted_zone }}"
+      - "host_name1:  {{ host_name1 }}"
+      - "deployment: {{ deployment }}"
+
+    # note ~/.ssh/ uses differnt home directory in semaphore than in local terminal
+  - name: Show Home Directory
+    debug:
+        msg: "USING HOME DIRECTORY: {{ lookup('env', 'HOME') }}"
+
+  - name: Create SSH Key Pair - required for SSH to instance as `ec2-user`
+    amazon.aws.ec2_key:
+      aws_access_key: "{{ aws_access_key }}"
+      aws_secret_key: "{{ aws_secret_key }}"
+      region: "{{ aws_region }}"
+      name: "{{ project_name }}.public_key"
+      state: present
+    register: key_pair
+
+  - name: Show key_pair
+    ansible.builtin.debug: var=key_pair
+    
+  - name: ensure local .ssh folder exists
+    when: key_pair.changed
+    ansible.builtin.file:
+       path: "{{ lookup('env', 'HOME') }}/.ssh/"
+       state: directory
+       mode: 0700
+
+   #     sudo mkdir -p $ANSIBLE_USER_HOME/.ssh
+    #    sudo chmod 700 $ANSIBLE_USER_HOME/.ssh
+     #   content: "{{ key_pair.key.private_key }}"
+     #   dest: "~/.ssh/{{ project_name }}.private_key.pem"
+     #   mode: '0400'
+
+  - name: Save Private Key Locally
+    when: key_pair.changed
+    ansible.builtin.copy:
+      content: "{{ key_pair.key.private_key }}"
+      dest: "{{ lookup('env', 'HOME') }}/.ssh/{{ project_name }}.private_key.pem"
+      mode: '0400'
+
+  - name: Create a virtual private cloud (VPC)
+    amazon.aws.ec2_vpc_net:
+      aws_access_key: "{{ aws_access_key }}"
+      aws_secret_key: "{{ aws_secret_key }}"
+      region: "{{ aws_region }}"
+      name: "{{ project_name }}_vpc"      # required
+      # Required: an IPv4 CIDR block that must be between /16 - /28
+      # Default: 172.31.0.0/16
+      cidr_block: "{{ vpc_cidr | default( '172.31.0.0/16' ) }}"
+      tags:
+        Project: "{{ project_name }}"
+        StartDate: "{{ ansible_date_time.date }}"
+    register: vpc
+
+  - name: Show vpc
+    ansible.builtin.debug: var=vpc
+
+
+
+
+  - name: Create an Internet Gateway to connect VPC to Internet
+    community.aws.ec2_vpc_igw:
+      aws_access_key: "{{ aws_access_key }}"
+      aws_secret_key: "{{ aws_secret_key }}"
+      region: "{{ aws_region }}"
+      vpc_id: "{{ vpc.vpc.id }}"
+      state: present
+      tags:
+        Name: "{{ project_name }}_igw"
+        Project: "{{ project_name }}"
+        StartDate: "{{ ansible_date_time.date }}"
+    register: igw
+
+  - name: Show igw
+    ansible.builtin.debug: var=igw
+
+
+
+
+  - name: Create a Subnet - a /24 within the VPC's /16
+    amazon.aws.ec2_vpc_subnet:
+      aws_access_key: "{{ aws_access_key }}"
+      aws_secret_key: "{{ aws_secret_key }}"
+      region: "{{ aws_region }}"
+      vpc_id: "{{ vpc.vpc.id }}"
+      cidr: "{{ sub_cidr | default( '172.31.0.0/24' ) }}"
+      tags:
+        Name: "{{ project_name }}_subnet"
+        Project: "{{ project_name }}"
+        StartDate: "{{ ansible_date_time.date }}"
+    register: subnet
+
+  - name: Show subnet
+    ansible.builtin.debug: var=subnet
+
+
+
+
+  - name: Create Route Table and Add Route from VPC to Internet Gateway
+    community.aws.ec2_vpc_route_table:
+      aws_access_key: "{{ aws_access_key }}"
+      aws_secret_key: "{{ aws_secret_key }}"
+      region: "{{ aws_region }}"
+      vpc_id: "{{ vpc.vpc.id }}"
+      subnets:
+        - "{{ subnet.subnet.id }}"
+      routes:
+        - dest: 0.0.0.0/0
+          gateway_id: "{{ igw.gateway_id }}"
+      tags:
+        Name: "{{ project_name }}_rt"
+        Project: "{{ project_name }}"
+        StartDate: "{{ ansible_date_time.date }}"
+    register: rt
+
+  - name: Show rt
+    ansible.builtin.debug: var=rt
+
+
+
+
+  - name: Create a Security Group for NOC
+    amazon.aws.ec2_group:
+      aws_access_key: "{{ aws_access_key }}"
+      aws_secret_key: "{{ aws_secret_key }}"
+      region: "{{ aws_region }}"
+      name: SSH
+      description: SSH
+      vpc_id: "{{ vpc.vpc.id }}"
+      state: present
+      rules:
+        - proto: tcp
+          ports:
+            - 80
+            - 443
+          cidr_ip: 0.0.0.0/0
+          rule_desc: allow HTTP on port 80 HTTPS on port 443 from any
+        - proto: tcp
+          ports:
+            - 22
+          cidr_ip: 0.0.0.0/0    # any
+          rule_desc: allow SSH on port 22 from any
+        - proto: icmp
+          from_port: -1 # -1 represents all ICMP types
+          to_port: -1
+          cidr_ip: 0.0.0.0/0
+          rule_desc: allow icmp from any
+      rules_egress:
+        - proto: all
+          cidr_ip: 0.0.0.0/0    # any
+      tags:
+        Project: "{{ project_name }}"
+        StartDate: "{{ ansible_date_time.date }}"
+    register: sg
+
+  - name: Show sg
+    ansible.builtin.debug: var=sg
+
+
+
+
+  - name: Create an EC2 Instance
+    amazon.aws.ec2_instance:
+       aws_access_key: "{{ aws_access_key }}"
+       aws_secret_key: "{{ aws_secret_key }}"
+       region: "{{ aws_region }}"
+       state: running
+       image_id: "{{ ami_id }}"
+       name: "{{ host_name1 }}"
+       instance_type: t2.micro
+       key_name: "{{ project_name }}.public_key"   # SSH Key Name
+       subnet_id: "{{ subnet.subnet.id }}"
+       security_group: "{{ sg.group_name }}"
+       network:
+          assign_public_ip: true
+       #count: 1
+       tags:
+          Name: "{{ host_name1 }}"
+          Project: "{{ project_name }}"
+          StartDate: "{{ ansible_date_time.date }}"
+       wait: true
+    register: ec2
+
+
+  - name: Show ec2
+    ansible.builtin.debug: var=ec2
+    
+  - name: List all hosted zones
+    amazon.aws.route53_info:
+       aws_access_key: "{{ aws_access_key }}"
+       aws_secret_key: "{{ aws_secret_key }}"
+       query: hosted_zone
+    register: hosted_zones
+    
+  - name: Show hosted zones    
+    ansible.builtin.debug: var=hosted_zones
+    
+  # Create an A record pointing to a specific IP
+  # Note: If the record already exists, it will be updated with the new IP address.
+  # todo remove the record on project termination
+  - name: Create A record for web server
+    amazon.aws.route53:
+       aws_access_key: "{{ aws_access_key }}"
+       aws_secret_key: "{{ aws_secret_key }}"
+       zone:  "{{ hosted_zone }}"
+       record: "{{ host_name1 }}.noc.{{deployment}}.{{ hosted_zone }}"
+       type: A
+       value: "{{ ec2.instances[0].public_ip_address }}"
+       ttl: 300
+       state: present
+       overwrite: true
+    register: route53_record
+    
+  - name: Show route53_record
+    ansible.builtin.debug: var=route53_record   
+
+  - name: Show SSH Commands for Instance
+    ansible.builtin.debug:
+      msg:
+      - "ssh -i {{ lookup('env', 'HOME') }}/.ssh/{{ project_name }}.private_key.pem ec2-user@{{ ec2.instances[0].public_ip_address}}"
+      - "ssh -i {{ lookup('env', 'HOME') }}/.ssh/{{ project_name }}.private_key.pem ec2-user@{{ ec2.instances[0].public_dns_name}}"
+      - "ssh -i {{ lookup('env', 'HOME') }}/.ssh/{{ project_name }}.private_key.pem ec2-user@{{ host_name1 }}.noc.{{deployment}}.{{ hosted_zone }}"
+
+  - name: Wait for SSH to be available
+    ansible.builtin.wait_for:
+      host: "{{ ec2.instances[0].public_ip_address }}"
+      port: 22
+      delay: 10
+      timeout: 300
+
+  - name: Add new instance to inventory
+    ansible.builtin.add_host:
+      name: "{{ ec2.instances[0].public_ip_address }}"
+      groups: new_instances
+      ansible_user: ec2-user
+      ansible_ssh_private_key_file: "{{ lookup('env', 'HOME') }}/.ssh/{{ project_name }}.private_key.pem"
+
+
+  # Then in a second play, configure the new instances
+  # see https://github.com/rlaager/ansible-bootstrap/  for inspiration
+- name: Create ansible user
+  hosts: new_instances
+  become: true
+  gather_facts: true
+
+  tasks:
+
+        # This must be the first task for bootstrapping!
+        # 
+        # If requiretty is set on the remote host, the bootstrapping itself will
+        # fail because of pipelining.  Instead, we force the use of paramiko, which
+        # does not do pipelining.  Alternatively, we could remove the paramiko
+        # connection specification, but then users would have to run:
+        #   ANSIBLE_SSH_PIPELINING=0 ansible-playbook playbooks/bootstrap.yaml ...
+        - name: remove requiretty from sudoers
+          connection: paramiko
+          lineinfile:
+            path: /etc/sudoers
+            state: absent
+            regexp: ^\s*Defaults\s+requiretty$
+            validate: /usr/sbin/visudo -cf %s
+          when: ansible_connection != "local"
+
+        - name: explicitly gather facts
+          setup:
+
+        - name: install SELinux dependencies
+          yum:
+            name: "{{ bootstrap_packages }}"
+            state: present
+          vars:
+            bootstrap_packages:
+              - python3-policycoreutils
+              - python3-libselinux
+            #  - libselinux-python
+            #  - policycoreutils-python
+          when: ansible_facts["os_family"] == "RedHat"
+
+        # NOTE: It seems weird to run this so late, since other things have assumed
+        # NOTE: that sudo exists.  However, if this matters (i.e. sudo is not
+        # NOTE: installed), then the user MUST specify a become_method on the command
+        # NOTE: line for this role to work at all, so it doesn't really matter when
+        # NOTE: this particular task is run.
+        - name: install sudo
+          apt:
+            name: sudo
+            state: present
+            cache_valid_time: 3600
+            force_apt_get: yes
+          when: ansible_facts["os_family"] == "Debian"
+
+        - name: allow ansible user to have passwordless sudo
+          lineinfile:
+            path: /etc/sudoers.d/ansible
+            line: "ansible ALL=(ALL) NOPASSWD: ALL"
+            # Older systems require this to be 0440 or sudo breaks.
+            mode: 0440
+            create: yes
+            validate: /usr/sbin/visudo -cf %s
+
+        - name: add ansible user and set groups
+          user:
+            name: ansible
+            # On RedHat systems, we put the ansible user in the wheel group to
+            # work-around cPanel's open file limit of 100.  Mitogen uses file
+            # descriptors 100 and 101 for internal purposes.  See:
+            # https://github.com/dw/mitogen/issues/644
+            groups:
+              "{{ 'wheel' if ansible_facts['os_family'] == 'RedHat' else '' }}"
+            home: "/home/ansible"
+           
+        - name: get ansible keys from local machine
+          delegate_to: localhost
+          connection: local
+          run_once: true
+          ansible.builtin.command: 
+            cmd: sudo cat /home/ansible/.ssh/id_rsa.pub
+          register: ansible_pub_key
+
+          
+        - name: provision ansible's authorized_keys from local ansible account
+          become: true
+          # become_user: "{{ 'root' if ansible_check_mode else 'ansible' }}"
+          authorized_key:
+            user: ansible
+            path: "/home/ansible/.ssh/authorized_keys"
+            key: "{{ ansible_pub_key.stdout_lines[0] }}"
+            exclusive: yes
+
+        # This must be after setting up passwordless sudo and the authorized_keys.
+        - name: remove ansible's password
+          user:
+            name: ansible
+            password: "*"
+        
+        
+
+#      - name: Install packages
+#        ansible.builtin.dnf:
+#          name:
+#            - nginx
+#            - python3
+#            - htop
+#          state: present
+#
+#      - name: Start nginx
+#        ansible.builtin.systemd:
+#          name: nginx
+#          state: started
+#          enabled: true
+
+...
