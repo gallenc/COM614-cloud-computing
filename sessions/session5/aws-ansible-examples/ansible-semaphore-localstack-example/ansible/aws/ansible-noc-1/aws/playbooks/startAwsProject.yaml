@@ -55,4 +55,46 @@
          instance-state-name: stopped
          "tag:Project": "{{ project_name }}"
 
+       wait: true
+    register: ec2
+
+  - name: Show ec2
+    ansible.builtin.debug: var=ec2
+    
+  - name: List all hosted zones
+    amazon.aws.route53_info:
+       aws_access_key: "{{ aws_access_key }}"
+       aws_secret_key: "{{ aws_secret_key }}"
+       query: hosted_zone
+    register: hosted_zones
+    
+  - name: Show hosted zones    
+    ansible.builtin.debug: var=hosted_zones
+    
+  # Create an A record pointing to a specific IP
+  # Note: If the record already exists, it will be updated with the new IP address.
+  # todo remove the record on project termination
+  - name: Create A record for web server
+    amazon.aws.route53:
+       aws_access_key: "{{ aws_access_key }}"
+       aws_secret_key: "{{ aws_secret_key }}"
+       zone:  "{{ hosted_zone }}"
+       record: "{{ host_name1 }}.noc.{{deployment}}.{{ hosted_zone }}"
+       type: A
+       value: "{{ ec2.instances[0].public_ip_address }}"
+       ttl: 300
+       state: present
+       overwrite: true
+    register: route53_record
+    
+  - name: Show route53_record
+    ansible.builtin.debug: var=route53_record   
+
+  - name: Show SSH Commands for Instance
+    ansible.builtin.debug:
+      msg:
+      - "ssh -i {{ lookup('env', 'HOME') }}/.ssh/{{ project_name }}.private_key.pem ec2-user@{{ ec2.instances[0].public_ip_address}}"
+      - "ssh -i {{ lookup('env', 'HOME') }}/.ssh/{{ project_name }}.private_key.pem ec2-user@{{ ec2.instances[0].public_dns_name}}"
+      - "ssh -i {{ lookup('env', 'HOME') }}/.ssh/{{ project_name }}.private_key.pem ec2-user@{{ host_name1 }}.noc.{{deployment}}.{{ hosted_zone }}"
+
 ...
