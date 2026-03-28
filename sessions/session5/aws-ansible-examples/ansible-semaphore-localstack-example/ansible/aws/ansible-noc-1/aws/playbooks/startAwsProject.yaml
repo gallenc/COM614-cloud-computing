@@ -51,17 +51,30 @@
        aws_secret_key: "{{ aws_secret_key }}"
        region: "{{ aws_region }}"
        state: running
-       network:
-          assign_public_ip: true
+ #      network:
+ #         assign_public_ip: true
        filters:
          instance-state-name: stopped
          "tag:Project": "{{ project_name }}"
 
        wait: true
-    register: ec2
+    register: start-ec2
 
   - name: Show ec2
-    ansible.builtin.debug: var=ec2
+    ansible.builtin.debug: var=start-ec2
+    
+  - name: get-facts
+    ec2_instance_info:
+      region: "{{ aws_region }}"
+      aws_access_key: "{{ aws_access_key }}"
+      aws_secret_key: "{{ aws_secret_key }}"
+      filters:
+        "tag:Name": "{{ host_name1 }}"
+        "tag:Project": "{{ project_name }}"
+    register: ec2
+    
+  - name: Show ec2 facts
+    debug: var="ec2.instances[0].public_ip_address"
     
   - name: List all hosted zones
     amazon.aws.route53_info:
