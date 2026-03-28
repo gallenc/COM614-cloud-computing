@@ -190,7 +190,7 @@
       "autorun": false,
       "environment": "Empty",
       "inventory": "aws-ansible-noc-1-dev",
-      "name": "AWS_terminate_AWS_noc1_dev",
+      "name": "AWS_terminate_AWS_noc1_dev_DANGER",
       "playbook": "sessions/session5/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/aws/ansible-noc-1/aws/playbooks/terminateAwsProject.yaml",
       "repository": "COM614-cloud-computing",
       "roles": [],
