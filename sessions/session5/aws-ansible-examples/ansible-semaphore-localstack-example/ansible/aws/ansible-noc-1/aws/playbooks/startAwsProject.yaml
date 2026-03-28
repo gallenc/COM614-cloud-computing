@@ -58,10 +58,10 @@
          "tag:Project": "{{ project_name }}"
 
        wait: true
-    register: start-ec2
+    register: startec2
 
-  - name: Show ec2
-    ansible.builtin.debug: var=start-ec2
+  - name: Show startec2
+    ansible.builtin.debug: var=startec2
     
   - name: get-facts
     ec2_instance_info:
