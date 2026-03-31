@@ -52,7 +52,7 @@ services:
       - VIRTUAL_HOST=${API_VIRTUAL_HOST:-sampleapi.example.com}
       - VIRTUAL_NETWORK=nginx-proxy
       - VIRTUAL_PATH=/api
-      - VIRTUAL_PORT=3000
+      - VIRTUAL_PORT=3001
       - LETSENCRYPT_HOST=${ENV_LETSENCRYPT_HOST:-sampleapi.example.com}
       - LETSENCRYPT_EMAIL=${ENV_LETSENCRYPT_EMAIL:-email@example.com}
 
