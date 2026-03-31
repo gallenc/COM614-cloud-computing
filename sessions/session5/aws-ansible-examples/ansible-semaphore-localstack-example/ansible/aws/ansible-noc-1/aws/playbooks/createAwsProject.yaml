@@ -74,17 +74,31 @@
        state: directory
        mode: 0700
 
-   #     sudo mkdir -p $ANSIBLE_USER_HOME/.ssh
-    #    sudo chmod 700 $ANSIBLE_USER_HOME/.ssh
-     #   content: "{{ key_pair.key.private_key }}"
-     #   dest: "~/.ssh/{{ project_name }}.private_key.pem"
-     #   mode: '0400'
+#      sudo mkdir -p $ANSIBLE_USER_HOME/.ssh
+#      sudo chmod 700 $ANSIBLE_USER_HOME/.ssh
+#      content: "{{ key_pair.key.private_key }}"
+#      dest: "~/.ssh/{{ project_name }}.private_key.pem"
+#      mode: '0400'
 
   - name: Save Private Key Locally
     when: key_pair.changed
     ansible.builtin.copy:
       content: "{{ key_pair.key.private_key }}"
       dest: "{{ lookup('env', 'HOME') }}/.ssh/{{ project_name }}.private_key.pem"
+      mode: '0400'
+ 
+  - name: ensure local share .ssh folder exists
+    when: key_pair.changed
+    ansible.builtin.file:
+       path: "/secretkeys/.ssh"
+       state: directory
+       mode: 0700
+
+  - name: Save Private key to share
+    when: key_pair.changed
+    ansible.builtin.copy:
+      content: "{{ key_pair.key.private_key }}"
+      dest: "/secretkeys/.ssh/{{ project_name }}.private_key.pem"
       mode: '0400'
 
   - name: Create a virtual private cloud (VPC)
@@ -164,9 +178,6 @@
 
   - name: Show rt
     ansible.builtin.debug: var=rt
-
-
-
 
   - name: Create a Security Group for NOC
     amazon.aws.ec2_group:
@@ -269,6 +280,9 @@
       - "ssh -i {{ lookup('env', 'HOME') }}/.ssh/{{ project_name }}.private_key.pem ec2-user@{{ ec2.instances[0].public_ip_address}}"
       - "ssh -i {{ lookup('env', 'HOME') }}/.ssh/{{ project_name }}.private_key.pem ec2-user@{{ ec2.instances[0].public_dns_name}}"
       - "ssh -i {{ lookup('env', 'HOME') }}/.ssh/{{ project_name }}.private_key.pem ec2-user@{{ host_name1 }}.noc.{{deployment}}.{{ hosted_zone }}"
+      - "ssh -i /secretkeys/.ssh/{{ project_name }}.private_key.pem ec2-user@{{ ec2.instances[0].public_ip_address}}"
+      - "ssh -i /secretkeys/.ssh/{{ project_name }}.private_key.pem ec2-user@{{ ec2.instances[0].public_dns_name}}"
+      - "ssh -i /secretkeys/.ssh/{{ project_name }}.private_key.pem ec2-user@{{ host_name1 }}.noc.{{deployment}}.{{ hosted_zone }}"
 
   - name: Wait for SSH to be available
     ansible.builtin.wait_for:
