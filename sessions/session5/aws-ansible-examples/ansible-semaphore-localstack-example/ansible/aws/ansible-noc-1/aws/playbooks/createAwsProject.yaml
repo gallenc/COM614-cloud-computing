@@ -118,9 +118,6 @@
   - name: Show vpc
     ansible.builtin.debug: var=vpc
 
-
-
-
   - name: Create an Internet Gateway to connect VPC to Internet
     community.aws.ec2_vpc_igw:
       aws_access_key: "{{ aws_access_key }}"

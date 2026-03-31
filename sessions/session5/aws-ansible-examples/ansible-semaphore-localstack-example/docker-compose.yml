@@ -66,6 +66,7 @@ services:
       - ./container-fs/semaphore/import-project:/home/semaphore/import-project
       - ./container-fs/ansible:/opt/ansible/inventory
       - ./container-fs/share:/share
+      - ./container-fs/secretkeys:/secretkeys
       - ssh-keys:/ssh-keys
     secrets:
       - ANSIBLE_SSH_PASSPHRASE
