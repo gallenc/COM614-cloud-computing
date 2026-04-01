@@ -191,7 +191,7 @@ services:
       VIRTUAL_HOST: ${WEB_VIRTUAL_HOST:-samplewebsite.example.com}
       VIRTUAL_NETWORK: N000
       VIRTUAL_PATH: /wordpress
-      VIRTUAL_PORT: 8011
+      VIRTUAL_PORT: 80
       LETSENCRYPT_HOST: ${ENV_LETSENCRYPT_HOST:-sample.example.com}
       LETSENCRYPT_EMAIL: ${ENV_LETSENCRYPT_EMAIL:-email@example.com}
       
@@ -225,7 +225,7 @@ services:
       VIRTUAL_HOST: ${WEB_VIRTUAL_HOST:-samplewebsite.example.com}
       VIRTUAL_NETWORK: N000
       VIRTUAL_PATH: /wordpress
-      VIRTUAL_PORT: 8012
+      VIRTUAL_PORT: 80
       LETSENCRYPT_HOST: ${ENV_LETSENCRYPT_HOST:-sample.example.com}
       LETSENCRYPT_EMAIL: ${ENV_LETSENCRYPT_EMAIL:-email@example.com}
       
@@ -260,7 +260,7 @@ services:
       VIRTUAL_HOST: ${WEB_VIRTUAL_HOST:-samplewebsite.example.com}
       VIRTUAL_NETWORK: N000
       VIRTUAL_PATH: /wordpress
-      VIRTUAL_PORT: 8013
+      VIRTUAL_PORT: 80
       LETSENCRYPT_HOST: ${ENV_LETSENCRYPT_HOST:-sample.example.com}
       LETSENCRYPT_EMAIL: ${ENV_LETSENCRYPT_EMAIL:-email@example.com}
       
