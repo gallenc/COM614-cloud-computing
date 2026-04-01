@@ -167,7 +167,13 @@ services:
     command: >
       /bin/sh -c '
       sleep 20;
-      wp core install --path="/var/www/html/wordpress" --url="https://${WEB_VIRTUAL_HOST:-localhost}/wordpress" --title="Local Wordpress By Docker" --admin_user=admin --admin_password=secret --admin_email=foo@bar.com '
+      wp core install --path="/var/www/html/wordpress" \
+         --url="https://${WEB_VIRTUAL_HOST:-localhost}/wordpress" \
+         --title="Local Wordpress By Docker" \
+         --admin_user=admin \
+         --admin_password=secret \
+         --admin_email=foo@bar.com 
+      '
 
     volumes:
       - wp_data:/var/www/html
