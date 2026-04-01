@@ -31,6 +31,8 @@ services:
       - "/etc/nginx/vhost.d"
       - "/usr/share/nginx/html"
       - "./volumes/proxy/certs:/etc/nginx/certs:ro"
+    labels: 
+        - "com.github.nginx-proxy.nginx-proxy.nginx"
     networks:
       N000:
         ipv4_address: 172.20.0.50
