@@ -58,6 +58,9 @@ services:
     environment:
       - NGINX_DOCKER_GEN_CONTAINER=nginx-gen
       - LETSENCRYPT_TEST=true  # set false in production
+    networks:
+        N000:
+          ipv4_address: 172.20.0.55
 
 # VIRTUAL_HOST control proxying by nginx-proxy and 
 # LETSENCRYPT_HOST control certificate creation and SSL enabling by acme-companion.
@@ -78,7 +81,7 @@ services:
       - LETSENCRYPT_EMAIL=${ENV_LETSENCRYPT_EMAIL:-email@example.com}
     networks:
        N000:
-          ipv4_address: 172.20.0.55
+          ipv4_address: 172.20.0.60
 
   sample-website:
     restart: always
@@ -97,7 +100,7 @@ services:
       - LETSENCRYPT_EMAIL=${ENV_LETSENCRYPT_EMAIL:-email@example.com}
     networks:
         N000:
-            ipv4_address: 172.20.0.60
+            ipv4_address: 172.20.0.65
 
   # word press example modified from 
   # https://github.com/docker/awesome-compose/tree/master/wordpress-mysql
