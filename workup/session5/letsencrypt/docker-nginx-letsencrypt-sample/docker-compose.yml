@@ -105,8 +105,8 @@ services:
     build: ./samples/website
     container_name: sample-website
     volumes:
-      - "./volumes/nginx-sample-website/conf.d/:/etc/nginx/conf.d"
-      - "./volumes/config/sample-website/config.js:/usr/share/nginx/html/config.js"
+      - "./container-fs/sample-website/nginx-sample-website/conf.d/:/etc/nginx/conf.d"
+      - "./container-fs/sample-website/config/sample-website/config.js:/usr/share/nginx/html/config.js"
     environment:
       - VIRTUAL_HOST=${WEB_VIRTUAL_HOST:-samplewebsite.example.com}
       - VIRTUAL_NETWORK=N000
