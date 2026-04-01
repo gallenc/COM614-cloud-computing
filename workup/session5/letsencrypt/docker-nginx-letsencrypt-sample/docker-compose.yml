@@ -32,6 +32,7 @@ services:
       - "/usr/share/nginx/html"
       - "./volumes/proxy/certs:/etc/nginx/certs:ro"
     labels: 
+        # see https://github.com/nginx-proxy/nginx-proxy/blob/main/docs/README.md#network-segregation
         - "com.github.nginx-proxy.nginx-proxy.nginx"
     networks:
       N000:
@@ -186,6 +187,14 @@ services:
       WORDPRESS_wpdb_PASSWORD: wordpress
       WORDPRESS_TABLE_PREFIX: "wp_"
       WORDPRESS_DEBUG: 1
+      
+      VIRTUAL_HOST: ${WEB_VIRTUAL_HOST:-samplewebsite.example.com}
+      VIRTUAL_NETWORK: N000
+      VIRTUAL_PATH: /wordpress
+      VIRTUAL_PORT: 8011
+      LETSENCRYPT_HOST: ${ENV_LETSENCRYPT_HOST:-sample.example.com}
+      LETSENCRYPT_EMAIL: ${ENV_LETSENCRYPT_EMAIL:-email@example.com}
+      
     # note working dir must match the url root of wordpress installation
     working_dir: /var/www/html/wordpress
     # vstm: add shared volume
@@ -212,6 +221,14 @@ services:
       WORDPRESS_DB_PASSWORD: wordpress
       WORDPRESS_TABLE_PREFIX: "wp_"
       WORDPRESS_DEBUG: 1
+      
+      VIRTUAL_HOST: ${WEB_VIRTUAL_HOST:-samplewebsite.example.com}
+      VIRTUAL_NETWORK: N000
+      VIRTUAL_PATH: /wordpress
+      VIRTUAL_PORT: 8012
+      LETSENCRYPT_HOST: ${ENV_LETSENCRYPT_HOST:-sample.example.com}
+      LETSENCRYPT_EMAIL: ${ENV_LETSENCRYPT_EMAIL:-email@example.com}
+      
     # note working dir must match the url root of wordpress installation
     working_dir: /var/www/html/wordpress
     # vstm: add shared volume
@@ -239,6 +256,14 @@ services:
       WORDPRESS_DB_PASSWORD: wordpress
       WORDPRESS_TABLE_PREFIX: "wp_"
       WORDPRESS_DEBUG: 1
+      
+      VIRTUAL_HOST: ${WEB_VIRTUAL_HOST:-samplewebsite.example.com}
+      VIRTUAL_NETWORK: N000
+      VIRTUAL_PATH: /wordpress
+      VIRTUAL_PORT: 8013
+      LETSENCRYPT_HOST: ${ENV_LETSENCRYPT_HOST:-sample.example.com}
+      LETSENCRYPT_EMAIL: ${ENV_LETSENCRYPT_EMAIL:-email@example.com}
+      
     # note working dir must match the url root of wordpress installation
     working_dir: /var/www/html/wordpress
     # vstm: add shared volume
