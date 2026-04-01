@@ -184,7 +184,7 @@ services:
       WORDPRESS_DB_HOST: wpdb:3306
       WORDPRESS_DB_NAME: wordpress
       WORDPRESS_DB_USER: wordpress
-      WORDPRESS_wpdb_PASSWORD: wordpress
+      WORDPRESS_PASSWORD: wordpress
       WORDPRESS_TABLE_PREFIX: "wp_"
       WORDPRESS_DEBUG: 1
       
@@ -197,7 +197,6 @@ services:
       
     # note working dir must match the url root of wordpress installation
     working_dir: /var/www/html/wordpress
-    # vstm: add shared volume
     volumes:
       - wp_data:/var/www/html
     networks:
@@ -231,15 +230,15 @@ services:
       
     # note working dir must match the url root of wordpress installation
     working_dir: /var/www/html/wordpress
-    # vstm: add shared volume
+
     volumes:
       - wp_data:/var/www/html
     networks:
       N000:
         ipv4_address: 172.20.0.82
       
-# wordpress server 3
-#  wordpress3:
+
+  # wordpress server 3
   wordpress3:
     depends_on:
       - wpdb
