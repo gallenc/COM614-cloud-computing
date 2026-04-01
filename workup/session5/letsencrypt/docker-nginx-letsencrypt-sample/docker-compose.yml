@@ -39,7 +39,7 @@ services:
       - conf:/etc/nginx/conf.d
       - html:/usr/share/nginx/html
       #- certs:/etc/nginx/certs:ro
-      - "./volumes/proxy/certs:/etc/nginx/certs:ro"
+      - "./container-fs/acme-companion/certs:/etc/nginx/certs:ro"
     labels: 
         # see https://github.com/nginx-proxy/nginx-proxy/blob/main/docs/README.md#network-segregation
         - "com.github.nginx-proxy.nginx-proxy.nginx"
@@ -53,7 +53,7 @@ services:
     container_name: nginx-gen
     volumes:
       - "/var/run/docker.sock:/tmp/docker.sock:ro"
-      - "./volumes/proxy/templates/nginx.tmpl:/etc/docker-gen/templates/nginx.tmpl:ro"
+      - "./container-fs/nginx-gen/templates/nginx.tmpl:/etc/docker-gen/templates/nginx.tmpl:ro"
     volumes_from:
       - nginx
     command: -notify-sighup nginx-proxy -watch -wait 5s:30s /etc/docker-gen/templates/nginx.tmpl /etc/nginx/conf.d/default.conf
@@ -65,7 +65,7 @@ services:
     volumes_from:
       - nginx
     volumes:
-      - "./volumes/proxy/certs:/etc/nginx/certs:rw"
+      - "./container-fs/acme-companion/certs:/etc/nginx/certs:rw"
       #- certs:/etc/nginx/certs:rw
       - acme:/etc/acme.sh
       - /var/run/docker.sock:/var/run/docker.sock:ro
@@ -174,7 +174,6 @@ services:
          --admin_password=secret \
          --admin_email=foo@bar.com 
       '
-
     volumes:
       - wp_data:/var/www/html
     # WP CLI needs the environment variables used for the Wordpress image
