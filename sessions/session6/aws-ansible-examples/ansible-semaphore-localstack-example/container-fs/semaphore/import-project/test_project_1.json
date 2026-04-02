@@ -1,0 +1,349 @@
+{
+  "environments": [
+    {
+      "env": "{}",
+      "json": "{}",
+      "name": "Empty"
+    }
+  ],
+  "integration_aliases": [
+    "jk8qowte1qs7c1lo"
+  ],
+  "integrations": [
+    {
+      "aliases": [
+        "adgrp7xnsm7av97y"
+      ],
+      "auth_header": "integration-token",
+      "auth_method": "",
+      "extract_values": [],
+      "matchers": [
+        {
+          "body_data_type": "",
+          "key": "semaphore-integration-command",
+          "match_type": "header",
+          "method": "equals",
+          "name": "semaphore-integration-command",
+          "value": "start-docker-compose-service"
+        },
+        {
+          "body_data_type": "",
+          "key": "auth-match",
+          "match_type": "header",
+          "method": "equals",
+          "name": "auth-match",
+          "value": "minad1234"
+        }
+      ],
+      "name": "start docker compose service ",
+      "searchable": true,
+      "task_params": {
+        "environment": "{}",
+        "message": "starting docker compose service",
+        "params": {}
+      },
+      "template": "Common start docker compose service"
+    },
+    {
+      "aliases": [
+        "aoem4eing599g9ya"
+      ],
+      "auth_header": "",
+      "auth_method": "",
+      "extract_values": [],
+      "matchers": [
+        {
+          "body_data_type": "",
+          "key": "semaphore-integration-command",
+          "match_type": "header",
+          "method": "equals",
+          "name": "semaphore-integration-command",
+          "value": "stop-docker-compose-service"
+        },
+        {
+          "body_data_type": "",
+          "key": "auth-match",
+          "match_type": "header",
+          "method": "equals",
+          "name": "auth-match",
+          "value": "minad1234"
+        }
+      ],
+      "name": "stop docker compose service ",
+      "searchable": true,
+      "task_params": {
+        "environment": "{}",
+        "message": "stopping docker compose service",
+        "params": {}
+      },
+      "template": "Common stop docker compose service"
+    }
+  ],
+  "inventories": [
+    {
+      "inventory": "sessions/session5/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/aws/ansible-noc-1/aws/inventory/dev/hosts.ini",
+      "name": "aws-ansible-noc-1-dev",
+      "ssh_key": "None",
+      "type": "file"
+    },
+    {
+      "inventory": "sessions/session5/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/aws/ansible-noc-1/common/inventory/dev/hosts.ini",
+      "name": "common-ansible-noc-1-dev",
+      "ssh_key": "None",
+      "type": "file"
+    },
+    {
+      "inventory": "sessions/session5/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/project-ansible3/inventory.ini",
+      "name": "project-ansible3-inventory",
+      "ssh_key": "None",
+      "type": "file"
+    }
+  ],
+  "keys": [
+    {
+      "name": "None",
+      "owner": "",
+      "type": "none"
+    }
+  ],
+  "meta": {
+    "alert": false,
+    "max_parallel_tasks": 1,
+    "name": "test_project1",
+    "type": ""
+  },
+  "repositories": [
+    {
+      "git_branch": "main",
+      "git_url": "https://github.com/gallenc/COM614-cloud-computing.git",
+      "name": "COM614-cloud-computing",
+      "ssh_key": "None"
+    }
+  ],
+  "roles": [],
+  "schedules": [],
+  "secret_storages": [],
+  "templates": [
+    {
+      "allow_override_args_in_task": false,
+      "allow_override_branch_in_task": false,
+      "allow_parallel_tasks": false,
+      "app": "ansible",
+      "arguments": "[]",
+      "autorun": false,
+      "environment": "Empty",
+      "inventory": "aws-ansible-noc-1-dev",
+      "name": "AWS_create_AWS_noc1_dev",
+      "playbook": "sessions/session5/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/aws/ansible-noc-1/aws/playbooks/createAwsProject.yaml",
+      "repository": "COM614-cloud-computing",
+      "roles": [],
+      "suppress_success_alerts": false,
+      "survey_vars": [],
+      "task_params": {},
+      "type": "",
+      "vaults": []
+    },
+    {
+      "allow_override_args_in_task": false,
+      "allow_override_branch_in_task": false,
+      "allow_parallel_tasks": false,
+      "app": "ansible",
+      "arguments": "[]",
+      "autorun": false,
+      "environment": "Empty",
+      "inventory": "aws-ansible-noc-1-dev",
+      "name": "AWS_start_AWS_noc1_dev",
+      "playbook": "sessions/session5/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/aws/ansible-noc-1/aws/playbooks/startAwsProject.yaml",
+      "repository": "COM614-cloud-computing",
+      "roles": [],
+      "suppress_success_alerts": false,
+      "survey_vars": [],
+      "task_params": {},
+      "type": "",
+      "vaults": []
+    },
+    {
+      "allow_override_args_in_task": false,
+      "allow_override_branch_in_task": false,
+      "allow_parallel_tasks": false,
+      "app": "ansible",
+      "arguments": "[]",
+      "autorun": false,
+      "environment": "Empty",
+      "inventory": "aws-ansible-noc-1-dev",
+      "name": "AWS_stop_AWS_noc1_dev",
+      "playbook": "sessions/session5/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/aws/ansible-noc-1/aws/playbooks/stopAwsProject.yaml",
+      "repository": "COM614-cloud-computing",
+      "roles": [],
+      "suppress_success_alerts": false,
+      "survey_vars": [],
+      "task_params": {},
+      "type": "",
+      "vaults": []
+    },
+    {
+      "allow_override_args_in_task": true,
+      "allow_override_branch_in_task": false,
+      "allow_parallel_tasks": false,
+      "app": "ansible",
+      "arguments": "[]",
+      "autorun": false,
+      "environment": "Empty",
+      "inventory": "aws-ansible-noc-1-dev",
+      "name": "AWS_terminate_AWS_noc1_dev_DANGER",
+      "playbook": "sessions/session5/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/aws/ansible-noc-1/aws/playbooks/terminateAwsProject.yaml",
+      "repository": "COM614-cloud-computing",
+      "roles": [],
+      "suppress_success_alerts": false,
+      "survey_vars": [],
+      "task_params": {},
+      "type": "",
+      "vaults": []
+    },
+    {
+      "allow_override_args_in_task": false,
+      "allow_override_branch_in_task": false,
+      "allow_parallel_tasks": false,
+      "app": "ansible",
+      "arguments": "[]",
+      "autorun": false,
+      "environment": "Empty",
+      "inventory": "common-ansible-noc-1-dev",
+      "name": "Common install docker compose services",
+      "playbook": "sessions/session5/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/aws/ansible-noc-1/common/playbooks/install-docker-compose-services.yaml",
+      "repository": "COM614-cloud-computing",
+      "roles": [],
+      "suppress_success_alerts": false,
+      "survey_vars": [],
+      "task_params": {},
+      "type": "",
+      "vaults": []
+    },
+    {
+      "allow_override_args_in_task": false,
+      "allow_override_branch_in_task": false,
+      "allow_parallel_tasks": false,
+      "app": "ansible",
+      "arguments": "[]",
+      "autorun": false,
+      "environment": "Empty",
+      "inventory": "common-ansible-noc-1-dev",
+      "name": "Common install docker systemd ",
+      "playbook": "sessions/session5/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/aws/ansible-noc-1/common/playbooks/install-docker-systemd.yaml",
+      "repository": "COM614-cloud-computing",
+      "roles": [],
+      "suppress_success_alerts": false,
+      "survey_vars": [],
+      "task_params": {},
+      "type": "",
+      "vaults": []
+    },
+    {
+      "allow_override_args_in_task": false,
+      "allow_override_branch_in_task": false,
+      "allow_parallel_tasks": false,
+      "app": "ansible",
+      "arguments": "[]",
+      "autorun": false,
+      "environment": "Empty",
+      "inventory": "common-ansible-noc-1-dev",
+      "name": "Common start docker compose service",
+      "playbook": "sessions/session5/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/aws/ansible-noc-1/common/playbooks/start-docker-compose-service.yaml",
+      "repository": "COM614-cloud-computing",
+      "roles": [],
+      "suppress_success_alerts": false,
+      "survey_vars": [],
+      "task_params": {},
+      "type": "",
+      "vaults": []
+    },
+    {
+      "allow_override_args_in_task": false,
+      "allow_override_branch_in_task": false,
+      "allow_parallel_tasks": false,
+      "app": "ansible",
+      "arguments": "[]",
+      "autorun": false,
+      "environment": "Empty",
+      "inventory": "common-ansible-noc-1-dev",
+      "name": "Common stop docker compose service",
+      "playbook": "sessions/session5/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/aws/ansible-noc-1/common/playbooks/stop-docker-compose-service.yaml",
+      "repository": "COM614-cloud-computing",
+      "roles": [],
+      "suppress_success_alerts": false,
+      "survey_vars": [],
+      "task_params": {},
+      "type": "",
+      "vaults": []
+    },
+    {
+      "allow_override_args_in_task": false,
+      "allow_override_branch_in_task": false,
+      "allow_parallel_tasks": false,
+      "app": "ansible",
+      "arguments": "[]",
+      "autorun": false,
+      "environment": "Empty",
+      "inventory": "project-ansible3-inventory",
+      "name": "Local_install-apache",
+      "playbook": "sessions/session5/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/project-ansible3/install_apache.yml",
+      "repository": "COM614-cloud-computing",
+      "roles": [],
+      "suppress_success_alerts": false,
+      "survey_vars": [],
+      "task_params": {},
+      "type": "",
+      "vaults": [],
+      "view": "All"
+    },
+    {
+      "allow_override_args_in_task": false,
+      "allow_override_branch_in_task": false,
+      "allow_parallel_tasks": false,
+      "app": "ansible",
+      "arguments": "[]",
+      "autorun": false,
+      "environment": "Empty",
+      "inventory": "project-ansible3-inventory",
+      "name": "Local_load-ssh-password",
+      "playbook": "sessions/session5/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/project-ansible3/load-ssh-withpass.yml",
+      "repository": "COM614-cloud-computing",
+      "roles": [],
+      "suppress_success_alerts": false,
+      "survey_vars": [],
+      "task_params": {},
+      "type": "",
+      "vaults": [],
+      "view": "All"
+    },
+    {
+      "allow_override_args_in_task": false,
+      "allow_override_branch_in_task": false,
+      "allow_parallel_tasks": false,
+      "app": "ansible",
+      "arguments": "[]",
+      "autorun": false,
+      "environment": "Empty",
+      "inventory": "project-ansible3-inventory",
+      "name": "Local_unistall-apache",
+      "playbook": "sessions/session5/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/project-ansible3/uninstall_apache.yml",
+      "repository": "COM614-cloud-computing",
+      "roles": [],
+      "suppress_success_alerts": false,
+      "survey_vars": [],
+      "task_params": {},
+      "type": "",
+      "vaults": [],
+      "view": "All"
+    }
+  ],
+  "views": [
+    {
+      "hidden": false,
+      "position": 0,
+      "sort_reverse": false,
+      "title": "All",
+      "type": "all"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+---
+- name: stop apache2 httpd
+  systemd:
+    name: httpd
+    enabled: false
+    state: stopped
+    
+- name: Uninstall apache web server on RHEL
+  yum:
+    name: httpd
+    state: absent
+    update_cache: true
