@@ -85,7 +85,7 @@
     ansible.builtin.copy:
       content: "{{ key_pair.key.private_key }}"
       dest: "{{ lookup('env', 'HOME') }}/.ssh/{{ project_name }}.private_key.pem"
-      mode: '0400'
+      mode: '0700'
  
   - name: ensure local share .ssh folder exists
     when: key_pair.changed
@@ -99,7 +99,7 @@
     ansible.builtin.copy:
       content: "{{ key_pair.key.private_key }}"
       dest: "/secretkeys/.ssh/{{ project_name }}.private_key.pem"
-      mode: '0400'
+      mode: '0700'
 
   - name: Create a virtual private cloud (VPC)
     amazon.aws.ec2_vpc_net:
