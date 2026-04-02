@@ -57,7 +57,7 @@ services:
       - "./container-fs/nginx-gen/templates/nginx.tmpl:/etc/docker-gen/templates/nginx.tmpl:ro"
     volumes_from:
       - nginx
-    command: -notify-sighup nginx-proxy -watch -wait 5s:30s /etc/docker-gen/templates/nginx.tmpl /etc/nginx/conf.d/default.conf
+    command: -notify-sighup nginx -watch -wait 5s:30s /etc/docker-gen/templates/nginx.tmpl /etc/nginx/conf.d/default.conf
 
   acme-companion:
     restart: always
