@@ -6,10 +6,12 @@
 # note gateway is 172.20.0.1 
 networks:
   N000:
+    name: "${SHARED_NETWORK_N000_ID:-N000}"
     ipam:
       config:
         - subnet: 172.20.0.0/24
   N001:
+    name: "${SHARED_NETWORK_N001_ID:-N001}"
     ipam:
       config:
         - subnet: 172.20.2.0/24
