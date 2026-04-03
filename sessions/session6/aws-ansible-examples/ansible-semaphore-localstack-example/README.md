@@ -98,7 +98,7 @@ start docker compose service
 
 ```
 curl -X POST http://localhost:3000/semaphore/semaphore/api/integrations/jk8qowte1qs7c1lo \
-    -H 'semaphore-integration-command: start-docker-compose-service' \
+    -H 'semaphore-integration-command: start-word-press-stack' \
     -H 'auth-match: minad1234' \
     -d '{
 }'
@@ -108,7 +108,7 @@ stop docker compose service
 
 ```
 curl -X POST http://localhost:3000/semaphore/semaphore/api/integrations/jk8qowte1qs7c1lo \
-    -H 'semaphore-integration-command: stop-docker-compose-service' \
+    -H 'semaphore-integration-command: stop-word-press-stack' \
     -H 'auth-match: minad1234' \
     -d '{
 }'
