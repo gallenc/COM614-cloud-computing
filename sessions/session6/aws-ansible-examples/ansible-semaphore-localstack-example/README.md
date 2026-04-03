@@ -1,5 +1,9 @@
 # ansible semaphore example
 
+## changes
+
+added letsencrypt to semaphore
+
 ## semaphore
 
 

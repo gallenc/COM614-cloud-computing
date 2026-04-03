@@ -24,7 +24,7 @@
           "match_type": "header",
           "method": "equals",
           "name": "semaphore-integration-command",
-          "value": "start-docker-compose-service"
+          "value": "start-word-press-stack"
         },
         {
           "body_data_type": "",
@@ -35,14 +35,14 @@
           "value": "minad1234"
         }
       ],
-      "name": "start docker compose service ",
+      "name": "start word press stack",
       "searchable": true,
       "task_params": {
         "environment": "{}",
         "message": "starting docker compose service",
         "params": {}
       },
-      "template": "Common start docker compose service"
+      "template": "Common start word press stack"
     },
     {
       "aliases": [
@@ -58,7 +58,7 @@
           "match_type": "header",
           "method": "equals",
           "name": "semaphore-integration-command",
-          "value": "stop-docker-compose-service"
+          "value": "stop-word-press-stack"
         },
         {
           "body_data_type": "",
@@ -69,14 +69,14 @@
           "value": "minad1234"
         }
       ],
-      "name": "stop docker compose service ",
+      "name": "stop stop word press stack",
       "searchable": true,
       "task_params": {
         "environment": "{}",
         "message": "stopping docker compose service",
         "params": {}
       },
-      "template": "Common stop docker compose service"
+      "template": "Common stop word press stack"
     }
   ],
   "inventories": [
@@ -209,7 +209,7 @@
       "autorun": false,
       "environment": "Empty",
       "inventory": "common-ansible-noc-1-dev",
-      "name": "Common install docker compose services",
+      "name": "Common install and update docker compose services",
       "playbook": "sessions/session6/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/aws/ansible-noc-1/common/playbooks/install-docker-compose-services.yaml",
       "repository": "COM614-cloud-computing",
       "roles": [],
@@ -247,8 +247,8 @@
       "autorun": false,
       "environment": "Empty",
       "inventory": "common-ansible-noc-1-dev",
-      "name": "Common start docker compose service",
-      "playbook": "sessions/session6/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/aws/ansible-noc-1/common/playbooks/start-docker-compose-service.yaml",
+      "name": "Common start nginx-letsencrypt-stack",
+      "playbook": "sessions/session6/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/aws/ansible-noc-1/common/playbooks/start-docker-nginx-proxy-letsencrypt-stack-service.yaml",
       "repository": "COM614-cloud-computing",
       "roles": [],
       "suppress_success_alerts": false,
@@ -266,8 +266,84 @@
       "autorun": false,
       "environment": "Empty",
       "inventory": "common-ansible-noc-1-dev",
-      "name": "Common stop docker compose service",
-      "playbook": "sessions/session6/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/aws/ansible-noc-1/common/playbooks/stop-docker-compose-service.yaml",
+      "name": "Common start sample web stack",
+      "playbook": "sessions/session6/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/aws/ansible-noc-1/common/playbooks/start-docker-sample-web-stack-service.yaml",
+      "repository": "COM614-cloud-computing",
+      "roles": [],
+      "suppress_success_alerts": false,
+      "survey_vars": [],
+      "task_params": {},
+      "type": "",
+      "vaults": []
+    },
+    {
+      "allow_override_args_in_task": false,
+      "allow_override_branch_in_task": false,
+      "allow_parallel_tasks": false,
+      "app": "ansible",
+      "arguments": "[]",
+      "autorun": false,
+      "environment": "Empty",
+      "inventory": "common-ansible-noc-1-dev",
+      "name": "Common start word press stack",
+      "playbook": "sessions/session6/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/aws/ansible-noc-1/common/playbooks/start-docker-wordpress-stack-service.yaml",
+      "repository": "COM614-cloud-computing",
+      "roles": [],
+      "suppress_success_alerts": false,
+      "survey_vars": [],
+      "task_params": {},
+      "type": "",
+      "vaults": []
+    },
+    {
+      "allow_override_args_in_task": false,
+      "allow_override_branch_in_task": false,
+      "allow_parallel_tasks": false,
+      "app": "ansible",
+      "arguments": "[]",
+      "autorun": false,
+      "environment": "Empty",
+      "inventory": "common-ansible-noc-1-dev",
+      "name": "Common stop nginx-letsencrypt-stack",
+      "playbook": "sessions/session6/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/aws/ansible-noc-1/common/playbooks/stop-docker-nginx-proxy-letsencrypt-stack-service.yaml",
+      "repository": "COM614-cloud-computing",
+      "roles": [],
+      "suppress_success_alerts": false,
+      "survey_vars": [],
+      "task_params": {},
+      "type": "",
+      "vaults": []
+    },
+    {
+      "allow_override_args_in_task": false,
+      "allow_override_branch_in_task": false,
+      "allow_parallel_tasks": false,
+      "app": "ansible",
+      "arguments": "[]",
+      "autorun": false,
+      "environment": "Empty",
+      "inventory": "common-ansible-noc-1-dev",
+      "name": "Common stop sample web stack",
+      "playbook": "sessions/session6/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/aws/ansible-noc-1/common/playbooks/stop-docker-sample-web-stack-service.yaml",
+      "repository": "COM614-cloud-computing",
+      "roles": [],
+      "suppress_success_alerts": false,
+      "survey_vars": [],
+      "task_params": {},
+      "type": "",
+      "vaults": []
+    },
+    {
+      "allow_override_args_in_task": false,
+      "allow_override_branch_in_task": false,
+      "allow_parallel_tasks": false,
+      "app": "ansible",
+      "arguments": "[]",
+      "autorun": false,
+      "environment": "Empty",
+      "inventory": "common-ansible-noc-1-dev",
+      "name": "Common stop word press stack",
+      "playbook": "sessions/session6/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/aws/ansible-noc-1/common/playbooks/stop-docker-wordpress-stack-service.yaml",
       "repository": "COM614-cloud-computing",
       "roles": [],
       "suppress_success_alerts": false,
