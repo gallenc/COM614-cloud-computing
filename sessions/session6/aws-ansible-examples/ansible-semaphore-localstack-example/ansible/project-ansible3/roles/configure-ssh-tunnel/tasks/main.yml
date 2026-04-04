@@ -34,7 +34,7 @@
         -o UserKnownHostsFile=/dev/null \
         -i /share/sshtunnel/.ssh/id_rsa \
         -R {{reverse_tunnel_port}}:localhost:22 \
-        ansible@{{ bastion_host }} -p 22
+        sshtunnel@{{ bastion_host }} -p 22
        Restart=always
        RestartSec=60
 
