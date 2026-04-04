@@ -34,7 +34,7 @@
   connection: local
   ansible.builtin.copy:
     content: "{{ user_result.ssh_public_key }}"
-    dest: /share/sshtunnel/.ssh/id_rsa.pub.
+    dest: /share/sshtunnel/.ssh/id_rsa.pub
     mode: '0644'
     
 - name: Store the private key locally for later distribution
@@ -43,7 +43,7 @@
     become: true
     src: /home/sshtunnel/.ssh/id_rsa
     dest: /share/sshtunnel/.ssh/id_rsa
-    mode: '0777'
+    mode: '0644'
      
 - name: local user login details
   ansible.builtin.debug:
