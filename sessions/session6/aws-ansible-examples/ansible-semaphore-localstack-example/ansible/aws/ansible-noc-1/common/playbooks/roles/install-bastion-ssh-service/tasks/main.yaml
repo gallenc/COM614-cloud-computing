@@ -24,7 +24,7 @@
 - name: ensure local share .ssh folder exists
   become: true
   ansible.builtin.file:
-    path: "/secretkeys/.ssh"
+    path: "/share/sshtunnel/.ssh"
     state: directory
     mode: '0777'
 
