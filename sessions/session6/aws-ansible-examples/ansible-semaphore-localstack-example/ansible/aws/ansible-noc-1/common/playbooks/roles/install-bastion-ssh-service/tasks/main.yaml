@@ -16,10 +16,6 @@
 - name: Display generated public key
   ansible.builtin.debug:
      msg: "Public key: {{ user_result.ssh_public_key }}"
-     
-- name: Display generated private key
-  ansible.builtin.debug:
-      msg: "Pprivate key: {{ user_result.ssh_key_file }}"
 
 - name: remove sshtunnel's password
   ansible.builtin.user:
@@ -42,12 +38,12 @@
     mode: '0644'
     
 - name: Store the private key locally for later distribution
-  connection: local
-  ansible.builtin.copy:
-    content: "{{ user_result.ssh_key_file }}"
+  become: true
+  ansible.builtin.fetch:
+    src: /home/sshtunnel/.ssh/id_rsa
     dest: /share/sshtunnel/.ssh/id_rsa
     mode: '0600'
-    
+     
 - name: local user login details
   ansible.builtin.debug:
          msg: "ssh -i /share/sshtunnel/.ssh/id_rsa sshtunnel@{{inventory_hostname}} -p 22"
