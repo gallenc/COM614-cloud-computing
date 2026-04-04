@@ -16,6 +16,10 @@
 - name: Display generated public key
   ansible.builtin.debug:
      msg: "Public key: {{ user_result.ssh_public_key }}"
+     
+- name: Display generated private key
+  ansible.builtin.debug:
+      msg: "Pprivate key: {{ user_result.ssh_key_file }}"
 
 - name: remove sshtunnel's password
   ansible.builtin.user:
