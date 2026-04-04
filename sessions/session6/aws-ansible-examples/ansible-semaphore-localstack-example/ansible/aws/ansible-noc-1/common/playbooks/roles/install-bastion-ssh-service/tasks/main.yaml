@@ -20,7 +20,7 @@
 - name: Add public key to authorized_keys
   ansible.posix.authorized_key:
     user: sshtunnel
-    key: "{{ user_result.deploy_public_key }}"
+    key: "{{ user_result.ssh_public_key }}"
     state: present
     
 
