@@ -37,7 +37,7 @@
     
 - name: Store the private key for later distribution
   ansible.builtin.copy:
-    content: "{{ user_result.ssh_private_key }}"
+    content: "{{ user_result.ssh_key_file }}"
     dest: /share/sshtunnel/.ssh/id_rsa
     owner: sshtunnel
     mode: '0600'
