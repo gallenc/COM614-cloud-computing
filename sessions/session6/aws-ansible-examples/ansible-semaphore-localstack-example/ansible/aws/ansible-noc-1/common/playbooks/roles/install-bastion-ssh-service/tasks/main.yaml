@@ -42,7 +42,7 @@
     flat: true
     src: /home/sshtunnel/.ssh/id_rsa
     dest: /share/sshtunnel/.ssh/id_rsa
-    mode: '0600'
+    mode: '0777'
      
 - name: local user login details
   ansible.builtin.debug:
