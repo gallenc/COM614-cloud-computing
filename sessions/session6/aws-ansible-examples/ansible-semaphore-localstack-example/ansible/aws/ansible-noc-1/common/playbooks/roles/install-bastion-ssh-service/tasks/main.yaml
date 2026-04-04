@@ -5,7 +5,6 @@
 - name: add bastion ssh user and set groups
   user:
     name: sshtunnel
-    groups: sshtunnel
     home: "/home/sshtunnel"
     shell: "/bin/bash"
     generate_ssh_key: yes
