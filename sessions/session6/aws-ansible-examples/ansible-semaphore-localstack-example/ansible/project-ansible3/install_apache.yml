@@ -1,6 +1,6 @@
 ---
 - name: install apache
-  hosts: web
+  hosts: "{{ my_inventory | default('web') }}"
   # Postpone facts gathering until SSH keys have been unlocked
   gather_facts: false
   become: true
