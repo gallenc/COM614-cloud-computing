@@ -40,6 +40,7 @@
 - name: Store the private key locally for later distribution
   ansible.builtin.fetch:
     flat: true
+    become: true
     src: /home/sshtunnel/.ssh/id_rsa
     dest: /share/sshtunnel/.ssh/id_rsa
     mode: '0777'
