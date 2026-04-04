@@ -1,5 +1,5 @@
 ---
-- name: test load ssh keys with passphrase
+- name: install docker systemd
   hosts: noc
   # Postpone facts gathering until SSH keys have been unlocked
   gather_facts: false

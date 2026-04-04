@@ -2,30 +2,31 @@
 - name: install apache
   hosts: web
   # Postpone facts gathering until SSH keys have been unlocked
-  gather_facts: no
-  become: yes
+  gather_facts: false
+  become: true
   
   pre_tasks:
   
-     - name: Unlock SSH key "{{ ssh_key_file }}"
-       shell: sudo rm -f "/tmp/ansible_add_ssh_run_pid" ; echo "$(sudo cat /home/ansible/.ssh/id_rsa)" | SSH_ASKPASS_REQUIRE=force  SSH_ASKPASS=/share/ssh-pass.sh ssh-add -
-       delegate_to: 127.0.0.1
-       become: no
-       changed_when: no
-       no_log: false
-       run_once: true
+    - name: Debug output
+      debug:
+         msg: "running in semaphore. Installing keys"
+      when: (lookup('env', 'SEMAPHORE_ADMIN') | length > 0)
+
+    - name: install semaphore ansible ssh keys
+      import_tasks: tasks/load-ssh-keys.yaml
+      when: (lookup('env', 'SEMAPHORE_ADMIN') | length > 0)
+      run_once: true
        
-     - name: Gathering facts
-       setup:
+    - name: Gathering facts
+      setup:
       
   roles:
     - install-apache2
 
   post_tasks:
-    # Optional, to remove the keys from the agent at the end:
-    - name: Remove ssh keys
-      command: ssh-add -D
-      delegate_to: 127.0.0.1
-      become: no
-      changed_when: no
+
+    - name: drop semaphore ansible ssh keys
+      import_tasks: tasks/unload-ssh-keys.yaml
+      when: (lookup('env', 'SEMAPHORE_ADMIN') | length > 0)
       run_once: true
+
