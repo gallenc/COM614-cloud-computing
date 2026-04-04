@@ -20,13 +20,19 @@
   user:
     name: sshtunnel
     password: "*"
+    
+- name: ensure local share .ssh folder exists
+  become: true
+  ansible.builtin.file:
+    path: "/secretkeys/.ssh"
+    state: directory
+    mode: '0777'
 
 - name: Store the public key for later distribution
   ansible.builtin.copy:
     content: "{{ user_result.ssh_public_key }}"
     dest: /share/sshtunnel/.ssh/id_rsa.pub.
     owner: sshtunnel
-    group: sshtunnel
     mode: '0644'
     
 - name: Store the private key for later distribution
@@ -34,7 +40,6 @@
     content: "{{ user_result.ssh_private_key }}"
     dest: /share/sshtunnel/.ssh/id_rsa
     owner: sshtunnel
-    group: sshtunnel
     mode: '0600'
     
 - name: user login details
