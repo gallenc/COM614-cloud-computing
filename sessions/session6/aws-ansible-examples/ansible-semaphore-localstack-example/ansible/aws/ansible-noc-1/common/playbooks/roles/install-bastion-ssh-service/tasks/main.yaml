@@ -22,6 +22,7 @@
     password: "*"
     
 - name: ensure local share .ssh folder exists
+  connection: local
   become: true
   ansible.builtin.file:
     path: "/share/sshtunnel/.ssh"
@@ -29,6 +30,7 @@
     mode: '0777'
 
 - name: Store the public key for later distribution
+  connection: local
   ansible.builtin.copy:
     content: "{{ user_result.ssh_public_key }}"
     dest: /share/sshtunnel/.ssh/id_rsa.pub.
@@ -36,17 +38,19 @@
     mode: '0644'
     
 - name: Store the private key for later distribution
+  connection: local
   ansible.builtin.copy:
     content: "{{ user_result.ssh_key_file }}"
     dest: /share/sshtunnel/.ssh/id_rsa
     owner: sshtunnel
     mode: '0600'
     
-- name: user login details
+- name: local user login details
   ansible.builtin.debug:
          msg: "ssh -i /home/sshtunnel/.ssh/id_rsa sshtunnel@{{inventory_hostname}} -p 22"
     
 - name: test login using the generated private key
+  connection: local
   ansible.builtin.command: "ssh -i /home/sshtunnel/.ssh/id_rsa sshtunnel@localhost -p 22 echo 'SSH connection successful'"
   register: ssh_test_result
   ignore_errors: true
