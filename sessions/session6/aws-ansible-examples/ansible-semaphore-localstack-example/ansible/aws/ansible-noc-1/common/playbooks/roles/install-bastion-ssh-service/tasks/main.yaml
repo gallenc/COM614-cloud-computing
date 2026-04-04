@@ -41,7 +41,7 @@
   become: true
   ansible.builtin.fetch:
     src: /home/sshtunnel/.ssh/id_rsa
-    dest: /share/sshtunnel/.ssh/id_rsa
+    dest: /share/sshtunnel/.ssh/
     mode: '0600'
      
 - name: local user login details
