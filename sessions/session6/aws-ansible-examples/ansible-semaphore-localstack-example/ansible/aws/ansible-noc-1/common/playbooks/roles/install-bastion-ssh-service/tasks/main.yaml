@@ -17,6 +17,13 @@
 #  ansible.builtin.debug:
 #     msg: "Public key: {{ user_result.ssh_public_key }}"
 
+- name: Add public key to authorized_keys
+  ansible.posix.authorized_key:
+    user: sshtunnel
+    key: "{{ user_result.deploy_public_key }}"
+    state: present
+    
+
 - name: remove sshtunnel's password
   ansible.builtin.user:
     name: sshtunnel
@@ -37,12 +44,7 @@
     src: /home/sshtunnel/.ssh/id_rsa.pub
     dest: /share/sshtunnel/.ssh/
     mode: '0644'
-#  connection: local
-#  ansible.builtin.copy:
-#    content: "{{ user_result.ssh_public_key }}"
-#    dest: /share/sshtunnel/.ssh/id_rsa.pub
-#    mode: '0644'
-    
+
 - name: Store the private key locally for later distribution
   ansible.builtin.fetch:
     flat: true
