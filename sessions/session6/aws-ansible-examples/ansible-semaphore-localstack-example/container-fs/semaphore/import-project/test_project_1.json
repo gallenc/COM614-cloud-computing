@@ -97,6 +97,12 @@
       "name": "project-ansible3-inventory",
       "ssh_key": "None",
       "type": "file"
+    },
+    {
+      "inventory": "sessions/session6/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/project-ansible3/proxy-inventory.ini",
+      "name": "project-ansible3-proxy-inventory",
+      "ssh_key": "None",
+      "type": "file"
     }
   ],
   "keys": [
@@ -216,6 +222,27 @@
       "suppress_success_alerts": false,
       "survey_vars": [],
       "task_params": {},
+      "type": "",
+      "vaults": []
+    },
+    {
+      "allow_override_args_in_task": false,
+      "allow_override_branch_in_task": false,
+      "allow_parallel_tasks": false,
+      "app": "ansible",
+      "arguments": "[]",
+      "autorun": false,
+      "environment": "Empty",
+      "inventory": "common-ansible-noc-1-dev",
+      "name": "Common install-bastion-ssh-service",
+      "playbook": "sessions/session6/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/aws/ansible-noc-1/common/playbooks/install-bastion-ssh-service.yaml",
+      "repository": "COM614-cloud-computing",
+      "roles": [],
+      "suppress_success_alerts": false,
+      "survey_vars": [],
+      "task_params": {
+        "allow_debug": true
+      },
       "type": "",
       "vaults": []
     },
@@ -361,6 +388,26 @@
       "autorun": false,
       "environment": "Empty",
       "inventory": "project-ansible3-inventory",
+      "name": "Local_configure-ssh-tunnel",
+      "playbook": "sessions/session6/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/project-ansible3/configure-ssh-tunnel.yml",
+      "repository": "COM614-cloud-computing",
+      "roles": [],
+      "suppress_success_alerts": false,
+      "survey_vars": [],
+      "task_params": {},
+      "type": "",
+      "vaults": [],
+      "view": "All"
+    },
+    {
+      "allow_override_args_in_task": false,
+      "allow_override_branch_in_task": false,
+      "allow_parallel_tasks": false,
+      "app": "ansible",
+      "arguments": "[]",
+      "autorun": false,
+      "environment": "Empty",
+      "inventory": "project-ansible3-inventory",
       "name": "Local_install-apache",
       "playbook": "sessions/session6/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/project-ansible3/install_apache.yml",
       "repository": "COM614-cloud-computing",
@@ -381,7 +428,7 @@
       "autorun": false,
       "environment": "Empty",
       "inventory": "project-ansible3-inventory",
-      "name": "Local_load-ssh-password",
+      "name": "Local_load-ssh-password-dummy-role",
       "playbook": "sessions/session6/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/project-ansible3/load-ssh-withpass.yml",
       "repository": "COM614-cloud-computing",
       "roles": [],
@@ -407,6 +454,66 @@
       "roles": [],
       "suppress_success_alerts": false,
       "survey_vars": [],
+      "task_params": {},
+      "type": "",
+      "vaults": [],
+      "view": "All"
+    },
+    {
+      "allow_override_args_in_task": false,
+      "allow_override_branch_in_task": false,
+      "allow_parallel_tasks": false,
+      "app": "ansible",
+      "arguments": "[]",
+      "autorun": false,
+      "environment": "Empty",
+      "inventory": "project-ansible3-proxy-inventory",
+      "name": "Remote_install-apache",
+      "playbook": "sessions/session6/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/project-ansible3/install_apache.yml",
+      "repository": "COM614-cloud-computing",
+      "roles": [],
+      "suppress_success_alerts": false,
+      "survey_vars": [
+        {
+          "default_value": "remote",
+          "description": "",
+          "name": "my_inventory",
+          "required": false,
+          "title": "my_inventory",
+          "type": "",
+          "values": []
+        }
+      ],
+      "task_params": {},
+      "type": "",
+      "vaults": [],
+      "view": "All"
+    },
+    {
+      "allow_override_args_in_task": false,
+      "allow_override_branch_in_task": false,
+      "allow_parallel_tasks": false,
+      "app": "ansible",
+      "arguments": "[]",
+      "autorun": false,
+      "environment": "Empty",
+      "inventory": "project-ansible3-proxy-inventory",
+      "name": "Remote_uninstall-apache",
+      "playbook": "sessions/session6/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/project-ansible3/uninstall_apache.yml",
+      "repository": "COM614-cloud-computing",
+      "roles": [],
+      "suppress_success_alerts": false,
+      "survey_vars": [
+        {
+          "default_value": "remote",
+          "description": "",
+          "name": "my_inventory",
+          "required": false,
+          "title": "my_inventory",
+          "type": "",
+          "values": []
+        }
+      ],
       "task_params": {},
       "type": "",
       "vaults": [],
