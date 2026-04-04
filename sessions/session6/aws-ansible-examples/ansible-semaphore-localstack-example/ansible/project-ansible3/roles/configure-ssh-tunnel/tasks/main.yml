@@ -26,7 +26,7 @@
         -o StrictHostKeyChecking=no \
         -o UserKnownHostsFile=/dev/null \
         -i /home/ansible/.ssh/id-rsa \
-        -R 9001:localhost:22 \
+        -R {{reverse_tunnel_port}}:localhost:22 \
         ansible@{{ bastion_host }} -p 22
        Restart=always
        RestartSec=60
