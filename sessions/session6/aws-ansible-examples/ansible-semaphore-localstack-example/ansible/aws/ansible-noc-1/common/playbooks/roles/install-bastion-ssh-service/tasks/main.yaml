@@ -42,7 +42,7 @@
     flat: true
     become: true
     src: /home/sshtunnel/.ssh/id_rsa
-    dest: /share/sshtunnel/.ssh/id_rsa
+    dest: /share/sshtunnel/.ssh/
     mode: '0644'
      
 - name: local user login details
