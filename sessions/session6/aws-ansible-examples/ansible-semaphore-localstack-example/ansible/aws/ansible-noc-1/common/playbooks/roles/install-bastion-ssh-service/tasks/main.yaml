@@ -1,0 +1,51 @@
+---
+    
+# set up bastion ssh service
+
+- name: add bastion ssh user and set groups
+  user:
+    name: sshtunnel
+    groups: sshtunnel
+    home: "/home/sshtunnel"
+    shell: "/bin/bash"
+    generate_ssh_key: yes
+    ssh_key_bits: 2048
+    ssh_key_file: .ssh/id_rsa
+    register: user_result
+
+- name: Display generated public key
+  ansible.builtin.debug:
+     msg: "Public key: {{ user_result.ssh_public_key }}"
+
+- name: remove sshtunnel's password
+  user:
+    name: sshtunnel
+    password: "*"
+
+- name: Store the public key for later distribution
+  ansible.builtin.copy:
+    content: "{{ user_result.ssh_public_key }}"
+    dest: /share/sshtunnel/.ssh/id_rsa.pub.
+    owner: sshtunnel
+    group: sshtunnel
+    mode: '0644'
+    
+- name: Store the private key for later distribution
+  ansible.builtin.copy:
+    content: "{{ user_result.ssh_private_key }}"
+    dest: /share/sshtunnel/.ssh/id_rsa
+    owner: sshtunnel
+    group: sshtunnel
+    mode: '0600'
+    
+- name: user login details
+  ansible.builtin.debug:
+         msg: "ssh -i /home/sshtunnel/.ssh/id_rsa sshtunnel@{{inventory_hostname}} -p 22"
+    
+- name: test login using the generated private key
+  ansible.builtin.command: "ssh -i /home/sshtunnel/.ssh/id_rsa sshtunnel@localhost -p 22 echo 'SSH connection successful'"
+  register: ssh_test_result
+  ignore_errors: true
+  
+- ansible.builtin.debug:
+     msg: "ssh test result {{ ssh_test_result.stdout }}"
