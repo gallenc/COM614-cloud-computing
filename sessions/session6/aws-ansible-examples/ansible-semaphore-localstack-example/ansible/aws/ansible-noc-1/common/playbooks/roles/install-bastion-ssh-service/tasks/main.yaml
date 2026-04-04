@@ -13,9 +13,9 @@
     force: true # Regenerate keys if the user already exists
   register: user_result
 
-- name: Display generated public key
-  ansible.builtin.debug:
-     msg: "Public key: {{ user_result.ssh_public_key }}"
+#- name: Display generated public key
+#  ansible.builtin.debug:
+#     msg: "Public key: {{ user_result.ssh_public_key }}"
 
 - name: remove sshtunnel's password
   ansible.builtin.user:
@@ -31,11 +31,17 @@
     mode: '0777'
 
 - name: Store the public key locally for later distribution
-  connection: local
-  ansible.builtin.copy:
-    content: "{{ user_result.ssh_public_key }}"
-    dest: /share/sshtunnel/.ssh/id_rsa.pub
+  ansible.builtin.fetch:
+    flat: true
+    become: true
+    src: /home/sshtunnel/.ssh/id_rsa.pub
+    dest: /share/sshtunnel/.ssh/
     mode: '0644'
+#  connection: local
+#  ansible.builtin.copy:
+#    content: "{{ user_result.ssh_public_key }}"
+#    dest: /share/sshtunnel/.ssh/id_rsa.pub
+#    mode: '0644'
     
 - name: Store the private key locally for later distribution
   ansible.builtin.fetch:
