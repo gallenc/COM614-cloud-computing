@@ -1,13 +1,13 @@
 ---
 - name: stop apache2
   systemd:
-     name: apache2
+     name: autossh
      enabled: false
      state: stopped
         
 - name: Uninstall apache web server on debian/ubuntu
   apt:
-    pkg: apache2
+    pkg: autossh
     state: absent
     update_cache: true
         
