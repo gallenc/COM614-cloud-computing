@@ -48,29 +48,29 @@
       - docker-compose-plugin
     state: present
 
-- name: Create Docker daemon configuration
-  ansible.builtin.copy:
-    content: |
-      {
-        "log-driver": "json-file",
-        "log-opts": {
-          "max-size": "10m",
-          "max-file": "3"
-        },
-        "storage-driver": "overlay2",
-        "default-address-pools": [
-          {"base": "172.17.0.0/16", "size": 24}
-        ]
-      }
-    dest: /etc/docker/daemon.json
-    mode: "0644"
-  notify: Restart Docker
-
-- name: Enable and start Docker
-  ansible.builtin.systemd:
-    name: docker
-    enabled: true
-    state: started
+#- name: Create Docker daemon configuration
+#  ansible.builtin.copy:
+#    content: |
+#      {
+#        "log-driver": "json-file",
+#        "log-opts": {
+#          "max-size": "10m",
+#          "max-file": "3"
+#        },
+#        "storage-driver": "overlay2",
+#        "default-address-pools": [
+#          {"base": "172.17.0.0/16", "size": 24}
+#        ]
+#      }
+#    dest: /etc/docker/daemon.json
+#    mode: "0644"
+#  notify: Restart Docker
+#
+#- name: Enable and start Docker
+#  ansible.builtin.systemd:
+#    name: docker
+#    enabled: true
+#    state: started
 
 - name: Add ansible user to docker group
   ansible.builtin.user:
