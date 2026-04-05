@@ -1,0 +1,82 @@
+---
+- debug:
+     msg: "tasks to install docker on Rhel/Alma/Rocky based systems"
+
+# based on https://oneuptime.com/blog/post/2026-03-04-ansible-deploy-docker-containers-rhel-9/view
+
+- name: Ensure dependencies are installed
+  ansible.builtin.package:
+    name:
+         - bc
+         - curl
+         - expect
+         - git
+         - ca-certificates
+    state: present
+
+- name: Remove conflicting packages
+  ansible.builtin.dnf:
+    name:
+          - podman
+          - buildah
+          - containers-common
+    state: absent
+
+- name: Install required dependencies
+  ansible.builtin.dnf:
+    name:
+      - dnf-plugins-core
+      - device-mapper-persistent-data
+      - lvm2
+    state: present
+
+- name: Add Docker CE repository
+  ansible.builtin.yum_repository:
+    name: docker-ce
+    description: Docker CE Repository
+    baseurl: https://download.docker.com/linux/rhel/9/$basearch/stable
+    gpgcheck: true
+    gpgkey: https://download.docker.com/linux/rhel/gpg
+    enabled: true
+
+- name: Install Docker CE packages
+  ansible.builtin.dnf:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-compose-plugin
+    state: present
+
+- name: Create Docker daemon configuration
+  ansible.builtin.copy:
+    content: |
+      {
+        "log-driver": "json-file",
+        "log-opts": {
+          "max-size": "10m",
+          "max-file": "3"
+        },
+        "storage-driver": "overlay2",
+        "default-address-pools": [
+          {"base": "172.17.0.0/16", "size": 24}
+        ]
+      }
+    dest: /etc/docker/daemon.json
+    mode: "0644"
+  notify: Restart Docker
+
+- name: Enable and start Docker
+  ansible.builtin.systemd:
+    name: docker
+    enabled: true
+    state: started
+
+- name: Add ansible user to docker group
+  ansible.builtin.user:
+       name: ansible
+       groups: docker
+       append: yes
+
+
+        
