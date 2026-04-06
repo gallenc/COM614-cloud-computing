@@ -42,9 +42,9 @@
 - name: Install Docker CE packages
   ansible.builtin.dnf:
     name:
-      - docker-ce
+      #- docker-ce
       - docker-ce-cli
-      - containerd.io
+      #- containerd.io
       - docker-compose-plugin
     state: present
 
