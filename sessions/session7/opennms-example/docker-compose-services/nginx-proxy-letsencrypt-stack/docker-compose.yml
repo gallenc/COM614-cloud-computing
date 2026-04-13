@@ -2,7 +2,7 @@
 
 # using fixed ip addresses
 # to see all networks use docker network ls
-# to see config use docker network inspect minimal-minion-activemq_N000
+# to see config use docker network inspect SHARED_NETWORK_N000_ID
 # note gateway is 172.20.0.1 
 networks:
   N000:

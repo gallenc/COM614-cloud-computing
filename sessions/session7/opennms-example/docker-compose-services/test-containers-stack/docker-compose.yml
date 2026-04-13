@@ -1,13 +1,19 @@
 
 # using fixed ip addresses
 # to see all network use docker network ls
-# to see config use docker network inspect minimal-minion-activemq_N000
+# to see config use docker network inspect SHARED_NETWORK_N000_ID
 # note gateway is 172.20.0.1 
 networks:
-  N020:
+  N000:
+    name: "${SHARED_NETWORK_N000_ID:-N000}"
     ipam:
       config:
         - subnet: 172.20.0.0/24
+  N001:
+    name: "${SHARED_NETWORK_N001_ID:-N001}"
+    ipam:
+      config:
+        - subnet: 172.20.2.0/24
 
 volumes:
   ssh-keys:
@@ -60,7 +66,7 @@ services:
     ports:
       - "8084:80"
     networks:
-      N020:
+      N000:
         ipv4_address: 172.20.0.26
   
   # from https://hub.docker.com/layers/antmelekhin/docker-systemd/ubuntu-24.04/
@@ -89,7 +95,7 @@ services:
     ports:
       - "8085:80"
     networks:
-      N020:
+      N000:
         ipv4_address: 172.20.0.28
         
   # ##############################################
@@ -121,7 +127,7 @@ services:
     ports:
       - "8086:80"
     networks:
-      N020:
+      N000:
         ipv4_address: 172.20.0.29
 
   #################################
@@ -147,7 +153,7 @@ services:
 #    depends_on:
 #      -  semaphore
     networks:
-      N020:
+      N000:
         ipv4_address: 172.20.0.22
         
   ## alma10 test container - no systemd
@@ -170,6 +176,6 @@ services:
 #    depends_on:
 #      -  semaphore
     networks:
-      N020:
+      N000:
         ipv4_address: 172.20.0.23
       
