@@ -1,0 +1,170 @@
+
+# using fixed ip addresses
+# to see all network use docker network ls
+# to see config use docker network inspect minimal-minion-activemq_N000
+# note gateway is 172.20.0.1 
+networks:
+  N020:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
+
+volumes:
+  ssh-keys:
+  
+secrets:
+  ANSIBLE_SSH_PASSPHRASE:
+    file: ./.secrets/ansible_ssh_passphrase.txt
+  ANSIBLE_ROOT_PASSWORD:
+    file: ./.secrets/ansible_root_password.txt
+  VAULT_PASSWORD_FILE:
+    file: ./.secrets/vault_password_file.txt
+
+services:
+
+
+  #############################################################
+  # IMAGES WITH SYSTEMD INSTALLED AND SSH ENABLED
+  # USING https://github.com/antmelekhin/docker-systemd IMAGES
+  #############################################################
+  
+  # https://hub.docker.com/layers/antmelekhin/docker-systemd/almalinux-10/
+  #   docker run -d --name systemd-${DISTR}-${VERSION} --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:rw --cgroupns=host docker-systemd:${DISTR}-${VERSION}
+
+  ## alma10 test container - with systemd
+  almasd1:
+    container_name: almasd1
+    # image: antmelekhin/docker-systemd:almalinux-10
+    image: alma10sd-local
+    build: ./container-fs/systemd/almalinux
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+        #cgroupns: host  ## not allowed in docker compose? not needed :)
+      - ./container-fs/share:/share
+      - ssh-keys:/ssh-keys
+      # Added to simulate docker in docker for testing ansible docker module with systemd hosts. 
+      # This allows the container to access the host's docker daemon. Be careful with this in production environments as it can pose security risks.
+      # - /var/run/docker.sock:/var/run/docker.sock:rw  # doesnt work
+    restart: on-failure
+    secrets:
+      - ANSIBLE_SSH_PASSPHRASE
+      - ANSIBLE_ROOT_PASSWORD
+    environment:
+      ROOT_PASSWORD: minad1234
+    post_start:
+      - command: ["sh", "-c", "/share/with-secrets.sh /share/generate-ansible-user-ssh.sh"]
+#    depends_on:
+#      -  semaphore
+    ports:
+      - "8084:80"
+    networks:
+      N020:
+        ipv4_address: 172.20.0.26
+  
+  # from https://hub.docker.com/layers/antmelekhin/docker-systemd/ubuntu-24.04/
+  ## ubuntu test container - with systemd
+  ubuntusd1:
+    container_name: ubuntusd1
+    image: ubuntu24sd-local
+    build: ./container-fs/systemd/ubuntu
+    restart: on-failure
+    secrets:
+      - ANSIBLE_SSH_PASSPHRASE
+      - ANSIBLE_ROOT_PASSWORD
+    environment:
+      ROOT_PASSWORD: minad1234
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+          #cgroupns: host  ## not allowed in docker compose? not needed :)
+      - ./container-fs/share:/share
+      - ssh-keys:/ssh-keys
+    post_start:
+      - command: ["sh", "-c", "/share/with-secrets.sh /share/generate-ansible-user-ssh.sh"]
+#    depends_on:
+#      -  semaphore
+    ports:
+      - "8085:80"
+    networks:
+      N020:
+        ipv4_address: 172.20.0.28
+        
+  # ##############################################
+  # DOCKER IN DOCKER TEST CONTAINER - with systemd
+  ################################################   
+  # from https://github.com/cruizba/ubuntu-dind  docker in docker 
+  ## ubuntu test container - with systemd
+  ubuntudindsd1:
+    container_name: ubuntudindsd1
+    image: ubuntu24dindsd-local
+    build: ./container-fs/systemddind/ubuntu
+    restart: on-failure
+    secrets:
+      - ANSIBLE_SSH_PASSPHRASE
+      - ANSIBLE_ROOT_PASSWORD
+    environment:
+      ROOT_PASSWORD: minad1234
+    privileged: true
+    volumes:
+      #- /sys/fs/cgroup:/sys/fs/cgroup:rw
+          #cgroupns: host  ## not allowed in docker compose? not needed :)
+      - ./container-fs/share:/share
+      - ssh-keys:/ssh-keys
+    post_start:
+      - command: ["sh", "-c", "/share/with-secrets.sh /share/generate-ansible-user-ssh.sh"]
+#    depends_on:
+#      -  semaphore
+    ports:
+      - "8086:80"
+    networks:
+      N020:
+        ipv4_address: 172.20.0.29
+
+  #################################
+  # IMAGES WITH SSH BUT NO SYSTEMD
+  #################################
+  ## ubuntu test container - no systemd
+  ubuntu1:
+    container_name: ubuntu1
+    image: ubuntu-local
+    build: ./container-fs/nosystemd/ubuntu
+    restart: on-failure
+    secrets:
+      - ANSIBLE_SSH_PASSPHRASE
+      - ANSIBLE_ROOT_PASSWORD
+    environment:
+      ROOT_PASSWORD: minad1234
+    volumes:
+      - ./container-fs/share:/share
+      - ssh-keys:/ssh-keys
+    post_start:
+      - command: ["sh", "-c", "/share/with-secrets.sh /share/generate-ansible-user-ssh.sh"]
+#    depends_on:
+#      -  semaphore
+    networks:
+      N020:
+        ipv4_address: 172.20.0.22
+        
+  ## alma10 test container - no systemd
+  alma1:
+    container_name: alma1
+    image: alma10-local
+    build: ./container-fs/nosystemd/almalinux
+    restart: on-failure
+    secrets:
+      - ANSIBLE_SSH_PASSPHRASE
+      - ANSIBLE_ROOT_PASSWORD
+    environment:
+      ROOT_PASSWORD: minad1234
+    volumes:
+      - ./container-fs/share:/share
+      - ssh-keys:/ssh-keys
+    post_start:
+      - command: ["sh", "-c", "/share/with-secrets.sh /share/generate-ansible-user-ssh.sh"]
+#    depends_on:
+#      -  semaphore
+    networks:
+      N020:
+        ipv4_address: 172.20.0.23
+      

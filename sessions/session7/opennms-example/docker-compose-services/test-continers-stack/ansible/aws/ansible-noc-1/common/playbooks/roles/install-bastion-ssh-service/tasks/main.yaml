@@ -1,0 +1,67 @@
+---
+    
+# set up bastion ssh service
+
+- name: add bastion ssh user and set groups
+  ansible.builtin.user:
+    name: sshtunnel
+    home: "/home/sshtunnel"
+    shell: "/bin/bash"
+    generate_ssh_key: yes
+    ssh_key_bits: 2048
+    ssh_key_file: .ssh/id_rsa
+    force: false # Regenerate keys if the user already exists
+  register: user_result
+
+#- name: Display generated public key
+#  ansible.builtin.debug:
+#     msg: "Public key: {{ user_result.ssh_public_key }}"
+
+- name: Add public key to authorized_keys
+  ansible.posix.authorized_key:
+    user: sshtunnel
+    key: "{{ user_result.ssh_public_key }}"
+    state: present
+    
+
+- name: remove sshtunnel's password
+  ansible.builtin.user:
+    name: sshtunnel
+    password: "*"
+    
+- name: ensure local share .ssh folder exists
+  connection: local
+  become: true
+  ansible.builtin.file:
+    path: "/share/sshtunnel/.ssh"
+    state: directory
+    mode: '0777'
+
+- name: Store the public key locally for later distribution
+  ansible.builtin.fetch:
+    flat: true
+    become: true
+    src: /home/sshtunnel/.ssh/id_rsa.pub
+    dest: /share/sshtunnel/.ssh/
+    mode: '0644'
+
+- name: Store the private key locally for later distribution
+  ansible.builtin.fetch:
+    flat: true
+    become: true
+    src: /home/sshtunnel/.ssh/id_rsa
+    dest: /share/sshtunnel/.ssh/
+    mode: '0644'
+     
+- name: local user login details
+  ansible.builtin.debug:
+         msg: "ssh -i /share/sshtunnel/.ssh/id_rsa sshtunnel@{{inventory_hostname}} -p 22"
+    
+- name: test login using the generated private key
+  connection: local
+  ansible.builtin.command: "ssh -i /share/sshtunnel/.ssh/id_rsa sshtunnel@{{inventory_hostname}} -p 22 echo 'SSH connection successful'"
+  register: ssh_test_result
+  ignore_errors: true
+  
+- ansible.builtin.debug:
+     msg: "ssh test result {{ ssh_test_result.stdout }}"

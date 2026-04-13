@@ -1,0 +1,18 @@
+---
+
+project_name: AWS_EC2_Instance_Test
+ami_id: ami-041f62d0737a0fbd1 #alma 10  # ami-04b6c97b14c54de18   # Amazon Linux 2 AMI (HVM), SSD Volume Type
+instance_type: t2.micro
+vpc_cidr: 172.31.0.0/16
+sub_cidr: 172.31.1.0/24
+
+aws_region: eu-west-2
+
+vpc_name: ansible-vpc-development
+
+hosted_zone: aws1.interfbn.com
+
+host_name1:  nocinstance1
+
+deployment: dev
+
