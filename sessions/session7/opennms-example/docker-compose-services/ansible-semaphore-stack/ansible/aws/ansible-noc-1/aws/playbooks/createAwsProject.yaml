@@ -407,16 +407,18 @@
         - name: Store the public key remotely
           become: true
           ansible.builtin.copy:
-            content: "{{ ansible_pub_key.stdout }}"
-            dest: /home/ansible/.ssh/id_rsa.pub
-            mode: '0644'
+          content: |
+           {{ ansible_pub_key.stdout }}
+          dest: /home/ansible/.ssh/id_rsa.pub
+          mode: '0644'
 
         - name: Store the private key remotely
           become: true
           ansible.builtin.copy:
-            content: "{{ ansible_private_key.stdout }}"
-            dest: /home/ansible/.ssh/id_rsa
-            mode: '0644'
+          content: |
+           {{ ansible_private_key.stdout }}
+          dest: /home/ansible/.ssh/id_rsa
+          mode: '0644'
 
   
 
