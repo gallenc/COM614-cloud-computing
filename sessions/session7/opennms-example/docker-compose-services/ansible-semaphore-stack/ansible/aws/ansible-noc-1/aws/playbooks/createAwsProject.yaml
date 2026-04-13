@@ -370,7 +370,7 @@
               "{{ 'wheel' if ansible_facts['os_family'] == 'RedHat' else '' }}"
             home: "/home/ansible"
            
-        - name: get ansible keys from local machine
+        - name: get ansible public key from local machine
           delegate_to: localhost
           connection: local
           run_once: true
@@ -394,7 +394,25 @@
             name: ansible
             password: "*"
         
-        
+# NOTE only do this if machine is also used as controller and needs ansible private keys
+
+        - name: Store the public key locally for later distribution
+          ansible.builtin.fetch:
+            flat: true
+            become: true
+            src: /home/ansible/.ssh/id_rsa.pub
+            dest: /home/ansible/.ssh/
+            mode: '0644'
+
+        - name: Store the private key locally for later distribution
+          ansible.builtin.fetch:
+            flat: true
+            become: true
+            src: /home/ansible/.ssh/id_rsa
+            dest: /home/ansible/.ssh/
+            mode: '0644'
+
+  
 
 #      - name: Install packages
 #        ansible.builtin.dnf:
