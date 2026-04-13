@@ -382,7 +382,7 @@
         - name: provision ansible's authorized_keys from local ansible account
           become: true
           # become_user: "{{ 'root' if ansible_check_mode else 'ansible' }}"
-          authorized_key:
+          ansible.posix.authorized_key:
             user: ansible
             path: "/home/ansible/.ssh/authorized_keys"
             key: "{{ ansible_pub_key.stdout_lines[0] }}"
@@ -396,20 +396,28 @@
         
 # NOTE only do this if machine is also used as controller and needs ansible private keys
 
+        - name: get ansible private key from local machine
+          delegate_to: localhost
+          connection: local
+          run_once: true
+          ansible.builtin.command: 
+            cmd: sudo cat /home/ansible/.ssh/id_rsa
+          register: ansible_private_key
+
         - name: Store the public key remotely
           ansible.builtin.copy:
             flat: true
             become: true
-            src: /home/ansible/.ssh/id_rsa.pub
-            dest: /home/ansible/.ssh/
+            content: "{{ ansible_pub_key.stdout }}"
+            dest: /home/ansible/.ssh/id_rsa.pub
             mode: '0644'
 
         - name: Store the private key remotely
           ansible.builtin.copy:
             flat: true
             become: true
-            src: /home/ansible/.ssh/id_rsa
-            dest: /home/ansible/.ssh/
+            content: "{{ ansible_private_key.stdout }}"
+            dest: /home/ansible/.ssh/id_rsa
             mode: '0644'
 
   
