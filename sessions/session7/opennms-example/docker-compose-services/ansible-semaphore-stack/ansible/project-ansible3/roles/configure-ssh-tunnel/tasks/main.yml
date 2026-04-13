@@ -1,0 +1,52 @@
+---
+
+    
+ - name: another debug
+   debug:
+          msg: "configuring ssh tunnel. OS Family: {{ ansible_os_family }}"
+
+ # using https://dev.to/bulletmark/create-a-reverse-ssh-tunnel-for-remote-access-to-a-restricted-machine-1ma0
+ 
+ - name: stop and disable sshtunnel if it exists
+   ansible.builtin.systemd:
+      name: sshtunnel
+      enabled: false
+      state: stopped
+   ignore_errors: true
+
+ - name: copy content to  /etc/systemd/system/sshtunnel.service
+   become: true
+   copy:
+      force: true
+      content: |
+       [Unit]
+       Description=Service to maintain an ssh reverse tunnel
+       Wants=network-online.target
+       After=network-online.target
+       StartLimitIntervalSec=0
+
+       [Service]
+       Type=simple
+       ExecStart=/usr/bin/ssh -qNn \
+        -o ServerAliveInterval=30 \
+        -o ServerAliveCountMax=3 \
+        -o ExitOnForwardFailure=yes \
+        -o StrictHostKeyChecking=no \
+        -o UserKnownHostsFile=/dev/null \
+        -i /share/sshtunnel/.ssh/id_rsa \
+        -R {{reverse_tunnel_port}}:localhost:22 \
+        sshtunnel@{{ bastion_host }} -p 22
+       Restart=always
+       RestartSec=60
+
+       [Install]
+       WantedBy=multi-user.target    
+         
+      dest: /etc/systemd/system/sshtunnel.service
+      mode: '0644'
+      
+ - name: Enable and start sshtunnel
+   ansible.builtin.systemd:
+      name: sshtunnel
+      enabled: true
+      state: started
