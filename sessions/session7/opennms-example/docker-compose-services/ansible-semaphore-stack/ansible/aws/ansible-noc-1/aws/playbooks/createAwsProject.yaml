@@ -396,16 +396,16 @@
         
 # NOTE only do this if machine is also used as controller and needs ansible private keys
 
-        - name: Store the public key locally for later distribution
-          ansible.builtin.fetch:
+        - name: Store the public key remotely
+          ansible.builtin.copy:
             flat: true
             become: true
             src: /home/ansible/.ssh/id_rsa.pub
             dest: /home/ansible/.ssh/
             mode: '0644'
 
-        - name: Store the private key locally for later distribution
-          ansible.builtin.fetch:
+        - name: Store the private key remotely
+          ansible.builtin.copy:
             flat: true
             become: true
             src: /home/ansible/.ssh/id_rsa
