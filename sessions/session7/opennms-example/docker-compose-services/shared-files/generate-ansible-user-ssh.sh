@@ -5,7 +5,7 @@ set -x
 # script to set up new ansible user and generate and copy new ansible keys
 # if environment variable ANSIBLE_SSH_PASSPHRASE is set, then used in generating the key
 
-ANSIBLE_KEYS="/ssh-keys/.ssh-ansible"
+ANSIBLE_KEYS="/shared-keys/ssh-keys/.ssh-ansible"
 ANSIBLE_USER_HOME="/home/ansible"
 ANSIBLE_KEY_PASSPHRASE=""
 

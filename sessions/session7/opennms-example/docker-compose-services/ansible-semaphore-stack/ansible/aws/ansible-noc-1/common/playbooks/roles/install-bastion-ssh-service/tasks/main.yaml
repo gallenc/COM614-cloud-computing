@@ -42,7 +42,7 @@
     flat: true
     become: true
     src: /home/sshtunnel/.ssh/id_rsa.pub
-    dest: /share/sshtunnel/.ssh/
+    dest: /shared-keys/sshtunnel/.ssh/
     mode: '0644'
 
 - name: Store the private key locally for later distribution
@@ -50,16 +50,16 @@
     flat: true
     become: true
     src: /home/sshtunnel/.ssh/id_rsa
-    dest: /share/sshtunnel/.ssh/
+    dest: /shared-keys/sshtunnel/.ssh/
     mode: '0644'
      
 - name: local user login details
   ansible.builtin.debug:
-         msg: "ssh -i /share/sshtunnel/.ssh/id_rsa sshtunnel@{{inventory_hostname}} -p 22"
+         msg: "ssh -i /shared-keys/sshtunnel/.ssh/id_rsa sshtunnel@{{inventory_hostname}} -p 22"
     
 - name: test login using the generated private key
   connection: local
-  ansible.builtin.command: "ssh -i /share/sshtunnel/.ssh/id_rsa sshtunnel@{{inventory_hostname}} -p 22 echo 'SSH connection successful'"
+  ansible.builtin.command: "ssh -i /shared-keys/sshtunnel/.ssh/id_rsa sshtunnel@{{inventory_hostname}} -p 22 echo 'SSH connection successful'"
   register: ssh_test_result
   ignore_errors: true
   

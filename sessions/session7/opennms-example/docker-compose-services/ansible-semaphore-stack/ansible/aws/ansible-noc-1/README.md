@@ -63,7 +63,7 @@ cd /home/ansible/devel/gitrepos
 
 git clone https://github.com/gallenc/COM614-cloud-computing.git
 
-cd /home/ansible/devel/gitrepos/COM614-cloud-computing/sessions/session6/aws-ansible-examples/ansible-semaphore-localstack-example/ansible/aws/ansible-noc-1
+cd /home/ansible/devel/gitrepos/COM614-cloud-computing/sessions/session7/opennms-example/docker-compose-services/ansible-semaphore-stack/ansible/aws/ansible-noc-1
 
 
 ```
