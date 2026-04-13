@@ -46,7 +46,7 @@ services:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
         #cgroupns: host  ## not allowed in docker compose? not needed :)
       - ../shared-files/:/share
-      - ../shared-keys/:/shared-keys
+      - ../.shared-keys/:/shared-keys
 
       # Added to simulate docker in docker for testing ansible docker module with systemd hosts. 
       # This allows the container to access the host's docker daemon. Be careful with this in production environments as it can pose security risks.
@@ -84,7 +84,7 @@ services:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
           #cgroupns: host  ## not allowed in docker compose? not needed :)
       - ../shared-files/:/share
-      - ../shared-keys/:/shared-keys
+      - ../.shared-keys/:/shared-keys
 
     post_start:
       - command: ["sh", "-c", "/share/with-secrets.sh /share/generate-ansible-user-ssh.sh"]
@@ -116,7 +116,7 @@ services:
       #- /sys/fs/cgroup:/sys/fs/cgroup:rw
           #cgroupns: host  ## not allowed in docker compose? not needed :)
       - ../shared-files/:/share
-      - ../shared-keys/:/shared-keys
+      - ../.shared-keys/:/shared-keys
 
     post_start:
       - command: ["sh", "-c", "/share/with-secrets.sh /share/generate-ansible-user-ssh.sh"]
@@ -144,7 +144,7 @@ services:
       ROOT_PASSWORD: minad1234
     volumes:
       - ../shared-files/:/share
-      - ../shared-keys/:/shared-keys
+      - ../.shared-keys/:/shared-keys
 
     post_start:
       - command: ["sh", "-c", "/share/with-secrets.sh /share/generate-ansible-user-ssh.sh"]
@@ -167,7 +167,7 @@ services:
       ROOT_PASSWORD: minad1234
     volumes:
       - ../shared-files/:/share
-      - ../shared-keys/:/shared-keys
+      - ../.shared-keys/:/shared-keys
 
     post_start:
       - command: ["sh", "-c", "/share/with-secrets.sh /share/generate-ansible-user-ssh.sh"]
