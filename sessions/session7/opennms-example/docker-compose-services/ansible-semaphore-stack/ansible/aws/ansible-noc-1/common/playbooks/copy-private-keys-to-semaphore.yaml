@@ -27,6 +27,7 @@
     - name: compress secrets to gz file
       run_once: true
       ansible.builtin.shell: |
+         sudo rm -f /tmp/secretkeys.tar.gz
          sudo tar -czf /tmp/secretkeys.tar.gz /shared-secrets /shared-keys 
          sudo chown ansible:ansible /tmp/secretkeys.tar.gz
          exit 0
