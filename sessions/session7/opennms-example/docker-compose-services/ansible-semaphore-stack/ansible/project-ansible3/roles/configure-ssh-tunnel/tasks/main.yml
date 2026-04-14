@@ -33,7 +33,7 @@
         -o ExitOnForwardFailure=yes \
         -o StrictHostKeyChecking=no \
         -o UserKnownHostsFile=/dev/null \
-        -i /shared-keys/sshtunnel/.ssh/id_rsa \
+        -i /shared-keys/ssh-keys/.ssh-sshtunnel/id_rsa \
         -R {{reverse_tunnel_port}}:localhost:22 \
         sshtunnel@{{ bastion_host }} -p 22
        Restart=always
