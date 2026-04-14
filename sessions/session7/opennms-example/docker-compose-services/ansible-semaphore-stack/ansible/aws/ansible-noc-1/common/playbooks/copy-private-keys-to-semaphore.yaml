@@ -27,12 +27,14 @@
       ansible.builtin.copy:
          src: /shared-keys
          dest: /opt/docker/compose/docker-compose-services/.shared-keys
+         force: true
 
     - name: copy shared secrets to remote ansible controller
       become: true
       ansible.builtin.copy:
          src: /shared-secrets
          dest: /opt/docker/compose/docker-compose-services/.shared-secrets
+         force: true
     
   post_tasks:
     
