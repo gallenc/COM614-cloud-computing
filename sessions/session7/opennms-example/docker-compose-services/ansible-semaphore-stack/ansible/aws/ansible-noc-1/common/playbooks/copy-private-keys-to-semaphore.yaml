@@ -21,23 +21,45 @@
       setup:
 
   tasks:
+    
+    # work around for permissions issues when running ansible in semaphore with a non-root user and copying files to the ansible controller
+    
+    - name: compress secrets to gz file
+      run_once: true
+      ansible.builtin.shell: |
+         sudo tar -czf /tmp/secretkeys.tar.gz /shared-secrets /shared-keys 
+         sudo chown ansible:ansible /tmp/secretkeys.tar.gz
+         exit 0
+      delegate_to: localhost
         
-    - name: copy shared keys to remote ansible controller
+    - name: copy secret keys to remote ansible controller
       become: true
       ansible.builtin.copy:
-         src: /shared-keys
-         dest: /opt/docker/compose/docker-compose-services/.shared-keys
+         src:  /tmp/secretkeys.tar.gz
+         dest: /opt/docker/compose/docker-compose-services/
          force: true
 
-    - name: copy shared secrets to remote ansible controller
+    - name: unpack shared secrets on ansible controller
       become: true
-      ansible.builtin.copy:
-         src: /shared-secrets
-         dest: /opt/docker/compose/docker-compose-services/.shared-secrets
-         force: true
-    
+      ansible.builtin.shell: |
+          sudo rm -f /opt/docker/compose/docker-compose-services/.shared-secrets
+          sudo rm -f /opt/docker/compose/docker-compose-services/.shared-keys
+          
+          sudo tar -xvzf /tmp/secretkeys.tar.gz -C /opt/docker/compose/docker-compose-services/
+          
+          sudo mv /opt/docker/compose/docker-compose-services/shared-secrets /opt/docker/compose/docker-compose-services/.shared-secrets
+          sudo mv /opt/docker/compose/docker-compose-services/shared-keys /opt/docker/compose/docker-compose-services/.shared-keys
+          sudo rm -f /tmp/secretkeys.tar.gz
+          exit 0
+
+    - name: remove temporary gz file from localhost
+      ansible.builtin.shell: |
+          sudo rm /tmp/secretkeys.tar.gz
+          exit 0
+      delegate_to: localhost
+      
   post_tasks:
-    
+
     - name: drop semaphore ansible ssh keys
       import_tasks: tasks/unload-ssh-keys.yaml
       when: (lookup('env', 'SEMAPHORE_ADMIN') | length > 0)
