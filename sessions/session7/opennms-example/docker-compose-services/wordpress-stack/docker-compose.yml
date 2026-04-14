@@ -1,0 +1,197 @@
+---
+
+# using fixed ip addresses
+# to see all network use docker network ls
+# to see config use docker network inspect minimal-minion-activemq_N000
+# note gateway is 172.20.0.1
+networks: 
+  N000:
+    name: "${SHARED_NETWORK_N000_ID:-N000}"
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
+  N001:
+    name: "${SHARED_NETWORK_N001_ID:-N001}"
+    ipam:
+      config:
+        - subnet: 172.20.2.0/24
+
+volumes:
+   wpdb_data: {} # data for mariadb / wordpress
+   wp_data: {} # data for wordpress
+   
+
+      
+services:
+ 
+  # word press example modified from 
+  # https://github.com/docker/awesome-compose/tree/master/wordpress-mysql
+  
+  # test wordpress mysql/mariadb database
+  wpdb:
+    # We use a mariadb image which supports both amd64 & arm64 architecture
+    image: mariadb:10.6.4-focal
+    # If you really want to use MySQL, uncomment the following line
+    #image: mysql:8.0.27
+    container_name: wpdb
+    hostname: wpdb
+    command: '--default-authentication-plugin=mysql_native_password'
+    volumes:
+      - wpdb_data:/var/lib/mysql
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=somewordpress
+      - MYSQL_DATABASE=wordpress
+      - MYSQL_USER=wordpress
+      - MYSQL_PASSWORD=wordpress
+    expose:
+      - 3306
+      - 33060
+    networks:
+      N000:
+        ipv4_address: 172.20.0.70
+        
+  # word press cli used to set up the word press site we are monitoring without manual intervention
+  # see https://stackoverflow.com/questions/50999848/how-to-run-wp-cli-in-docker-compose-yml
+  wordpress-cli:
+    depends_on:
+      - wpdb
+      - wordpress1
+      - wordpress2
+      - wordpress3
+    image: wordpress:cli
+    container_name: wordpress-cli
+    hostname: wordpress-cli
+    # vstm: This is required to run wordpress-cli with the same
+    # user-id as wordpress. This way there are no permission problems
+    # when running the cli
+    user: '33'
+    # vstm: The sleep 20 is required so that the command is run after
+    # mysql is initialized. Depending on your machine this might take
+    # longer or it can go faster.
+    # note path must match working_dir and must match the url root of wordpress installation
+    command: >
+      /bin/sh -c '
+      sleep 20;
+      wp core install --path="/var/www/html/wordpress" \
+         --url="https://${WEB_VIRTUAL_HOST:-localhost}/wordpress" \
+         --title="Local Wordpress By Docker" \
+         --admin_user=admin \
+         --admin_password=secret \
+         --admin_email=foo@bar.com 
+      '
+    volumes:
+      - wp_data:/var/www/html
+    # WP CLI needs the environment variables used for the Wordpress image
+    environment:
+      WORDPRESS_DB_HOST: wpdb:3306
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_TABLE_PREFIX: "wp_"
+
+    networks:
+      N000:
+        ipv4_address: 172.20.0.80
+      
+  # wordpress server 1
+  wordpress1:
+    depends_on:
+      - wpdb
+    image: wordpress:latest
+    container_name: wordpress1
+    hostname: wordpress1
+    ports:
+      - 8011:80
+    restart: unless-stopped
+    environment:
+      WORDPRESS_DB_HOST: wpdb:3306
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_TABLE_PREFIX: "wp_"
+      WORDPRESS_DEBUG: 1
+      
+      VIRTUAL_HOST: ${WEB_VIRTUAL_HOST:-samplewebsite.example.com}
+      VIRTUAL_NETWORK: N000
+      VIRTUAL_PATH: /wordpress
+      VIRTUAL_PORT: 80
+      LETSENCRYPT_HOST: ${ENV_LETSENCRYPT_HOST:-sample.example.com}
+      LETSENCRYPT_EMAIL: ${ENV_LETSENCRYPT_EMAIL:-email@example.com}
+      
+    # note working dir must match the url root of wordpress installation
+    working_dir: /var/www/html/wordpress
+    volumes:
+      - wp_data:/var/www/html
+    networks:
+      N000:
+        ipv4_address: 172.20.0.81
+        
+  # wordpress server 2
+  wordpress2:
+    depends_on:
+      - wpdb
+    image: wordpress:latest
+    container_name: wordpress2
+    hostname: wordpress2
+    ports:
+      - 8012:80
+    restart: unless-stopped
+    environment:
+      WORDPRESS_DB_HOST: wpdb:3306
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_TABLE_PREFIX: "wp_"
+      WORDPRESS_DEBUG: 1
+      
+      VIRTUAL_HOST: ${WEB_VIRTUAL_HOST:-samplewebsite.example.com}
+      VIRTUAL_NETWORK: N000
+      VIRTUAL_PATH: /wordpress
+      VIRTUAL_PORT: 80
+      LETSENCRYPT_HOST: ${ENV_LETSENCRYPT_HOST:-sample.example.com}
+      LETSENCRYPT_EMAIL: ${ENV_LETSENCRYPT_EMAIL:-email@example.com}
+      
+    # note working dir must match the url root of wordpress installation
+    working_dir: /var/www/html/wordpress
+
+    volumes:
+      - wp_data:/var/www/html
+    networks:
+      N000:
+        ipv4_address: 172.20.0.82
+      
+
+  # wordpress server 3
+  wordpress3:
+    depends_on:
+      - wpdb
+    image: wordpress:latest
+    container_name: wordpress3
+    hostname: unless-stopped
+    ports:
+      - 8013:80
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: wpdb:3306
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_TABLE_PREFIX: "wp_"
+      WORDPRESS_DEBUG: 1
+      
+      VIRTUAL_HOST: ${WEB_VIRTUAL_HOST:-samplewebsite.example.com}
+      VIRTUAL_NETWORK: N000
+      VIRTUAL_PATH: /wordpress
+      VIRTUAL_PORT: 80
+      LETSENCRYPT_HOST: ${ENV_LETSENCRYPT_HOST:-sample.example.com}
+      LETSENCRYPT_EMAIL: ${ENV_LETSENCRYPT_EMAIL:-email@example.com}
+      
+    # note working dir must match the url root of wordpress installation
+    working_dir: /var/www/html/wordpress
+    # vstm: add shared volume
+    volumes:
+      - wp_data:/var/www/html
+    networks:
+      N000:
+        ipv4_address: 172.20.0.83
