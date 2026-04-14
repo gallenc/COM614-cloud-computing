@@ -48,8 +48,8 @@
           
           sudo tar -xvzf /tmp/secretkeys.tar.gz -C /opt/docker/compose/docker-compose-services/
           
-          sudo mv /opt/docker/compose/docker-compose-services/shared-secrets /opt/docker/compose/docker-compose-services/.shared-secrets
-          sudo mv /opt/docker/compose/docker-compose-services/shared-keys /opt/docker/compose/docker-compose-services/.shared-keys
+          sudo rename /opt/docker/compose/docker-compose-services/shared-secrets /opt/docker/compose/docker-compose-services/.shared-secrets
+          sudo rename /opt/docker/compose/docker-compose-services/shared-keys /opt/docker/compose/docker-compose-services/.shared-keys
           sudo rm -f /tmp/secretkeys.tar.gz
           exit 0
 
