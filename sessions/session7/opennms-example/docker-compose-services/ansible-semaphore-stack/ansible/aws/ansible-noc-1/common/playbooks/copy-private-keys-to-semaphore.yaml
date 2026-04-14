@@ -37,6 +37,7 @@
       ansible.builtin.copy:
          src:  /tmp/secretkeys.tar.gz
          dest: /opt/docker/compose/docker-compose-services/secretkeys.tar.gz
+         follow: true # follow symlinks to ensure the file is copied correctly
          force: true
 
     - name: unpack shared secrets on ansible controller
