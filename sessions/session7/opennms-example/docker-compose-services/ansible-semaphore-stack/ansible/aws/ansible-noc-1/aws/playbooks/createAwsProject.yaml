@@ -91,7 +91,7 @@
     when: key_pair.changed
     become: true
     ansible.builtin.file:
-       path: "/secretkeys/.ssh"
+       path: "/shared-keys/ssh-keys/.ssh-aws"
        state: directory
        mode: '0777'
 
@@ -99,7 +99,7 @@
     when: key_pair.changed
     ansible.builtin.copy:
       content: "{{ key_pair.key.private_key }}"
-      dest: "/secretkeys/.ssh/{{ project_name }}.private_key.pem"
+      dest: "/shared-keys/ssh-keys/.ssh-aws/{{ project_name }}.private_key.pem"
       mode: '0700'
 
   - name: Create a virtual private cloud (VPC)
@@ -278,9 +278,9 @@
       - "ssh -i {{ lookup('env', 'HOME') }}/.ssh/{{ project_name }}.private_key.pem ec2-user@{{ ec2.instances[0].public_ip_address}}"
       - "ssh -i {{ lookup('env', 'HOME') }}/.ssh/{{ project_name }}.private_key.pem ec2-user@{{ ec2.instances[0].public_dns_name}}"
       - "ssh -i {{ lookup('env', 'HOME') }}/.ssh/{{ project_name }}.private_key.pem ec2-user@{{ host_name1 }}.noc.{{deployment}}.{{ hosted_zone }}"
-      - "ssh -i /secretkeys/.ssh/{{ project_name }}.private_key.pem ec2-user@{{ ec2.instances[0].public_ip_address}}"
-      - "ssh -i /secretkeys/.ssh/{{ project_name }}.private_key.pem ec2-user@{{ ec2.instances[0].public_dns_name}}"
-      - "ssh -i /secretkeys/.ssh/{{ project_name }}.private_key.pem ec2-user@{{ host_name1 }}.noc.{{deployment}}.{{ hosted_zone }}"
+      - "ssh -i /shared-keys/ssh-keys/.ssh-aws/{{ project_name }}.private_key.pem ec2-user@{{ ec2.instances[0].public_ip_address}}"
+      - "ssh -i /shared-keys/ssh-keys/.ssh-aws/{{ project_name }}.private_key.pem ec2-user@{{ ec2.instances[0].public_dns_name}}"
+      - "ssh -i /shared-keys/ssh-keys/.ssh-aws/{{ project_name }}.private_key.pem ec2-user@{{ host_name1 }}.noc.{{deployment}}.{{ hosted_zone }}"
 
   - name: Wait for SSH to be available
     ansible.builtin.wait_for:

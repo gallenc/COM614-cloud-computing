@@ -58,7 +58,7 @@ services:
       - ./container-fs/ansible:/opt/ansible/inventory
       - ../shared-files/:/share
       - ../.shared-keys/:/shared-keys
-      - ./container-fs/secretkeys:/secretkeys
+
     secrets:
       - ANSIBLE_SSH_PASSPHRASE
       - ANSIBLE_ROOT_PASSWORD
