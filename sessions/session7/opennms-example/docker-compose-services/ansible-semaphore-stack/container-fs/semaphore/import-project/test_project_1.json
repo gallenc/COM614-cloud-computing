@@ -221,7 +221,9 @@
       "roles": [],
       "suppress_success_alerts": false,
       "survey_vars": [],
-      "task_params": {},
+      "task_params": {
+        "allow_debug": true
+      },
       "type": "",
       "vaults": []
     },
@@ -240,7 +242,9 @@
       "roles": [],
       "suppress_success_alerts": false,
       "survey_vars": [],
-      "task_params": {},
+      "task_params": {
+        "allow_debug": true
+      },
       "type": "",
       "vaults": []
     },
@@ -295,6 +299,27 @@
       "inventory": "common-ansible-noc-1-dev",
       "name": "Common start ansible-semaphore-stack",
       "playbook": "sessions/session7/opennms-example/docker-compose-services/ansible-semaphore-stack/ansible/aws/ansible-noc-1/common/playbooks/start-ansible-semaphore-stack-service.yaml",
+      "repository": "COM614-cloud-computing",
+      "roles": [],
+      "suppress_success_alerts": false,
+      "survey_vars": [],
+      "task_params": {
+        "allow_debug": true
+      },
+      "type": "",
+      "vaults": []
+    },
+    {
+      "allow_override_args_in_task": false,
+      "allow_override_branch_in_task": false,
+      "allow_parallel_tasks": false,
+      "app": "ansible",
+      "arguments": "[]",
+      "autorun": false,
+      "environment": "Empty",
+      "inventory": "common-ansible-noc-1-dev",
+      "name": "Common start nginx-letsencrypt-stack",
+      "playbook": "sessions/session7/opennms-example/docker-compose-services/ansible-semaphore-stack/ansible/aws/ansible-noc-1/common/playbooks/start-docker-nginx-proxy-letsencrypt-stack-service.yaml",
       "repository": "COM614-cloud-computing",
       "roles": [],
       "suppress_success_alerts": false,
