@@ -1,0 +1,69 @@
+---
+
+# Docker compose project containing grafana configuration
+# Craig Gallen Entimoss LTD
+
+# using fixed ip addresses
+# to see all network use docker network ls
+# to see config use docker network inspect SHARED_NETWORK_N000_ID
+# note gateway is 172.20.0.1 
+networks:
+  N000:
+    name: "${SHARED_NETWORK_N000_ID:-N000}"
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
+  N001:
+    name: "${SHARED_NETWORK_N001_ID:-N001}"
+    ipam:
+      config:
+        - subnet: 172.20.2.0/24
+
+volumes:
+  data-grafana: {}
+
+services:
+      
+  grafana:
+    profiles: [opennms]
+    image: ${DOCKER_REGISTRY:-docker.io}/grafana/grafana:${GRAFANA_VERSION:-latest}
+    container_name: grafana
+    hostname: grafana
+    environment:
+      TZ: ${TIMEZONE:-America/New_York}
+      GF_SECURITY_ADMIN_PASSWORD: mypass
+      GF_INSTALL_PLUGINS: opennms-opennms-app,grafana-piechart-panel,neocat-cal-heatmap-panel,briangann-datatable-panel
+      GF_SERVER_HTTP_PORT: 3000
+      GF_SERVER_PROTOCOL: http
+      GF_SERVER_DOMAIN: localhost:80
+      GF_SERVER_ROOT_URL: http://localhost:80/grafana/
+      GF_SERVER_SERVER_FROM_SUB_PATH: true
+      
+      # datasources - should match variable substitution in datasources
+      ONMS_GRAFANA_USERNAME: admin
+      ONMS_GRAFANA_PASSWORD: admin
+      POSTGRES_GRAFANA_USERNAME: postgres
+      POSTGRES_GRAFANA_PASSWORD: postgres
+
+      # docker-proxy settings for nginx-proxy and acme-companion
+      VIRTUAL_HOST: ${GRAFANA_VIRTUAL_HOST:-samplewebsite.example.com}
+      VIRTUAL_NETWORK: N000
+      VIRTUAL_PATH: /grafana
+      VIRTUAL_PORT: 3000
+      LETSENCRYPT_HOST: ${ENV_LETSENCRYPT_HOST:-sample.example.com}
+      LETSENCRYPT_EMAIL: ${ENV_LETSENCRYPT_EMAIL:-email@example.com}
+      
+    volumes:
+      - data-grafana:/var/lib/grafana
+      - ./container-fs/grafana/provisioning:/etc/grafana/provisioning/
+      - ./container-fs/grafana/conf/conf.ini:/conf/conf.ini
+    ports:
+      - "3000:3000/tcp"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 100M
+    networks:
+      N000:
+        ipv4_address: 172.20.0.20

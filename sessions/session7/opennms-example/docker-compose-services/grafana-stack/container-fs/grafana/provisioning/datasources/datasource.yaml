@@ -1,0 +1,59 @@
+# datasources definition for the docker compose example
+# see ronnies example herehttps://github.com/opennms-forge/bmp-playground/blob/2fed326b902e4367f481edcf8a657dc2907e469e/grafana/dashboards/dashboard.yml
+# see also https://grafana.com/docs/grafana/latest/administration/provisioning/?utm_source=grafana_ds_list#data-sources
+# note uid of datasources must match uid in dashboards
+
+apiVersion: 1
+
+datasources:
+  - name: OpenNMS Performance
+    type: opennms-performance-datasource
+    uid: "a1e696f9-1885-4e78-a829-2e2379ee0aa5"
+    access: proxy
+    database: ""
+    orgId: 1
+    url: http://horizon:8980/opennms
+    isDefault: true
+    basicAuth: true
+    basicAuthUser: ${ONMS_GRAFANA_USERNAME}
+    secureJsonData:
+      basicAuthPassword: ${ONMS_GRAFANA_PASSWORD}
+
+  - name: OpenNMS Entity
+    type: opennms-entity-datasource
+    uid: "fbf4dab5-e6f2-47b7-9bcc-8ed69da133b3"
+    access: proxy
+    database: ""
+    orgId: 1
+    url: http://horizon:8980/opennms
+    basicAuth: true
+    basicAuthUser: ${ONMS_GRAFANA_USERNAME}
+    secureJsonData:
+      basicAuthPassword: ${ONMS_GRAFANA_PASSWORD}
+
+#  - name: OpenNMS Flow
+#    type: opennms-flow-datasource
+#    uid: my_unique_uid
+#    access: proxy
+#    database: ""
+#    orgId: 1
+#    url: http://horizon:8980/opennms
+#    basicAuth: true
+#   basicAuthUser: ${ONMS_GRAFANA_USERNAME}
+#   secureJsonData:
+#     basicAuthPassword: ${ONMS_GRAFANA_PASSWORD}
+
+  - name: PostgreSQL-opennms
+    type: postgres
+    uid: "c52de4bf-ec82-4ecd-be95-cac08b56d9e0"
+    access: proxy
+    database: opennms
+    url: database:5432
+    user: ${POSTGRES_GRAFANA_USERNAME}
+    secureJsonData:
+      password: ${POSTGRES_GRAFANA_PASSWORD}
+    jsonData:
+      postgresVersion: 1500
+      sslmode: disable
+      tlsAuth: false
+      tlsSkipVerify: true
