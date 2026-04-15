@@ -37,7 +37,7 @@ services:
 
       # use if running behind nginx
       GF_SERVER_DOMAIN: localhost:80
-      GF_SERVER_ROOT_URL: http://localhost:80/grafana/
+      GF_SERVER_ROOT_URL: http://localhost:80/grafana
       GF_SERVER_SERVER_FROM_SUB_PATH: true
       
       # datasources - should match variable substitution in datasources
