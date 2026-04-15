@@ -4,6 +4,8 @@ project_name: AWS_EC2_Instance_Test
 ami_id: ami-041f62d0737a0fbd1 #alma 10  # ami-04b6c97b14c54de18   # Amazon Linux 2 AMI (HVM), SSD Volume Type
 
 # choice of instance types - see https://aws.amazon.com/ec2/instance-types/
+# note "Free tier eligible" means a resource (e.g., an EC2 instance) is part of the AWS Free Tier program but may not be free for you
+# while "Free tier available" means that the resource is eligible for the AWS Free Tier program, 
 # t2.micro   1 vCPU, 1 GiB memory - NOT free tier eligible 0.0132
 # t3.micro   2 vCPU, 1 GiB memory - free tier eligible 0.0118 USD
 # t3.small   2 vCPU, 2 GiB memory - free tier eligible 0.0236 USD
