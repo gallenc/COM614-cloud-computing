@@ -35,7 +35,9 @@ echo updated repo in directory $DIRECTORY/$REPO
 
 sudo mkdir -p /opt/docker/compose
 
-sudo ln -sf -t /opt/docker/compose/  $DIRECTORY/COM614-cloud-computing/sessions/session7/opennms-example/docker-compose-services   docker-compose-services
+rm -f /opt/docker/compose/docker-compose-services
+
+sudo ln -sf   $DIRECTORY/COM614-cloud-computing/sessions/session7/opennms-example/docker-compose-services   /opt/docker/compose/docker-compose-services
 
 sudo chown -h ansible:ansible /opt/docker/compose/docker-compose-services
 
