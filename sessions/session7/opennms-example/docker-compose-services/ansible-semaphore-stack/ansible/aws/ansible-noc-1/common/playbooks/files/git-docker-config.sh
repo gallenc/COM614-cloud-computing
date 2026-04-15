@@ -8,6 +8,7 @@
 DIRECTORY="/home/ansible/devel/gitrepos"
 REPO="COM614-cloud-computing"
 REPO_URL="https://github.com/gallenc/COM614-cloud-computing.git"
+RELATIVE_SERVICE_PATH="sessions/session7/opennms-example/docker-compose-services
 
 if ! [ -d "$DIRECTORY" ]; then
   echo creating "$DIRECTORY"
@@ -37,7 +38,9 @@ sudo mkdir -p /opt/docker/compose
 
 rm -f /opt/docker/compose/docker-compose-services
 
-sudo ln -sf   $DIRECTORY/COM614-cloud-computing/sessions/session7/opennms-example/docker-compose-services   /opt/docker/compose/docker-compose-services
+sudo ln -sf   $DIRECTORY/$REPO/$RELATIVE_SERVICE_PATH   /opt/docker/compose/docker-compose-services
+
+echo "Created simlink  /opt/docker/compose/docker-compose-services to compose services in directory $DIRECTORY/$REPO/$RELATIVE_SERVICE_PATH"
 
 sudo chown -h ansible:ansible /opt/docker/compose/docker-compose-services
 
