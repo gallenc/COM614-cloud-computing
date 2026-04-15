@@ -8,7 +8,7 @@
 DIRECTORY="/home/ansible/devel/gitrepos"
 REPO="COM614-cloud-computing"
 REPO_URL="https://github.com/gallenc/COM614-cloud-computing.git"
-RELATIVE_SERVICE_PATH="sessions/session7/opennms-example/docker-compose-services
+RELATIVE_SERVICE_PATH="sessions/session7/opennms-example/docker-compose-services"
 
 if ! [ -d "$DIRECTORY" ]; then
   echo creating "$DIRECTORY"
