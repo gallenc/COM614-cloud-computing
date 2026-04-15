@@ -43,8 +43,8 @@
     - name: unpack shared secrets on ansible controller
       become: true
       ansible.builtin.shell: |
-          sudo rm -f /opt/docker/compose/docker-compose-services/.shared-secrets
-          sudo rm -f /opt/docker/compose/docker-compose-services/.shared-keys
+          sudo rm -r -f /opt/docker/compose/docker-compose-services/.shared-secrets
+          sudo rm -r -f /opt/docker/compose/docker-compose-services/.shared-keys
           
           sudo tar -xvzf /tmp/secretkeys.tar.gz -C /opt/docker/compose/docker-compose-services/
           
