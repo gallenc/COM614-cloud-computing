@@ -121,7 +121,7 @@ services:
   # try docker compose exec aws-cli bash
   # aws help
   aws-cli:
-    image: amazon/aws-cli:latest
+    image: amazon/aws-cli:2.34.30
     container_name: aws-cli
     stdin_open: true # equivalent of -i
     tty: true        # equivalent of -t

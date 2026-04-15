@@ -25,7 +25,7 @@
       ansible.builtin.systemd_service:
         name: docker-compose@grafana-stack
         #enabled: true
-        state: started
+        state: stopped
     
   post_tasks:
     
