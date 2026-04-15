@@ -107,7 +107,7 @@ services:
       # docker-proxy settings for nginx-proxy and acme-companion
       VIRTUAL_HOST: ${SEMAPHORE_VIRTUAL_HOST:-samplewebsite.example.com}
       VIRTUAL_NETWORK: N000
-      VIRTUAL_PATH: /semaphoreui
+      VIRTUAL_PATH: /semaphore
       VIRTUAL_PORT: 3000
       LETSENCRYPT_HOST: ${ENV_LETSENCRYPT_HOST:-sample.example.com}
       LETSENCRYPT_EMAIL: ${ENV_LETSENCRYPT_EMAIL:-email@example.com}
