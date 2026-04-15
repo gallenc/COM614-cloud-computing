@@ -103,6 +103,14 @@ services:
       # dosent seem to work - see command above for startup
       # SEMAPHORE_IMPORT_PROJECT_NAME: "Test_Project_1"
       # SEMAPHORE_IMPORT_PROJECT_FILE: /home/semaphore/import-project/test_project_1.json
+      
+      # docker-proxy settings for nginx-proxy and acme-companion
+      VIRTUAL_HOST: ${SEMAPHORE_VIRTUAL_HOST:-samplewebsite.example.com}
+      VIRTUAL_NETWORK: N000
+      VIRTUAL_PATH: /semaphoreui
+      VIRTUAL_PORT: 3000
+      LETSENCRYPT_HOST: ${ENV_LETSENCRYPT_HOST:-sample.example.com}
+      LETSENCRYPT_EMAIL: ${ENV_LETSENCRYPT_EMAIL:-email@example.com}
     depends_on:
       -  postgres-semaphore
     networks:
@@ -121,6 +129,6 @@ services:
     environment:
       - HTTP_PROXY=http://ipadresses:port
       - HTTPS_PROXY=https://ipadresses:port
-    ports:
-      - "8080:8080"
+    #ports:
+    #  - "8080:8080"
  
