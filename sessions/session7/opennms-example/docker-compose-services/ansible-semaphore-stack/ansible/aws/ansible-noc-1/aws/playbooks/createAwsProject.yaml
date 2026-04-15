@@ -225,7 +225,7 @@
        state: running
        image_id: "{{ ami_id }}"
        name: "{{ host_name1 }}"
-       instance_type: t2.micro
+       instance_type: "{{ instance_type }}"
        key_name: "{{ project_name }}.public_key"   # SSH Key Name
        subnet_id: "{{ subnet.subnet.id }}"
        security_group: "{{ sg.group_name }}"
