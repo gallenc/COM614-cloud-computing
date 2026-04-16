@@ -6,17 +6,24 @@
 #
 # using fixed ip addresses so opennms provisoning config works with known addresses
 # to see all network use docker network ls
-# to see config use docker network inspect kuwabia-docker-compose_kuwaiba-net
-# note gateway is 172.30.0.1 
+# to see config use docker network inspect SHARED_NETWORK_N000_ID
+# note gateway is 172.20.0.1 
 networks:
-  kuwaiba-net:
+  N000:
+    name: "${SHARED_NETWORK_N000_ID:-N000}"
     ipam:
       config:
-        - subnet: 172.30.0.0/24
+        - subnet: 172.20.0.0/24
+  N001:
+    name: "${SHARED_NETWORK_N001_ID:-N001}"
+    ipam:
+      config:
+        - subnet: 172.20.2.0/24
+  # to match radio network examples
   testradiosite1:
     ipam:
       config:
-        - subnet: 192.168.105.0/24
+         - subnet: 192.168.105.0/24
 
 volumes:
   data-postgres: {}
@@ -26,6 +33,7 @@ volumes:
 
 services:
 
+  # only runs locally for testing opennms using docker compose  --profile local-nginx  up -d
   nginx:
     profiles: [local-nginx]
     image: ${DOCKER_REGISTRY:-docker.io}/nginx:${NGINX_VERSION:-1.23-alpine}
@@ -42,15 +50,23 @@ services:
       - "80:80"
       - "443:443"
     networks:
-      kuwaiba-net:
-        ipv4_address: 172.30.0.5
+      N000:
+        ipv4_address: 172.20.0.5
 
   pris-kuwaiba:
     container_name: pris-kuwaiba
     image: ${DOCKER_REGISTRY:-docker.io}/${DOCKER_ORG:-opennms}/${MINION_OCI:-pris}:${PRIS_VERSION:-latest}
     environment:
-      - TZ=Europe/Berlin
-      - JAVA_OPTS=-XX:+PrintGCDetails -XX:+UnlockExperimentalVMOptions
+      TZ: ${TIMEZONE:-America/New_York}
+      JAVA_OPTS: -XX:+PrintGCDetails -XX:+UnlockExperimentalVMOptions
+      
+      # docker-proxy settings for nginx-proxy and acme-companion
+      VIRTUAL_HOST: ${PRIS_VIRTUAL_HOST:-samplewebsite.example.com}
+      VIRTUAL_NETWORK: N000
+      VIRTUAL_PATH: /pgadmin4
+      VIRTUAL_PORT: 3000
+      LETSENCRYPT_HOST: ${ENV_LETSENCRYPT_HOST:-sample.example.com}
+      LETSENCRYPT_EMAIL: ${ENV_LETSENCRYPT_EMAIL:-email@example.com}
     volumes:
       - ./container-fs/pris/requisitions:/opt/opennms-pris/requisitions
       - ./container-fs/pris/scriptsteps:/opt/opennms-pris/scriptsteps
@@ -65,8 +81,8 @@ services:
     ports:
       - "8020:8000"
     networks:
-      kuwaiba-net:
-        ipv4_address: 172.30.0.35
+      N000:
+        ipv4_address: 172.20.0.35
         
   database:
     image: ${DOCKER_REGISTRY:-docker.io}/postgres:${POSTGRES_VERSION:-13}
@@ -86,8 +102,8 @@ services:
       timeout: 30s
       retries: 3
     networks:
-      kuwaiba-net:
-        ipv4_address: 172.30.0.10
+      N000:
+        ipv4_address: 172.20.0.10
 
   pgadmin:
     image: dpage/pgadmin4
@@ -99,12 +115,20 @@ services:
       PGADMIN_DEFAULT_EMAIL: user-name@domain-name.com
       PGADMIN_DEFAULT_PASSWORD: minad1234
       PGADMIN_SERVER_JSON_FILE: /pgadmin/servers.json
+      
+      # docker-proxy settings for nginx-proxy and acme-companion
+      VIRTUAL_HOST: ${PGADMIN4_VIRTUAL_HOST:-samplewebsite.example.com}
+      VIRTUAL_NETWORK: N000
+      VIRTUAL_PATH: /pgadmin4
+      VIRTUAL_PORT: 3000
+      LETSENCRYPT_HOST: ${ENV_LETSENCRYPT_HOST:-sample.example.com}
+      LETSENCRYPT_EMAIL: ${ENV_LETSENCRYPT_EMAIL:-email@example.com}
     volumes:
       - data-pgadmin:/var/lib/pgadmin
       - ./container-fs/pgadmin/:/pgadmin
     networks:
-      kuwaiba-net:
-        ipv4_address: 172.30.0.11
+      N000:
+        ipv4_address: 172.20.0.11
 
   horizon:
     image: ${DOCKER_REGISTRY:-docker.io}/${DOCKER_ORG:-opennms}/${HORIZON_OCI:-horizon}:${ONMS_VERSION:-bleeding}
@@ -120,6 +144,15 @@ services:
       # JAVA_OPTS updates from default in container (-Xmx1024m -XX:MaxMetaspaceSize=512m) plus enable debugger
       # extenal jdb connection from windows using  jdb -connect com.sun.jdi.SocketAttach:hostname=localhost,port=8001
       JAVA_OPTS: -Xmx2048m -XX:MaxMetaspaceSize=512m -agentlib:jdwp=transport=dt_socket,server=y,address=*:8001,suspend=n
+      
+      # docker-proxy settings for nginx-proxy and acme-companion
+      VIRTUAL_HOST: ${HORIZON_VIRTUAL_HOST:-samplewebsite.example.com}
+      VIRTUAL_NETWORK: N000
+      VIRTUAL_PATH: /opennms
+      VIRTUAL_PORT: 3000
+      LETSENCRYPT_HOST: ${ENV_LETSENCRYPT_HOST:-sample.example.com}
+      LETSENCRYPT_EMAIL: ${ENV_LETSENCRYPT_EMAIL:-email@example.com}
+      
     volumes:
       - data-opennms:/opennms-data
       - data-opennms-cfg:/opt/opennms/etc
@@ -146,8 +179,8 @@ services:
           cpus: "2"
           memory: 4G
     networks:
-      kuwaiba-net:
-        ipv4_address: 172.30.0.15
+      N000:
+        ipv4_address: 172.20.0.15
       
  
 # minion1 is an instance of a minion on testradiosite network. Used to access devices simulated using snmpsim
@@ -186,8 +219,11 @@ services:
           cpus: "1"
           memory: 3216M
     networks:
-      kuwaiba-net:
-        ipv4_address: 172.30.0.25
+      N000:
+        ipv4_address: 172.20.0.25
+      N001:
+        ipv4_address: 172.20.2.25
+      # to match radio network examples
       testradiosite1:
         ipv4_address: 192.168.105.245
 
