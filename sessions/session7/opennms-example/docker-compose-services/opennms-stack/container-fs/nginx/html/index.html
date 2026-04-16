@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Kuwaiba OpenNMS Radio Demo</title>
+
+</head>
+<body>
+
+   <h2>Kuwaiba OpenNMS Radio Demo</h2>
+
+   <table>
+      <tr>
+         <th>Component</th>
+         <th>URL</th>
+      </tr>
+      <tr>
+         <td>Kuwaiba</td>
+         <td><a href="./kuwaiba" target="_blank">Kuwaiba Login</a></td>
+      </tr>
+      <tr>
+         <td>OpenNMS</td>
+         <td><a href="./opennms" target="_blank">OpenNMS Login</a></td>
+      </tr>
+      <tr>
+         <td>Grafana</td>
+         <td><a href="./grafana" target="_blank">Grafana Login</a></td>
+      </tr>
+      <tr>
+         <td>PRIS REQUISITIONS</td>
+         <td>
+            <a href="./requisitions/kuwaiba-UK" target="_blank">PRIS Requisition imported from Kuwaiba (kuwaiba-UK)</a>
+            <BR>
+            <a href="./requisitions/kuwaiba-all" target="_blank">PRIS Requisition imported from Kuwaiba (kuwaiba-all)</a>
+            <BR>
+            <a href="./requisitions/testrequisition" target="_blank">PRIS Requisition generated from local testrequisition.csv file</a>
+         </td>
+      </tr>
+   </table>
+   <BR>
+   <div>
+     <H2>Demo Controls - Import Requisition To OpenNMS</H2>
+     <BR>
+     <label for="requisition">Requisition Name</label> 
+     <input type="text" id="requisition" value="kuwaiba-UK"> 
+     <br>
+     <br>
+     <button id="onms-import">Import Requisition to OpenNMS</button>
+     <br>
+     <br>
+     <button id="onms-synchronise" value="kuwaiba-UK">Synchronise Requisition with OpenNMS Database</button>
+     <br>
+     <p id="result"></p>
+   </div>
+</body>
+<script>
+var result = document.getElementById('result');
+
+document.getElementById('onms-import').addEventListener('click', async _ => {
+  try { 
+	var requId = document.getElementById('requisition').value;    
+    const response = await fetch('./opennms/rest/events', {
+            headers: {
+              'Accept': 'application/xml',
+              'Content-Type': 'application/xml'
+            },
+            method: "POST",
+            body: 
+            '<event>\n'+
+            '   <uei>uei.opennms.org/internal/importer/reloadImport</uei>\n'+
+            '   <parms>\n'+
+            '      <parm>\n'+
+            '         <parmName>url</parmName>\n'+
+            '         <value>http://pris-kuwaiba:8000/requisitions/'+requId+'</value>\n'+
+            '      </parm>\n'+
+            '   </parms>\n'+
+            '</event>'
+    });
+    console.log('Completed!', response);
+    result.textContent = 'Imported Requisition :'+requId;
+  } catch(err) {
+    console.error(`Error: ${err}`);
+    result.textContent = 'error importing requisition : '+err;
+  }
+});
+
+
+// PUT http://localhost:8980/opennms/rest/requisitions/kuwaiba-UK/import?rescanExisting=true
+document.getElementById('onms-synchronise').addEventListener('click', async _ => {
+  try {     
+	var requId = document.getElementById('requisition').value; 
+    const response = await fetch('./opennms/rest/requisitions/'+requId+'/import?rescanExisting=true', {
+            headers: {
+              'Accept': 'application/xml',
+              'Content-Type': 'application/xml'
+            },
+            method: "PUT",
+            body: {}
+    });
+    console.log('Completed!', response);
+    result.textContent = 'Synchronisation Started';
+  } catch(err) {
+    console.error(`Error: ${err}`);
+    result.textContent = 'error synchronising requisition : '+err;
+  }
+});
+
+</script>
+</html>

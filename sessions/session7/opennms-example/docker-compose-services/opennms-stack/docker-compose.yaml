@@ -1,0 +1,193 @@
+---
+
+# Docker compose project containing kuwaiba opennms wireless simulation
+# Craig Gallen Entimoss LTD
+#
+#
+# using fixed ip addresses so opennms provisoning config works with known addresses
+# to see all network use docker network ls
+# to see config use docker network inspect kuwabia-docker-compose_kuwaiba-net
+# note gateway is 172.30.0.1 
+networks:
+  kuwaiba-net:
+    ipam:
+      config:
+        - subnet: 172.30.0.0/24
+  testradiosite1:
+    ipam:
+      config:
+        - subnet: 192.168.105.0/24
+
+volumes:
+  data-postgres: {}
+  data-opennms: {}
+  data-opennms-cfg: {}
+  data-pgadmin: {}
+
+services:
+
+  nginx:
+    profiles: [local-nginx]
+    image: ${DOCKER_REGISTRY:-docker.io}/nginx:${NGINX_VERSION:-1.23-alpine}
+    #image: nginx:1.23-alpine
+    container_name: nginx
+    hostname: nginx
+    restart: unless-stopped
+    volumes:
+      - ./container-fs/nginx/conf.d:/etc/nginx/conf.d
+      - ./container-fs/nginx/certs:/etc/ssl/certs
+      - ./container-fs/nginx/private:/etc/ssl/private
+      - ./container-fs/nginx/html/index.html:/usr/share/nginx/html/index.html
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      kuwaiba-net:
+        ipv4_address: 172.30.0.5
+
+  pris-kuwaiba:
+    container_name: pris-kuwaiba
+    image: ${DOCKER_REGISTRY:-docker.io}/${DOCKER_ORG:-opennms}/${MINION_OCI:-pris}:${PRIS_VERSION:-latest}
+    environment:
+      - TZ=Europe/Berlin
+      - JAVA_OPTS=-XX:+PrintGCDetails -XX:+UnlockExperimentalVMOptions
+    volumes:
+      - ./container-fs/pris/requisitions:/opt/opennms-pris/requisitions
+      - ./container-fs/pris/scriptsteps:/opt/opennms-pris/scriptsteps
+      - ./container-fs/pris/lib/jackson-annotations-2.16.0.jar:/opt/opennms-pris/lib/jackson-annotations-2.16.0.jar
+      - ./container-fs/pris/lib/jackson-core-2.16.0.jar:/opt/opennms-pris/lib/jackson-core-2.16.0.jar
+      - ./container-fs/pris/lib/jackson-databind-2.16.0.jar:/opt/opennms-pris/lib/jackson-databind-2.16.0.jar
+    healthcheck:
+      test: ["CMD", "curl", "-f", "-I", "http://localhost:8000/pris/2.1.0/index.html"]
+      interval: 30s
+      timeout: 5s
+      retries: 1
+    ports:
+      - "8020:8000"
+    networks:
+      kuwaiba-net:
+        ipv4_address: 172.30.0.35
+        
+  database:
+    image: ${DOCKER_REGISTRY:-docker.io}/postgres:${POSTGRES_VERSION:-13}
+    container_name: database
+    hostname: database
+    environment:
+      TZ: ${TIMEZONE:-America/New_York}
+      POSTGRES_HOST: database
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - data-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 30s
+      retries: 3
+    networks:
+      kuwaiba-net:
+        ipv4_address: 172.30.0.10
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: always
+    ports:
+      - "8888:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user-name@domain-name.com
+      PGADMIN_DEFAULT_PASSWORD: minad1234
+      PGADMIN_SERVER_JSON_FILE: /pgadmin/servers.json
+    volumes:
+      - data-pgadmin:/var/lib/pgadmin
+      - ./container-fs/pgadmin/:/pgadmin
+    networks:
+      kuwaiba-net:
+        ipv4_address: 172.30.0.11
+
+  horizon:
+    image: ${DOCKER_REGISTRY:-docker.io}/${DOCKER_ORG:-opennms}/${HORIZON_OCI:-horizon}:${ONMS_VERSION:-bleeding}
+    container_name: horizon
+    hostname: horizon
+    sysctls:
+      net.ipv4.ping_group_range: "0 429496729"
+    depends_on:
+      database:
+        condition: service_healthy
+    environment:
+      TZ: ${TIMEZONE:-America/New_York}
+      # JAVA_OPTS updates from default in container (-Xmx1024m -XX:MaxMetaspaceSize=512m) plus enable debugger
+      # extenal jdb connection from windows using  jdb -connect com.sun.jdi.SocketAttach:hostname=localhost,port=8001
+      JAVA_OPTS: -Xmx2048m -XX:MaxMetaspaceSize=512m -agentlib:jdwp=transport=dt_socket,server=y,address=*:8001,suspend=n
+    volumes:
+      - data-opennms:/opennms-data
+      - data-opennms-cfg:/opt/opennms/etc
+      - ./container-fs/horizon/opt/opennms/deploy:/opt/opennms/deploy
+      - ./container-fs/horizon/opt/opennms-overlay:/opt/opennms-overlay
+      - ./container-fs/horizon/etc/conf.d/confd.toml:/etc/confd/confd.toml
+    command: ["-s"]
+    ports:
+      - "8101:8101/tcp"   # karaf ssh
+      - "8980:8980/tcp"   # web ui
+      - "10162:1162/udp"  # snmp trap
+      - "10514:10514/udp" # syslog
+      - "61616:61616/tcp" # activemq
+      - "8990:8990" # grpc
+      - "8001:8001" # JPDA debugging port
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "-I", "http://localhost:8980/opennms/login.jsp" ]
+      interval: 1m
+      timeout: 5s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 4G
+    networks:
+      kuwaiba-net:
+        ipv4_address: 172.30.0.15
+      
+ 
+# minion1 is an instance of a minion on testradiosite network. Used to access devices simulated using snmpsim
+# LOCATION ftwidley1
+  minion1:
+    profiles: [minion]
+    image: ${DOCKER_REGISTRY:-docker.io}/${DOCKER_ORG:-opennms}/${MINION_OCI:-minion}:${ONMS_VERSION:-bleeding}
+    container_name: minion1
+    hostname: minion1
+    sysctls:
+      net.ipv4.ping_group_range: "0 429496729"
+    environment:
+      TZ: ${TIMEZONE:-America/New_York}
+      JAVA_MIN_MEM: 512M  # doesnt work
+      JAVA_MAX_MEM: 2048M # doesnt work
+      JAVA_OPTS: -Xmx2048m -Xms512m -agentlib:jdwp=transport=dt_socket,server=y,address=*:8001,suspend=n
+    volumes:
+      - './container-fs/minion1/opt/minion/minion-config.yaml:/opt/minion/minion-config.yaml'
+    command: ["-f"]
+#    depends_on:
+#      horizon:
+#        condition: service_healthy
+    healthcheck:
+      test: "/health.sh"
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    ports:
+      - "8201:8201/tcp"
+      - "1162:1162/udp"
+      - "1514:1514/udp"
+      - "9001:8001" # JPDA debugging port
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 3216M
+    networks:
+      kuwaiba-net:
+        ipv4_address: 172.30.0.25
+      testradiosite1:
+        ipv4_address: 192.168.105.245
+
