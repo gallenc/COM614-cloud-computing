@@ -36,6 +36,7 @@
     path: "/home/sshtunnel/.ssh"
     state: directory
     mode: '0777'
+    user: "sshtunnwl"
 
 - name: Store the public key locally for later distribution
   ansible.builtin.fetch:
