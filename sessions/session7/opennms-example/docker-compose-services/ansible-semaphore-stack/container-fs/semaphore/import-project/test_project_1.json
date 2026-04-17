@@ -358,6 +358,27 @@
       "autorun": false,
       "environment": "Empty",
       "inventory": "common-ansible-noc-1-dev",
+      "name": "Common start opennms stack",
+      "playbook": "sessions/session7/opennms-example/docker-compose-services/ansible-semaphore-stack/ansible/aws/ansible-noc-1/common/playbooks/start-opennms-stack-service.yaml",
+      "repository": "COM614-cloud-computing",
+      "roles": [],
+      "suppress_success_alerts": false,
+      "survey_vars": [],
+      "task_params": {
+        "allow_debug": true
+      },
+      "type": "",
+      "vaults": []
+    },
+    {
+      "allow_override_args_in_task": false,
+      "allow_override_branch_in_task": false,
+      "allow_parallel_tasks": false,
+      "app": "ansible",
+      "arguments": "[]",
+      "autorun": false,
+      "environment": "Empty",
+      "inventory": "common-ansible-noc-1-dev",
       "name": "Common start sample web stack",
       "playbook": "sessions/session7/opennms-example/docker-compose-services/ansible-semaphore-stack/ansible/aws/ansible-noc-1/common/playbooks/start-docker-sample-web-stack-service.yaml",
       "repository": "COM614-cloud-computing",
@@ -443,6 +464,27 @@
       "suppress_success_alerts": false,
       "survey_vars": [],
       "task_params": {},
+      "type": "",
+      "vaults": []
+    },
+    {
+      "allow_override_args_in_task": false,
+      "allow_override_branch_in_task": false,
+      "allow_parallel_tasks": false,
+      "app": "ansible",
+      "arguments": "[]",
+      "autorun": false,
+      "environment": "Empty",
+      "inventory": "common-ansible-noc-1-dev",
+      "name": "Common stop opennms stack",
+      "playbook": "sessions/session7/opennms-example/docker-compose-services/ansible-semaphore-stack/ansible/aws/ansible-noc-1/common/playbooks/stop-opennms-stack-service.yaml",
+      "repository": "COM614-cloud-computing",
+      "roles": [],
+      "suppress_success_alerts": false,
+      "survey_vars": [],
+      "task_params": {
+        "allow_debug": true
+      },
       "type": "",
       "vaults": []
     },
