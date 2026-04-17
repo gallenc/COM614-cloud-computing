@@ -18,11 +18,11 @@ networks:
   
 secrets:
   ANSIBLE_SSH_PASSPHRASE:
-    file: ../.shared-secrets/ansible_ssh_passphrase.txt
+    file: ../../.shared-secrets/ansible_ssh_passphrase.txt
   ANSIBLE_ROOT_PASSWORD:
-    file: ../.shared-secrets/ansible_root_password.txt
+    file: ../../.shared-secrets/ansible_root_password.txt
   VAULT_PASSWORD_FILE:
-    file: ../.shared-secrets/vault_password_file.txt
+    file: ../../.shared-secrets/vault_password_file.txt
 
 services:
 
@@ -45,7 +45,7 @@ services:
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
         #cgroupns: host  ## not allowed in docker compose? not needed :)
-      - ../../shared-files/:/share
+      - ../shared-files/:/share
       - ../../.shared-keys/:/shared-keys
 
       # Added to simulate docker in docker for testing ansible docker module with systemd hosts. 
@@ -83,7 +83,7 @@ services:
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
           #cgroupns: host  ## not allowed in docker compose? not needed :)
-      - ../../shared-files/:/share
+      - ../shared-files/:/share
       - ../../.shared-keys/:/shared-keys
 
     post_start:
@@ -115,7 +115,7 @@ services:
     volumes:
       #- /sys/fs/cgroup:/sys/fs/cgroup:rw
           #cgroupns: host  ## not allowed in docker compose? not needed :)
-      - ../../shared-files/:/share
+      - ../shared-files/:/share
       - ../../.shared-keys/:/shared-keys
 
     post_start:
@@ -143,7 +143,7 @@ services:
     environment:
       ROOT_PASSWORD: minad1234
     volumes:
-      - ../../shared-files/:/share
+      - ../shared-files/:/share
       - ../../.shared-keys/:/shared-keys
 
     post_start:
@@ -166,7 +166,7 @@ services:
     environment:
       ROOT_PASSWORD: minad1234
     volumes:
-      - ../../shared-files/:/share
+      - ../shared-files/:/share
       - ../../.shared-keys/:/shared-keys
 
     post_start:
