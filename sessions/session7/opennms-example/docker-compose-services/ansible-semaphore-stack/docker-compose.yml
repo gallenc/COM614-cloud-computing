@@ -56,9 +56,9 @@ services:
     volumes:
       - ./container-fs/semaphore/import-project:/home/semaphore/import-project
       - ./container-fs/ansible:/opt/ansible/inventory
-      - ../shared-files/:/share
-      - ../.shared-keys/:/shared-keys        # insecure - fix
-      - ../.shared-secrets/:/shared-secrets  # insecure - fix
+      - ../../shared-files/:/share
+      - ../../.shared-keys/:/shared-keys        # insecure - fix
+      - ../../.shared-secrets/:/shared-secrets  # insecure - fix
     secrets:
       - ANSIBLE_SSH_PASSPHRASE
       - ANSIBLE_ROOT_PASSWORD
