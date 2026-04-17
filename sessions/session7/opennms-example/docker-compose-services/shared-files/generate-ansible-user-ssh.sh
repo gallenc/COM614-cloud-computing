@@ -5,7 +5,8 @@ set -x
 # script to set up new ansible user and generate and copy new ansible keys
 # if environment variable ANSIBLE_SSH_PASSPHRASE is set, then used in generating the key
 
-ANSIBLE_KEYS="/shared-keys/ssh-keys/.ssh-ansible"
+SHARED_SSH_KEYS="/shared-keys/ssh-keys"
+ANSIBLE_KEYS="$SHARED_SSH_KEYS/.ssh-ansible"
 ANSIBLE_USER_HOME="/home/ansible"
 ANSIBLE_KEY_PASSPHRASE=""
 
@@ -24,6 +25,12 @@ if getent passwd | grep -c '^ansible:' > /dev/null ;
     sudo useradd -m -s /bin/bash  -u 800 --groups sudo,wheel  -g ansible --password "$(mkpasswd $ANSIBLE_ROOT_PASSWORD )"  ansible
     sudo echo "%ansible ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/ansible
 fi
+
+if ! [ -d "$SHARED_SSH_KEYS" ]; 
+  then
+   sudo mkdir -p "$SHARED_SSH_KEYS";
+fi
+sudo chmod 777 "$SHARED_SSH_KEYS";
 
 # only generate once but share among machines
 if ! [ -d "$ANSIBLE_KEYS" ] ; 
