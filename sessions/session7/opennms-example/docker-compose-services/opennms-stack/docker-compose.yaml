@@ -146,10 +146,10 @@ services:
       JAVA_OPTS: -Xmx2048m -XX:MaxMetaspaceSize=512m -agentlib:jdwp=transport=dt_socket,server=y,address=*:8001,suspend=n
       
       # docker-proxy settings for nginx-proxy and acme-companion
-      VIRTUAL_HOST: ${HORIZON_VIRTUAL_HOST:-samplewebsite.example.com}
+      VIRTUAL_HOST: ${OPENNMS_VIRTUAL_HOST:-samplewebsite.example.com}
       VIRTUAL_NETWORK: N000
       VIRTUAL_PATH: /opennms
-      VIRTUAL_PORT: 3000
+      VIRTUAL_PORT: 8980
       LETSENCRYPT_HOST: ${ENV_LETSENCRYPT_HOST:-sample.example.com}
       LETSENCRYPT_EMAIL: ${ENV_LETSENCRYPT_EMAIL:-email@example.com}
       
@@ -185,8 +185,9 @@ services:
  
 # minion1 is an instance of a minion on testradiosite network. Used to access devices simulated using snmpsim
 # LOCATION ftwidley1
+  # only runs locally for testing opennms using docker compose  --profile local-minion  up -d
   minion1:
-    profiles: [minion]
+    profiles: [local-minion]
     image: ${DOCKER_REGISTRY:-docker.io}/${DOCKER_ORG:-opennms}/${MINION_OCI:-minion}:${ONMS_VERSION:-bleeding}
     container_name: minion1
     hostname: minion1
