@@ -33,7 +33,7 @@
   connection: local
   become: true
   ansible.builtin.file:
-    path: "/share/sshtunnel/.ssh"
+    path: "/home/sshtunnel/.ssh"
     state: directory
     mode: '0777'
 
