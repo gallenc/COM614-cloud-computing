@@ -13,7 +13,7 @@ ami_id: ami-041f62d0737a0fbd1 #alma 10  # ami-04b6c97b14c54de18   # Amazon Linux
 # m7i-flex.large 2 vCPU x86_64 8gb - free tier eligible 0.19812 USD
 
 # t3.small works for grafana and semaphore
-
+# c7i-flex.large works with opennms - no sure about with semaphore and grafana as well
 instance_type: c7i-flex.large
 
 vpc_cidr: 172.31.0.0/16
