@@ -21,11 +21,11 @@ volumes:
   
 secrets:
   ANSIBLE_SSH_PASSPHRASE:
-    file: ../../.shared-secrets/ansible_ssh_passphrase.txt
+    file: ../.shared-secrets/ansible_ssh_passphrase.txt
   ANSIBLE_ROOT_PASSWORD:
-    file: ../../.shared-secrets/ansible_root_password.txt
+    file: ../.shared-secrets/ansible_root_password.txt
   VAULT_PASSWORD_FILE:
-    file: ../../.shared-secrets/vault_password_file.txt
+    file: ../.shared-secrets/vault_password_file.txt
 
 services:
   postgres-semaphore:
@@ -57,8 +57,8 @@ services:
       - ./container-fs/semaphore/import-project:/home/semaphore/import-project
       - ./container-fs/ansible:/opt/ansible/inventory
       - ../shared-files/:/share
-      - ../../.shared-keys/:/shared-keys        # insecure - fix
-      - ../../.shared-secrets/:/shared-secrets  # insecure - fix
+      - ../.shared-keys/:/shared-keys        # insecure - fix
+      - ../.shared-secrets/:/shared-secrets  # insecure - fix
     secrets:
       - ANSIBLE_SSH_PASSPHRASE
       - ANSIBLE_ROOT_PASSWORD
