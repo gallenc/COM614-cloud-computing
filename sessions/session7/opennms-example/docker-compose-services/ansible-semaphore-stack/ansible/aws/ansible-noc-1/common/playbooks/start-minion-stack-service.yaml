@@ -1,6 +1,6 @@
 ---
 - name: test load ssh keys with passphrase
-  hosts: "{{ variable_hosts | default('empty_group') }}"
+  hosts: remote
   # Postpone facts gathering until SSH keys have been unlocked
   gather_facts: false
   become: true
@@ -25,8 +25,12 @@
     - name: Gathering facts
       setup:
 
-  roles:
-    - install-docker-compose-services
+  tasks:
+    - name: Make sure a service unit is running
+      ansible.builtin.systemd_service:
+        name: docker-compose@minion-stack
+        #enabled: true
+        state: started
     
   post_tasks:
     

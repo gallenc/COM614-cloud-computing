@@ -1,11 +1,16 @@
 ---
 - name: test load ssh keys with passphrase
-  hosts: noc
+  hosts: "{{ variable_hosts | default('empty_group') }}"
   # Postpone facts gathering until SSH keys have been unlocked
   gather_facts: false
   become: true
   
   pre_tasks:
+    
+    - name: Fail script if required variable_hosts parameter is missing
+      fail:
+        msg: "You have to add the --extra-vars='variable_hosts='"
+      when: (variable_hosts is not defined) or (variable_hosts == "")
     
     - name: Debug output
       debug:
