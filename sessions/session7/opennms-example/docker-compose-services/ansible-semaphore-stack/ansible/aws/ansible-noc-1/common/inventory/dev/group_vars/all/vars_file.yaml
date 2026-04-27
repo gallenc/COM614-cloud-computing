@@ -1,4 +1,4 @@
 ---
-variable_hosts=noc
+variable_hosts: noc
 
 

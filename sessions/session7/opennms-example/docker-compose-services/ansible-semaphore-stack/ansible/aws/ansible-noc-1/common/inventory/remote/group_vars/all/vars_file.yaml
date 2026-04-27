@@ -1,5 +1,5 @@
 ---
-variable_hosts=remote
+variable_hosts: remote
 
 
 
