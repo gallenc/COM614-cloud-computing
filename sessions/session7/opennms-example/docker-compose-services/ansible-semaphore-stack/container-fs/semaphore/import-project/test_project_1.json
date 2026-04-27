@@ -42,7 +42,7 @@
         "message": "starting docker compose service",
         "params": {}
       },
-      "template": "NOC Common start word press stack"
+      "template": "Common start word press stack"
     },
     {
       "aliases": [
@@ -76,7 +76,7 @@
         "message": "stopping docker compose service",
         "params": {}
       },
-      "template": "NOC Common stop word press stack"
+      "template": "Common stop word press stack"
     }
   ],
   "inventories": [
@@ -215,22 +215,12 @@
       "autorun": false,
       "environment": "Empty",
       "inventory": "common-ansible-noc-1-dev",
-      "name": "NOC Common copy-private-keys-to-semaphore",
+      "name": "Common  copy-private-keys-to-semaphore",
       "playbook": "sessions/session7/opennms-example/docker-compose-services/ansible-semaphore-stack/ansible/aws/ansible-noc-1/common/playbooks/copy-private-keys-to-semaphore.yaml",
       "repository": "COM614-cloud-computing",
       "roles": [],
       "suppress_success_alerts": false,
-      "survey_vars": [
-        {
-          "default_value": "noc",
-          "description": "host group which this playbook applies to",
-          "name": "variable_hosts",
-          "required": false,
-          "title": "variable_hosts",
-          "type": "",
-          "values": []
-        }
-      ],
+      "survey_vars": [],
       "task_params": {
         "allow_debug": true
       },
@@ -246,22 +236,12 @@
       "autorun": false,
       "environment": "Empty",
       "inventory": "common-ansible-noc-1-dev",
-      "name": "NOC Common install and update docker compose services",
+      "name": "Common install and update docker compose services",
       "playbook": "sessions/session7/opennms-example/docker-compose-services/ansible-semaphore-stack/ansible/aws/ansible-noc-1/common/playbooks/install-docker-compose-services.yaml",
       "repository": "COM614-cloud-computing",
       "roles": [],
       "suppress_success_alerts": false,
-      "survey_vars": [
-        {
-          "default_value": "noc",
-          "description": "host group which this playbook applies to",
-          "name": "variable_hosts",
-          "required": false,
-          "title": "variable_hosts",
-          "type": "",
-          "values": []
-        }
-      ],
+      "survey_vars": [],
       "task_params": {
         "allow_debug": true
       },
@@ -277,22 +257,12 @@
       "autorun": false,
       "environment": "Empty",
       "inventory": "common-ansible-noc-1-dev",
-      "name": "NOC Common install-bastion-ssh-service",
+      "name": "Common install-bastion-ssh-service",
       "playbook": "sessions/session7/opennms-example/docker-compose-services/ansible-semaphore-stack/ansible/aws/ansible-noc-1/common/playbooks/install-bastion-ssh-service.yaml",
       "repository": "COM614-cloud-computing",
       "roles": [],
       "suppress_success_alerts": false,
-      "survey_vars": [
-        {
-          "default_value": "noc",
-          "description": "host group which this playbook applies to",
-          "name": "variable_hosts",
-          "required": false,
-          "title": "variable_hosts",
-          "type": "",
-          "values": []
-        }
-      ],
+      "survey_vars": [],
       "task_params": {
         "allow_debug": true
       },
@@ -308,7 +278,7 @@
       "autorun": false,
       "environment": "Empty",
       "inventory": "common-ansible-noc-1-dev",
-      "name": "NOC Common install docker systemd ",
+      "name": "Common install docker systemd ",
       "playbook": "sessions/session7/opennms-example/docker-compose-services/ansible-semaphore-stack/ansible/aws/ansible-noc-1/common/playbooks/install-docker-systemd.yaml",
       "repository": "COM614-cloud-computing",
       "roles": [],
@@ -316,7 +286,7 @@
       "survey_vars": [
         {
           "default_value": "noc",
-          "description": "host group which this playbook applies to",
+          "description": "host group which this plaaybook applies to",
           "name": "variable_hosts",
           "required": false,
           "title": "variable_hosts",
@@ -339,22 +309,12 @@
       "autorun": false,
       "environment": "Empty",
       "inventory": "common-ansible-noc-1-dev",
-      "name": "NOC Common start ansible-semaphore-stack",
+      "name": "Common start ansible-semaphore-stack",
       "playbook": "sessions/session7/opennms-example/docker-compose-services/ansible-semaphore-stack/ansible/aws/ansible-noc-1/common/playbooks/start-ansible-semaphore-stack-service.yaml",
       "repository": "COM614-cloud-computing",
       "roles": [],
       "suppress_success_alerts": false,
-      "survey_vars": [
-        {
-          "default_value": "noc",
-          "description": "host group which this playbook applies to",
-          "name": "variable_hosts",
-          "required": false,
-          "title": "variable_hosts",
-          "type": "",
-          "values": []
-        }
-      ],
+      "survey_vars": [],
       "task_params": {
         "allow_debug": true
       },
@@ -370,22 +330,12 @@
       "autorun": false,
       "environment": "Empty",
       "inventory": "common-ansible-noc-1-dev",
-      "name": "NOC Common start grafana stack",
+      "name": "Common start grafana stack",
       "playbook": "sessions/session7/opennms-example/docker-compose-services/ansible-semaphore-stack/ansible/aws/ansible-noc-1/common/playbooks/start-grafana-stack-service.yaml",
       "repository": "COM614-cloud-computing",
       "roles": [],
       "suppress_success_alerts": false,
-      "survey_vars": [
-        {
-          "default_value": "noc",
-          "description": "host group which this playbook applies to",
-          "name": "variable_hosts",
-          "required": false,
-          "title": "variable_hosts",
-          "type": "",
-          "values": []
-        }
-      ],
+      "survey_vars": [],
       "task_params": {
         "allow_debug": true
       },
@@ -401,25 +351,13 @@
       "autorun": false,
       "environment": "Empty",
       "inventory": "common-ansible-noc-1-dev",
-      "name": "NOC Common start nginx-letsencrypt-stack",
+      "name": "Common start nginx-letsencrypt-stack",
       "playbook": "sessions/session7/opennms-example/docker-compose-services/ansible-semaphore-stack/ansible/aws/ansible-noc-1/common/playbooks/start-docker-nginx-proxy-letsencrypt-stack-service.yaml",
       "repository": "COM614-cloud-computing",
       "roles": [],
       "suppress_success_alerts": false,
-      "survey_vars": [
-        {
-          "default_value": "noc",
-          "description": "host group which this playbook applies to",
-          "name": "variable_hosts",
-          "required": false,
-          "title": "variable_hosts",
-          "type": "",
-          "values": []
-        }
-      ],
-      "task_params": {
-        "allow_debug": true
-      },
+      "survey_vars": [],
+      "task_params": {},
       "type": "",
       "vaults": []
     },
@@ -432,22 +370,12 @@
       "autorun": false,
       "environment": "Empty",
       "inventory": "common-ansible-noc-1-dev",
-      "name": "NOC Common start opennms stack",
+      "name": "Common start opennms stack",
       "playbook": "sessions/session7/opennms-example/docker-compose-services/ansible-semaphore-stack/ansible/aws/ansible-noc-1/common/playbooks/start-opennms-stack-service.yaml",
       "repository": "COM614-cloud-computing",
       "roles": [],
       "suppress_success_alerts": false,
-      "survey_vars": [
-        {
-          "default_value": "noc",
-          "description": "host group which this playbook applies to",
-          "name": "variable_hosts",
-          "required": false,
-          "title": "variable_hosts",
-          "type": "",
-          "values": []
-        }
-      ],
+      "survey_vars": [],
       "task_params": {
         "allow_debug": true
       },
@@ -463,25 +391,13 @@
       "autorun": false,
       "environment": "Empty",
       "inventory": "common-ansible-noc-1-dev",
-      "name": "NOC Common start sample web stack",
+      "name": "Common start sample web stack",
       "playbook": "sessions/session7/opennms-example/docker-compose-services/ansible-semaphore-stack/ansible/aws/ansible-noc-1/common/playbooks/start-docker-sample-web-stack-service.yaml",
       "repository": "COM614-cloud-computing",
       "roles": [],
       "suppress_success_alerts": false,
-      "survey_vars": [
-        {
-          "default_value": "noc",
-          "description": "host group which this playbook applies to",
-          "name": "variable_hosts",
-          "required": false,
-          "title": "variable_hosts",
-          "type": "",
-          "values": []
-        }
-      ],
-      "task_params": {
-        "allow_debug": true
-      },
+      "survey_vars": [],
+      "task_params": {},
       "type": "",
       "vaults": []
     },
@@ -494,25 +410,13 @@
       "autorun": false,
       "environment": "Empty",
       "inventory": "common-ansible-noc-1-dev",
-      "name": "NOC Common start word press stack",
+      "name": "Common start word press stack",
       "playbook": "sessions/session7/opennms-example/docker-compose-services/ansible-semaphore-stack/ansible/aws/ansible-noc-1/common/playbooks/start-docker-wordpress-stack-service.yaml",
       "repository": "COM614-cloud-computing",
       "roles": [],
       "suppress_success_alerts": false,
-      "survey_vars": [
-        {
-          "default_value": "noc",
-          "description": "host group which this playbook applies to",
-          "name": "variable_hosts",
-          "required": false,
-          "title": "variable_hosts",
-          "type": "",
-          "values": []
-        }
-      ],
-      "task_params": {
-        "allow_debug": true
-      },
+      "survey_vars": [],
+      "task_params": {},
       "type": "",
       "vaults": []
     },
@@ -525,25 +429,13 @@
       "autorun": false,
       "environment": "Empty",
       "inventory": "common-ansible-noc-1-dev",
-      "name": "NOC Common stop ansible-semaphore-stack",
+      "name": "Common stop ansible-semaphore-stack",
       "playbook": "sessions/session7/opennms-example/docker-compose-services/ansible-semaphore-stack/ansible/aws/ansible-noc-1/common/playbooks/stop-ansible-semaphore-stack-service.yaml",
       "repository": "COM614-cloud-computing",
       "roles": [],
       "suppress_success_alerts": false,
-      "survey_vars": [
-        {
-          "default_value": "noc",
-          "description": "host group which this playbook applies to",
-          "name": "variable_hosts",
-          "required": false,
-          "title": "variable_hosts",
-          "type": "",
-          "values": []
-        }
-      ],
-      "task_params": {
-        "allow_debug": true
-      },
+      "survey_vars": [],
+      "task_params": {},
       "type": "",
       "vaults": []
     },
@@ -556,24 +448,14 @@
       "autorun": false,
       "environment": "Empty",
       "inventory": "common-ansible-noc-1-dev",
-      "name": "NOC Common stop grafana stack",
+      "name": "Common stop grafana stack",
       "playbook": "sessions/session7/opennms-example/docker-compose-services/ansible-semaphore-stack/ansible/aws/ansible-noc-1/common/playbooks/stop-grafana-stack-service.yaml",
       "repository": "COM614-cloud-computing",
       "roles": [],
       "suppress_success_alerts": false,
-      "survey_vars": [
-        {
-          "default_value": "noc",
-          "description": "host group which this playbook applies to",
-          "name": "variable_hosts",
-          "required": false,
-          "title": "variable_hosts",
-          "type": "",
-          "values": []
-        }
-      ],
+      "survey_vars": [],
       "task_params": {
-        "allow_debug": true
+        "allow_debug": false
       },
       "type": "",
       "vaults": []
@@ -587,25 +469,13 @@
       "autorun": false,
       "environment": "Empty",
       "inventory": "common-ansible-noc-1-dev",
-      "name": "NOC Common stop nginx-letsencrypt-stack",
+      "name": "Common stop nginx-letsencrypt-stack",
       "playbook": "sessions/session7/opennms-example/docker-compose-services/ansible-semaphore-stack/ansible/aws/ansible-noc-1/common/playbooks/stop-docker-nginx-proxy-letsencrypt-stack-service.yaml",
       "repository": "COM614-cloud-computing",
       "roles": [],
       "suppress_success_alerts": false,
-      "survey_vars": [
-        {
-          "default_value": "noc",
-          "description": "host group which this playbook applies to",
-          "name": "variable_hosts",
-          "required": false,
-          "title": "variable_hosts",
-          "type": "",
-          "values": []
-        }
-      ],
-      "task_params": {
-        "allow_debug": true
-      },
+      "survey_vars": [],
+      "task_params": {},
       "type": "",
       "vaults": []
     },
@@ -618,22 +488,12 @@
       "autorun": false,
       "environment": "Empty",
       "inventory": "common-ansible-noc-1-dev",
-      "name": "NOC Common stop opennms stack",
+      "name": "Common stop opennms stack",
       "playbook": "sessions/session7/opennms-example/docker-compose-services/ansible-semaphore-stack/ansible/aws/ansible-noc-1/common/playbooks/stop-opennms-stack-service.yaml",
       "repository": "COM614-cloud-computing",
       "roles": [],
       "suppress_success_alerts": false,
-      "survey_vars": [
-        {
-          "default_value": "noc",
-          "description": "host group which this playbook applies to",
-          "name": "variable_hosts",
-          "required": false,
-          "title": "variable_hosts",
-          "type": "",
-          "values": []
-        }
-      ],
+      "survey_vars": [],
       "task_params": {
         "allow_debug": true
       },
@@ -649,7 +509,7 @@
       "autorun": false,
       "environment": "Empty",
       "inventory": "common-ansible-noc-1-dev",
-      "name": "NOC Common stop sample web stack",
+      "name": "Common stop sample web stack",
       "playbook": "sessions/session7/opennms-example/docker-compose-services/ansible-semaphore-stack/ansible/aws/ansible-noc-1/common/playbooks/stop-docker-sample-web-stack-service.yaml",
       "repository": "COM614-cloud-computing",
       "roles": [],
@@ -668,7 +528,7 @@
       "autorun": false,
       "environment": "Empty",
       "inventory": "common-ansible-noc-1-dev",
-      "name": "NOC Common stop word press stack",
+      "name": "Common stop word press stack",
       "playbook": "sessions/session7/opennms-example/docker-compose-services/ansible-semaphore-stack/ansible/aws/ansible-noc-1/common/playbooks/stop-docker-wordpress-stack-service.yaml",
       "repository": "COM614-cloud-computing",
       "roles": [],
