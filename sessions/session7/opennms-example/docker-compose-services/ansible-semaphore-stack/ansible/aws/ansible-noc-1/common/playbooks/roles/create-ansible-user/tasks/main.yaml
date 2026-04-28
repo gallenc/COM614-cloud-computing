@@ -67,6 +67,7 @@
         groups:
           "{{ 'wheel' if ansible_facts['os_family'] == 'RedHat' else '' }}"
         home: "/home/ansible"
+        shell: "/bin/bash"
        
     - name: get ansible public key from local machine
       delegate_to: localhost
