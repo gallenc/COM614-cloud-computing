@@ -21,6 +21,7 @@
      path: "/home/sshtunnel/.ssh"
      state: directory
      owner: sshtunnel
+     group: sshtunnel
      mode: '0700'
        
  - name: Store the public key in sshtunnel's .ssh folder
@@ -29,6 +30,7 @@
       src: /shared-keys/ssh-keys/.ssh-sshtunnel/id_rsa.pub
       dest: /home/sshtunnel/.ssh/
       owner: sshtunnel
+      group: sshtunnel
       mode: '0644'
 
  - name: Store the private key in sshtunnel's .ssh folder
@@ -37,6 +39,7 @@
       src: /shared-keys/ssh-keys/.ssh-sshtunnel/id_rsa
       dest: /home/sshtunnel/.ssh/
       owner: sshtunnel
+      group: sshtunnel
       mode: '0600'      
 
  # using https://dev.to/bulletmark/create-a-reverse-ssh-tunnel-for-remote-access-to-a-restricted-machine-1ma0
