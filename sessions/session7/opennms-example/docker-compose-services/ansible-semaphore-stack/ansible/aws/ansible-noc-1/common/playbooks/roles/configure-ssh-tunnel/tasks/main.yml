@@ -9,6 +9,7 @@
    user:
      name: sshtunnel
      home: "/home/sshtunnel"
+     shell: "/bin/bash"
      
  - name: remove sshtunnel's password
    ansible.builtin.user:
