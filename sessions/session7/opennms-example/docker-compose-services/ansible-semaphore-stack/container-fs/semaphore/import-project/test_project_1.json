@@ -99,7 +99,7 @@
       "type": "file"
     },
     {
-      "inventory": "",
+      "inventory": "[local]\n#minion_pi_widley  ansible_host=172.20.0.28 ansible_user=ansible reverse_tunnel_port=9010\n#minion_pi_lab     ansible_host=172.20.0.28 ansible_user=ansible reverse_tunnel_port=9011\nminion_nuc_lab     ansible_host=192.168.100.42 ansible_user=alan ansible_ssh_pass=DABsys7D ansible_become_password=DABsys7D  reverse_tunnel_port=9012",
       "name": "LOCALLY_ATTACHED_REMOTE",
       "ssh_key": "None",
       "type": "static"
@@ -840,7 +840,7 @@
       "arguments": "[]",
       "autorun": false,
       "environment": "Empty",
-      "inventory": "common-ansible-noc-1-REMOTE",
+      "inventory": "LOCALLY_ATTACHED_REMOTE",
       "name": "REMOTE_create-ansible-user",
       "playbook": "sessions/session7/opennms-example/docker-compose-services/ansible-semaphore-stack/ansible/aws/ansible-noc-1/common/playbooks/create-ansible-user.yaml",
       "repository": "COM614-cloud-computing",
@@ -902,8 +902,8 @@
       "arguments": "[]",
       "autorun": false,
       "environment": "Empty",
-      "inventory": "common-ansible-noc-1-REMOTE",
-      "name": "REMOTE_locally-configure-ssh-tunnel",
+      "inventory": "LOCALLY_ATTACHED_REMOTE",
+      "name": "REMOTE_locally-configure-ssh-tunnel-user",
       "playbook": "sessions/session7/opennms-example/docker-compose-services/ansible-semaphore-stack/ansible/aws/ansible-noc-1/common/playbooks/configure-ssh-tunnel.yml",
       "repository": "COM614-cloud-computing",
       "roles": [],
@@ -915,6 +915,15 @@
           "name": "variable_hosts",
           "required": false,
           "title": "variable_hosts",
+          "type": "",
+          "values": []
+        },
+        {
+          "default_value": "nocinstance1.noc.dev.aws1.interfbn.com",
+          "description": "url to acces bastion host",
+          "name": "bastion_host",
+          "required": false,
+          "title": "bastion_host",
           "type": "",
           "values": []
         }
