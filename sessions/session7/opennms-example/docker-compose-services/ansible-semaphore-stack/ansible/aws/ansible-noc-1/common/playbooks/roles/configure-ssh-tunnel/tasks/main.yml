@@ -24,17 +24,16 @@
      mode: '0700'
        
  - name: Store the public key in sshtunnel's .ssh folder
+   become: true
    ansible.builtin.copy:
-      become: true
       src: /shared-keys/ssh-keys/.ssh-sshtunnel/id_rsa.pub
       dest: /home/sshtunnel/.ssh/
       owner: sshtunnel
       mode: '0644'
 
  - name: Store the private key in sshtunnel's .ssh folder
+   become: true
    ansible.builtin.copy:
-      flat: true
-      become: true
       src: /shared-keys/ssh-keys/.ssh-sshtunnel/id_rsa
       dest: /home/sshtunnel/.ssh/
       owner: sshtunnel
