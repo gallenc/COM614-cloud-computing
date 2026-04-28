@@ -1,5 +1,5 @@
 ---
-- name: test load ssh keys with passphrase
+- name: copy private keys to semaphore ansible controller
   hosts: "{{ variable_hosts | default('empty_group') }}"
   # Postpone facts gathering until SSH keys have been unlocked
   gather_facts: false
