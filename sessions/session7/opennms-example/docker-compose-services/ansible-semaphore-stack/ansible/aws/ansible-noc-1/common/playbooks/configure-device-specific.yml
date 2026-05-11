@@ -27,7 +27,7 @@
 
 
   roles:
-    - configure-pi-specific
+    - configure-device-specific
     
   post_tasks:
 
