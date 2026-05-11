@@ -3,7 +3,7 @@
     msg: "Testing device specific tasks. OS Family: {{ ansible_os_family }}"
     
 - debug:
-     var=hostvars[inventory_hostname]
+    msg: "Testing device specific tasks. Device Type: {{ device_type }}"
 
 #- name: Load pi4 specific tasks
  # include_tasks: pi4.yaml
