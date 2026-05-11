@@ -1,9 +1,7 @@
 ---
 
-    
- - name: another debug
-   debug:
-          msg: "configuring device specific OS Family: {{ ansible_os_family }}"
+ - debug:
+     msg: "conffiguring Pi4 device . Device Type: {{ device_type }}"
           
 # this is needed to set wireless as default route after network is up, otherwise the device will use ethernet as default route and wireless won't work until you manually change the default route to wlan0.
  - name: stop and disable PostNetworkUp.service if exists

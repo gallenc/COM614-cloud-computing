@@ -5,6 +5,6 @@
 - debug:
     msg: "Testing device specific tasks. Device Type: {{ device_type }}"
 
-#- name: Load pi4 specific tasks
- # include_tasks: pi4.yaml
- # when:  {{device_type}}=="pi4"
+- name: Load pi4 specific tasks
+  include_tasks: pi4.yaml
+  when:  device_type=="pi4"
