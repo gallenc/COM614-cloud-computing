@@ -1,0 +1,10 @@
+---
+- debug:
+    msg: "Testing device specific tasks. OS Family: {{ ansible_os_family }}"
+    
+- debug:
+     var=hostvars[inventory_hostname]
+
+#- name: Load pi4 specific tasks
+ # include_tasks: pi4.yaml
+ # when:  {{device_type}}=="pi4"
