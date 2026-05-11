@@ -198,6 +198,11 @@
             - 22
           cidr_ip: 0.0.0.0/0    # any
           rule_desc: allow SSH on port 22 from any
+        - proto: tcp
+          ports:
+            - 61616
+          cidr_ip: 0.0.0.0/0    # any
+          rule_desc: allow Activemq on port 61616 from any (note not secure)
         - proto: icmp
           from_port: -1 # -1 represents all ICMP types
           to_port: -1

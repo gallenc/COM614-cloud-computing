@@ -1,6 +1,11 @@
 ---
 
+hosted_zone: aws1.interfbn.com
 
+host_name1:  nocinstance1
 
+deployment: dev
+
+# activemqbroker: {{ host_name1 }}.noc.{{deployment}}.{{ hosted_zone }}
 
 

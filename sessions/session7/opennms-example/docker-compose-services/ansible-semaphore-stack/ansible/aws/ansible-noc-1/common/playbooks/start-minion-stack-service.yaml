@@ -26,6 +26,42 @@
       setup:
 
   tasks:
+    
+    - name: copy minion configuration to  minion-config.yaml
+      become: true
+      become_user: 'ansible'
+      copy:
+         force: true
+         content: |
+            ---
+            http-url: "http://horizon:8980/opennms"
+            broker-url: "failover:tcp://{{ host_name1 }}.noc.{{deployment}}.{{ hosted_zone }:61616"
+            id: "minion-TBD"
+            location: "LOCATION-TBD"
+
+            karaf:
+              shell:
+                ssh:
+                  host: "0.0.0.0"
+
+            netmgt:
+              syslog:
+                syslog.listen.interface: "0.0.0.0"
+                syslog.listen.port: 1514
+
+              traps:
+                trapd.listen.interface: "0.0.0.0"
+                trapd.listen.port: 1162
+   
+         dest: /opt/docker/compose/docker-compose-services/minion-stack/container-fs/minion1/opt/minion/minion-config.yaml
+         mode: '0644'
+    
+    - name: Make sure a service unit is stopped before changing configuration
+      ansible.builtin.systemd_service:
+        name: docker-compose@minion-stack
+        enabled: false
+        state: stopped
+        
     - name: Make sure a service unit is running
       ansible.builtin.systemd_service:
         name: docker-compose@minion-stack
