@@ -492,6 +492,37 @@
       "arguments": "[]",
       "autorun": false,
       "environment": "Empty",
+      "inventory": "common-ansible-noc-1-REMOTE",
+      "name": "NOC Common start minion stack",
+      "playbook": "sessions/session7/opennms-example/docker-compose-services/ansible-semaphore-stack/ansible/aws/ansible-noc-1/common/playbooks/start-minion-stack-service.yaml",
+      "repository": "COM614-cloud-computing",
+      "roles": [],
+      "suppress_success_alerts": false,
+      "survey_vars": [
+        {
+          "default_value": "noc",
+          "description": "host group which this playbook applies to",
+          "name": "variable_hosts",
+          "required": false,
+          "title": "variable_hosts",
+          "type": "",
+          "values": []
+        }
+      ],
+      "task_params": {
+        "allow_debug": true
+      },
+      "type": "",
+      "vaults": []
+    },
+    {
+      "allow_override_args_in_task": false,
+      "allow_override_branch_in_task": false,
+      "allow_parallel_tasks": false,
+      "app": "ansible",
+      "arguments": "[]",
+      "autorun": false,
+      "environment": "Empty",
       "inventory": "common-ansible-noc-1-dev",
       "name": "NOC Common start nginx-letsencrypt-stack",
       "playbook": "sessions/session7/opennms-example/docker-compose-services/ansible-semaphore-stack/ansible/aws/ansible-noc-1/common/playbooks/start-docker-nginx-proxy-letsencrypt-stack-service.yaml",
@@ -650,6 +681,37 @@
       "inventory": "common-ansible-noc-1-dev",
       "name": "NOC Common stop grafana stack",
       "playbook": "sessions/session7/opennms-example/docker-compose-services/ansible-semaphore-stack/ansible/aws/ansible-noc-1/common/playbooks/stop-grafana-stack-service.yaml",
+      "repository": "COM614-cloud-computing",
+      "roles": [],
+      "suppress_success_alerts": false,
+      "survey_vars": [
+        {
+          "default_value": "noc",
+          "description": "host group which this playbook applies to",
+          "name": "variable_hosts",
+          "required": false,
+          "title": "variable_hosts",
+          "type": "",
+          "values": []
+        }
+      ],
+      "task_params": {
+        "allow_debug": true
+      },
+      "type": "",
+      "vaults": []
+    },
+    {
+      "allow_override_args_in_task": false,
+      "allow_override_branch_in_task": false,
+      "allow_parallel_tasks": false,
+      "app": "ansible",
+      "arguments": "[]",
+      "autorun": false,
+      "environment": "Empty",
+      "inventory": "common-ansible-noc-1-REMOTE",
+      "name": "NOC Common stop minion stack",
+      "playbook": "sessions/session7/opennms-example/docker-compose-services/ansible-semaphore-stack/ansible/aws/ansible-noc-1/common/playbooks/stop-minion-stack-service.yaml",
       "repository": "COM614-cloud-computing",
       "roles": [],
       "suppress_success_alerts": false,
@@ -840,38 +902,6 @@
       "arguments": "[]",
       "autorun": false,
       "environment": "Empty",
-      "inventory": "LOCALLY_ATTACHED_REMOTE",
-      "name": "REMOTE_create-ansible-user",
-      "playbook": "sessions/session7/opennms-example/docker-compose-services/ansible-semaphore-stack/ansible/aws/ansible-noc-1/common/playbooks/create-ansible-user.yaml",
-      "repository": "COM614-cloud-computing",
-      "roles": [],
-      "suppress_success_alerts": false,
-      "survey_vars": [
-        {
-          "default_value": "local",
-          "description": "host group which this playbook applies to",
-          "name": "variable_hosts",
-          "required": false,
-          "title": "variable_hosts",
-          "type": "",
-          "values": []
-        }
-      ],
-      "task_params": {
-        "allow_debug": true
-      },
-      "type": "",
-      "vaults": [],
-      "view": "All"
-    },
-    {
-      "allow_override_args_in_task": false,
-      "allow_override_branch_in_task": false,
-      "allow_parallel_tasks": false,
-      "app": "ansible",
-      "arguments": "[]",
-      "autorun": false,
-      "environment": "Empty",
       "inventory": "project-ansible3-proxy-inventory",
       "name": "Remote_install-apache",
       "playbook": "sessions/session7/opennms-example/docker-compose-services/ansible-semaphore-stack/ansible/project-ansible3/install_apache.yml",
@@ -968,6 +998,38 @@
         }
       ],
       "task_params": {},
+      "type": "",
+      "vaults": [],
+      "view": "All"
+    },
+    {
+      "allow_override_args_in_task": false,
+      "allow_override_branch_in_task": false,
+      "allow_parallel_tasks": false,
+      "app": "ansible",
+      "arguments": "[]",
+      "autorun": false,
+      "environment": "Empty",
+      "inventory": "LOCALLY_ATTACHED_REMOTE",
+      "name": "REMOTE_locally_create-ansible-user",
+      "playbook": "sessions/session7/opennms-example/docker-compose-services/ansible-semaphore-stack/ansible/aws/ansible-noc-1/common/playbooks/create-ansible-user.yaml",
+      "repository": "COM614-cloud-computing",
+      "roles": [],
+      "suppress_success_alerts": false,
+      "survey_vars": [
+        {
+          "default_value": "local",
+          "description": "host group which this playbook applies to",
+          "name": "variable_hosts",
+          "required": false,
+          "title": "variable_hosts",
+          "type": "",
+          "values": []
+        }
+      ],
+      "task_params": {
+        "allow_debug": true
+      },
       "type": "",
       "vaults": [],
       "view": "All"
