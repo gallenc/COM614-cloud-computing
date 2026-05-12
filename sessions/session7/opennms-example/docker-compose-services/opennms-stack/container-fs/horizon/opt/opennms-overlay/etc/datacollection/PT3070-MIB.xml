@@ -1,0 +1,883 @@
+<datacollection-group xmlns="http://xmlns.opennms.org/xsd/config/datacollection" name="PT3070-MIB">
+   <resourceType name="pt3070SystemScheduledActionEntry" label="pt3070SystemScheduledActionEntry" resourceLabel="${pt3070SystemScheduledActionRecurrence} (${index})">
+      <persistenceSelectorStrategy class="org.opennms.netmgt.collection.support.PersistAllSelectorStrategy"/>
+      <storageStrategy class="org.opennms.netmgt.collection.support.IndexStorageStrategy"/>
+   </resourceType>
+   <resourceType name="pt3070GroupAlarmEntry" label="pt3070GroupAlarmEntry" resourceLabel="${pt3070GroupAlarmState} (${index})">
+      <persistenceSelectorStrategy class="org.opennms.netmgt.collection.support.PersistAllSelectorStrategy"/>
+      <storageStrategy class="org.opennms.netmgt.collection.support.IndexStorageStrategy"/>
+   </resourceType>
+   <resourceType name="pt3070PrimaryAlarmEntry" label="pt3070PrimaryAlarmEntry" resourceLabel="${pt3070PrimaryAlarmState} (${index})">
+      <persistenceSelectorStrategy class="org.opennms.netmgt.collection.support.PersistAllSelectorStrategy"/>
+      <storageStrategy class="org.opennms.netmgt.collection.support.IndexStorageStrategy"/>
+   </resourceType>
+   <resourceType name="pt3070SecondaryAlarmEntry" label="pt3070SecondaryAlarmEntry" resourceLabel="${pt3070SecondaryAlarmState} (${index})">
+      <persistenceSelectorStrategy class="org.opennms.netmgt.collection.support.PersistAllSelectorStrategy"/>
+      <storageStrategy class="org.opennms.netmgt.collection.support.IndexStorageStrategy"/>
+   </resourceType>
+   <resourceType name="pt3070SFNAlarmEntry" label="pt3070SFNAlarmEntry" resourceLabel="${pt3070SFNAlarmState} (${index})">
+      <persistenceSelectorStrategy class="org.opennms.netmgt.collection.support.PersistAllSelectorStrategy"/>
+      <storageStrategy class="org.opennms.netmgt.collection.support.IndexStorageStrategy"/>
+   </resourceType>
+   <resourceType name="pt3070ReferenceAlarmEntry" label="pt3070ReferenceAlarmEntry" resourceLabel="${pt3070ReferenceAlarmState} (${index})">
+      <persistenceSelectorStrategy class="org.opennms.netmgt.collection.support.PersistAllSelectorStrategy"/>
+      <storageStrategy class="org.opennms.netmgt.collection.support.IndexStorageStrategy"/>
+   </resourceType>
+   <resourceType name="pt3070ModulatorAlarmEntry" label="pt3070ModulatorAlarmEntry" resourceLabel="${pt3070ModulatorAlarmState} (${index})">
+      <persistenceSelectorStrategy class="org.opennms.netmgt.collection.support.PersistAllSelectorStrategy"/>
+      <storageStrategy class="org.opennms.netmgt.collection.support.IndexStorageStrategy"/>
+   </resourceType>
+   <resourceType name="pt3070RFAlarmEntry" label="pt3070RFAlarmEntry" resourceLabel="${pt3070RFAlarmState} (${index})">
+      <persistenceSelectorStrategy class="org.opennms.netmgt.collection.support.PersistAllSelectorStrategy"/>
+      <storageStrategy class="org.opennms.netmgt.collection.support.IndexStorageStrategy"/>
+   </resourceType>
+   <resourceType name="pt3070GPSAlarmEntry" label="pt3070GPSAlarmEntry" resourceLabel="${pt3070GPSAlarmState} (${index})">
+      <persistenceSelectorStrategy class="org.opennms.netmgt.collection.support.PersistAllSelectorStrategy"/>
+      <storageStrategy class="org.opennms.netmgt.collection.support.IndexStorageStrategy"/>
+   </resourceType>
+   <resourceType name="pt3070EDIAlarmEntry" label="pt3070EDIAlarmEntry" resourceLabel="${pt3070EDIAlarmState} (${index})">
+      <persistenceSelectorStrategy class="org.opennms.netmgt.collection.support.PersistAllSelectorStrategy"/>
+      <storageStrategy class="org.opennms.netmgt.collection.support.IndexStorageStrategy"/>
+   </resourceType>
+   <resourceType name="pt3070ExternalAlarmEntry" label="pt3070ExternalAlarmEntry" resourceLabel="${pt3070ExternalAlarmState} (${index})">
+      <persistenceSelectorStrategy class="org.opennms.netmgt.collection.support.PersistAllSelectorStrategy"/>
+      <storageStrategy class="org.opennms.netmgt.collection.support.IndexStorageStrategy"/>
+   </resourceType>
+   <resourceType name="pt3070HWMonitorAlarmEntry" label="pt3070HWMonitorAlarmEntry" resourceLabel="${pt3070HWMonitorAlarmState} (${index})">
+      <persistenceSelectorStrategy class="org.opennms.netmgt.collection.support.PersistAllSelectorStrategy"/>
+      <storageStrategy class="org.opennms.netmgt.collection.support.IndexStorageStrategy"/>
+   </resourceType>
+   <resourceType name="pt3070CommsAlarmEntry" label="pt3070CommsAlarmEntry" resourceLabel="${pt3070CommsAlarmState} (${index})">
+      <persistenceSelectorStrategy class="org.opennms.netmgt.collection.support.PersistAllSelectorStrategy"/>
+      <storageStrategy class="org.opennms.netmgt.collection.support.IndexStorageStrategy"/>
+   </resourceType>
+   <resourceType name="pt3070InternalAlarmEntry" label="pt3070InternalAlarmEntry" resourceLabel="${pt3070InternalAlarmState} (${index})">
+      <persistenceSelectorStrategy class="org.opennms.netmgt.collection.support.PersistAllSelectorStrategy"/>
+      <storageStrategy class="org.opennms.netmgt.collection.support.IndexStorageStrategy"/>
+   </resourceType>
+   <resourceType name="pt3070PresetEntry" label="pt3070PresetEntry" resourceLabel="${index}">
+      <persistenceSelectorStrategy class="org.opennms.netmgt.collection.support.PersistAllSelectorStrategy"/>
+      <storageStrategy class="org.opennms.netmgt.collection.support.IndexStorageStrategy"/>
+   </resourceType>
+   <resourceType name="pt3070EventlogEntry" label="pt3070EventlogEntry" resourceLabel="${index}">
+      <persistenceSelectorStrategy class="org.opennms.netmgt.collection.support.PersistAllSelectorStrategy"/>
+      <storageStrategy class="org.opennms.netmgt.collection.support.IndexStorageStrategy"/>
+   </resourceType>
+   <resourceType name="pt3070CommsStaticRouteEntry" label="pt3070CommsStaticRouteEntry" resourceLabel="${pt3070CommsStaticRouteType} (${index})">
+      <persistenceSelectorStrategy class="org.opennms.netmgt.collection.support.PersistAllSelectorStrategy"/>
+      <storageStrategy class="org.opennms.netmgt.collection.support.IndexStorageStrategy"/>
+   </resourceType>
+<!--    <group name="pt3070System" ifType="ignore"> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.7" instance="0" alias="pt307SystInstFW1Rev" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.8" instance="0" alias="pt307SysInsFW1RevBL" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.9" instance="0" alias="pt307SystInstFW2Rev" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.10" instance="0" alias="pt307SysInsFW2RevBL" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.11" instance="0" alias="pt307SystInstFW3Rev" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.12" instance="0" alias="pt307SystInstFW4Rev" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.13" instance="0" alias="pt307SystInstPCBRev" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.14" instance="0" alias="pt307SysInstCaliRev" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.15" instance="0" alias="pt307SysInsCaliDate" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.16" instance="0" alias="pt3070SystemReboot" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.19" instance="0" alias="pt307SysRebDefaConf" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.22" instance="0" alias="pt3070SysteDateTime" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.24" instance="0" alias="pt3070SystImag0Vers" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.25" instance="0" alias="pt307SysIma0InsDate" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.26" instance="0" alias="pt3070SystImag1vers" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.27" instance="0" alias="pt307SysIma1InsDate" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.28" instance="0" alias="pt3070SysteServiLED" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.33" instance="0" alias="pt3070SystemLanguag" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.30" instance="0" alias="pt3070SystemType" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.32" instance="0" alias="pt3070SystModuStand" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.23" instance="0" alias="pt3070SystCurrImage" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.1" instance="0" alias="pt3070SysteInstruKU" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.2" instance="0" alias="pt3070SystInstrType" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.6" instance="0" alias="pt3070SystInstOptio" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.20" instance="0" alias="pt307SysDatTimeSync" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.31" instance="0" alias="pt30SysDatTimSynAct" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.21" instance="0" alias="pt3070SystemTimezon" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.3" instance="0" alias="pt3070SystInstSWRev" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.4" instance="0" alias="pt30SysInsBooLoaRev" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.5" instance="0" alias="pt307SysInstKernRev" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.34" instance="0" alias="pt307SystOperOnTime" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.35" instance="0" alias="pt307SysOpeOnAirTim" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.36" instance="0" alias="pt307SysOpeNumOfBoo" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.40" instance="0" alias="pt3070SystemBackpla" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.41" instance="0" alias="pt3070SystBackIdRaw" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.42" instance="0" alias="pt3070SystBackIdPcb" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.43" instance="0" alias="pt307SysBacIdCabOpt" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.44" instance="0" alias="pt307SysBackIdMAnuf" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.45" instance="0" alias="pt307SysBacCaliDate" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.46" instance="0" alias="pt307SystBackCaliSw" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.47" instance="0" alias="pt307SystBackIdPart" type="integer32"/> -->
+<!--    </group> -->
+<!--    <group name="pt3070SystemScheduledActionTable" ifType="all"> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.50.1.1" instance="pt3070SystemScheduledActionEntry" alias="pt307SystScheActiID" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.50.1.2" instance="pt3070SystemScheduledActionEntry" alias="pt307SysSchActiRecu" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.50.1.3" instance="pt3070SystemScheduledActionEntry" alias="pt307SysSchActiHour" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.50.1.4" instance="pt3070SystemScheduledActionEntry" alias="pt307SysSchActiMinu" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.50.1.5" instance="pt3070SystemScheduledActionEntry" alias="pt307SysSchActiWeek" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.50.1.6" instance="pt3070SystemScheduledActionEntry" alias="pt30SysSchActMonDay" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.50.1.7" instance="pt3070SystemScheduledActionEntry" alias="pt307SysSchActiDate" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.50.1.8" instance="pt3070SystemScheduledActionEntry" alias="pt30SysSchActRanDel" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.50.1.9" instance="pt3070SystemScheduledActionEntry" alias="pt307SysSchActiActi" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.50.1.10" instance="pt3070SystemScheduledActionEntry" alias="pt30SysSchActRepMod" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.50.1.11" instance="pt3070SystemScheduledActionEntry" alias="pt307SysSchActPreNo" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.50.1.12" instance="pt3070SystemScheduledActionEntry" alias="pt30SysSchActRebIma" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.50.1.13" instance="pt3070SystemScheduledActionEntry" alias="pt30SyScAcRebSysTyp" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.50.1.14" instance="pt3070SystemScheduledActionEntry" alias="pt307SysSchActiMute" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.50.1.15" instance="pt3070SystemScheduledActionEntry" alias="pt30SyScActSWUpgPro" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.50.1.16" instance="pt3070SystemScheduledActionEntry" alias="pt30SyScActSWUpgUse" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.50.1.17" instance="pt3070SystemScheduledActionEntry" alias="pt30SyScActSWUpgPas" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.50.1.18" instance="pt3070SystemScheduledActionEntry" alias="pt30SyScAcSWUpImSer" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.1.50.1.19" instance="pt3070SystemScheduledActionEntry" alias="pt30SyScAcSWUpImPat" type="octetstring"/> -->
+<!--    </group> -->
+<!--    <group name="pt3070Mode" ifType="ignore"> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.1" instance="0" alias="pt3070ModeNetwork" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.99" instance="0" alias="pt3070ModetracInput" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.90" instance="0" alias="pt3070Modeoffsetra0" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.91" instance="0" alias="pt3070Modeoffsetra1" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.92" instance="0" alias="pt3070Modeoffsetra0" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.93" instance="0" alias="pt3070Modeoffsetra1" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.1270" instance="0" alias="pt3070Modein0level1" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.1271" instance="0" alias="pt3070Modein0level2" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.1272" instance="0" alias="pt3070Modein0level3" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.1273" instance="0" alias="pt3070Modein1level1" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.1274" instance="0" alias="pt3070Modein1level2" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.1275" instance="0" alias="pt3070Modein1level3" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.1276" instance="0" alias="pt3070Modein0level1" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.1277" instance="0" alias="pt3070Modein0level2" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.1278" instance="0" alias="pt3070Modein0level3" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.1279" instance="0" alias="pt3070Modein1level1" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.1280" instance="0" alias="pt3070Modein1level2" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.1281" instance="0" alias="pt3070Modein1level3" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.100" instance="0" alias="pt307ModIntProcDela" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.15" instance="0" alias="pt3070ModeStatDelay" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.16" instance="0" alias="pt3070ModeDelaOffse" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.17" instance="0" alias="pt307ModUseDelaOffs" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.18" instance="0" alias="pt30MoUsDelOffAsDef" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.4" instance="0" alias="pt3070ModeDabMode" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.5" instance="0" alias="pt307ModDabLocaMode" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.6" instance="0" alias="pt30ModDabLocModUse" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.30" instance="0" alias="pt307ModeDabTiiEnab" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.31" instance="0" alias="pt307ModeDabTiiSign" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.32" instance="0" alias="pt30MoDaTiiLocMaiID" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.33" instance="0" alias="pt30MoDaTiLoMaIdUse" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.34" instance="0" alias="p3MDaTiLoMaIdUsAsDe" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.35" instance="0" alias="pt30MoDaTiiLocSubID" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.36" instance="0" alias="pt30MoDaTiLoSuIdUse" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.37" instance="0" alias="p3MDaTiLoSuIdUsAsDe" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.40" instance="0" alias="pt307ModDabMnscAddr" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.55" instance="0" alias="pt307ModDabMnscTime" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.41" instance="0" alias="pt30ModDabMnsOnaSta" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.42" instance="0" alias="pt30MoDaMnsOnaMaiID" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.43" instance="0" alias="pt30MoDaMnsOnaSubID" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.44" instance="0" alias="pt30MoDaMnOnaDelOff" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.45" instance="0" alias="pt30MoDaMnOnSrMaiID" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.46" instance="0" alias="pt30MoDaMnOnSrSubID" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.47" instance="0" alias="pt30MoDaMnOnSrDeOff" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.51" instance="0" alias="pt30ModDabMnsPriSta" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.52" instance="0" alias="pt30MoDaMnsPriMaiID" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.53" instance="0" alias="pt30MoDaMnsPriSubID" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.54" instance="0" alias="pt30MoDaMnPriDelOff" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.61" instance="0" alias="pt30ModDabMnsSecSta" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.62" instance="0" alias="pt30MoDaMnsSecMaiID" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.63" instance="0" alias="pt30MoDaMnsSecSubID" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.64" instance="0" alias="pt30MoDaMnSecDelOff" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.76" instance="0" alias="pt30MoNeDeMaCuNeDel" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.77" instance="0" alias="pt30MoNeDeMaMaNeDel" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.78" instance="0" alias="pt30MoNeDeMaMiNeDel" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.79" instance="0" alias="pt30MoNeDeMaMoDeMar" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.80" instance="0" alias="pt30MoNeDeReCuNeDel" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.81" instance="0" alias="pt30MoNeDeReMaNeDel" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.82" instance="0" alias="pt30MoNeDeReMiNeDel" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.83" instance="0" alias="pt30MoNeDeReMoDeMar" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.84" instance="0" alias="pt30ModNetDelResDel" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.120" instance="0" alias="pt307ModTisHoldTime" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.121" instance="0" alias="pt307ModTisHoldFore" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.122" instance="0" alias="pt307ModTisHoldPrim" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.123" instance="0" alias="pt307ModTisHoldSeco" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.124" instance="0" alias="pt307ModTisSyncPrim" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.2.125" instance="0" alias="pt307ModTisSyncSeco" type="integer32"/> -->
+<!--    </group> -->
+<!--    <group name="pt3070Eti" ifType="ignore"> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.30.3" instance="0" alias="pt307EtiInp1LocStat" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.30.53" instance="0" alias="pt307EtiInp2LocStat" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.30.4" instance="0" alias="pt307EtiInp1LinErro" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.30.54" instance="0" alias="pt307EtiInp2LinErro" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.30.5" instance="0" alias="pt3070EtiInput1Mode" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.30.55" instance="0" alias="pt3070EtiInput2Mode" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.30.6" instance="0" alias="pt30EtInp1LinErrCle" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.30.56" instance="0" alias="pt30EtInp2LinErrCle" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.30.7" instance="0" alias="pt30EtInp1LevErrCle" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.30.57" instance="0" alias="pt30EtInp2LevErrCle" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.30.8" instance="0" alias="pt307EtiInp1SynTime" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.30.58" instance="0" alias="pt307EtiInp2SynTime" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.30.12" instance="0" alias="pt307EtiInp1nulDete" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.30.62" instance="0" alias="pt307EtiInp2nulDete" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.30.50" instance="0" alias="pt307EtiHardPcbRevi" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.30.51" instance="0" alias="pt307EtiHardBomRevi" type="integer32"/> -->
+<!--    </group> -->
+<!--    <group name="pt3070Edi" ifType="ignore"> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.15" instance="0" alias="pt307EdiRx1ReceEnab" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.45" instance="0" alias="pt307EdiRx2ReceEnab" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.8" instance="0" alias="pt307EdiRx1SyncTime" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.38" instance="0" alias="pt307EdiRx2SyncTime" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.11" instance="0" alias="pt3070EdiRx1LanSele" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.41" instance="0" alias="pt3070EdiRx2LanSele" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.12" instance="0" alias="pt3070EdiRx1Multica" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.42" instance="0" alias="pt3070EdiRx2Multica" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.13" instance="0" alias="pt3070EdiRx1Protoco" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.43" instance="0" alias="pt3070EdiRx2Protoco" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.14" instance="0" alias="pt3070EdiRx1Portnum" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.44" instance="0" alias="pt3070EdiRx2Portnum" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.16" instance="0" alias="pt30EdRx1PaErRatLim" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.46" instance="0" alias="pt30EdRx2PaErRatLim" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.10" instance="0" alias="pt307EdiRx1MinuLate" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.40" instance="0" alias="pt307EdiRx2MinuLate" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.17" instance="0" alias="pt3070EdiRx1Status" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.47" instance="0" alias="pt3070EdiRx2Status" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.18" instance="0" alias="pt307EdiRx1CurIPAdd" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.48" instance="0" alias="pt307EdiRx2CurIPAdd" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.32" instance="0" alias="pt30EdiRx1CurDevNam" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.62" instance="0" alias="pt30EdiRx2CurDevNam" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.26" instance="0" alias="pt3070EdiRx1IpBitra" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.56" instance="0" alias="pt3070EdiRx2IpBitra" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.20" instance="0" alias="pt30EdiRx1PacErrRat" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.50" instance="0" alias="pt30EdiRx2PacErrRat" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.19" instance="0" alias="pt307EdiRx1SequErro" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.49" instance="0" alias="pt307EdiRx2SequErro" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.21" instance="0" alias="pt307EdiRx1LosIPFra" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.51" instance="0" alias="pt307EdiRx2LosIPFra" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.22" instance="0" alias="pt307EdiRx1CorIPFra" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.52" instance="0" alias="pt307EdiRx2CorIPFra" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.30" instance="0" alias="pt307EdiRx1OveIPFra" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.60" instance="0" alias="pt307EdiRx2OveIPFra" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.25" instance="0" alias="pt30EdiRx1InfFieTex" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.55" instance="0" alias="pt30EdiRx2InfFieTex" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.29" instance="0" alias="pt3070EdiRx1DCPProt" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.59" instance="0" alias="pt3070EdiRx2DCPProt" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.4" instance="0" alias="pt30EdiRx1DCPFraSiz" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.34" instance="0" alias="pt30EdiRx2DCPFraSiz" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.5" instance="0" alias="pt3070EdiRx1DCPFrag" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.35" instance="0" alias="pt3070EdiRx2DCPFrag" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.6" instance="0" alias="pt307EdiRx1DCPFMaxl" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.36" instance="0" alias="pt307EdiRx2DCPFMaxl" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.27" instance="0" alias="pt307EdiRx1QueuSize" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.57" instance="0" alias="pt307EdiRx2QueuSize" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.28" instance="0" alias="pt307EdiRx1CurrLate" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.58" instance="0" alias="pt307EdiRx2CurrLate" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.9" instance="0" alias="pt30EdiRx1LevErrCle" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.31.39" instance="0" alias="pt30EdiRx2LevErrCle" type="string"/> -->
+<!--    </group> -->
+<!--    <group name="pt3070Input" ifType="ignore"> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.3.90" instance="0" alias="pt30InpRefOcxDevTyp" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.3.91" instance="0" alias="pt30InpRefOcxCalDat" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.3.92" instance="0" alias="pt30InpRefOcxCalVer" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.3.1" instance="0" alias="pt3070InputRefDirec" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.3.2" instance="0" alias="pt3070InputRefSourc" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.3.11" instance="0" alias="pt3070InputRefStatu" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.3.3" instance="0" alias="pt307InpRef10MhzImp" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.3.7" instance="0" alias="pt30InRe10MhzHolDel" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.3.8" instance="0" alias="pt30InRe10MhzHolFor" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.3.4" instance="0" alias="pt307InpRef1PPSImpe" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.3.9" instance="0" alias="pt30InRef1PPSHolDel" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.3.10" instance="0" alias="pt30InRef1PPSHolFor" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.3.5" instance="0" alias="pt30InRef1PPSTriSlo" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.3.6" instance="0" alias="pt30InRef1PPSTriLev" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.3.15" instance="0" alias="pt30InAuRouDelHp2Lp" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.3.16" instance="0" alias="pt30InAuRouDelLp2Hp" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.3.12" instance="0" alias="pt3070InpuPrimSourc" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.3.13" instance="0" alias="pt3070InpuSecoSourc" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.3.14" instance="0" alias="pt307InpAutRoutPoli" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.3.1001" instance="0" alias="pt307InpPriStorTime" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.3.1002" instance="0" alias="pt307InpPriTranDela" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.3.1011" instance="0" alias="pt307InpSecStorTime" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.3.1012" instance="0" alias="pt307InpSecTranDela" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.3.36" instance="0" alias="pt3070InpuPrimStatu" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.3.37" instance="0" alias="pt3070InpuSecoStatu" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.3.38" instance="0" alias="pt3070InputHp" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.3.39" instance="0" alias="pt3070InputLp" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.3.40" instance="0" alias="pt307InpEffAutoPoli" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.3.41" instance="0" alias="pt3070InputHpBitrat" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.3.47" instance="0" alias="pt3070InputLpBitrat" type="integer32"/> -->
+<!--    </group> -->
+   <group name="pt3070Output" ifType="ignore">
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.9" instance="0" alias="pt3070OutpPoweLevel" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1" instance="0" alias="pt3070OutputMode" type="string"/> -->
+      <mibObj oid=".1.3.6.1.4.1.18086.3070.4.17" instance="0" alias="pt3070OutpEffeLevel" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.18086.3070.4.18" instance="0" alias="pt3070OutpActuLevel" type="integer32"/>
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.8" instance="0" alias="pt3070OutputPolarit" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.2" instance="0" alias="pt3070OutpuRfFreque" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.10" instance="0" alias="pt307OutpRfFreqOffs" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.3" instance="0" alias="pt3070OutputRfLevel" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.50" instance="0" alias="pt307OutpRfCablMode" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.51" instance="0" alias="pt30OuRfCaConLevOff" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.52" instance="0" alias="pt30OuRfCaFrLevOff0" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.53" instance="0" alias="pt30OuRfCaFrLevOff1" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.54" instance="0" alias="pt30OuRfCaFrLevOff2" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.55" instance="0" alias="pt30OuRfCaFrLevOff3" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.56" instance="0" alias="pt30OuRfCaFrLevOff4" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.57" instance="0" alias="pt30OuRfCaFrLevOff5" type="integer32"/> -->
+      <mibObj oid=".1.3.6.1.4.1.18086.3070.4.19" instance="0" alias="pt307OutRfDetActLev" type="integer32"/>
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.20" instance="0" alias="pt30OuRfDeLowLevLim" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.21" instance="0" alias="pt307OutRfDetLowLev" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.22" instance="0" alias="pt30OuRfDeHigLevLim" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.23" instance="0" alias="pt307OutRfDetHigLev" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.30" instance="0" alias="pt3070OutpRfAlcCont" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.31" instance="0" alias="pt3070OutpRfAlcSens" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.32" instance="0" alias="pt30OutRfAlcSetPor1" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.33" instance="0" alias="pt30OutRfAlcSetPor2" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.36" instance="0" alias="pt30OutRfAlcMarSet1" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.37" instance="0" alias="pt30OutRfAlcMarSet2" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.34" instance="0" alias="pt3070OutpRfAlcStat" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.35" instance="0" alias="pt307OutRfAlcStaInf" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.7" instance="0" alias="pt3070OutputMute" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.58" instance="0" alias="pt3070OutpMuteReaso" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1000" instance="0" alias="pt307OutHpaSta1Text" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1002" instance="0" alias="pt307OutHpaSta2Text" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1004" instance="0" alias="pt307OutHpaSta3Text" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1006" instance="0" alias="pt307OutHpaSta4Text" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1008" instance="0" alias="pt307OutHpaSta5Text" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1010" instance="0" alias="pt307OutHpaSta6Text" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1012" instance="0" alias="pt307OutHpaSta7Text" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1014" instance="0" alias="pt307OutHpaSta8Text" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1016" instance="0" alias="pt307OutHpaSta9Text" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1018" instance="0" alias="pt307OutHpaSta10Tex" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1020" instance="0" alias="pt307OutHpaSta11Tex" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1022" instance="0" alias="pt307OutHpaSta12Tex" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1001" instance="0" alias="pt307OutHpaSta1Para" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1003" instance="0" alias="pt307OutHpaSta2Para" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1005" instance="0" alias="pt307OutHpaSta3Para" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1007" instance="0" alias="pt307OutHpaSta4Para" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1009" instance="0" alias="pt307OutHpaSta5Para" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1011" instance="0" alias="pt307OutHpaSta6Para" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1013" instance="0" alias="pt307OutHpaSta7Para" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1015" instance="0" alias="pt307OutHpaSta8Para" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1017" instance="0" alias="pt307OutHpaSta9Para" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1019" instance="0" alias="pt307OutHpaSta10Par" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1021" instance="0" alias="pt307OutHpaSta11Par" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1023" instance="0" alias="pt307OutHpaSta12Par" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1030" instance="0" alias="pt307OutHpaAla1Text" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1032" instance="0" alias="pt307OutHpaAla2Text" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1034" instance="0" alias="pt307OutHpaAla3Text" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1036" instance="0" alias="pt307OutHpaAla4Text" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1038" instance="0" alias="pt307OutHpaAla5Text" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1040" instance="0" alias="pt307OutHpaAla6Text" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1042" instance="0" alias="pt307OutHpaAla7Text" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1044" instance="0" alias="pt307OutHpaAla8Text" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1046" instance="0" alias="pt307OutHpaAla9Text" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1048" instance="0" alias="pt307OutHpaAla10Tex" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1050" instance="0" alias="pt307OutHpaAla11Tex" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1052" instance="0" alias="pt307OutHpaAla12Tex" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1031" instance="0" alias="pt307OutHpaAla1Stat" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1033" instance="0" alias="pt307OutHpaAla2Stat" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1035" instance="0" alias="pt307OutHpaAla3Stat" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1037" instance="0" alias="pt307OutHpaAla4Stat" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1039" instance="0" alias="pt307OutHpaAla5Stat" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1041" instance="0" alias="pt307OutHpaAla6Stat" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1043" instance="0" alias="pt307OutHpaAla7Stat" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1045" instance="0" alias="pt307OutHpaAla8Stat" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1047" instance="0" alias="pt307OutHpaAla9Stat" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1049" instance="0" alias="pt307OutHpaAla10Sta" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1051" instance="0" alias="pt307OutHpaAla11Sta" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.4.1053" instance="0" alias="pt307OutHpaAla12Sta" type="string"/> -->
+   </group>
+   <group name="pt3070Gps" ifType="ignore">
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.7.20" instance="0" alias="pt3070GpsInUse" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.7.100" instance="0" alias="pt3070GpsMaintenanc" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.7.4" instance="0" alias="pt3070GpsBias" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.7.15" instance="0" alias="pt3070GpsbiaVoltage" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.7.12" instance="0" alias="pt3070GpsCableDelay" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.7.11" instance="0" alias="pt3070GpsHoldoForev" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.7.10" instance="0" alias="pt3070GpsHoldovTime" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.7.16" instance="0" alias="pt307GpsSateSystGPS" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.7.17" instance="0" alias="pt307GpsSatSystGLON" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.7.18" instance="0" alias="pt307GpsSatSystGALI" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.7.19" instance="0" alias="pt307GpsSatSystCOMP" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.7.9" instance="0" alias="pt3070GpsVersion" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.7.1" instance="0" alias="pt3070Gps1PPSStatus" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.7.21" instance="0" alias="pt3070GpsTime" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.7.13" instance="0" alias="pt3070GpsState" type="octetstring"/> -->
+      <mibObj oid=".1.3.6.1.4.1.18086.3070.7.14" instance="0" alias="pt307GpsVisiSateSnr" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.18086.3070.7.22" instance="0" alias="pt307GpsTracSateSnr" type="integer32"/>
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.7.2" instance="0" alias="pt3070GpsVisibSatel" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.7.3" instance="0" alias="pt3070GpsTrackSatel" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.7.6" instance="0" alias="pt3070GpsLongtitude" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.7.7" instance="0" alias="pt3070GpsLatitude" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.7.8" instance="0" alias="pt3070GpsAltitude" type="octetstring"/> -->
+   </group>
+<!--    <group name="pt3070Monitor" ifType="ignore"> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.12.1" instance="0" alias="pt3070MonitorSource" type="string"/> -->
+<!--    </group> -->
+<!--    <group name="pt3070Test" ifType="ignore"> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.13.1" instance="0" alias="pt3070TestEnable" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.13.2" instance="0" alias="pt3070TestEnabRecon" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.13.4" instance="0" alias="pt3070TestFreqOffse" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.13.5" instance="0" alias="pt3070TestPRBSMode" type="string"/> -->
+<!--    </group> -->
+<!--    <group name="pt3070GroupAlarmTable" ifType="all"> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.1.1.1" instance="pt3070GroupAlarmEntry" alias="pt3070GroupAlarmID" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.1.1.2" instance="pt3070GroupAlarmEntry" alias="pt3070GrouAlarDescr" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.1.1.3" instance="pt3070GroupAlarmEntry" alias="pt3070GrouAlarState" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.1.1.4" instance="pt3070GroupAlarmEntry" alias="pt307GroAlaActiEven" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.1.1.5" instance="pt3070GroupAlarmEntry" alias="pt307GroAlaActRela1" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.1.1.6" instance="pt3070GroupAlarmEntry" alias="pt307GroAlaActRela2" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.1.1.7" instance="pt3070GroupAlarmEntry" alias="pt307GroAlaActiTrap" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.1.1.8" instance="pt3070GroupAlarmEntry" alias="pt307GroAlaActiEmai" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.1.1.9" instance="pt3070GroupAlarmEntry" alias="pt30GroAlaActAlaLED" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.1.1.10" instance="pt3070GroupAlarmEntry" alias="pt30GroAlaActForMod" type="string"/> -->
+<!--    </group> -->
+<!--    <group name="pt3070PrimaryAlarmTable" ifType="all"> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.5.1.1" instance="pt3070PrimaryAlarmEntry" alias="pt3070PrimarAlarmID" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.5.1.2" instance="pt3070PrimaryAlarmEntry" alias="pt3070PrimAlarDescr" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.5.1.3" instance="pt3070PrimaryAlarmEntry" alias="pt3070PrimAlarState" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.5.1.4" instance="pt3070PrimaryAlarmEntry" alias="pt307PriAlaActiEven" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.5.1.5" instance="pt3070PrimaryAlarmEntry" alias="pt307PriAlaActRela1" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.5.1.6" instance="pt3070PrimaryAlarmEntry" alias="pt307PriAlaActRela2" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.5.1.7" instance="pt3070PrimaryAlarmEntry" alias="pt307PriAlaActiTrap" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.5.1.8" instance="pt3070PrimaryAlarmEntry" alias="pt307PriAlaActiEmai" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.5.1.9" instance="pt3070PrimaryAlarmEntry" alias="pt30PriAlaActAlaLED" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.5.1.10" instance="pt3070PrimaryAlarmEntry" alias="pt30PriAlaActForMod" type="string"/> -->
+<!--    </group> -->
+<!--    <group name="pt3070SecondaryAlarmTable" ifType="all"> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.6.1.1" instance="pt3070SecondaryAlarmEntry" alias="pt3070SecondAlarmID" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.6.1.2" instance="pt3070SecondaryAlarmEntry" alias="pt3070SecoAlarDescr" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.6.1.3" instance="pt3070SecondaryAlarmEntry" alias="pt3070SecoAlarState" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.6.1.4" instance="pt3070SecondaryAlarmEntry" alias="pt307SecAlaActiEven" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.6.1.5" instance="pt3070SecondaryAlarmEntry" alias="pt307SecAlaActRela1" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.6.1.6" instance="pt3070SecondaryAlarmEntry" alias="pt307SecAlaActRela2" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.6.1.7" instance="pt3070SecondaryAlarmEntry" alias="pt307SecAlaActiTrap" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.6.1.8" instance="pt3070SecondaryAlarmEntry" alias="pt307SecAlaActiEmai" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.6.1.9" instance="pt3070SecondaryAlarmEntry" alias="pt30SecAlaActAlaLED" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.6.1.10" instance="pt3070SecondaryAlarmEntry" alias="pt30SecAlaActForMod" type="string"/> -->
+<!--    </group> -->
+<!--    <group name="pt3070SFNAlarmTable" ifType="all"> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.7.1.1" instance="pt3070SFNAlarmEntry" alias="pt3070SFNAlarmID" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.7.1.2" instance="pt3070SFNAlarmEntry" alias="pt3070SFNAlarmDescr" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.7.1.3" instance="pt3070SFNAlarmEntry" alias="pt3070SFNAlarmState" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.7.1.4" instance="pt3070SFNAlarmEntry" alias="pt307SFNAlaActiEven" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.7.1.5" instance="pt3070SFNAlarmEntry" alias="pt307SFNAlaActRela1" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.7.1.6" instance="pt3070SFNAlarmEntry" alias="pt307SFNAlaActRela2" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.7.1.7" instance="pt3070SFNAlarmEntry" alias="pt307SFNAlaActiTrap" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.7.1.8" instance="pt3070SFNAlarmEntry" alias="pt307SFNAlaActiEmai" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.7.1.9" instance="pt3070SFNAlarmEntry" alias="pt30SFNAlaActAlaLED" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.7.1.10" instance="pt3070SFNAlarmEntry" alias="pt30SFNAlaActForMod" type="string"/> -->
+<!--    </group> -->
+<!--    <group name="pt3070ReferenceAlarmTable" ifType="all"> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.8.1.1" instance="pt3070ReferenceAlarmEntry" alias="pt3070RefereAlarmID" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.8.1.2" instance="pt3070ReferenceAlarmEntry" alias="pt3070RefeAlarDescr" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.8.1.3" instance="pt3070ReferenceAlarmEntry" alias="pt3070RefeAlarState" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.8.1.4" instance="pt3070ReferenceAlarmEntry" alias="pt307RefAlaActiEven" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.8.1.5" instance="pt3070ReferenceAlarmEntry" alias="pt307RefAlaActRela1" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.8.1.6" instance="pt3070ReferenceAlarmEntry" alias="pt307RefAlaActRela2" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.8.1.7" instance="pt3070ReferenceAlarmEntry" alias="pt307RefAlaActiTrap" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.8.1.8" instance="pt3070ReferenceAlarmEntry" alias="pt307RefAlaActiEmai" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.8.1.9" instance="pt3070ReferenceAlarmEntry" alias="pt30RefAlaActAlaLED" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.8.1.10" instance="pt3070ReferenceAlarmEntry" alias="pt30RefAlaActForMod" type="string"/> -->
+<!--    </group> -->
+<!--    <group name="pt3070ModulatorAlarmTable" ifType="all"> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.3.1.1" instance="pt3070ModulatorAlarmEntry" alias="pt3070ModulaAlarmID" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.3.1.2" instance="pt3070ModulatorAlarmEntry" alias="pt3070ModuAlarDescr" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.3.1.3" instance="pt3070ModulatorAlarmEntry" alias="pt3070ModuAlarState" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.3.1.4" instance="pt3070ModulatorAlarmEntry" alias="pt307ModAlaActiEven" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.3.1.5" instance="pt3070ModulatorAlarmEntry" alias="pt307ModAlaActRela1" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.3.1.6" instance="pt3070ModulatorAlarmEntry" alias="pt307ModAlaActRela2" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.3.1.7" instance="pt3070ModulatorAlarmEntry" alias="pt307ModAlaActiTrap" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.3.1.8" instance="pt3070ModulatorAlarmEntry" alias="pt307ModAlaActiEmai" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.3.1.9" instance="pt3070ModulatorAlarmEntry" alias="pt30ModAlaActAlaLED" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.3.1.10" instance="pt3070ModulatorAlarmEntry" alias="pt30ModAlaActForMod" type="string"/> -->
+<!--    </group> -->
+<!--    <group name="pt3070RFAlarmTable" ifType="all"> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.9.1.1" instance="pt3070RFAlarmEntry" alias="pt3070RFAlarmID" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.9.1.2" instance="pt3070RFAlarmEntry" alias="pt3070RFAlarmDescri" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.9.1.3" instance="pt3070RFAlarmEntry" alias="pt3070RFAlarmState" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.9.1.4" instance="pt3070RFAlarmEntry" alias="pt307RFAlarActiEven" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.9.1.5" instance="pt3070RFAlarmEntry" alias="pt307RFAlaActiRela1" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.9.1.6" instance="pt3070RFAlarmEntry" alias="pt307RFAlaActiRela2" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.9.1.7" instance="pt3070RFAlarmEntry" alias="pt307RFAlarActiTrap" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.9.1.8" instance="pt3070RFAlarmEntry" alias="pt307RFAlarActiEmai" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.9.1.9" instance="pt3070RFAlarmEntry" alias="pt307RFAlaActAlaLED" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.9.1.10" instance="pt3070RFAlarmEntry" alias="pt307RFAlaActForMod" type="string"/> -->
+<!--    </group> -->
+<!--    <group name="pt3070GPSAlarmTable" ifType="all"> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.10.1.1" instance="pt3070GPSAlarmEntry" alias="pt3070GPSAlarmID" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.10.1.2" instance="pt3070GPSAlarmEntry" alias="pt3070GPSAlarmDescr" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.10.1.3" instance="pt3070GPSAlarmEntry" alias="pt3070GPSAlarmState" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.10.1.4" instance="pt3070GPSAlarmEntry" alias="pt307GPSAlaActiEven" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.10.1.5" instance="pt3070GPSAlarmEntry" alias="pt307GPSAlaActRela1" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.10.1.6" instance="pt3070GPSAlarmEntry" alias="pt307GPSAlaActRela2" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.10.1.7" instance="pt3070GPSAlarmEntry" alias="pt307GPSAlaActiTrap" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.10.1.8" instance="pt3070GPSAlarmEntry" alias="pt307GPSAlaActiEmai" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.10.1.9" instance="pt3070GPSAlarmEntry" alias="pt30GPSAlaActAlaLED" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.10.1.10" instance="pt3070GPSAlarmEntry" alias="pt30GPSAlaActForMod" type="string"/> -->
+<!--    </group> -->
+<!--    <group name="pt3070EDIAlarmTable" ifType="all"> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.12.1.1" instance="pt3070EDIAlarmEntry" alias="pt3070EDIAlarmID" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.12.1.2" instance="pt3070EDIAlarmEntry" alias="pt3070EDIAlarmDescr" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.12.1.3" instance="pt3070EDIAlarmEntry" alias="pt3070EDIAlarmState" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.12.1.4" instance="pt3070EDIAlarmEntry" alias="pt307EDIAlaActiEven" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.12.1.5" instance="pt3070EDIAlarmEntry" alias="pt307EDIAlaActRela1" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.12.1.6" instance="pt3070EDIAlarmEntry" alias="pt307EDIAlaActRela2" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.12.1.7" instance="pt3070EDIAlarmEntry" alias="pt307EDIAlaActiTrap" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.12.1.8" instance="pt3070EDIAlarmEntry" alias="pt307EDIAlaActiEmai" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.12.1.9" instance="pt3070EDIAlarmEntry" alias="pt30EDIAlaActAlaLED" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.12.1.10" instance="pt3070EDIAlarmEntry" alias="pt30EDIAlaActForMod" type="string"/> -->
+<!--    </group> -->
+<!--    <group name="pt3070ExternalAlarmTable" ifType="all"> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.13.1.1" instance="pt3070ExternalAlarmEntry" alias="pt3070ExternAlarmID" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.13.1.2" instance="pt3070ExternalAlarmEntry" alias="pt3070ExteAlarDescr" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.13.1.3" instance="pt3070ExternalAlarmEntry" alias="pt3070ExteAlarState" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.13.1.4" instance="pt3070ExternalAlarmEntry" alias="pt307ExtAlaActiEven" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.13.1.5" instance="pt3070ExternalAlarmEntry" alias="pt307ExtAlaActRela1" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.13.1.6" instance="pt3070ExternalAlarmEntry" alias="pt307ExtAlaActRela2" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.13.1.7" instance="pt3070ExternalAlarmEntry" alias="pt307ExtAlaActiTrap" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.13.1.8" instance="pt3070ExternalAlarmEntry" alias="pt307ExtAlaActiEmai" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.13.1.9" instance="pt3070ExternalAlarmEntry" alias="pt30ExtAlaActAlaLED" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.13.1.10" instance="pt3070ExternalAlarmEntry" alias="pt30ExtAlaActForMod" type="string"/> -->
+<!--    </group> -->
+<!--    <group name="pt3070HWMonitorAlarmTable" ifType="all"> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.14.1.1" instance="pt3070HWMonitorAlarmEntry" alias="pt3070HWMoniAlarmID" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.14.1.2" instance="pt3070HWMonitorAlarmEntry" alias="pt307HWMoniAlarDesc" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.14.1.3" instance="pt3070HWMonitorAlarmEntry" alias="pt307HWMoniAlarStat" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.14.1.4" instance="pt3070HWMonitorAlarmEntry" alias="pt307HWMonAlaActEve" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.14.1.5" instance="pt3070HWMonitorAlarmEntry" alias="pt30HWMonAlaActRel1" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.14.1.6" instance="pt3070HWMonitorAlarmEntry" alias="pt30HWMonAlaActRel2" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.14.1.7" instance="pt3070HWMonitorAlarmEntry" alias="pt307HWMonAlaActTra" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.14.1.8" instance="pt3070HWMonitorAlarmEntry" alias="pt307HWMonAlaActEma" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.14.1.9" instance="pt3070HWMonitorAlarmEntry" alias="pt30HWMoAlActAlaLED" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.14.1.10" instance="pt3070HWMonitorAlarmEntry" alias="pt30HWMoAlActForMod" type="string"/> -->
+<!--    </group> -->
+<!--    <group name="pt3070CommsAlarmTable" ifType="all"> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.15.1.1" instance="pt3070CommsAlarmEntry" alias="pt3070CommsAlarmID" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.15.1.2" instance="pt3070CommsAlarmEntry" alias="pt3070CommAlarDescr" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.15.1.3" instance="pt3070CommsAlarmEntry" alias="pt3070CommAlarState" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.15.1.4" instance="pt3070CommsAlarmEntry" alias="pt307ComAlaActiEven" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.15.1.5" instance="pt3070CommsAlarmEntry" alias="pt307ComAlaActRela1" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.15.1.6" instance="pt3070CommsAlarmEntry" alias="pt307ComAlaActRela2" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.15.1.7" instance="pt3070CommsAlarmEntry" alias="pt307ComAlaActiTrap" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.15.1.8" instance="pt3070CommsAlarmEntry" alias="pt307ComAlaActiEmai" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.15.1.9" instance="pt3070CommsAlarmEntry" alias="pt30ComAlaActAlaLED" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.15.1.10" instance="pt3070CommsAlarmEntry" alias="pt30ComAlaActForMod" type="string"/> -->
+<!--    </group> -->
+<!--    <group name="pt3070InternalAlarmTable" ifType="all"> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.18.1.1" instance="pt3070InternalAlarmEntry" alias="pt3070InternAlarmID" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.18.1.2" instance="pt3070InternalAlarmEntry" alias="pt3070InteAlarDescr" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.18.1.3" instance="pt3070InternalAlarmEntry" alias="pt3070InteAlarState" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.18.1.4" instance="pt3070InternalAlarmEntry" alias="pt307IntAlaActiEven" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.18.1.5" instance="pt3070InternalAlarmEntry" alias="pt307IntAlaActRela1" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.18.1.6" instance="pt3070InternalAlarmEntry" alias="pt307IntAlaActRela2" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.18.1.7" instance="pt3070InternalAlarmEntry" alias="pt307IntAlaActiTrap" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.18.1.8" instance="pt3070InternalAlarmEntry" alias="pt307IntAlaActiEmai" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.18.1.9" instance="pt3070InternalAlarmEntry" alias="pt30IntAlaActAlaLED" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.14.18.1.10" instance="pt3070InternalAlarmEntry" alias="pt30IntAlaActForMod" type="string"/> -->
+<!--    </group> -->
+<!--    <group name="pt3070PresetTable" ifType="all"> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.15.1.1.1" instance="pt3070PresetEntry" alias="pt3070PresetNo" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.15.1.1.2" instance="pt3070PresetEntry" alias="pt3070PresetName" type="octetstring"/> -->
+<!--    </group> -->
+<!--    <group name="pt3070Preset" ifType="ignore"> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.15.2" instance="0" alias="pt3070PresetRecall" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.15.3" instance="0" alias="pt3070PresetStore" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.15.4" instance="0" alias="pt3070PresLastRecal" type="octetstring"/> -->
+<!--    </group> -->
+<!--    <group name="pt3070EventlogTable" ifType="all"> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.16.1.1.1" instance="pt3070EventlogEntry" alias="pt3070EventlogNo" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.16.1.1.2" instance="pt3070EventlogEntry" alias="pt3070EventlogID" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.16.1.1.3" instance="pt3070EventlogEntry" alias="pt3070EventlTimesta" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.16.1.1.4" instance="pt3070EventlogEntry" alias="pt3070EventlogText" type="octetstring"/> -->
+<!--    </group> -->
+<!--    <group name="pt3070Eventlog" ifType="ignore"> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.16.2" instance="0" alias="pt3070EventlogClear" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.16.3" instance="0" alias="pt3070EventloEnable" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.16.4" instance="0" alias="pt3070EventlogMode" type="string"/> -->
+<!--    </group> -->
+<!--    <group name="pt3070Comms" ifType="ignore"> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.34" instance="0" alias="pt307ComAlaEmaiRece" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.888" instance="0" alias="pt3070CommNetwWarni" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.98" instance="0" alias="pt307ComSepSwitPort" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.94" instance="0" alias="pt307ComBroStorProt" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.80" instance="0" alias="pt307ComLocPhysInte" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.3" instance="0" alias="pt307ComLocDhcpMode" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.1" instance="0" alias="pt307ComLocStaIpAdd" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.2" instance="0" alias="pt307ComLocStatNetm" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.100" instance="0" alias="pt307ComLocIpMulAdd" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.190" instance="0" alias="pt30CoLoIpMuSoFiMod" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.200" instance="0" alias="pt30CoLoIpMuSoFiAd1" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.201" instance="0" alias="pt30CoLoIpMuSoFiAd2" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.202" instance="0" alias="pt30CoLoIpMuSoFiAd3" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.203" instance="0" alias="pt30CoLoIpMuSoFiAd4" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.204" instance="0" alias="pt30CoLoIpMuSoFiAd5" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.205" instance="0" alias="pt30CoLoIpMuSoFiAd6" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.101" instance="0" alias="pt307ComLocVlanEnab" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.102" instance="0" alias="pt307CommLocaVlanId" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.103" instance="0" alias="pt307ComLocServSNMP" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.104" instance="0" alias="pt307ComLocServSCPI" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.105" instance="0" alias="pt307ComLocaServEDI" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.106" instance="0" alias="pt307ComLocaServRIP" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.4" instance="0" alias="pt307ComLocCurIpAdd" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.5" instance="0" alias="pt307ComLocCurrNetm" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.117" instance="0" alias="pt3070CommRemoEnabl" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.81" instance="0" alias="pt307ComRemPhysInte" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.73" instance="0" alias="pt307ComRemDhcpMode" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.7" instance="0" alias="pt307ComRemStaIpAdd" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.8" instance="0" alias="pt307ComRemStatNetm" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.110" instance="0" alias="pt307ComRemIpMulAdd" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.191" instance="0" alias="pt30CoReIpMuSoFiMod" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.220" instance="0" alias="pt30CoReIpMuSoFiAd1" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.221" instance="0" alias="pt30CoReIpMuSoFiAd2" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.222" instance="0" alias="pt30CoReIpMuSoFiAd3" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.223" instance="0" alias="pt30CoReIpMuSoFiAd4" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.224" instance="0" alias="pt30CoReIpMuSoFiAd5" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.225" instance="0" alias="pt30CoReIpMuSoFiAd6" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.111" instance="0" alias="pt307ComRemVlanEnab" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.112" instance="0" alias="pt307CommRemoVlanId" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.113" instance="0" alias="pt307ComRemServSNMP" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.114" instance="0" alias="pt307ComRemServSCPI" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.115" instance="0" alias="pt307ComRemoServEDI" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.116" instance="0" alias="pt307ComRemoServWeb" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.118" instance="0" alias="pt307ComRemoServRIP" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.10" instance="0" alias="pt307ComRemCurIpAdd" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.11" instance="0" alias="pt307ComRemCurrNetm" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.127" instance="0" alias="pt307ComGbeAdmiEnab" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.82" instance="0" alias="pt30ComGbeAdmPhyInt" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.74" instance="0" alias="pt30ComGbeAdmDhcMod" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.13" instance="0" alias="pt30CoGbAdmStaIpAdd" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.14" instance="0" alias="pt30ComGbeAdmStaNet" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.120" instance="0" alias="pt30CoGbAdmIpMulAdd" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.192" instance="0" alias="p30CoGbAdIpMuSoFiMo" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.230" instance="0" alias="p3CoGbAdIpMuSoFiAd1" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.231" instance="0" alias="p3CoGbAdIpMuSoFiAd2" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.232" instance="0" alias="p3CoGbAdIpMuSoFiAd3" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.233" instance="0" alias="p3CoGbAdIpMuSoFiAd4" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.234" instance="0" alias="p3CoGbAdIpMuSoFiAd5" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.235" instance="0" alias="p3CoGbAdIpMuSoFiAd6" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.121" instance="0" alias="pt30ComGbeAdmVlaEna" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.122" instance="0" alias="pt307ComGbeAdmVlaId" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.123" instance="0" alias="pt30ComGbeAdmSerSNM" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.124" instance="0" alias="pt30ComGbeAdmSerSCP" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.125" instance="0" alias="pt30ComGbeAdmSerEDI" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.126" instance="0" alias="pt30ComGbeAdmSerWeb" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.128" instance="0" alias="pt30ComGbeAdmSerRIP" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.16" instance="0" alias="pt30CoGbAdmCurIpAdd" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.17" instance="0" alias="pt30ComGbeAdmCurNet" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.150" instance="0" alias="pt3070CommBackEnabl" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.151" instance="0" alias="pt307ComBacPhysInte" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.75" instance="0" alias="pt307ComBacDhcpMode" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.152" instance="0" alias="pt307ComBacStaIpAdd" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.153" instance="0" alias="pt307ComBacStatNetm" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.154" instance="0" alias="pt307ComBacIpMulAdd" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.193" instance="0" alias="pt30CoBaIpMuSoFiMod" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.170" instance="0" alias="pt30CoBaIpMuSoFiAd1" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.171" instance="0" alias="pt30CoBaIpMuSoFiAd2" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.172" instance="0" alias="pt30CoBaIpMuSoFiAd3" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.173" instance="0" alias="pt30CoBaIpMuSoFiAd4" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.174" instance="0" alias="pt30CoBaIpMuSoFiAd5" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.175" instance="0" alias="pt30CoBaIpMuSoFiAd6" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.155" instance="0" alias="pt307ComBacVlanEnab" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.156" instance="0" alias="pt307CommBackVlanId" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.157" instance="0" alias="pt307ComBacServSNMP" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.158" instance="0" alias="pt307ComBacServSCPI" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.159" instance="0" alias="pt307ComBackServEDI" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.160" instance="0" alias="pt307ComBackServWeb" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.161" instance="0" alias="pt307ComBackServRIP" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.162" instance="0" alias="pt307ComBacCurIpAdd" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.163" instance="0" alias="pt307ComBacCurrNetm" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.2500" instance="0" alias="pt3070CommPortEnabl" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.2151" instance="0" alias="pt307ComPorPhysInte" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.2075" instance="0" alias="pt307ComPorDhcpMode" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.2152" instance="0" alias="pt307ComPorStaIpAdd" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.2153" instance="0" alias="pt307ComPorStatNetm" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.2154" instance="0" alias="pt307ComPorIpMulAdd" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.2193" instance="0" alias="pt30CoPoIpMuSoFiMod" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.2170" instance="0" alias="pt30CoPoIpMuSoFiAd1" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.2171" instance="0" alias="pt30CoPoIpMuSoFiAd2" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.2172" instance="0" alias="pt30CoPoIpMuSoFiAd3" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.2173" instance="0" alias="pt30CoPoIpMuSoFiAd4" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.2174" instance="0" alias="pt30CoPoIpMuSoFiAd5" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.2175" instance="0" alias="pt30CoPoIpMuSoFiAd6" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.2155" instance="0" alias="pt307ComPorVlanEnab" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.2156" instance="0" alias="pt307CommPortVlanId" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.2157" instance="0" alias="pt307ComPorServSNMP" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.2158" instance="0" alias="pt307ComPorServSCPI" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.2159" instance="0" alias="pt307ComPortServEDI" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.2160" instance="0" alias="pt307ComPortServWeb" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.2161" instance="0" alias="pt307ComPortServRIP" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.2162" instance="0" alias="pt307ComPorCurIpAdd" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.2163" instance="0" alias="pt307ComPorCurrNetm" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.55" instance="0" alias="pt307ComSNMServPort" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.56" instance="0" alias="pt30ComSNMReaOnlCom" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.57" instance="0" alias="pt30ComSNMReaWriCom" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.58" instance="0" alias="pt307ComSNMTrapComm" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.59" instance="0" alias="pt307ComSNMTrapDest" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.419" instance="0" alias="pt307ComSNMTraDest2" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.779" instance="0" alias="pt307ComSNMTraDest3" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.1139" instance="0" alias="pt307ComSNMTraDest4" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.1499" instance="0" alias="pt307ComSNMTraDest5" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.60" instance="0" alias="pt30ComSNMTraDesPor" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.420" instance="0" alias="pt30CoSNMTraDesPor2" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.780" instance="0" alias="pt30CoSNMTraDesPor3" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.1140" instance="0" alias="pt30CoSNMTraDesPor4" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.1500" instance="0" alias="pt30CoSNMTraDesPor5" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.29" instance="0" alias="pt3070CommStatGatew" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.30" instance="0" alias="pt3070CommCurrGatew" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.27" instance="0" alias="pt3070CommStatHostn" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.28" instance="0" alias="pt3070CommCurrHostn" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.25" instance="0" alias="pt307ComStatDNSDoma" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.26" instance="0" alias="pt307ComCurrDNSDoma" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.19" instance="0" alias="pt30CoStaDNS1SerAdd" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.21" instance="0" alias="pt30CoStaDNS2SerAdd" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.23" instance="0" alias="pt30CoStaDNS3SerAdd" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.20" instance="0" alias="pt30CoCurDNS1SerAdd" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.22" instance="0" alias="pt30CoCurDNS2SerAdd" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.24" instance="0" alias="pt30CoCurDNS3SerAdd" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.31" instance="0" alias="pt30ComStaNtpSerAdd" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.3102" instance="0" alias="pt30CoStaNtp2SerAdd" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.3104" instance="0" alias="pt30CoStaNtp3SerAdd" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.32" instance="0" alias="pt30ComCurNtpSerAdd" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.3202" instance="0" alias="pt30CoCurNtp2SerAdd" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.3204" instance="0" alias="pt30CoCurNtp3SerAdd" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.33" instance="0" alias="pt307ComEmaServAddr" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.9940" instance="0" alias="pt307ComSecuWebPort" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.9941" instance="0" alias="pt3070CommsWebProto" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.35" instance="0" alias="pt307ComWebServPort" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.36" instance="0" alias="pt307ComSCPServPort" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.37" instance="0" alias="pt307ComSCPServBaud" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.39" instance="0" alias="pt307ComSCPUartInte" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.38" instance="0" alias="pt3070CommsRipPort" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.99" instance="0" alias="pt3070CommIGMPVersi" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.97" instance="0" alias="pt30ComIGMQueRobCou" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.96" instance="0" alias="pt30CoIGPv3UnRepInt" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.95" instance="0" alias="pt30CoIGPv2UnRepInt" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.48" instance="0" alias="pt3070CommAcceAllow" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.49" instance="0" alias="pt307ComAccAlloTime" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.50" instance="0" alias="pt30ComAccAllTimLef" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.1000" instance="0" alias="pt307ComNtpStatMess" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.1001" instance="0" alias="pt307ComNtpStatLeap" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.1002" instance="0" alias="pt307ComNtpStatSour" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.1003" instance="0" alias="pt30ComNtpPeeRmsJit" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.1004" instance="0" alias="pt30ComNtpPeeCloOff" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.1005" instance="0" alias="pt30ComNtpPeeRouDel" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.1006" instance="0" alias="pt307ComNtpPeerDisp" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.1007" instance="0" alias="pt30ComNtpLooRmsJit" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.1008" instance="0" alias="pt30ComNtpLooCloOff" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.1009" instance="0" alias="pt30ComNtpLooRmsWan" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.1010" instance="0" alias="pt30ComNtpLooFreOff" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.51" instance="0" alias="pt307ComAccPassObse" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.52" instance="0" alias="pt307ComAccPassOper" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.53" instance="0" alias="pt307ComAccPassAdmi" type="octetstring"/> -->
+<!--    </group> -->
+<!--    <group name="pt3070CommsStaticRouteTable" ifType="all"> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.300.1.1" instance="pt3070CommsStaticRouteEntry" alias="pt307CommStatRoutNO" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.300.1.2" instance="pt3070CommsStaticRouteEntry" alias="pt307ComStaRoutType" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.300.1.3" instance="pt3070CommsStaticRouteEntry" alias="pt307ComStaRoutPref" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.300.1.4" instance="pt3070CommsStaticRouteEntry" alias="pt30ComStaRouPreSiz" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.300.1.5" instance="pt3070CommsStaticRouteEntry" alias="pt307ComStaRoutTarg" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.17.300.1.6" instance="pt3070CommsStaticRouteEntry" alias="pt30ComStaRouPhyInt" type="string"/> -->
+<!--    </group> -->
+<!--    <group name="pt3070Precorrector" ifType="ignore"> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.100" instance="0" alias="pt3070PrecorVersion" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.101" instance="0" alias="pt3070PrecorVersion" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.5" instance="0" alias="pt3070PrecorHeadroo" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.79" instance="0" alias="pt3070PrecLineAdapt" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.2" instance="0" alias="pt3070PrecLineaMode" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.46" instance="0" alias="pt307PreLinSensEnab" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.24" instance="0" alias="pt307PreLinMoniStat" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.22" instance="0" alias="pt30PreLinMonSenLev" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.23" instance="0" alias="pt30PreLinMonSenVal" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.8" instance="0" alias="pt30PrLiMoSenBadCou" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.26" instance="0" alias="pt30PreLinMonAmpRip" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.30" instance="0" alias="pt30PrLiMoAmpRipVal" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.27" instance="0" alias="pt30PreLinMonGroDel" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.31" instance="0" alias="pt30PrLiMoGroDelVal" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.47" instance="0" alias="pt30PreLinMonDisIte" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.19" instance="0" alias="pt307PreLinMoniIter" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.1" instance="0" alias="pt307PreLinAdapMode" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.42" instance="0" alias="pt30PrLiAdAmRiTaLev" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.14" instance="0" alias="pt30PrLiAdAmRiTaHys" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.10" instance="0" alias="pt30PrLiAdAmpRipEna" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.43" instance="0" alias="pt30PrLiAdGrDeTaLev" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.15" instance="0" alias="pt30PrLiAdGrDeTaHys" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.11" instance="0" alias="pt30PrLiAdGroDelEna" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.82" instance="0" alias="pt30PreLinAdaPreNeu" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.83" instance="0" alias="pt30PreLinAdaPreFac" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.84" instance="0" alias="pt30PreLinAdaPreFac" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.85" instance="0" alias="pt30PreLinAdaPreFac" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.78" instance="0" alias="pt3070PrecLineAtten" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.80" instance="0" alias="pt3070PrecNonlAdapt" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.4" instance="0" alias="pt3070PrecNonliMode" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.48" instance="0" alias="pt307PreNonSensEnab" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.40" instance="0" alias="pt307PreNonMoniStat" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.38" instance="0" alias="pt30PreNonMonSenLev" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.39" instance="0" alias="pt30PreNonMonSenVal" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.9" instance="0" alias="pt30PrNoMoSenBadCou" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.28" instance="0" alias="pt30PrNoMoLowShoLev" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.32" instance="0" alias="pt30PrNoMoLowShoVal" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.29" instance="0" alias="pt30PrNoMoUppShoLev" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.33" instance="0" alias="pt30PrNoMoUppShoVal" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.49" instance="0" alias="pt30PreNonMonDisIte" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.35" instance="0" alias="pt307PreNonMoniIter" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.50" instance="0" alias="pt307PreNonlMoniMer" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.51" instance="0" alias="pt30PreNonMonMerVal" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.52" instance="0" alias="pt307PreNonMoniPapr" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.53" instance="0" alias="pt30PreNonMonPapVal" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.77" instance="0" alias="pt3070PrecNonlAtten" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.3" instance="0" alias="pt307PreNonAdapMode" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.55" instance="0" alias="pt30PrNoAdMaRfPaEna" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.56" instance="0" alias="pt30PrNoAdMaRfPaLim" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.57" instance="0" alias="pt30PreNonAdaMerTar" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.58" instance="0" alias="pt30PrNoAdMerTarHys" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.59" instance="0" alias="pt30PreNonAdaMerEna" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.44" instance="0" alias="pt30PrNoAdLoShTaLev" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.16" instance="0" alias="pt30PrNoAdLoShTaHys" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.12" instance="0" alias="pt30PrNoAdLowShoEna" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.45" instance="0" alias="pt30PrNoAdUpShTaLev" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.17" instance="0" alias="pt30PrNoAdUpShTaHys" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.13" instance="0" alias="pt30PrNoAdUppShoEna" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.90" instance="0" alias="pt30PreNonAdaPreNeu" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.91" instance="0" alias="pt30PreNonAdaPreFac" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.92" instance="0" alias="pt30PreNonAdaPreFac" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.93" instance="0" alias="pt30PreNonAdaPreFac" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.60" instance="0" alias="pt3070PrecPaprClipp" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.61" instance="0" alias="pt3070PrecPaprShapi" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.74" instance="0" alias="pt3070PrecClippMode" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.75" instance="0" alias="pt3070PrecClipAdapt" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.76" instance="0" alias="pt3070PrecClipEnabl" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.81" instance="0" alias="pt307PreCliAdapShap" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.64" instance="0" alias="pt307PreCliMoniStat" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.65" instance="0" alias="pt30PrClMoShoLevLow" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.66" instance="0" alias="pt30PrClMoShLeLoVal" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.67" instance="0" alias="pt30PrClMoShoLevUpp" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.68" instance="0" alias="pt30PrClMoShLeUpVal" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.69" instance="0" alias="pt307PreClipMoniMer" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.70" instance="0" alias="pt30PreCliMonMerVal" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.71" instance="0" alias="pt307PreCliMoniPapr" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.72" instance="0" alias="pt30PreCliMonPapVal" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.73" instance="0" alias="pt307PreCliMoniIter" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.6" instance="0" alias="pt30PreLasTurAroTim" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.7" instance="0" alias="pt30PreSecSinLasUpd" type="integer32"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.20" instance="0" alias="pt307PreLinLoadNeut" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.21" instance="0" alias="pt307PreLinLoadFact" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.25" instance="0" alias="pt30PreLinUpdFacCur" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.36" instance="0" alias="pt307PreNonLoadNeut" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.37" instance="0" alias="pt307PreNonLoadFact" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.25.41" instance="0" alias="pt30PreNonUpdFacCur" type="string"/> -->
+<!--    </group> -->
+<!--    <group name="pt3070Backplane" ifType="ignore"> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.27.1" instance="0" alias="pt307BacPolHardMute" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.27.2" instance="0" alias="pt307BackPolaRFFail" type="string"/> -->
+<!--    </group> -->
+<!--    <group name="pt3070Notifs" ifType="ignore"> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.64.1" instance="0" alias="pt3070NotifMessage" type="octetstring"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.64.2" instance="0" alias="pt3070NotifState" type="string"/> -->
+<!--       <mibObj oid=".1.3.6.1.4.1.18086.3070.64.3" instance="0" alias="pt3070NotiLocalTime" type="octetstring"/> -->
+<!--    </group> -->
+   
+   
+   <systemDef name="PT3070">
+      <sysoid>.1.3.6.1.4.1.18086.3070</sysoid>
+      <collect>
+         <includeGroup>pt3070Output</includeGroup>
+         <includeGroup>pt3070Gps</includeGroup>
+      </collect>
+   </systemDef>
+</datacollection-group>

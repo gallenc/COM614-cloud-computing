@@ -1,0 +1,101 @@
+<xml-groups>
+ <!--
+        DAB mux performance 
+{
+  "timestamp": "2026-03-20T23:33:54.613967+00:00",
+  "source": "dab_mux",
+  "stats": {
+    "service": "ODR-DabMux  MGMT Server",
+    "inputs": {
+      "sub-03": {
+        "max_fill": 9984,
+        "min_fill": 8256,
+        "num_underruns": 72,
+        "num_overruns": 0,
+        "peak_left": -9,
+        "peak_right": -9,
+        "state": "Streaming (4)",
+        "uptime": 5861
+      },
+      "sub-02": {
+        "max_fill": 4800,
+        "min_fill": 3840,
+        "num_underruns": 69,
+        "num_overruns": 1,
+        "peak_left": -3,
+        "peak_right": -3,
+        "state": "Streaming (4)",
+        "uptime": 5861
+      },
+      "sub-01": {
+        "max_fill": 6336,
+        "min_fill": 4800,
+        "num_underruns": 45,
+        "num_overruns": 1,
+        "peak_left": -2,
+        "peak_right": -1,
+        "state": "Streaming (4)",
+        "uptime": 5861
+      }
+    },
+    "outputs": {
+      "edi_tcp_13000": {
+        "num_connections": 1
+      }
+    }
+  }
+}
+    -->
+
+<!-- ideally want to extract names from key-xpath but doesn't work yet using key-xpath -->
+<!--     <xml-group name="inputs_odr_dab_mux" resource-type="odr-dab-mux" key-xpath="inputs" resource-xpath="/stats/inputs"> -->
+<!--             <xml-object name="max_fill" type="GAUGE" xpath="max_fill"/>  -->
+<!--             <xml-object name="min_fill" type="GAUGE" xpath="min_fill"/>  -->
+<!--             <xml-object name="num_underruns" type="COUNTER" xpath="num_underruns"/>  -->
+<!--             <xml-object name="num_overruns" type="COUNTER" xpath="num_overruns"/>  -->
+<!--             <xml-object name="peak_left" type="GAUGE" xpath="peak_left"/>  -->
+<!--             <xml-object name="peak_right" type="GAUGE" xpath="peak_right"/>  -->
+<!--             <xml-object name="state" type="STRING" xpath="state"/>  -->
+<!--             <xml-object name="uptime" type="COUNTER" xpath="uptime"/>  -->
+<!--      </xml-group> -->
+
+<!--  work around specifying exact inputs -->
+    <xml-group name="sub-01-inputs_odr_dab_mux" resource-type="node"  resource-xpath="/stats/inputs/sub-01">
+            <xml-object name="sub-01-max_fill" type="GAUGE" xpath="max_fill"/> 
+            <xml-object name="sub-01-min_fill" type="GAUGE" xpath="min_fill"/> 
+            <xml-object name="sub-01-num_underruns" type="COUNTER" xpath="num_underruns"/> 
+            <xml-object name="sub-01-num_overruns" type="COUNTER" xpath="num_overruns"/> 
+            <xml-object name="sub-01-peak_left" type="GAUGE" xpath="peak_left"/> 
+            <xml-object name="sub-01-peak_right" type="GAUGE" xpath="peak_right"/> 
+            <xml-object name="sub-01-state" type="STRING" xpath="state"/> 
+            <xml-object name="sub-01-uptime" type="COUNTER" xpath="uptime"/> 
+     </xml-group>
+     
+     <xml-group name="sub-02-inputs_odr_dab_mux" resource-type="node"  resource-xpath="/stats/inputs/sub-02">
+            <xml-object name="sub-02-max_fill" type="GAUGE" xpath="max_fill"/> 
+            <xml-object name="sub-02-min_fill" type="GAUGE" xpath="min_fill"/> 
+            <xml-object name="sub-02-num_underruns" type="COUNTER" xpath="num_underruns"/> 
+            <xml-object name="sub-02-num_overruns" type="COUNTER" xpath="num_overruns"/> 
+            <xml-object name="sub-02-peak_left" type="GAUGE" xpath="peak_left"/> 
+            <xml-object name="sub-02-peak_right" type="GAUGE" xpath="peak_right"/> 
+            <xml-object name="sub-02-state" type="STRING" xpath="state"/> 
+            <xml-object name="sub-02-uptime" type="COUNTER" xpath="uptime"/> 
+     </xml-group>
+     
+     <xml-group name="sub-03-inputs_odr_dab_mux" resource-type="node"  resource-xpath="/stats/inputs/sub-03">
+            <xml-object name="sub-03-max_fill" type="GAUGE" xpath="max_fill"/> 
+            <xml-object name="sub-03-min_fill" type="GAUGE" xpath="min_fill"/> 
+            <xml-object name="sub-03-num_underruns" type="COUNTER" xpath="num_underruns"/> 
+            <xml-object name="sub-03-num_overruns" type="COUNTER" xpath="num_overruns"/> 
+            <xml-object name="sub-03-peak_left" type="GAUGE" xpath="peak_left"/> 
+            <xml-object name="sub-03-peak_right" type="GAUGE" xpath="peak_right"/> 
+            <xml-object name="sub-03-state" type="STRING" xpath="state"/> 
+            <xml-object name="sub-03-uptime" type="COUNTER" xpath="uptime"/> 
+     </xml-group>
+
+     <xml-group name="outputs_odr_dab_mux" resource-type="node" key-xpath="outputs" resource-xpath="/stats/outputs/edi_tcp_13000">
+            <xml-object name="edi_tcp_13000_num_connections" type="COUNTER" xpath="num_connections"/> 
+     </xml-group>
+
+
+</xml-groups>

@@ -12,6 +12,8 @@
    <event-file>events/DB7012-MIB.events.xml</event-file>
    <event-file>events/DB8008-MIB.events.xml</event-file>
    <event-file>events/DB9000RX-MIB.events.xml</event-file>
+   <event-file>events/PT3070-MIB.events.xml</event-file>
+   <event-file>events/TREDESS-FS-MIB.events.xml</event-file>
    
    <event-file>events/opennms.snmp.trap.translator.events.xml</event-file>
    <event-file>events/opennms.ackd.events.xml</event-file>

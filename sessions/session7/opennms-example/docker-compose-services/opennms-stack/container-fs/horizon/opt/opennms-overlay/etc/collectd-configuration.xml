@@ -217,8 +217,28 @@
       </service>
    </package>
 
+   <package name="ODR_dab" remote="false">
+      <filter>IPADDR != '0.0.0.0'</filter>
+      <include-range begin="1.1.1.1" end="254.254.254.254" />
+      <include-range begin="::1" end="ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff" />
+
+      <service name="odr_dab_mod_stats" interval="300000" user-defined="false" status="on">
+         <parameter key="collection" value="json-dab-mod-stats" />
+         <parameter key="handler-class" value="org.opennms.protocols.json.collector.DefaultJsonCollectionHandler" />
+      </service>
+  
+      <service name="odr_dab_mux_stats" interval="300000" user-defined="false" status="on">
+         <parameter key="collection" value="json-dab-mux-stats" />
+         <parameter key="handler-class" value="org.opennms.protocols.json.collector.DefaultJsonCollectionHandler" />
+      </service>
+      
+   </package>
+
    <collector service="Apache-Stats" class-name="org.opennms.netmgt.collectd.HttpCollector" />
    <collector service="nginx_stats" class-name="org.opennms.netmgt.collectd.HttpCollector" />
+
+   <collector service="odr_dab_mod_stats" class-name="org.opennms.protocols.xml.collector.XmlCollector" />   
+   <collector service="odr_dab_mux_stats" class-name="org.opennms.protocols.xml.collector.XmlCollector" />
 
    <collector service="Windows-Exporter" class-name="org.opennms.netmgt.collectd.prometheus.PrometheusCollector" />
    <collector service="Node-Exporter" class-name="org.opennms.netmgt.collectd.prometheus.PrometheusCollector" />

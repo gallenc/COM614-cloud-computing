@@ -1,0 +1,37 @@
+<xml-groups>
+ <!--
+        DAB mod performance 
+{
+  "timestamp": "2026-03-20T23:33:54.613967+00:00",
+  "source": "dab_mod",
+  "stats": {
+    "num_modulator_restarts": "0",
+    "most_recent_edi_decoded": "1774049635",
+    "edi_source": "tcp://mux:13000",
+    "running_since": "1774045604",
+    "ensemble_label": "Solent Uni",
+    "ensemble_eid": "49622",
+    "num_services": "3",
+    "digital_gain": "0.800000",
+    "gainmode": "var",
+    "iq_samplerate": "2048000",
+    "tist_offset": "0"
+  }
+}
+    -->
+
+    <xml-group name="stats_odr_dab_mod" resource-type="node"  resource-xpath="/stats">
+            <xml-object name="num_modulator_restarts" type="COUNTER" xpath="num_modulator_restarts"/>
+            <xml-object name="most_recent_edi_decoded" type="GAUGE" xpath="most_recent_edi_decoded"/>
+            <xml-object name="edi_source" type="STRING" xpath="edi_source"/>
+            <xml-object name="running_since" type="STRING" xpath="running_since"/>
+            <xml-object name="ensemble_label" type="STRING" xpath="ensemble_label"/>
+            <xml-object name="ensemble_eid" type="STRING" xpath="ensemble_eid"/>
+            <xml-object name="num_services" type="GAUGE" xpath="num_services"/>
+            <xml-object name="digital_gain" type="STRING" xpath="digital_gain"/>
+            <xml-object name="gainmode" type="STRING" xpath="gainmode"/>
+            <xml-object name="iq_samplerate" type="GAUGE" xpath="iq_samplerate"/>
+            <xml-object name="tist_offset" type="GAUGE" xpath="tist_offset"/>
+     </xml-group>
+
+</xml-groups>
