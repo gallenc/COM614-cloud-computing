@@ -102,6 +102,6 @@ ansible-inventory -i common/inventory/dev/hosts.ini stop-docker-compose-service.
 
 # running in ansible semaphore-ui
 
-http://localhost:3000/semaphore/
+http://localhost:3001/semaphore/
 
 

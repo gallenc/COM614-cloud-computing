@@ -48,7 +48,7 @@ services:
     container_name: semaphore
     restart: unless-stopped
     ports:
-      - 3000:3000
+      - 3001:3000
     # image: semaphoreui/semaphore:v2.17.0
     image: entimoss/semaphore:v2.17.0
     build: ./container-fs/semaphore
