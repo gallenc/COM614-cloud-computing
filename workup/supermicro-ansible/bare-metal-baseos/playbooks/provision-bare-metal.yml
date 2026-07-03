@@ -1,0 +1,36 @@
+# playbooks/provision-bare-metal.yml
+# Complete bare metal provisioning workflow
+---
+- name: Trigger PXE boot on target servers
+  hosts: "{{ target_servers }}"
+  gather_facts: false
+  tasks:
+    - name: Configure and power cycle via IPMI
+      ansible.builtin.include_role:
+        name: bare_metal_ipmi
+
+- name: Wait for OS installation to complete
+  hosts: "{{ target_servers }}"
+  gather_facts: false
+  tasks:
+    - name: Wait for SSH access
+      ansible.builtin.wait_for_connection:
+        timeout: 3600
+        delay: 300
+
+- name: Apply base configuration
+  hosts: "{{ target_servers }}"
+  become: true
+  roles:
+    - common
+    - security_baseline
+    - monitoring_agent
+    - firmware_updates
+
+- name: Apply role-specific configuration
+  hosts: "{{ target_servers }}"
+  become: true
+  tasks:
+    - name: Apply server role
+      ansible.builtin.include_role:
+        name: "{{ server_role }}"

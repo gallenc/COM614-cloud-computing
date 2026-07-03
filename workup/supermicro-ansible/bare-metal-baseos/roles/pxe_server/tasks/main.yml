@@ -1,0 +1,47 @@
+# roles/pxe_server/tasks/main.yml
+# Configure PXE boot server for bare metal provisioning
+---
+- name: Install PXE server packages
+  ansible.builtin.apt:
+    name:
+      - tftpd-hpa
+      - dnsmasq
+      - nginx
+    state: present
+
+- name: Create PXE content directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - /srv/tftp
+    - /var/www/html/autoinstall
+
+- name: Configure dnsmasq for PXE
+  ansible.builtin.template:
+    src: dnsmasq-pxe.conf.j2
+    dest: /etc/dnsmasq.d/pxe.conf
+    mode: '0644'
+  notify: restart dnsmasq
+
+- name: Download Ubuntu installer
+  ansible.builtin.get_url:
+    url: "https://releases.ubuntu.com/22.04/ubuntu-22.04.5-live-server-amd64.iso"
+    dest: /srv/tftp/ubuntu-22.04.5.iso
+    mode: '0644'
+
+- name: Mount installer ISO
+  ansible.posix.mount:
+    src: /srv/tftp/ubuntu-22.04.5.iso
+    path: /srv/tftp/ubuntu-22.04
+    fstype: iso9660
+    opts: loop,ro
+    state: mounted
+
+- name: Deploy per-server autoinstall configs
+  ansible.builtin.template:
+    src: autoinstall.yml.j2
+    dest: "/var/www/html/autoinstall/{{ item }}.yml"
+    mode: '0644'
+  loop: "{{ groups['bare_metal'] }}"

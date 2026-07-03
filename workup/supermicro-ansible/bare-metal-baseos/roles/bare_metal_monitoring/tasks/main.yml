@@ -1,0 +1,30 @@
+# roles/bare_metal_monitoring/tasks/main.yml
+# Set up hardware health monitoring
+---
+- name: Install hardware monitoring tools
+  ansible.builtin.apt:
+    name:
+      - lm-sensors
+      - smartmontools
+      - mdadm
+    state: present
+
+- name: Run sensors detection
+  ansible.builtin.command: sensors-detect --auto
+  changed_when: true
+
+- name: Configure SMART monitoring
+  ansible.builtin.template:
+    src: smartd.conf.j2
+    dest: /etc/smartd.conf
+    mode: '0644'
+  notify: restart smartd
+
+- name: Deploy hardware metrics exporter
+  ansible.builtin.include_role:
+    name: node_exporter
+  vars:
+    collectors:
+      - hwmon
+      - diskstats
+      - mdadm

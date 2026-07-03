@@ -1,0 +1,41 @@
+# roles/bare_metal_ipmi/tasks/main.yml
+# Control bare metal servers via IPMI
+---
+- name: Install IPMI tools
+  ansible.builtin.apt:
+    name: ipmitool
+    state: present
+  delegate_to: localhost
+
+- name: Set PXE boot for next boot
+  ansible.builtin.command:
+    cmd: >
+      ipmitool -I lanplus
+      -H {{ ipmi_host }}
+      -U {{ ipmi_user }}
+      -P {{ ipmi_password }}
+      chassis bootdev pxe options=efiboot
+  delegate_to: localhost
+  changed_when: true
+  no_log: true
+
+- name: Power cycle the server
+  ansible.builtin.command:
+    cmd: >
+      ipmitool -I lanplus
+      -H {{ ipmi_host }}
+      -U {{ ipmi_user }}
+      -P {{ ipmi_password }}
+      chassis power cycle
+  delegate_to: localhost
+  changed_when: true
+  no_log: true
+
+- name: Wait for server to boot and become reachable
+  ansible.builtin.wait_for:
+    host: "{{ ansible_host }}"
+    port: 22
+    timeout: 1200
+    delay: 120
+  delegate_to: localhost
+  
