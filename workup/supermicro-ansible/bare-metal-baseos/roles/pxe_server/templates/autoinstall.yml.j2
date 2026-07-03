@@ -1,0 +1,89 @@
+# roles/pxe_server/templates/autoinstall.yml.j2
+# Ubuntu autoinstall configuration for {{ item }}
+#cloud-config
+autoinstall:
+  version: 1
+  locale: en_US.UTF-8
+  keyboard:
+    layout: us
+  network:
+    version: 2
+    ethernets:
+      {{ primary_interface | default('eno1') }}:
+        addresses:
+          - {{ hostvars[item].ansible_host }}/24
+        gateway4: {{ gateway }}
+        nameservers:
+          addresses: {{ dns_servers | to_json }}
+  storage:
+    version: 1
+{% if hostvars[item].raid_config == 'raid1' %}
+    config:
+      - id: disk0
+        type: disk
+        ptable: gpt
+        path: /dev/sda
+      - id: disk1
+        type: disk
+        ptable: gpt
+        path: /dev/sdb
+      - id: disk0-esp
+        type: partition
+        device: disk0
+        size: 538M
+        flag: boot
+        grub_device: true
+      - id: disk1-esp
+        type: partition
+        device: disk1
+        size: 538M
+        flag: boot
+      - id: disk0-root
+        type: partition
+        device: disk0
+        size: -1
+      - id: disk1-root
+        type: partition
+        device: disk1
+        size: -1
+      - id: md0
+        type: raid
+        name: md0
+        raidlevel: 1
+        ptable: gpt
+        devices: [disk0-root, disk1-root]
+      - id: disk0-esp-format
+        type: format
+        volume: disk0-esp
+        fstype: fat32
+      - id: disk0-esp-mount
+        type: mount
+        device: disk0-esp-format
+        path: /boot/efi
+      - id: md0-part1
+        type: partition
+        device: md0
+        size: -1
+      - id: md0-format
+        type: format
+        volume: md0-part1
+        fstype: ext4
+      - id: md0-mount
+        type: mount
+        device: md0-format
+        path: /
+{% endif %}
+  identity:
+    hostname: {{ item }}
+    username: deploy
+    password: "{{ deploy_password_hash }}"
+  ssh:
+    install-server: true
+    authorized-keys:
+      - {{ deploy_ssh_public_key }}
+  packages:
+    - python3
+    - python3-apt
+    - openssh-server
+  late-commands:
+    - 'echo "{{ item }} provisioned by Ansible PXE" > /target/etc/provisioning-info'
