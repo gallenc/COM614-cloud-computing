@@ -1,0 +1,13 @@
+- name: create ansible user
+  hosts: "{{ variable_hosts | default('empty_group') }}"
+  become: true
+  
+  pre_tasks:
+
+    - name: Fail script if required variable_hosts parameter is missing
+      fail:
+        msg: "You have to add the --extra-vars='variable_hosts='"
+      when: (variable_hosts is not defined) or (variable_hosts == "")
+
+  roles:
+      - create-ansible-user
