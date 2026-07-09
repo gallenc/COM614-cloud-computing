@@ -1,7 +1,7 @@
 [Main Menu](../../../sessions/README.md) |[sessionX](../../sessionX/) | [Session X Notes](../docs/sessionNotes.md)
 
 
-![Alt text](./images/mermaid1.svg)
+![Alt text](./images/mermaid-diagram-guest-low.png)
 
 # Session X Notes
 
