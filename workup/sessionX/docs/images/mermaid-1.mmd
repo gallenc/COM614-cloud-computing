@@ -1,0 +1,150 @@
+---
+config:
+  layout: dagre
+  layoutDirection: TB
+  curve: linear
+  nodeSep: 80
+  rankSep: 100
+---
+graph TB
+    %% WAN - Northbound Connection
+    pc["External PC<br/>WAN Gateway"]
+
+    %% Router with ports
+    subgraph routergroup["Trenda Router"]
+        direction TB
+        r_eth0["eth0"]
+        r_eth1["eth1"]
+        r_eth2["eth2"]
+        r_wan["WAN"]
+    end
+
+    %% Northbound WAN connection
+    pc -->|ISP/WAN| r_wan
+
+    %% Uplink connections to switch
+    %% r_eth0 -->|ProCurve<br/>Port 41| uplink41["ProCurve Port 41<br/>VLAN 10 Uplink"]
+    r_eth1 -->|ProCurve<br/>Port 42| uplink42["ProCurve Port 42<br/>VLAN 20 Uplink"]
+    r_eth2 -->|ProCurve<br/>Port 43| uplink43["ProCurve Port 43<br/>VLAN 1 Uplink"]
+
+    subgraph switchgroup["HP ProCurve 3400cl Switch 44 Ports"]
+        direction TB
+
+        subgraph vlan10["VLAN 10 – Production eth0 10.0.0.0/24"]
+            uplink41
+            p1["Port 1"]
+            p4["Port 4"]
+            p7["Port 7"]
+            p10["Port 10"]
+            p13["Port 13"]
+            p16["Port 16"]
+            p19["Port 19"]
+            p22["Port 22"]
+        end
+
+        subgraph vlan20["VLAN 20 – Secondary eth1 10.0.1.0/24"]
+            uplink42
+            p2["Port 2"]
+            p5["Port 5"]
+            p8["Port 8"]
+            p11["Port 11"]
+            p14["Port 14"]
+            p17["Port 17"]
+            p20["Port 20"]
+            p23["Port 23"]
+        end
+
+        subgraph vlan1["VLAN 1 – Management IPMI 192.168.5.0/24   Switch IP address 192.168.5.100"]
+            uplink43
+            p3["Port 3"]
+            p6["Port 6"]
+            p9["Port 9"]
+            p12["Port 12"]
+            p15["Port 15"]
+            p18["Port 18"]
+            p21["Port 21"]
+            p24["Port 24"]
+        end
+
+        subgraph untagged["Untagged/Unused Ports"]
+            p25["Port 25"]
+            p26["Port 26"]
+            p27["Port 27"]
+            p28["Port 28"]
+            p29["Port 29"]
+            p30["Port 30"]
+            p31["Port 31"]
+            p32["Port 32"]
+            p33["Port 33"]
+            p34["Port 34"]
+            p35["Port 35"]
+            p36["Port 36"]
+            p37["Port 37"]
+            p38["Port 38"]
+            p39["Port 39"]
+            p40["Port 40"]
+            p44["Port 44"]
+        end
+    end
+
+    subgraph bladeservers["Blade Servers"]
+        direction TB
+        b1["blade-1-1"]
+        b2["blade-1-2"]
+        b3["blade-1-3"]
+        b4["blade-1-4"]
+        b5["blade-1-5"]
+        b6["blade-1-6"]
+        b7["blade-1-7"]
+        b8["blade-1-8"]
+    end
+
+    %% VLAN 10 Connections
+    p1 --> b1
+    p4 --> b2
+    p7 --> b3
+    p10 --> b4
+    p13 --> b5
+    p16 --> b6
+    p19 --> b7
+    p22 --> b8
+
+    %% VLAN 20 Connections
+    p2 --> b1
+    p5 --> b2
+    p8 --> b3
+    p11 --> b4
+    p14 --> b5
+    p17 --> b6
+    p20 --> b7
+    p23 --> b8
+
+    %% VLAN 1 IPMI Connections
+    p3 -.->|IPMI| b1
+    p6 -.->|IPMI| b2
+    p9 -.->|IPMI| b3
+    p12 -.->|IPMI| b4
+    p15 -.->|IPMI| b5
+    p18 -.->|IPMI| b6
+    p21 -.->|IPMI| b7
+    p24 -.->|IPMI| b8
+
+    classDef blade stroke:#818cf8,fill:#eef2ff,stroke-width:2px
+    classDef vlan10 stroke:#38bdf8,fill:#f0f9ff
+    classDef vlan20 stroke:#4ade80,fill:#f0fdf4
+    classDef vlan1 stroke:#a3e635,fill:#f7fee7
+    classDef untagged stroke:#9ca3af,fill:#f3f4f6
+    classDef routergroup stroke:#f97316,fill:#ffedd5,stroke-width:2px
+    classDef rport stroke:#d97706,fill:#fed7aa
+    classDef wanport stroke:#7c3aed,fill:#ede9fe,stroke-width:2px
+    classDef uplink stroke:#dc2626,fill:#fee2e2,stroke-width:2px
+    classDef bladegroup stroke:#6366f1,fill:#f5f3ff,stroke-width:2px
+    classDef pc stroke:#059669,fill:#d1fae5,stroke-width:2px
+    class b1,b2,b3,b4,b5,b6,b7,b8 blade
+    class r_eth0,r_eth1,r_eth2 rport
+    class r_wan wanport
+    class uplink41,uplink42,uplink43 uplink
+    class routergroup routergroup
+    class bladeservers bladegroup
+    class untagged untagged
+    class pc pc
