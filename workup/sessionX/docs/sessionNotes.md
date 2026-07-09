@@ -1,5 +1,8 @@
 [Main Menu](../../../sessions/README.md) |[sessionX](../../sessionX/) | [Session X Notes](../docs/sessionNotes.md)
 
+
+![Alt text](./images/mermaid1.svg)
+
 # Session X Notes
 
 
