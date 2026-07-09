@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<datacollection-group name="odr-dab">
+  <resourceType name="odr-dab-mux" label="odrDabMux" resourceLabel="${label}" >
+<!--     <persistenceSelectorStrategy class="org.opennms.netmgt.collectd.PersistRegexSelectorStrategy"> -->
+<!--       <parameter key="match-expression" value="#suspect=='false'" /> -->
+<!--     </persistenceSelectorStrategy> -->
+    <persistenceSelectorStrategy class="org.opennms.netmgt.collectd.PersistAllSelectorStrategy"/>
+    <storageStrategy class="org.opennms.protocols.xml.collector.XmlStorageStrategy"/>
+  </resourceType>
+</datacollection-group>

@@ -1,0 +1,27 @@
+<xml-datacollection-config rrdRepository="/opt/opennms/share/rrd/snmp/" xmlns="http://xmlns.opennms.org/xsd/config/xml-datacollection">
+
+    <xml-collection name="json-dab-mux-stats">
+        <rrd step="300">
+            <rra>RRA:AVERAGE:0.5:1:2016</rra>
+            <rra>RRA:AVERAGE:0.5:12:1488</rra>
+            <rra>RRA:AVERAGE:0.5:288:366</rra>
+            <rra>RRA:MAX:0.5:288:366</rra>
+            <rra>RRA:MIN:0.5:288:366</rra>
+        </rrd>
+        <xml-source url="http://{ipaddr}:80/stats/mux">
+             <import-groups>xml-datacollection/stats_odr_dab_mux.xml</import-groups>
+        </xml-source>
+    </xml-collection>
+    <xml-collection name="json-dab-mod-stats">
+        <rrd step="300">
+            <rra>RRA:AVERAGE:0.5:1:2016</rra>
+            <rra>RRA:AVERAGE:0.5:12:1488</rra>
+            <rra>RRA:AVERAGE:0.5:288:366</rra>
+            <rra>RRA:MAX:0.5:288:366</rra>
+            <rra>RRA:MIN:0.5:288:366</rra>
+        </rrd>
+        <xml-source url="http://{ipaddr}:80/stats/mod">
+            <import-groups>xml-datacollection/stats_odr_dab_mod.xml</import-groups>
+        </xml-source>
+    </xml-collection>
+</xml-datacollection-config>

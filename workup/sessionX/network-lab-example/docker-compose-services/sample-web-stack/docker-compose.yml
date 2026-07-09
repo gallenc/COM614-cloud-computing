@@ -1,0 +1,61 @@
+---
+
+# using fixed ip addresses
+# to see all network use docker network ls
+# to see config use docker network inspect minimal-minion-activemq_N000
+# note gateway is 172.20.0.1 
+networks:
+  N000:
+    name: "${SHARED_NETWORK_N000_ID:-N000}"
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
+  N001:
+    name: "${SHARED_NETWORK_N001_ID:-N001}"
+    ipam:
+      config:
+        - subnet: 172.20.2.0/24
+
+      
+services:
+ 
+# VIRTUAL_HOST control proxying by nginx-proxy and 
+# LETSENCRYPT_HOST control certificate creation and SSL enabling by acme-companion.
+# Certificates will only be issued for containers that have both VIRTUAL_HOST and LETSENCRYPT_HOST variables set to domain(s)
+# that correctly resolve to the host, provided the host is publicly reachable. 
+
+  sample-api:
+    restart: always
+    image: sample-api
+    build: ./samples/api
+    container_name: sample-api
+    environment:
+      - VIRTUAL_HOST=${API_VIRTUAL_HOST:-sampleapi.example.com}
+      - VIRTUAL_NETWORK=N000
+      - VIRTUAL_PATH=/api
+      - VIRTUAL_PORT=3001
+      - LETSENCRYPT_HOST=${ENV_LETSENCRYPT_HOST:-sampleapi.example.com}
+      - LETSENCRYPT_EMAIL=${ENV_LETSENCRYPT_EMAIL:-email@example.com}
+    networks:
+       N000:
+          ipv4_address: 172.20.0.60
+
+  sample-website:
+    restart: always
+    image: sample-website
+    build: ./samples/website
+    container_name: sample-website
+    volumes:
+      - "./container-fs/sample-website/nginx-sample-website/conf.d/:/etc/nginx/conf.d"
+      - "./container-fs/sample-website/config/sample-website/config.js:/usr/share/nginx/html/config.js"
+    environment:
+      - VIRTUAL_HOST=${WEB_VIRTUAL_HOST:-samplewebsite.example.com}
+      - VIRTUAL_NETWORK=N000
+      - VIRTUAL_PATH=/web
+      - VIRTUAL_PORT=80
+      - LETSENCRYPT_HOST=${ENV_LETSENCRYPT_HOST:-sample.example.com}
+      - LETSENCRYPT_EMAIL=${ENV_LETSENCRYPT_EMAIL:-email@example.com}
+    networks:
+        N000:
+            ipv4_address: 172.20.0.65
+

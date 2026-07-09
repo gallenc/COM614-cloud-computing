@@ -1,0 +1,19 @@
+---
+- debug:
+    msg: "Agent Role Started. OS Family: {{ ansible_os_family }}"
+
+- name: Load OS specific tasks (RHEL)
+  include_tasks: Rhel.yaml
+  when: ansible_os_family == 'RedHat'
+
+- name: Load OS specific tasks (Debian)
+  include_tasks: Debian.yaml
+  when: ansible_os_family == 'Debian'
+  
+# set up docker compose systemd service  
+- name: Copy docker compose service file
+  copy: 
+    src:  "{{ playbook_dir }}/files/docker-compose@.service"
+    dest: "/etc/systemd/system/docker-compose@.service"  
+    mode: '0644'
+    

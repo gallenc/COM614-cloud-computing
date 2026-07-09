@@ -1,0 +1,134 @@
+
+# using fixed ip addresses
+# to see all network use docker network ls
+# to see config use docker network inspect SHARED_NETWORK_N000_ID
+# note gateway is 172.20.0.1 
+networks:
+  N000:
+    name: "${SHARED_NETWORK_N000_ID:-N000}"
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
+  N001:
+    name: "${SHARED_NETWORK_N001_ID:-N001}"
+    ipam:
+      config:
+        - subnet: 172.20.2.0/24
+
+
+volumes:
+  semaphore-postgres:
+  
+secrets:
+  ANSIBLE_SSH_PASSPHRASE:
+    file: ../.shared-secrets/ansible_ssh_passphrase.txt
+  ANSIBLE_ROOT_PASSWORD:
+    file: ../.shared-secrets/ansible_root_password.txt
+  VAULT_PASSWORD_FILE:
+    file: ../.shared-secrets/vault_password_file.txt
+
+services:
+  postgres-semaphore:
+    container_name: postgres-semaphore
+    restart: unless-stopped
+    image: postgres:15
+    #image: postgres:14
+    hostname: postgres-semaphore
+    volumes:
+      - semaphore-postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: semaphore
+      POSTGRES_PASSWORD: semaphore
+      POSTGRES_DB: semaphore
+    networks:
+      N000:
+        ipv4_address: 172.20.0.27
+
+  semaphore:
+    container_name: semaphore
+    restart: unless-stopped
+    ports:
+      - 3001:3000
+    # image: semaphoreui/semaphore:v2.17.0
+    image: entimoss/semaphore:v2.17.0
+    build: ./container-fs/semaphore
+    hostname: semaphore
+    volumes:
+      - ./container-fs/semaphore/import-project:/home/semaphore/import-project
+      - ./container-fs/ansible:/opt/ansible/inventory
+      - ../shared-files/:/share
+      - ../.shared-keys/:/shared-keys        # insecure - fix
+      - ../.shared-secrets/:/shared-secrets  # insecure - fix
+    secrets:
+      - ANSIBLE_SSH_PASSPHRASE
+      - ANSIBLE_ROOT_PASSWORD
+      - VAULT_PASSWORD_FILE
+      
+    # override https://github.com/semaphoreui/semaphore/blob/develop/deployment/docker/server/Dockerfile
+    # see https://stackoverflow.com/questions/68931421/how-to-start-ssh-agent-in-dockerfile
+    command: ["/usr/bin/ssh-agent", "/usr/local/bin/server-wrapper"]
+    post_start:
+      - command: ["sh", "-c", "/share/with-secrets.sh /share/generate-ansible-user-ssh.sh "]
+       # note this command will exit wth a signal if the project already exists in semaphore. However the container will still start
+      - command: ["sh", "-c","/share/wait-for-it.sh localhost:3000 -- /usr/local/bin/semaphore project import --file /home/semaphore/import-project/test_project_1.json"]
+    environment:
+      SEMAPHORE_DB_USER: semaphore
+      SEMAPHORE_DB_PASS: semaphore
+      SEMAPHORE_DB_HOST: postgres-semaphore # for postgres, change to: postgres
+      SEMAPHORE_DB_PORT: 5432 
+      SEMAPHORE_DB_DIALECT: postgres
+      SEMAPHORE_DB: semaphore
+
+      SEMAPHORE_PLAYBOOK_PATH: /tmp/semaphore/
+      SEMAPHORE_ADMIN_PASSWORD: changeme
+      SEMAPHORE_ADMIN_NAME: admin
+      SEMAPHORE_ADMIN_EMAIL: admin@localhost
+      SEMAPHORE_ADMIN: admin
+      SEMAPHORE_WEB_ROOT: /semaphore
+      SEMAPHORE_ACCESS_KEY_ENCRYPTION: gs72mPntFATGJs9qK0pQ0rKtfidlexiMjYCH9gWKhTU=
+      SEMAPHORE_LDAP_ACTIVATED: 'no' # if you wish to use ldap, set to: 'yes'
+      SEMAPHORE_LDAP_HOST: dc01.local.example.com
+      SEMAPHORE_LDAP_PORT: '636'
+      SEMAPHORE_LDAP_NEEDTLS: 'yes'
+      SEMAPHORE_LDAP_DN_BIND: 'uid=bind_user,cn=users,cn=accounts,dc=local,dc=shiftsystems,dc=net'
+      SEMAPHORE_LDAP_PASSWORD: 'ldap_bind_account_password'
+      SEMAPHORE_LDAP_DN_SEARCH: 'dc=local,dc=example,dc=com'
+      SEMAPHORE_LDAP_SEARCH_FILTER: "(\u0026(uid=%s)(memberOf=cn=ipausers,cn=groups,cn=accounts,dc=local,dc=example,dc=com))"
+      ANSIBLE_VAULT_PASSWORD_FILE: "/share/vault-password-client.sh" # must be executable and return vault password when run  
+      TZ: UTC
+      # https://semaphoreui.com/docs/administration-guide/configuration/env-vars
+      SEMAPHORE_FORWARDED_ENV_VARS: '["SSH_AUTH_SOCK","SSH_AGENT_PID","SEMAPHORE_ADMIN","ANSIBLE_VAULT_PASSWORD_FILE"]'
+      
+      # see https://github.com/semaphoreui/semaphore/blob/develop/deployment/docker/server/server-wrapper
+      # dosent seem to work - see command above for startup
+      # SEMAPHORE_IMPORT_PROJECT_NAME: "Test_Project_1"
+      # SEMAPHORE_IMPORT_PROJECT_FILE: /home/semaphore/import-project/test_project_1.json
+      
+      # docker-proxy settings for nginx-proxy and acme-companion
+      VIRTUAL_HOST: ${SEMAPHORE_VIRTUAL_HOST:-samplewebsite.example.com}
+      VIRTUAL_NETWORK: N000
+      VIRTUAL_PATH: /semaphore
+      VIRTUAL_PORT: 3000
+      LETSENCRYPT_HOST: ${ENV_LETSENCRYPT_HOST:-sample.example.com}
+      LETSENCRYPT_EMAIL: ${ENV_LETSENCRYPT_EMAIL:-email@example.com}
+    depends_on:
+      -  postgres-semaphore
+    networks:
+      N000:
+        ipv4_address: 172.20.0.21
+  
+  # see https://stackoverflow.com/questions/69735582/aws-cli-image-rrun-from-docker-compose-and-its-shutdon-after-one-second
+  # try docker compose exec aws-cli bash
+  # aws help
+  aws-cli:
+    image: amazon/aws-cli:2.34.30
+    container_name: aws-cli
+    stdin_open: true # equivalent of -i
+    tty: true        # equivalent of -t
+    entrypoint: tail -f /dev/null
+    environment:
+      - HTTP_PROXY=http://ipadresses:port
+      - HTTPS_PROXY=https://ipadresses:port
+    #ports:
+    #  - "8080:8080"
+ 

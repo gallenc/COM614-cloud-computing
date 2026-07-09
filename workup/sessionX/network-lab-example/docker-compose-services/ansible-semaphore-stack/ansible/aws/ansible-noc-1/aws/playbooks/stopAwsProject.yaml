@@ -1,0 +1,58 @@
+---
+#------------------------------------------------------------------------------
+#
+# Create a simple AWS instance:
+# 1. Create SSH Key Pair
+# 2. Create VPC
+# 3. Create Internet Gateway
+# 4. Create Subnet
+# 5. Create Route Table
+# 6. Create Security Group
+# 7. Create EC2 Instance
+#
+# Assumes AWS_* environment variables for task authentication:
+#   export AWS_REGION='us-west-1'
+#   export AWS_ACCESS_KEY='AKIAIOSF/EXAMPLE+KEY'
+#   export AWS_SECRET_KEY='wJalrXUtnFEMI/K7MDENG/bPxRfi/EXAMPLE+KEY'
+#
+# Run with `ansible-playbook playbook.yaml`
+#
+# Connect with `ssh -i ./AWS_EC2_Instance_Test.private_key.pem ec2-user@hostname`
+#
+# For more AMI IDs for other images and in different regions, see
+# <https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html>
+#
+#------------------------------------------------------------------------------
+
+- name: AWS EC2 Instance Playbook
+  hosts: localhost
+  connection: local
+  gather_facts: true   # required for `ansible_date_time`
+#  vars:
+#    project_name: AWS_EC2_Instance_Test
+#    ami_id: ami-041f62d0737a0fbd1 #alma 10  # ami-04b6c97b14c54de18   # Amazon Linux 2 AMI (HVM), SSD Volume Type
+#    instance_type: t2.micro
+#    vpc_cidr: 172.31.0.0/16
+#    sub_cidr: 172.31.1.0/24
+
+  tasks:
+
+
+  - name: Show Playbook Options
+    ansible.builtin.debug:
+      msg:
+      - "project_name: {{ project_name }}"
+      - "aws_region: {{ aws_region }}"
+
+
+  - name: Stop all EC2 instances in Project "{{ project_name }}"
+    community.aws.ec2_instance:
+       aws_access_key: "{{ aws_access_key }}"
+       aws_secret_key: "{{ aws_secret_key }}"
+       region: "{{ aws_region }}"
+       state: stopped
+       filters:
+         instance-state-name: running
+         "tag:Project": "{{ project_name }}"
+
+...
