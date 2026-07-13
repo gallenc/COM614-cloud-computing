@@ -34,7 +34,8 @@
       login_prompt: ""
       password_prompt: "Password: "
       prompts:
-      - 'ProCurve Switch 3400cl-48G# '
+#      - 'ProCurve Switch 3400cl-48G# '
+       - '[>#]'
       command:
       - show version
     register: telnet_output
