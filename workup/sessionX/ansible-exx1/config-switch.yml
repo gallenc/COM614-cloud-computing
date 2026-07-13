@@ -19,19 +19,20 @@
       - config
       - vlan 1
       - name "Default_IPMI_VLAN"
-      - untagged 3, 6, 9, 12, 15, 18, 21, 24, 43 
+      - untagged 3,6,9,12,15,18,21,24,43 
       - ip address dhcp-bootp
       - exit
       - vlan 20
       - name "Secondary"
-      - untagged  2, 5, 8, 11, 14, 17, 20, 23, 42  
+      - untagged  2,5,8,11,14,17,20,23,42  
       - exit
       - vlan 10
       - name "Production"
-      - untagged 1, 4, 7, 10, 13, 16, 19, 22, 41
+      - untagged 1,4,7,10,13,16,19,22,41
       - exit
       - write memory
       - exit
+      - show running_config
       
     register: telnet_output
 
