@@ -1,0 +1,72 @@
+---
+# Alternative Ansible Playbook for HP ProCurve 3400cl
+# Using raw commands for broader compatibility
+#
+# This version uses direct CLI commands which are more compatible
+# with different ProCurve firmware versions
+
+- name: Configure HP ProCurve 3400cl Switch (Raw Commands)
+  hosts: procurve_3400cl
+  connection: network_cli
+  gather_facts: no
+  
+  vars:
+    vlan_config:
+      - id: 100
+        name: "Production"
+        ports: "1-20"
+      - id: 200
+        name: "Development"
+        ports: "21-40"
+      - id: 300
+        name: "Management"
+        ports: "41-48"
+  
+  tasks:
+    - name: Enter configuration mode and create VLANs
+      vars:
+        ansible_command_timeout: 60
+      block:
+        - name: Create VLAN 100 and assign ports
+          community.network.hpexcl_command:
+            commands:
+              - "vlan 100"
+              - "name {{ vlan_config[0].name }}"
+              - "untagged {{ vlan_config[0].ports }}"
+              - "exit"
+        
+        - name: Create VLAN 200 and assign ports
+          community.network.hpexcl_command:
+            commands:
+              - "vlan 200"
+              - "name {{ vlan_config[1].name }}"
+              - "untagged {{ vlan_config[1].ports }}"
+              - "exit"
+        
+        - name: Create VLAN 300 and assign ports
+          community.network.hpexcl_command:
+            commands:
+              - "vlan 300"
+              - "name {{ vlan_config[2].name }}"
+              - "untagged {{ vlan_config[2].ports }}"
+              - "exit"
+    
+    - name: Verify VLAN configuration
+      community.network.hpexcl_command:
+        commands:
+          - "show vlan"
+      register: vlan_status
+    
+    - name: Display current VLAN status
+      debug:
+        var: vlan_status.stdout_lines
+    
+    - name: Save configuration to memory
+      community.network.hpexcl_command:
+        commands:
+          - "write memory"
+      register: save_result
+    
+    - name: Display save result
+      debug:
+        var: save_result.stdout_lines

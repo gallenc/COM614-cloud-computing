@@ -1,0 +1,4 @@
+ansible>=2.9.0
+jinja2>=2.11.0
+paramiko>=2.7.0
+netaddr>=0.7.18

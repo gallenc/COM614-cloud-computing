@@ -1,0 +1,123 @@
+---
+# HP ProCurve 3400cl VLAN Configuration - Test Playbook
+# 
+# This playbook configures three VLANs on an HP ProCurve 3400cl switch:
+# - VLAN 100 (Production): Ports 1-20
+# - VLAN 200 (Development): Ports 21-40
+# - VLAN 300 (Management): Ports 41-48
+#
+# The switch has 48 ports total, configured as follows:
+# Total ports: 48
+# VLAN 100: 20 ports (1-20)
+# VLAN 200: 20 ports (21-40)
+# VLAN 300: 8 ports (41-48)
+
+- name: HP ProCurve 3400cl VLAN Test Configuration
+  hosts: procurve_3400cl
+  connection: network_cli
+  gather_facts: no
+  
+  vars:
+    # VLAN configuration
+    vlans:
+      production:
+        id: 100
+        name: "Production"
+        ports: "1-20"
+        description: "Production network - 20 ports"
+      development:
+        id: 200
+        name: "Development"
+        ports: "21-40"
+        description: "Development network - 20 ports"
+      management:
+        id: 300
+        name: "Management"
+        ports: "41-48"
+        description: "Management network - 8 ports (remaining)"
+  
+  pre_tasks:
+    - name: Display configuration plan
+      debug:
+        msg: |
+          ============================================
+          HP ProCurve 3400cl VLAN Configuration Plan
+          ============================================
+          
+          Switch Model: HP ProCurve 3400cl
+          Total Ports: 48
+          Configuration Type: Untagged Port Assignment
+          
+          VLAN 1 (Production):
+            - VLAN ID: 100
+            - Name: Production
+            - Ports: 1-20 (20 ports)
+          
+          VLAN 2 (Development):
+            - VLAN ID: 200
+            - Name: Development
+            - Ports: 21-40 (20 ports)
+          
+          VLAN 3 (Management):
+            - VLAN ID: 300
+            - Name: Management
+            - Ports: 41-48 (8 ports)
+          
+          ============================================
+  
+  tasks:
+    - name: Create VLAN 100 (Production)
+      community.network.hpexcl_config:
+        lines:
+          - "name {{ vlans.production.name }}"
+          - "untagged {{ vlans.production.ports }}"
+        parents: "vlan {{ vlans.production.id }}"
+        save_when: changed
+      register: vlan_100_result
+    
+    - name: Create VLAN 200 (Development)
+      community.network.hpexcl_config:
+        lines:
+          - "name {{ vlans.development.name }}"
+          - "untagged {{ vlans.development.ports }}"
+        parents: "vlan {{ vlans.development.id }}"
+        save_when: changed
+      register: vlan_200_result
+    
+    - name: Create VLAN 300 (Management)
+      community.network.hpexcl_config:
+        lines:
+          - "name {{ vlans.management.name }}"
+          - "untagged {{ vlans.management.ports }}"
+        parents: "vlan {{ vlans.management.id }}"
+        save_when: changed
+      register: vlan_300_result
+    
+    - name: Verify VLAN configuration
+      community.network.hpexcl_command:
+        commands: "show vlan"
+      register: vlan_verification
+    
+    - name: Display verification results
+      debug:
+        msg: "{{ vlan_verification.stdout_lines }}"
+  
+  post_tasks:
+    - name: Configuration summary
+      debug:
+        msg: |
+          ============================================
+          Configuration Results
+          ============================================
+          
+          VLAN 100 (Production):
+            Status: {{ vlan_100_result.changed | ternary('CONFIGURED', 'NO CHANGES') }}
+          
+          VLAN 200 (Development):
+            Status: {{ vlan_200_result.changed | ternary('CONFIGURED', 'NO CHANGES') }}
+          
+          VLAN 300 (Management):
+            Status: {{ vlan_300_result.changed | ternary('CONFIGURED', 'NO CHANGES') }}
+          
+          All three VLANs configured successfully!
+          ============================================

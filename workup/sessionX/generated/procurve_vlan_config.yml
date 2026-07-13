@@ -1,0 +1,69 @@
+---
+# Ansible Playbook to configure HP ProCurve 3400cl switch
+# with three VLANs (100, 200, 300) each with 20 ports
+# 
+# Prerequisites:
+#   - Ansible with network_cli connection plugin
+#   - SSH access to the switch
+#   - Switch IP/hostname configured in inventory
+#
+# Usage:
+#   ansible-playbook procurve_vlan_config.yml -i inventory.ini
+
+- name: Configure HP ProCurve 3400cl Switch with VLANs
+  hosts: procurve_switch
+  connection: network_cli
+  gather_facts: no
+  
+  vars:
+    # Define VLANs with their port ranges
+    vlans:
+      - vlan_id: 100
+        vlan_name: "Production"
+        port_range: "1-20"
+      - vlan_id: 200
+        vlan_name: "Development"
+        port_range: "21-40"
+      - vlan_id: 300
+        vlan_name: "Management"
+        port_range: "41-48"  # Note: ProCurve 3400cl has 48 ports total
+  
+  tasks:
+    - name: Configure VLAN 100 - Production
+      community.network.hpexcl_config:
+        lines:
+          - "vlan 100"
+          - "name Production"
+          - "untagged 1-20"
+        parents: "vlan 100"
+      register: vlan_100_config
+    
+    - name: Configure VLAN 200 - Development
+      community.network.hpexcl_config:
+        lines:
+          - "vlan 200"
+          - "name Development"
+          - "untagged 21-40"
+        parents: "vlan 200"
+      register: vlan_200_config
+    
+    - name: Configure VLAN 300 - Management
+      community.network.hpexcl_config:
+        lines:
+          - "vlan 300"
+          - "name Management"
+          - "untagged 41-48"
+        parents: "vlan 300"
+      register: vlan_300_config
+    
+    - name: Display VLAN Configuration Results
+      debug:
+        msg: |
+          VLAN 100 (Production):
+          {{ vlan_100_config }}
+          
+          VLAN 200 (Development):
+          {{ vlan_200_config }}
+          
+          VLAN 300 (Management):
+          {{ vlan_300_config }}
