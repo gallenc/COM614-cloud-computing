@@ -18,7 +18,7 @@
       - show version
       - config
       - vlan 1
-      - name "Default_IPMI_VLAN"
+      - name "Default_IPMI"
       - untagged 3,6,9,12,15,18,21,24,43 
       - ip address dhcp-bootp
       - exit
@@ -32,10 +32,9 @@
       - exit
       - write memory
       - exit
-      - show running_config
       
     register: telnet_output
 
   - name: Display telnet output
     debug:
-      var: telnet_output.stdout_lines
+      var: "telnet_output.stdout_lines"
