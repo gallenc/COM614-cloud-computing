@@ -18,7 +18,7 @@
       - show version
       - config
       - vlan 1
-      - name "Default Management IPMI VLAN"
+      - name "Default_IPMI_VLAN"
       - untagged 3, 6, 9, 12, 15, 18, 21, 24, 43 
       - ip address dhcp-bootp
       - exit
