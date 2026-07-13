@@ -1,0 +1,44 @@
+#- hosts: 
+#  gather_facts: false
+#  tasks:
+#  - name: run show command
+#    ansible.netcommon.telnet:
+#      port: "{{ ansible_port | default(omit) }}"
+#      prompts:
+#      - '[>#]'
+#      command:
+#      - show version
+
+- name: Configure HP ProCurve 3400cl
+  hosts: procurve_switches
+  gather_facts: no
+  vars:
+#   ansible_network_os: ansible.netcommon.network_cli
+#   ansible_connection: network_cli
+#   ansible_user: "manager"
+#   ansible_password: "your_password"
+
+
+
+#  tasks:
+#    - name: Get switch system information
+#      ansible.netcommon.cli_command:
+#        command: show system-information
+  tasks:
+  - name: run show command
+    ansible.netcommon.telnet:
+      port: "{{ ansible_port | default(omit) }}"
+      user: manager
+      password: minad1234
+      timeout: 10
+      login_prompt: ""
+      password_prompt: "Password: "
+      prompts:
+      - 'ProCurve Switch 3400cl-48G# '
+      command:
+      - show version
+    register: telnet_output
+
+  - name: Display telnet output
+    debug:
+      var: telnet_output.stdout_lines
