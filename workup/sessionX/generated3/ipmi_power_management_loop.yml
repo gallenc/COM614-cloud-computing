@@ -1,0 +1,42 @@
+---
+# Ansible Playbook for IPMI Power Management (Loop Version)
+# Servers: All servers in ipmi_management group
+# Purpose: Turn on or off all servers using IPMI protocol via community.general.ipmi_power module
+# This version works with all servers defined in inventory and uses loops for cleaner code
+
+- name: IPMI Power Management for All Servers
+  hosts: ipmi_management
+  gather_facts: no
+  vars:
+    # Set to 'on' or 'off' to control server power state
+    # Power State: 'on', 'off', 'reboot', 'status'
+    # Commonly used states:
+    #   on              - Power on the server
+    #   off             - Power off the server (graceful)
+    #   hard_power_off  - Force hard power off
+    #   reboot          - Reboot the server
+    #   status          - Check power status (informational only)
+    power_state: 'on'
+    # IPMI credentials (update with actual values or use vault)
+    ipmi_user: admin
+    ipmi_password: admin
+  
+  tasks:
+    - name: Display IPMI Power Management Task
+      debug:
+        msg: "Managing IPMI power for {{ inventory_hostname }} - Setting power state to: {{ power_state }}"
+
+    - name: Manage IPMI power state via ipmitool
+      community.general.ipmi_power:
+        name: "{{ inventory_hostname }}"
+        user: "{{ ipmi_user }}"
+        password: "{{ ipmi_password }}"
+        host: "{{ ansible_host }}"
+        state: "{{ power_state }}"
+      register: ipmi_result
+      when: power_state in ['on', 'off']
+
+    - name: Display IPMI Power Management Result
+      debug:
+        msg: "Server {{ inventory_hostname }} ({{ ansible_host }}): Power state = {{ ipmi_result.power_state | default('Failed to retrieve state') }}"
+      when: ipmi_result is defined

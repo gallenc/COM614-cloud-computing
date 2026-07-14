@@ -6,10 +6,6 @@
 # Session X Notes
 
 
-
-
-
-
 # supermicro
 
 BIOS : Delete (Del) key repeatedly during the Power-On Self-Test (POST). Some models may require pressing F11 or F12 to open the boot menu OR ctrl -s 

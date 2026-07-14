@@ -1,0 +1,39 @@
+# Ansible IPMI Power Management - Git Ignore File
+# Protects sensitive data from being committed to version control
+
+# Ansible Vault files (encrypted credentials)
+ipmi_vault.yml
+*.vault.yml
+
+# Ansible logs
+ansible.log
+*.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE
+.vscode/
+.idea/
+*.sublime-workspace
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Temporary files
+*.tmp
+.tmp/
+
+# Local host inventory
+hosts.local.ini
+
+# Any file with credentials in name
+*credentials*
+*secret*
+*password*
