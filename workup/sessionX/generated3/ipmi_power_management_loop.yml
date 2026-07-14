@@ -25,16 +25,25 @@
     - name: Display IPMI Power Management Task
       debug:
         msg: "Managing IPMI power for {{ inventory_hostname }} - Setting power state to: {{ power_state }}"
+        
+    - name: Power off the server using ipmitool via shell
+      ansible.builtin.shell: >
+        ipmitool -I lanplus 
+        -H "{{ ansible_host  }}" 
+        -U "{{ ipmi_user }}" 
+        -P "{{ ipmi_password }}" 
+        chassis power {{ power_state }}
+      delegate_to: localhost
 
-    - name: Manage IPMI power state via ipmitool
-      community.general.ipmi_power:
-        name: "{{ inventory_hostname }}"
-        user: "{{ ipmi_user }}"
-        password: "{{ ipmi_password }}"
-        host: "{{ ansible_host }}"
-        state: "{{ power_state }}"
-      register: ipmi_result
-      when: power_state in ['on', 'off']
+#    - name: Manage IPMI power state via ipmitool
+#      community.general.ipmi_power:
+#        name: "{{ inventory_hostname }}"
+#        user: "{{ ipmi_user }}"
+#        password: "{{ ipmi_password }}"
+#        host: "{{ ansible_host }}"
+#        state: "{{ power_state }}"
+#      register: ipmi_result
+#      when: power_state in ['on', 'off']
 
     - name: Display IPMI Power Management Result
       debug:
