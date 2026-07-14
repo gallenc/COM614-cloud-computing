@@ -26,7 +26,7 @@
       debug:
         msg: "Managing IPMI power for {{ inventory_hostname }} - Setting power state to: {{ power_state }}"
         
-    - name: Power off the server using ipmitool via shell
+    - name: Manage IPMI power state via ipmitool
       ansible.builtin.shell: >
         ipmitool -I lanplus 
         -H "{{ ansible_host  }}" 
@@ -34,7 +34,9 @@
         -P "{{ ipmi_password }}" 
         chassis power {{ power_state }}
       delegate_to: localhost
+      register: ipmi_result
 
+# cant use this module as it needs SSH and wont work with supermicro
 #    - name: Manage IPMI power state via ipmitool
 #      community.general.ipmi_power:
 #        name: "{{ inventory_hostname }}"
@@ -47,5 +49,5 @@
 
     - name: Display IPMI Power Management Result
       debug:
-        msg: "Server {{ inventory_hostname }} ({{ ansible_host }}): Power state = {{ ipmi_result.power_state | default('Failed to retrieve state') }}"
+        msg: "Server {{ inventory_hostname }} ({{ ansible_host }}): Result = {{ ipmi_result.stdout}}"
       when: ipmi_result is defined
