@@ -3,7 +3,7 @@
   gather_facts: no
 
   tasks:
-  - name: run show command
+  - name: configure procurve switch1
     ansible.netcommon.telnet:
       port: "{{ ansible_port | default(omit) }}"
       user: manager
