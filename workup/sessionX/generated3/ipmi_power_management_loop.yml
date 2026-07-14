@@ -18,8 +18,8 @@
     #   status          - Check power status (informational only)
     power_state: 'on'
     # IPMI credentials (update with actual values or use vault)
-    ipmi_user: admin
-    ipmi_password: admin
+    ipmi_user: ADMIN
+    ipmi_password: ADMIN
   
   tasks:
     - name: Display IPMI Power Management Task
