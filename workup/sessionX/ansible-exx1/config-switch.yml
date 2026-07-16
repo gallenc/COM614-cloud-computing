@@ -20,7 +20,7 @@
       - vlan 1
       - name "Default_IPMI"
       - untagged 3,6,9,12,15,18,21,24,43 
-      - ip address dhcp-bootp
+      - ip address 192.168.105.100 255.255.255.0
       - exit
       - vlan 20
       - name "Secondary"
