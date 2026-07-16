@@ -6,6 +6,7 @@
   - name: configure procurve switch1
     ansible.netcommon.telnet:
       port: "{{ ansible_port | default(omit) }}"
+      host: "{{ansible_host}}"
       user: manager
       password: minad1234
       timeout: 10
