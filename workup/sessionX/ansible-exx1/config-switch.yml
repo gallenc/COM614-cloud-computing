@@ -9,7 +9,7 @@
       host: "{{ansible_host}}"
       user: manager
       password: minad1234
-      timeout: 10
+      timeout: 20
       login_prompt: ""
       password_prompt: "Password: "
       prompts:
