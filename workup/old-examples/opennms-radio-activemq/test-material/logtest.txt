@@ -1,0 +1,361 @@
+==> FilterWatcher.log <==
+2025-04-10 10:47:19,849 DEBUG [FilterWatcher-Thread] o.o.n.f.JdbcFilterDao: Filter.getNodeIPAddressServiceMap(IPADDR != '0.0.0.0'): SQL statement: SELECT node.nodeID, ipInterface.ipAddr, service.serviceName FROM ipInterface JOIN node ON (ipInterface.nodeID = node.nodeID) JOIN ifServices ON (ipInterface.id = ifServices.ipInterfaceId) JOIN service ON (ifServices.serviceID = service.serviceID) WHERE ipInterface.IPADDR != '0.0.0.0'
+2025-04-10 10:47:19,857 DEBUG [FilterWatcher-Thread] o.o.n.d.s.DefaultFilterWatcher: Done refreshing results for rule.
+2025-04-10 10:53:13,321 DEBUG [FilterWatcher-Thread] o.o.n.d.s.DefaultFilterWatcher: Refreshing results for filter rule: IPADDR != '0.0.0.0'
+2025-04-10 10:53:13,322 DEBUG [FilterWatcher-Thread] o.o.n.f.JdbcFilterDao: Filter.getNodeIPAddressServiceMap(IPADDR != '0.0.0.0')
+2025-04-10 10:53:13,323 DEBUG [FilterWatcher-Thread] o.o.n.f.JdbcFilterDao: Filter.getNodeIPAddressServiceMap(IPADDR != '0.0.0.0'): SQL statement: SELECT node.nodeID, ipInterface.ipAddr, service.serviceName FROM ipInterface JOIN node ON (ipInterface.nodeID = node.nodeID) JOIN ifServices ON (ipInterface.id = ifServices.ipInterfaceId) JOIN service ON (ifServices.serviceID = service.serviceID) WHERE ipInterface.IPADDR != '0.0.0.0'
+2025-04-10 10:53:13,324 DEBUG [FilterWatcher-Thread] o.o.n.d.s.DefaultFilterWatcher: Done refreshing results for rule.
+2025-04-10 10:59:07,109 DEBUG [FilterWatcher-Thread] o.o.n.d.s.DefaultFilterWatcher: Refreshing results for filter rule: IPADDR != '0.0.0.0'
+2025-04-10 10:59:07,110 DEBUG [FilterWatcher-Thread] o.o.n.f.JdbcFilterDao: Filter.getNodeIPAddressServiceMap(IPADDR != '0.0.0.0')
+2025-04-10 10:59:07,110 DEBUG [FilterWatcher-Thread] o.o.n.f.JdbcFilterDao: Filter.getNodeIPAddressServiceMap(IPADDR != '0.0.0.0'): SQL statement: SELECT node.nodeID, ipInterface.ipAddr, service.serviceName FROM ipInterface JOIN node ON (ipInterface.nodeID = node.nodeID) JOIN ifServices ON (ipInterface.id = ifServices.ipInterfaceId) JOIN service ON (ifServices.serviceID = service.serviceID) WHERE ipInterface.IPADDR != '0.0.0.0'
+2025-04-10 10:59:07,112 DEBUG [FilterWatcher-Thread] o.o.n.d.s.DefaultFilterWatcher: Done refreshing results for rule.
+
+==> ackd.log <==
+2025-04-10 07:15:50,456 INFO  [Main] o.s.c.s.ClassPathXmlApplicationContext: Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@52f51bc2: startup date [Thu Apr 10 07:15:50 EDT 2025]; parent: ApplicationContext 'daoContext'
+2025-04-10 07:15:50,458 INFO  [Main] o.s.b.f.x.XmlBeanDefinitionReader: Loading XML bean definitions from class path resource [META-INF/opennms/applicationContext-ackd.xml]
+2025-04-10 07:15:50,490 INFO  [Main] o.s.b.f.a.AutowiredAnnotationBeanPostProcessor: JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+
+==> alarmd.log <==
+2025-04-10 07:15:44,790 INFO  [Main] o.s.c.s.ClassPathXmlApplicationContext: Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@30d974dd: startup date [Thu Apr 10 07:15:44 EDT 2025]; parent: ApplicationContext 'daoContext'
+2025-04-10 07:15:44,793 INFO  [Main] o.s.b.f.x.XmlBeanDefinitionReader: Loading XML bean definitions from class path resource [META-INF/opennms/applicationContext-alarmd.xml]
+2025-04-10 07:15:44,865 INFO  [Main] o.s.b.f.a.AutowiredAnnotationBeanPostProcessor: JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2025-04-10 07:15:52,520 WARN  [Main] o.d.c.k.b.i.KieBuilderImpl: File 'alarmd.drl' is in folder '' but declares package 'org.opennms.netmgt.alarmd.drools'. It is advised to have a correspondance between package and folder names.
+2025-04-10 07:15:52,521 WARN  [Main] o.d.c.k.b.i.KieBuilderImpl: File 'situations.drl' is in folder '' but declares package 'org.opennms.netmgt.alarmd.drools'. It is advised to have a correspondance between package and folder names.
+
+==> bsmd.log <==
+2025-04-10 07:15:45,082 INFO  [Main] o.s.c.s.ClassPathXmlApplicationContext: Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@7b0bc4cf: startup date [Thu Apr 10 07:15:45 EDT 2025]; parent: ApplicationContext 'daoContext'
+2025-04-10 07:15:45,085 INFO  [Main] o.s.b.f.x.XmlBeanDefinitionReader: Loading XML bean definitions from class path resource [META-INF/opennms/applicationContext-bsmd.xml]
+2025-04-10 07:15:45,115 INFO  [Main] o.s.b.f.a.AutowiredAnnotationBeanPostProcessor: JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+
+==> collectd.1.log <==
+2025-04-10 11:03:10,497 DEBUG [Collectd-Thread-16-of-50] o.o.n.c.s.AbstractCollectionAttribute: Visiting attribute Attribute[JMX_org.opennms.netmgt.provision.overall.name...Reqtn95th:20285.936067]
+2025-04-10 11:03:10,497 DEBUG [Collectd-Thread-16-of-50] o.o.n.c.s.AbstractCollectionAttribute: Visiting attribute Attribute[name:"file:/usr/share/opennms/etc/imports/pending/test.xml.1744295750492"]
+2025-04-10 11:03:10,497 DEBUG [Collectd-Thread-16-of-50] o.o.n.c.s.AbstractCollectionAttribute: Visiting attribute Attribute[domain:org.opennms.netmgt.provision.overall]
+2025-04-10 11:03:10,497 DEBUG [Collectd-Thread-16-of-50] o.o.n.c.s.AbstractCollectionAttribute: Visiting attribute Attribute[JMX_org.opennms.netmgt.provision.overall.name...Reqtn98th:20285.936067]
+2025-04-10 11:03:10,497 DEBUG [Collectd-Thread-16-of-50] o.o.n.c.s.AbstractCollectionAttribute: Visiting attribute Attribute[name:"file:/usr/share/opennms/etc/imports/pending/test.xml.1744295750492"]
+2025-04-10 11:03:10,497 DEBUG [Collectd-Thread-16-of-50] o.o.n.c.s.AbstractCollectionAttribute: Visiting attribute Attribute[domain:org.opennms.netmgt.provision.overall]
+2025-04-10 11:03:10,497 DEBUG [Collectd-Thread-16-of-50] o.o.n.c.s.AbstractCollectionAttribute: Visiting attribute Attribute[JMX_org.opennms.netmgt.provision.overall.name...Reqtn99th:20285.936067]
+2025-04-10 11:03:10,497 DEBUG [Collectd-Thread-16-of-50] o.o.n.c.s.AbstractCollectionAttribute: Visiting attribute Attribute[name:"file:/usr/share/opennms/etc/imports/pending/test.xml.1744295750492"]
+2025-04-10 11:03:10,497 DEBUG [Collectd-Thread-16-of-50] o.o.n.c.s.AbstractCollectionAttribute: Visiting attribute Attribute[domain:org.opennms.netmgt.provision.overall]
+2025-04-10 11:03:10,497 DEBUG [Collectd-Thread-16-of-50] o.o.n.c.s.AbstractCollectionAttribute: Visiting attribute Attribute[JMX_org.opennms.netmgt.provision.overall.name...Reqtn999th:20285.936067]
+
+==> collectd.log <==
+2025-04-10 11:03:11,457 DEBUG [Collectd-Thread-16-of-50] o.o.n.c.s.AbstractCollectionAttribute: Visiting attribute Attribute[name:"file:/usr/share/opennms/etc/imports/test.xml"]
+2025-04-10 11:03:11,457 DEBUG [Collectd-Thread-16-of-50] o.o.n.t.a.ThresholdingVisitor: visitAttribute: storing value "file:/usr/share/opennms/etc/imports/test.xml" for attribute named name
+2025-04-10 11:03:11,457 DEBUG [Collectd-Thread-16-of-50] o.o.n.c.s.AbstractCollectionAttribute: Visiting attribute Attribute[domain:org.opennms.netmgt.provision.overall]
+2025-04-10 11:03:11,457 DEBUG [Collectd-Thread-16-of-50] o.o.n.t.a.ThresholdingVisitor: visitAttribute: storing value org.opennms.netmgt.provision.overall for attribute named domain
+2025-04-10 11:03:11,457 DEBUG [Collectd-Thread-16-of-50] o.o.n.t.ThresholdingSetImpl: applyThresholds: Applying thresholds on GenericTypeResource[node=NodeLevelResource[nodeId=1, path=null], instance=org_opennms_netmgt_provision_overall_name__file__usr_share_opennms_etc_imports_test_xml_, unmodified-instance=org_opennms_netmgt_provision_overall_name__file__usr_share_opennms_etc_imports_test_xml_, resourceType=ResourceType [name=requisitionMetrics, label=Requisition Metrics, resourceLabel=Requisition ${index}, persistenceSelectorStrategy=PersistenceSelectorStrategy [class=org.opennms.netmgt.collection.support.PersistAllSelectorStrategy, parameters=[]], storageStrategy=StorageStrategy [class=org.opennms.netmgt.dao.support.SiblingColumnStorageStrategy, parameters=[Parameter [key=sibling-column-name, value=name], Parameter [key=replace-all, value=s/\"//]]]], storageStrategy=org.opennms.netmgt.dao.support.SiblingColumnStorageStrategy@75f75ae9, persistenceSelectorStrategy=org.opennms.netmgt.collection.support.PersistAllSelectorStrategy@58aba2e0] using 15 attributes.
+2025-04-10 11:03:11,457 DEBUG [Collectd-Thread-16-of-50] o.o.n.t.ThresholdingSetImpl: getEntityMap: No thresholds configured for resource type 'requisitionMetrics' in threshold group opennms-jvm-jmx. Skipping this group.
+2025-04-10 11:03:11,457 INFO  [Collectd-Thread-16-of-50] o.o.n.c.CollectableService: run: finished collection for 1/127.0.0.1/OpenNMS-JVM/opennms
+2025-04-10 11:03:11,457 DEBUG [Collectd-Thread-16-of-50] o.o.n.s.LegacyScheduler: schedule: Adding ready runnable CollectableService for service 1:/127.0.0.1:OpenNMS-JVM (ready in 296475ms) at interval 296475
+2025-04-10 11:03:11,457 DEBUG [Collectd-Thread-16-of-50] o.o.n.s.LegacyScheduler: schedule: interval queue did not exist, a new one has been created
+2025-04-10 11:03:11,457 DEBUG [Collectd-Thread-16-of-50] o.o.n.s.LegacyScheduler: schedule: queue element added, notification not performed
+
+==> discovery.log <==
+2025-04-10 07:15:47,983 INFO  [Main] o.s.c.s.ClassPathXmlApplicationContext: Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@15691106: startup date [Thu Apr 10 07:15:47 EDT 2025]; parent: ApplicationContext 'daoContext'
+2025-04-10 07:15:47,986 INFO  [Main] o.s.b.f.x.XmlBeanDefinitionReader: Loading XML bean definitions from class path resource [META-INF/opennms/applicationContext-discovery.xml]
+2025-04-10 07:15:48,015 INFO  [Main] o.s.b.f.a.AutowiredAnnotationBeanPostProcessor: JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+
+==> enlinkd.log <==
+2025-04-10 10:36:25,539 WARN  [DefaultUDPTransportMapping_0.0.0.0/0] o.s.Snmp: Received response that cannot be matched to any outstanding request, address=192.168.105.250/161, requestID=1240128078
+2025-04-10 10:36:25,579 WARN  [DefaultUDPTransportMapping_0.0.0.0/0] o.s.MessageDispatcherImpl: java.io.IOException: The encoded length 85 exceeds the number of bytes left in input at position 4 which actually is 83
+2025-04-10 10:36:35,593 WARN  [DefaultUDPTransportMapping_0.0.0.0/0] o.s.MessageDispatcherImpl: java.io.IOException: The encoded length 85 exceeds the number of bytes left in input at position 4 which actually is 83
+2025-04-10 10:47:19,866 WARN  [enlinkd-Thread] o.o.n.e.s.i.BridgeTopologyServiceImpl: reconcileTopologyForDeleteNode: node: 15, start: null domain or empty
+2025-04-10 10:53:13,494 WARN  [DefaultUDPTransportMapping_0.0.0.0/0] o.s.Snmp: Received response that cannot be matched to any outstanding request, address=192.168.105.250/161, requestID=1533373826
+2025-04-10 10:53:13,497 WARN  [DefaultUDPTransportMapping_0.0.0.0/0] o.s.Snmp: Received response that cannot be matched to any outstanding request, address=192.168.105.250/161, requestID=2069072175
+2025-04-10 10:53:13,498 WARN  [DefaultUDPTransportMapping_0.0.0.0/0] o.s.MessageDispatcherImpl: java.io.IOException: The encoded length 85 exceeds the number of bytes left in input at position 4 which actually is 83
+2025-04-10 10:53:23,494 WARN  [DefaultUDPTransportMapping_0.0.0.0/0] o.s.Snmp: Received response that cannot be matched to any outstanding request, address=192.168.105.250/161, requestID=2069072175
+2025-04-10 10:53:23,495 WARN  [DefaultUDPTransportMapping_0.0.0.0/0] o.s.MessageDispatcherImpl: java.io.IOException: The encoded length 85 exceeds the number of bytes left in input at position 4 which actually is 83
+2025-04-10 10:59:07,116 WARN  [enlinkd-Thread] o.o.n.e.s.i.BridgeTopologyServiceImpl: reconcileTopologyForDeleteNode: node: 16, start: null domain or empty
+
+==> eventd.log <==
+2025-04-10 07:15:34,675 INFO  [Main] o.s.o.h.HibernateTransactionManager: Using DataSource [org.opennms.core.db.HikariCPConnectionFactory@5ff22a2d] of Hibernate SessionFactory for HibernateTransactionManager
+2025-04-10 07:15:39,688 WARN  [Main] o.o.n.a.n.b.BSFNorthbounderManager: The BSF NBI is globally disabled, the destinations won't be registered which means all the alarms will be rejected.
+2025-04-10 07:15:39,720 WARN  [Main] o.o.n.a.n.d.DroolsNorthbounderManager: The Drools NBI is globally disabled, the destinations won't be registered which means all the alarms will be rejected.
+2025-04-10 07:15:39,768 WARN  [Main] o.o.n.a.n.e.EmailNorthbounderManager: The Email NBI is globally disabled, the destinations won't be registered which means all the alarms will be rejected.
+2025-04-10 07:15:39,806 WARN  [Main] o.o.n.a.n.s.SnmpTrapNorthbounderManager: The SNMP Trap NBI is globally disabled, the destinations won't be registered which means all the alarms will be rejected.
+2025-04-10 07:15:39,846 WARN  [Main] o.o.n.a.n.s.SyslogNorthbounderManager: The Syslog NBI is globally disabled, the destinations won't be registered which means all the alarms will be rejected.
+2025-04-10 09:49:56,087 WARN  [OpenNMS.InterfaceToNodeCache-Thread] o.o.n.d.s.InterfaceToNodeCacheEventProcessor: uei.opennms.org/nodes/interfaceDeleted: Cannot find node in DB: 13
+2025-04-10 10:35:17,272 WARN  [OpenNMS.InterfaceToNodeCache-Thread] o.o.n.d.s.InterfaceToNodeCacheEventProcessor: uei.opennms.org/nodes/interfaceDeleted: Cannot find node in DB: 14
+2025-04-10 10:47:19,858 WARN  [OpenNMS.InterfaceToNodeCache-Thread] o.o.n.d.s.InterfaceToNodeCacheEventProcessor: uei.opennms.org/nodes/interfaceDeleted: Cannot find node in DB: 15
+2025-04-10 10:59:07,111 WARN  [OpenNMS.InterfaceToNodeCache-Thread] o.o.n.d.s.InterfaceToNodeCacheEventProcessor: uei.opennms.org/nodes/interfaceDeleted: Cannot find node in DB: 16
+
+==> instrumentation.log <==
+2025-04-10 11:03:07,979 INFO  [Collectd-Thread-4-of-50] collector.collect: persistDataQueueing: begin: opennms/2/127.0.0.1/JMX-Minion
+2025-04-10 11:03:08,029 INFO  [Collectd-Thread-4-of-50] collector.collect: persistDataQueueing: end: opennms/2/127.0.0.1/JMX-Minion
+2025-04-10 11:03:08,934 INFO  [Collectd-Thread-16-of-50] collector.collect: begin:opennms/1/127.0.0.1/OpenNMS-JVM
+2025-04-10 11:03:08,935 INFO  [Collectd-Thread-10-of-50] collector.collect: begin:opennms/1/127.0.0.1/OpenNMS-DB-Stats
+2025-04-10 11:03:08,949 INFO  [Collectd-Thread-10-of-50] collector.collect: end:opennms/1/127.0.0.1/OpenNMS-DB-Stats
+2025-04-10 11:03:08,949 INFO  [Collectd-Thread-10-of-50] collector.collect: persistDataQueueing: begin: opennms/1/127.0.0.1/OpenNMS-DB-Stats
+2025-04-10 11:03:08,959 INFO  [Collectd-Thread-10-of-50] collector.collect: persistDataQueueing: end: opennms/1/127.0.0.1/OpenNMS-DB-Stats
+2025-04-10 11:03:09,031 INFO  [Collectd-Thread-16-of-50] collector.collect: end:opennms/1/127.0.0.1/OpenNMS-JVM
+2025-04-10 11:03:09,031 INFO  [Collectd-Thread-16-of-50] collector.collect: persistDataQueueing: begin: opennms/1/127.0.0.1/OpenNMS-JVM
+2025-04-10 11:03:10,967 INFO  [Collectd-Thread-16-of-50] collector.collect: persistDataQueueing: end: opennms/1/127.0.0.1/OpenNMS-JVM
+
+==> ipc.log <==
+---------------------------------------------------------------------------------------------------------------------------------------
+org.apache.camel.ExchangeTimedOutException: The OUT message was not received within: 20000 millis due reply message with correlationID: Camel-ID-horizon-1744283740049-0-19 not received on destination: temp-queue://ID:horizon-39803-1744283725624-4:3:1. Exchange[ID-horizon-1744283740049-0-18]
+	at org.apache.camel.component.jms.reply.ReplyManagerSupport.processReply(ReplyManagerSupport.java:170) [camel-jms-2.21.5.jar:2.21.5]
+	at org.apache.camel.component.jms.reply.TemporaryQueueReplyHandler.onTimeout(TemporaryQueueReplyHandler.java:62) [camel-jms-2.21.5.jar:2.21.5]
+	at org.apache.camel.component.jms.reply.CorrelationTimeoutMap$1.run(CorrelationTimeoutMap.java:60) [camel-jms-2.21.5.jar:2.21.5]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539) [?:?]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264) [?:?]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136) [?:?]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) [?:?]
+	at java.base/java.lang.Thread.run(Thread.java:840) [?:?]
+
+==> jetty-server.log <==
+2025-04-10 07:15:50,565 INFO  [Main] o.s.c.s.ClassPathXmlApplicationContext: Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@44dafc97: startup date [Thu Apr 10 07:15:50 EDT 2025]; root of context hierarchy
+2025-04-10 07:15:50,568 INFO  [Main] o.s.b.f.x.XmlBeanDefinitionReader: Loading XML bean definitions from class path resource [META-INF/opennms/applicationContext-jettyServer.xml]
+2025-04-10 07:16:00,097 WARN  [Main] o.e.j.u.DeprecationWarning: Using @Deprecated Class org.apache.felix.http.proxy.ProxyListener
+
+==> karaf.log <==
+2025-04-10T07:18:17,340 | INFO  | features-3-thread-1 | BlueprintContainerImpl           | 31 - org.apache.aries.blueprint.core - 1.10.3 | Blueprint bundle org.opennms.features.geocoder.mapquest/33.0.10 has been started
+2025-04-10T07:18:17,343 | INFO  | features-3-thread-1 | FeaturesServiceImpl              | 21 - org.apache.karaf.features.core - 4.3.10 |   org.opennms.features.geocoder.nominatim/33.0.10
+2025-04-10T07:18:17,541 | INFO  | features-3-thread-1 | BlueprintContainerImpl           | 31 - org.apache.aries.blueprint.core - 1.10.3 | Blueprint bundle org.opennms.features.geocoder.nominatim/33.0.10 has been started
+2025-04-10T07:18:17,544 | INFO  | features-3-thread-1 | FeaturesServiceImpl              | 21 - org.apache.karaf.features.core - 4.3.10 |   org.opennms.features.geocoder.google/33.0.10
+2025-04-10T07:18:17,740 | INFO  | features-3-thread-1 | BlueprintContainerImpl           | 31 - org.apache.aries.blueprint.core - 1.10.3 | Blueprint bundle org.opennms.features.geocoder.google/33.0.10 has been started
+2025-04-10T07:18:17,753 | INFO  | features-3-thread-1 | FeaturesServiceImpl              | 21 - org.apache.karaf.features.core - 4.3.10 | Done.
+2025-04-10T07:18:25,948 | INFO  | Blueprint Extender: 2 | BlueprintContainerImpl           | 31 - org.apache.aries.blueprint.core - 1.10.3 | Blueprint bundle org.opennms.features.api-layer.core/33.0.10 has been started
+2025-04-10T07:18:46,128 | INFO  | Blueprint Extender: 3 | BlueprintContainerImpl           | 31 - org.apache.aries.blueprint.core - 1.10.3 | Blueprint bundle org.opennms.features.flows.processing/33.0.10 has been started
+2025-04-10T07:18:46,162 | INFO  | Blueprint Extender: 1 | BlueprintContainerImpl           | 31 - org.apache.aries.blueprint.core - 1.10.3 | Blueprint bundle org.opennms.features.telemetry.protocols.netflow.adapter/33.0.10 has been started
+2025-04-10T07:18:46,184 | INFO  | Blueprint Extender: 2 | BlueprintContainerImpl           | 31 - org.apache.aries.blueprint.core - 1.10.3 | Blueprint bundle org.opennms.features.telemetry.protocols.sflow.adapter/33.0.10 has been started
+
+==> karafStartupMonitor.log <==
+2025-04-10 07:15:50,945 INFO  [Main] o.s.b.f.x.XmlBeanDefinitionReader: Loading XML bean definitions from class path resource [META-INF/opennms/applicationContext-karafStartupMonitor.xml]
+2025-04-10 07:15:50,961 DEBUG [Main] o.o.n.d.AbstractSpringContextJmxServiceDaemon: SPRING: context.classLoader= java.net.FactoryURLClassLoader@e9e54c2
+2025-04-10 07:15:50,961 INFO  [Main] o.o.n.d.AbstractSpringContextJmxServiceDaemon: karafStartupMonitor initialization complete.
+2025-04-10 07:16:25,875 INFO  [Main] o.o.n.d.AbstractSpringContextJmxServiceDaemon: karafStartupMonitor starting.
+2025-04-10 07:16:25,875 DEBUG [Main] o.o.n.d.AbstractSpringContextJmxServiceDaemon: SPRING: thread.classLoader=java.net.FactoryURLClassLoader@e9e54c2
+2025-04-10 07:16:25,875 INFO  [Main] o.o.f.k.h.d.KarafStartupMonitor: KarafStartupMonitor is starting.
+2025-04-10 07:16:25,876 INFO  [Main] o.o.f.k.h.d.KarafStartupMonitor: Waiting for loading of org.opennms.features.karaf.health.service.KarafHealthService, will block startup until service is available.
+2025-04-10 07:18:20,931 INFO  [Main] o.o.f.k.h.d.KarafStartupMonitor: KarafStartupMonitor is started.
+2025-04-10 07:18:20,932 DEBUG [Main] o.o.n.d.AbstractSpringContextJmxServiceDaemon: SPRING: context.classLoader= java.net.FactoryURLClassLoader@e9e54c2
+2025-04-10 07:18:20,932 INFO  [Main] o.o.n.d.AbstractSpringContextJmxServiceDaemon: karafStartupMonitor starting complete.
+
+==> manager.log <==
+2025-04-10 07:18:46,361 INFO  [Main] o.o.n.v.Invoker: Invoking start on object OpenNMS:Name=Trapd
+2025-04-10 07:18:46,442 INFO  [Main] o.o.n.v.Invoker: Invocation start successful for MBean OpenNMS:Name=Trapd
+2025-04-10 07:18:46,442 INFO  [Main] o.o.n.v.Invoker: Invoking start on object OpenNMS:Name=PerspectivePoller
+2025-04-10 07:18:46,541 INFO  [Main] o.o.n.v.Invoker: Invocation start successful for MBean OpenNMS:Name=PerspectivePoller
+2025-04-10 07:18:46,541 DEBUG [Main] o.o.n.v.Starter: Startup complete
+2025-04-10 07:19:45,890 DEBUG [RMI TCP Connection(5)-127.0.0.1] o.o.n.c.ServiceConfigFactory: ServiceConfigFactory.init: config file path /usr/share/opennms/etc/service-configuration.xml
+2025-04-10 09:38:54,531 DEBUG [RMI TCP Connection(7)-127.0.0.1] o.o.n.c.ServiceConfigFactory: ServiceConfigFactory.init: config file path /usr/share/opennms/etc/service-configuration.xml
+2025-04-10 09:48:51,270 DEBUG [RMI TCP Connection(9)-127.0.0.1] o.o.n.c.ServiceConfigFactory: ServiceConfigFactory.init: config file path /usr/share/opennms/etc/service-configuration.xml
+2025-04-10 10:34:47,069 DEBUG [RMI TCP Connection(11)-127.0.0.1] o.o.n.c.ServiceConfigFactory: ServiceConfigFactory.init: config file path /usr/share/opennms/etc/service-configuration.xml
+2025-04-10 10:46:25,079 DEBUG [RMI TCP Connection(13)-127.0.0.1] o.o.n.c.ServiceConfigFactory: ServiceConfigFactory.init: config file path /usr/share/opennms/etc/service-configuration.xml
+
+==> minion.log <==
+2025-04-10 09:49:56,096 WARN  [minionStatusTracker-Thread] o.o.m.s.MinionStatusTracker: Unable to retrieve minion. The node (ID: 13) does not exist!
+2025-04-10 10:35:17,365 WARN  [minionStatusTracker-Thread] o.o.m.s.MinionStatusTracker: Unable to retrieve minion. The node (ID: 14) does not exist!
+2025-04-10 10:47:19,865 WARN  [minionStatusTracker-Thread] o.o.m.s.MinionStatusTracker: Unable to retrieve minion. The node (ID: 15) does not exist!
+2025-04-10 10:59:07,116 WARN  [minionStatusTracker-Thread] o.o.m.s.MinionStatusTracker: Unable to retrieve minion. The node (ID: 16) does not exist!
+
+==> notifd.log <==
+2025-04-10 07:15:45,489 INFO  [Main] o.s.c.s.ClassPathXmlApplicationContext: Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@7cb93c41: startup date [Thu Apr 10 07:15:45 EDT 2025]; parent: ApplicationContext 'daoContext'
+2025-04-10 07:15:45,492 INFO  [Main] o.s.b.f.x.XmlBeanDefinitionReader: Loading XML bean definitions from class path resource [META-INF/opennms/applicationContext-pollerConfigDaos.xml]
+2025-04-10 07:15:45,514 INFO  [Main] o.s.b.f.x.XmlBeanDefinitionReader: Loading XML bean definitions from class path resource [META-INF/opennms/applicationContext-deviceConfig-MonitorAdaptor.xml]
+2025-04-10 07:15:45,536 INFO  [Main] o.s.b.f.a.AutowiredAnnotationBeanPostProcessor: JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2025-04-10 07:15:45,885 INFO  [Main] o.s.c.s.ClassPathXmlApplicationContext: Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@f2b1b68: startup date [Thu Apr 10 07:15:45 EDT 2025]; parent: ApplicationContext 'pollerConfigContext'
+2025-04-10 07:15:45,885 INFO  [Main] o.s.b.f.x.XmlBeanDefinitionReader: Loading XML bean definitions from class path resource [META-INF/opennms/applicationContext-notifd.xml]
+2025-04-10 07:15:45,927 INFO  [Main] o.s.b.f.a.AutowiredAnnotationBeanPostProcessor: JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+
+==> perspectivepollerd.log <==
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2025-04-10 07:18:46,459 INFO  [Main] o.q.i.StdSchedulerFactory: Quartz scheduler 'DefaultQuartzScheduler' initialized from default resource file in Quartz package: 'quartz.properties'
+2025-04-10 07:18:46,460 INFO  [Main] o.q.i.StdSchedulerFactory: Quartz scheduler version: 2.3.2
+2025-04-10 07:18:46,460 INFO  [Main] o.q.c.QuartzScheduler: Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+
+==> poller.log <==
+2025-04-10 07:17:26,758 WARN  [Camel (rpcClient) thread #33 - TemporaryQueueReplyManager[OpenNMS.ftwidley1.RPC.SNMP]] o.a.c.c.j.r.TemporaryQueueReplyManager: Reply received for unknown correlationID [Camel-ID-horizon-1744283740049-0-19]. The message will be ignored: ActiveMQTextMessage {commandId = 45, responseRequired = true, messageId = ID:minion2-41213-1744283827339-1:4:21:1:1, originalDestination = null, originalTransactionId = null, producerId = ID:minion2-41213-1744283827339-1:4:21:1, destination = temp-queue://ID:horizon-39803-1744283725624-4:3:1, transactionId = null, expiration = 0, timestamp = 1744283846755, arrival = 0, brokerInTime = 1744283846756, brokerOutTime = 1744283846757, correlationId = Camel-ID-horizon-1744283740049-0-19, replyTo = null, persistent = true, type = null, priority = 4, groupID = null, groupSequence = 0, targetConsumerId = null, compressed = false, userID = null, content = org.apache.activemq.util.ByteSequence@62405147, marshalledProperties = null, dataStructure = null, redeliveryCounter = 0, size = 2644, properties = null, readOnlyProperties = true, readOnlyBody = true, droppable = false, jmsXGroupFirstForConsumer = false, text = <snmp-response error="java.util.concurrent.Co...more&#xa;"/>}
+2025-04-10 09:49:56,103 ERROR [Poller:PollerEventProcessor-Thread] o.o.n.p.PollerEventProcessor: Service 13/192.168.105.250/ICMP does not exist in pollable node map, unable to delete service.
+2025-04-10 09:49:56,143 ERROR [Poller:PollerEventProcessor-Thread] o.o.n.p.PollerEventProcessor: Service 13/192.168.105.250/HTTP does not exist in pollable node map, unable to delete service.
+2025-04-10 09:49:56,146 ERROR [Poller:PollerEventProcessor-Thread] o.o.n.p.PollerEventProcessor: Nodeid 13 does not exist in pollable node map, unable to delete node.
+2025-04-10 10:35:17,286 ERROR [Poller:PollerEventProcessor-Thread] o.o.n.p.PollerEventProcessor: Interface 14/172.20.0.100 does not exist in pollable node map, unable to delete node.
+2025-04-10 10:35:17,366 ERROR [Poller:PollerEventProcessor-Thread] o.o.n.p.PollerEventProcessor: Nodeid 14 does not exist in pollable node map, unable to delete node.
+2025-04-10 10:47:19,866 ERROR [Poller:PollerEventProcessor-Thread] o.o.n.p.PollerEventProcessor: Interface 15/192.168.105.250 does not exist in pollable node map, unable to delete node.
+2025-04-10 10:47:19,868 ERROR [Poller:PollerEventProcessor-Thread] o.o.n.p.PollerEventProcessor: Nodeid 15 does not exist in pollable node map, unable to delete node.
+2025-04-10 10:59:07,120 ERROR [Poller:PollerEventProcessor-Thread] o.o.n.p.PollerEventProcessor: Interface 16/192.168.105.250 does not exist in pollable node map, unable to delete node.
+2025-04-10 10:59:07,123 ERROR [Poller:PollerEventProcessor-Thread] o.o.n.p.PollerEventProcessor: Nodeid 16 does not exist in pollable node map, unable to delete node.
+
+==> provisiond.log <==
+2025-04-10 10:44:39,279 WARN  [DefaultUDPTransportMapping_0.0.0.0/0] o.s.MessageDispatcherImpl: java.io.IOException: Encountered unsupported variable syntax: 43
+2025-04-10 10:44:49,315 WARN  [Provisiond:EventListener-Thread] o.o.n.p.s.Provisioner: nodeScan = org.opennms.netmgt.provision.service.NodeScan@5910850[foreign source=test,foreign id=test,node id=15,location=Default,aborted=false,provision service=org.opennms.netmgt.provision.service.DefaultProvisionService@50b95e56]
+2025-04-10 10:44:49,315 WARN  [Provisiond:EventListener-Thread] o.o.n.p.s.Provisioner: addToScheduleQueue future = java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask@82c33c[Not completed, task = java.util.concurrent.Executors$RunnableAdapter@57d49b61[Wrapped task = org.opennms.netmgt.provision.service.NodeScan$6@5d7d09bf]]
+2025-04-10 10:52:53,220 WARN  [DefaultUDPTransportMapping_0.0.0.0/0] o.s.MessageDispatcherImpl: java.io.IOException: Encountered unsupported variable syntax: 43
+2025-04-10 10:52:53,257 WARN  [pool-4-thread-13] o.o.n.p.d.c.r.DnsLookupClientRpcModule: Failed to retrieve the fully qualified domain name for /192.168.105.250. Using the textual representation of the IP address.
+2025-04-10 10:53:03,221 WARN  [DefaultUDPTransportMapping_0.0.0.0/0] o.s.MessageDispatcherImpl: java.io.IOException: Encountered unsupported variable syntax: 43
+2025-04-10 10:53:13,322 WARN  [Provisiond:EventListener-Thread] o.o.n.p.s.Provisioner: node added event (1744296793322)
+2025-04-10 10:53:13,331 WARN  [Provisiond:EventListener-Thread] o.o.n.p.s.Provisioner: scheduleForNode is org.opennms.netmgt.provision.service.NodeScanSchedule@66a6aff3[foreign source=test,foreign id=192.168.105.250,node id=16,location=Default,initial delay=PT0S,scan interval=PT86400S,monitorKey=file:/usr/share/opennms/etc/imports/pending/test.xml.1744296535326.20250410105253]
+2025-04-10 10:53:13,332 WARN  [Provisiond:EventListener-Thread] o.o.n.p.s.Provisioner: nodeScan = org.opennms.netmgt.provision.service.NodeScan@4ba8bbf3[foreign source=test,foreign id=192.168.105.250,node id=16,location=Default,aborted=false,provision service=org.opennms.netmgt.provision.service.DefaultProvisionService@50b95e56]
+2025-04-10 10:53:13,332 WARN  [Provisiond:EventListener-Thread] o.o.n.p.s.Provisioner: addToScheduleQueue future = java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask@52b47e2f[Not completed, task = java.util.concurrent.Executors$RunnableAdapter@7b39a5eb[Wrapped task = org.opennms.netmgt.provision.service.NodeScan$6@13e80cc]]
+
+==> queued.log <==
+2025-04-10 07:15:45,322 INFO  [Main] o.s.c.s.ClassPathXmlApplicationContext: Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@34c62857: startup date [Thu Apr 10 07:15:45 EDT 2025]; parent: ApplicationContext 'daoContext'
+2025-04-10 07:15:45,325 INFO  [Main] o.s.b.f.x.XmlBeanDefinitionReader: Loading XML bean definitions from class path resource [META-INF/opennms/applicationContext-queued.xml]
+2025-04-10 07:15:45,359 INFO  [Main] o.s.b.f.a.AutowiredAnnotationBeanPostProcessor: JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+
+==> reportd.log <==
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2025-04-10 07:15:50,343 INFO  [Main] o.q.i.StdSchedulerFactory: Quartz scheduler 'reportd' initialized from an externally provided properties instance.
+2025-04-10 07:15:50,343 INFO  [Main] o.q.i.StdSchedulerFactory: Quartz scheduler version: 2.3.2
+2025-04-10 07:15:50,343 INFO  [Main] o.q.c.QuartzScheduler: JobFactory set to: org.springframework.scheduling.quartz.AdaptableJobFactory@189f5658
+2025-04-10 07:15:50,379 INFO  [Main] o.q.c.QuartzScheduler: JobFactory set to: org.opennms.netmgt.reporting.service.ReportJobFactory@62f3c384
+2025-04-10 07:15:50,453 INFO  [Main] o.s.c.s.DefaultLifecycleProcessor: Starting beans in phase 2147483647
+2025-04-10 07:15:50,453 INFO  [Main] o.s.s.q.SchedulerFactoryBean: Starting Quartz Scheduler now
+2025-04-10 07:15:50,453 INFO  [Main] o.q.c.QuartzScheduler: Scheduler reportd_$_NON_CLUSTERED started.
+2025-04-10 07:15:58,182 INFO  [Main] o.q.c.QuartzScheduler: Scheduler reportd_$_NON_CLUSTERED started.
+
+==> rtc.log <==
+2025-04-10 07:16:01,608 WARN  [DataSender-Thread-1-of-5] o.o.n.r.DataSender: DataSender:  Unable to send category 'Overall Service Availability' to URL 'http://localhost:8980/opennms/rtc/post/Overall+Service+Availability': Connection refused
+2025-04-10 07:16:20,456 WARN  [DataSender-Thread-1-of-5] o.o.n.r.DataSender: DataSender:  Unable to send category 'Network Interfaces' to URL 'http://localhost:8980/opennms/rtc/post/Network+Interfaces': Connection refused
+2025-04-10 07:16:20,468 WARN  [DataSender-Thread-1-of-5] o.o.n.r.DataSender: DataSender:  Unable to send category 'Web Servers' to URL 'http://localhost:8980/opennms/rtc/post/Web+Servers': Connection refused
+2025-04-10 07:16:20,547 WARN  [DataSender-Thread-1-of-5] o.o.n.r.DataSender: DataSender:  Unable to send category 'Email Servers' to URL 'http://localhost:8980/opennms/rtc/post/Email+Servers': Connection refused
+2025-04-10 07:16:20,560 WARN  [DataSender-Thread-1-of-5] o.o.n.r.DataSender: DataSender:  Unable to send category 'DNS and DHCP Servers' to URL 'http://localhost:8980/opennms/rtc/post/DNS+and+DHCP+Servers': Connection refused
+2025-04-10 07:16:20,568 WARN  [DataSender-Thread-1-of-5] o.o.n.r.DataSender: DataSender:  Unable to send category 'Database Servers' to URL 'http://localhost:8980/opennms/rtc/post/Database+Servers': Connection refused
+2025-04-10 07:16:20,650 WARN  [DataSender-Thread-1-of-5] o.o.n.r.DataSender: DataSender:  Unable to send category 'Device Config Backup' to URL 'http://localhost:8980/opennms/rtc/post/Device+Config+Backup': Connection refused
+2025-04-10 07:16:20,659 WARN  [DataSender-Thread-1-of-5] o.o.n.r.DataSender: DataSender:  Unable to send category 'JMX Servers' to URL 'http://localhost:8980/opennms/rtc/post/JMX+Servers': Connection refused
+2025-04-10 07:16:20,667 WARN  [DataSender-Thread-1-of-5] o.o.n.r.DataSender: DataSender:  Unable to send category 'Other Servers' to URL 'http://localhost:8980/opennms/rtc/post/Other+Servers': Connection refused
+2025-04-10 07:16:20,851 WARN  [DataSender-Thread-1-of-5] o.o.n.r.DataSender: DataSender:  Unable to send category 'Overall Service Availability' to URL 'http://localhost:8980/opennms/rtc/post/Overall+Service+Availability': Connection refused
+
+==> statsd.log <==
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2025-04-10 07:15:48,320 INFO  [Main] o.q.i.StdSchedulerFactory: Quartz scheduler 'Statsd' initialized from an externally provided properties instance.
+2025-04-10 07:15:48,320 INFO  [Main] o.q.i.StdSchedulerFactory: Quartz scheduler version: 2.3.2
+2025-04-10 07:15:48,323 INFO  [Main] o.q.c.QuartzScheduler: JobFactory set to: org.springframework.scheduling.quartz.AdaptableJobFactory@4d2181e6
+2025-04-10 07:15:48,357 INFO  [Main] o.s.c.s.DefaultLifecycleProcessor: Starting beans in phase 2147483647
+2025-04-10 07:15:48,357 INFO  [Main] o.s.s.q.SchedulerFactoryBean: Starting Quartz Scheduler now
+2025-04-10 07:15:48,357 INFO  [Main] o.q.c.QuartzScheduler: Scheduler Statsd_$_NON_CLUSTERED started.
+
+==> syslogd.log <==
+2025-04-10 07:18:21,451 DEBUG [SyslogReceiverCamelNettyImpl [0.0.0.0:10514]] o.a.c.i.DefaultCamelContext: Starting consumer (order: 1000) on route: syslogListen
+2025-04-10 07:18:21,453 DEBUG [SyslogReceiverCamelNettyImpl [0.0.0.0:10514]] o.a.c.m.DefaultManagementAgent: Registered MBean with ObjectName: org.apache.camel:context=syslogdListenerCamelNettyContext,type=consumers,name=NettyConsumer(0x765b1232)
+2025-04-10 07:18:21,454 DEBUG [SyslogReceiverCamelNettyImpl [0.0.0.0:10514]] o.a.c.c.n.NettyConsumer: Starting consumer: Consumer[udp://0.0.0.0:10514]
+2025-04-10 07:18:21,454 DEBUG [SyslogReceiverCamelNettyImpl [0.0.0.0:10514]] o.a.c.c.n.NettyConsumer: Netty consumer binding to: 0.0.0.0:10514
+2025-04-10 07:18:21,543 DEBUG [SyslogReceiverCamelNettyImpl [0.0.0.0:10514]] o.a.c.c.n.SingleUDPNettyServerBootstrapFactory: Created Bootstrap Bootstrap(BootstrapConfig(group: NioEventLoopGroup, channelFactory: ReflectiveChannelFactory(NioDatagramChannel.class), options: {SO_RCVBUF=2147483647, SO_REUSEADDR=true, SO_SNDBUF=65536, CONNECT_TIMEOUT_MILLIS=500, SO_BROADCAST=false}, resolver: io.netty.resolver.DefaultAddressResolverGroup@68593efd))
+2025-04-10 07:18:21,550 INFO  [SyslogReceiverCamelNettyImpl [0.0.0.0:10514]] o.a.c.c.n.SingleUDPNettyServerBootstrapFactory: ConnectionlessBootstrap binding to 0.0.0.0:10514
+2025-04-10 07:18:21,558 INFO  [SyslogReceiverCamelNettyImpl [0.0.0.0:10514]] o.a.c.c.n.NettyConsumer: Netty consumer bound to: 0.0.0.0:10514
+2025-04-10 07:18:21,558 INFO  [SyslogReceiverCamelNettyImpl [0.0.0.0:10514]] o.a.c.i.DefaultCamelContext: Route: syslogListen started and consuming from: udp://0.0.0.0:10514
+2025-04-10 07:18:21,558 INFO  [SyslogReceiverCamelNettyImpl [0.0.0.0:10514]] o.a.c.i.DefaultCamelContext: Total 1 routes, of which 1 are started
+2025-04-10 07:18:21,558 INFO  [SyslogReceiverCamelNettyImpl [0.0.0.0:10514]] o.a.c.i.DefaultCamelContext: Apache Camel 2.21.5 (CamelContext: syslogdListenerCamelNettyContext) started in 0.427 seconds
+
+==> telemetryd.log <==
+2025-04-10 07:15:51,148 INFO  [Main] o.s.c.s.ClassPathXmlApplicationContext: Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@b102e41: startup date [Thu Apr 10 07:15:51 EDT 2025]; parent: ApplicationContext 'eventDaemonContext'
+2025-04-10 07:15:51,151 INFO  [Main] o.s.b.f.x.XmlBeanDefinitionReader: Loading XML bean definitions from class path resource [META-INF/opennms/applicationContext-telemetryDaemon.xml]
+2025-04-10 07:15:51,185 INFO  [Main] o.s.b.f.a.AutowiredAnnotationBeanPostProcessor: JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+
+==> trapd.log <==
+2025-04-10 07:15:51,333 INFO  [Main] o.s.c.s.ClassPathXmlApplicationContext: Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@2fa6e1a1: startup date [Thu Apr 10 07:15:51 EDT 2025]; parent: ApplicationContext 'daoContext'
+2025-04-10 07:15:51,335 INFO  [Main] o.s.b.f.x.XmlBeanDefinitionReader: Loading XML bean definitions from class path resource [META-INF/opennms/applicationContext-jceks-scv.xml]
+2025-04-10 07:15:51,353 INFO  [Main] o.s.b.f.x.XmlBeanDefinitionReader: Loading XML bean definitions from class path resource [META-INF/opennms/applicationContext-trapDaemon.xml]
+2025-04-10 07:15:51,365 INFO  [Main] o.s.b.f.s.DefaultListableBeanFactory: Overriding bean definition for bean 'jceksSecureCredentialsVault' with a different definition: replacing [Generic bean: class [org.opennms.features.scv.jceks.JCEKSSecureCredentialsVault]; scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null; defined in class path resource [META-INF/opennms/applicationContext-jceks-scv.xml]] with [Generic bean: class [org.opennms.core.soa.support.ReferenceFactoryBean]; scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null]
+2025-04-10 07:15:51,374 INFO  [Main] o.s.b.f.a.AutowiredAnnotationBeanPostProcessor: JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+
+==> trouble-ticketer.log <==
+2025-04-10 07:15:45,188 INFO  [Main] o.s.c.s.ClassPathXmlApplicationContext: Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@1d9b005b: startup date [Thu Apr 10 07:15:45 EDT 2025]; parent: ApplicationContext 'daoContext'
+2025-04-10 07:15:45,191 INFO  [Main] o.s.b.f.x.XmlBeanDefinitionReader: Loading XML bean definitions from class path resource [META-INF/opennms/applicationContext-troubleTicketer.xml]
+2025-04-10 07:15:45,240 INFO  [Main] o.s.b.f.a.AutowiredAnnotationBeanPostProcessor: JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+
+==> web.log <==
+2025-04-10 10:53:56,134 WARN  [qtp818761337-9752] o.e.j.w.s.WebSocketServerFactory: Not a 'HTTP/1.1' request (was [HTTP/1.0])
+2025-04-10 10:54:56,197 WARN  [qtp818761337-9991] o.e.j.w.s.WebSocketServerFactory: Not a 'HTTP/1.1' request (was [HTTP/1.0])
+2025-04-10 10:55:56,469 WARN  [qtp818761337-9752] o.e.j.w.s.WebSocketServerFactory: Not a 'HTTP/1.1' request (was [HTTP/1.0])
+2025-04-10 10:56:57,444 WARN  [qtp818761337-10609] o.e.j.w.s.WebSocketServerFactory: Not a 'HTTP/1.1' request (was [HTTP/1.0])
+2025-04-10 10:57:57,526 WARN  [qtp818761337-407] o.e.j.w.s.WebSocketServerFactory: Not a 'HTTP/1.1' request (was [HTTP/1.0])
+2025-04-10 10:58:57,853 WARN  [qtp818761337-407] o.e.j.w.s.WebSocketServerFactory: Not a 'HTTP/1.1' request (was [HTTP/1.0])
+2025-04-10 10:59:58,025 WARN  [qtp818761337-9752] o.e.j.w.s.WebSocketServerFactory: Not a 'HTTP/1.1' request (was [HTTP/1.0])
+2025-04-10 11:00:58,052 WARN  [qtp818761337-9752] o.e.j.w.s.WebSocketServerFactory: Not a 'HTTP/1.1' request (was [HTTP/1.0])
+2025-04-10 11:01:58,312 WARN  [qtp818761337-9752] o.e.j.w.s.WebSocketServerFactory: Not a 'HTTP/1.1' request (was [HTTP/1.0])
+2025-04-10 11:02:58,606 WARN  [qtp818761337-9752] o.e.j.w.s.WebSocketServerFactory: Not a 'HTTP/1.1' request (was [HTTP/1.0])
+
+==> provisiond.log <==
+2025-04-10 11:03:17,038 WARN  [DefaultUDPTransportMapping_0.0.0.0/0] o.s.MessageDispatcherImpl: java.io.IOException: Encountered unsupported variable syntax: 43
+2025-04-10 11:03:17,048 WARN  [pool-4-thread-14] o.o.n.p.d.c.r.DnsLookupClientRpcModule: Failed to retrieve the fully qualified domain name for /192.168.105.250. Using the textual representation of the IP address.
+2025-04-10 11:03:27,039 WARN  [DefaultUDPTransportMapping_0.0.0.0/0] o.s.MessageDispatcherImpl: java.io.IOException: Encountered unsupported variable syntax: 43
+
+==> FilterWatcher.log <==
+2025-04-10 11:03:37,160 DEBUG [FilterWatcher-Thread] o.o.n.d.s.DefaultFilterWatcher: Refreshing results for filter rule: IPADDR != '0.0.0.0'
+2025-04-10 11:03:37,172 DEBUG [FilterWatcher-Thread] o.o.n.f.JdbcFilterDao: Filter.getNodeIPAddressServiceMap(IPADDR != '0.0.0.0')
+2025-04-10 11:03:37,173 DEBUG [FilterWatcher-Thread] o.o.n.f.JdbcFilterDao: Filter.getNodeIPAddressServiceMap(IPADDR != '0.0.0.0'): SQL statement: SELECT node.nodeID, ipInterface.ipAddr, service.serviceName FROM ipInterface JOIN node ON (ipInterface.nodeID = node.nodeID) JOIN ifServices ON (ipInterface.id = ifServices.ipInterfaceId) JOIN service ON (ifServices.serviceID = service.serviceID) WHERE ipInterface.IPADDR != '0.0.0.0'
+
+==> provisiond.log <==
+2025-04-10 11:03:37,163 WARN  [Provisiond:EventListener-Thread] o.o.n.p.s.Provisioner: node added event (1744297417163)
+2025-04-10 11:03:37,170 WARN  [Provisiond:EventListener-Thread] o.o.n.p.s.Provisioner: scheduleForNode is org.opennms.netmgt.provision.service.NodeScanSchedule@4cf762f5[foreign source=test,foreign id=192.168.105.250,node id=17,location=Default,initial delay=PT0S,scan interval=PT86400S,monitorKey=file:/usr/share/opennms/etc/imports/pending/test.xml.1744297302538.20250410110316]
+2025-04-10 11:03:37,170 WARN  [Provisiond:EventListener-Thread] o.o.n.p.s.Provisioner: nodeScan = org.opennms.netmgt.provision.service.NodeScan@32111c32[foreign source=test,foreign id=192.168.105.250,node id=17,location=Default,aborted=false,provision service=org.opennms.netmgt.provision.service.DefaultProvisionService@50b95e56]
+2025-04-10 11:03:37,170 WARN  [Provisiond:EventListener-Thread] o.o.n.p.s.Provisioner: addToScheduleQueue future = java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask@f1d3f89[Not completed, task = java.util.concurrent.Executors$RunnableAdapter@28758127[Wrapped task = org.opennms.netmgt.provision.service.NodeScan$6@780a1ab7]]
+
+==> FilterWatcher.log <==
+2025-04-10 11:03:37,213 DEBUG [FilterWatcher-Thread] o.o.n.d.s.DefaultFilterWatcher: Done refreshing results for rule.
+
+==> collectd.log <==
+2025-04-10 11:03:37,366 DEBUG [collectd-Thread] o.o.n.e.EventIpcManagerDefaultImpl: run: calling onEvent on collectd for event {"uei":"uei.opennms.org\/nodes\/nodeGainedService","time":"2025-04-10 11:03:37,254-0400","dbid":341,"source":"Provisiond","nodeid":17,"parms":["ImmutableParm{parmName='iphostname', value=ImmutableValue{content='192.168.105.250', type='string', encoding='text', expand=false}}","ImmutableParm{parmName='nodelabel', value=ImmutableValue{content='192.168.105.250', type='string', encoding='text', expand=false}}","ImmutableParm{parmName='nodelabelsource', value=ImmutableValue{content='U', type='string', encoding='text', expand=false}}"]}
+2025-04-10 11:03:37,367 DEBUG [collectd-Thread] o.o.n.c.Collectd: received event, uei = uei.opennms.org/nodes/nodeGainedService
+2025-04-10 11:03:37,371 DEBUG [collectd-Thread] o.o.n.c.Collectd: getSpecificationsForInterface: address/service: OnmsIpInterface{id=95, ipAddr=192.168.105.250, netMask=null, ipHostName=192.168.105.250, isManaged=M, snmpPrimary=P, ipLastCapsdPoll=null, nodeId=17}/ICMP not scheduled, service is not enabled or does not exist in package: cassandra-via-jmx
+2025-04-10 11:03:37,371 DEBUG [collectd-Thread] o.o.n.c.Collectd: getSpecificationsForInterface: address/service: OnmsIpInterface{id=95, ipAddr=192.168.105.250, netMask=null, ipHostName=192.168.105.250, isManaged=M, snmpPrimary=P, ipLastCapsdPoll=null, nodeId=17}/ICMP not scheduled, service is not enabled or does not exist in package: vmware3
+2025-04-10 11:03:37,371 DEBUG [collectd-Thread] o.o.n.c.Collectd: getSpecificationsForInterface: address/service: OnmsIpInterface{id=95, ipAddr=192.168.105.250, netMask=null, ipHostName=192.168.105.250, isManaged=M, snmpPrimary=P, ipLastCapsdPoll=null, nodeId=17}/ICMP not scheduled, service is not enabled or does not exist in package: vmware4
+2025-04-10 11:03:37,372 DEBUG [collectd-Thread] o.o.n.c.Collectd: getSpecificationsForInterface: address/service: OnmsIpInterface{id=95, ipAddr=192.168.105.250, netMask=null, ipHostName=192.168.105.250, isManaged=M, snmpPrimary=P, ipLastCapsdPoll=null, nodeId=17}/ICMP not scheduled, service is not enabled or does not exist in package: vmware5
+2025-04-10 11:03:37,372 DEBUG [collectd-Thread] o.o.n.c.Collectd: getSpecificationsForInterface: address/service: OnmsIpInterface{id=95, ipAddr=192.168.105.250, netMask=null, ipHostName=192.168.105.250, isManaged=M, snmpPrimary=P, ipLastCapsdPoll=null, nodeId=17}/ICMP not scheduled, service is not enabled or does not exist in package: vmware6
+2025-04-10 11:03:37,372 DEBUG [collectd-Thread] o.o.n.c.Collectd: getSpecificationsForInterface: address/service: OnmsIpInterface{id=95, ipAddr=192.168.105.250, netMask=null, ipHostName=192.168.105.250, isManaged=M, snmpPrimary=P, ipLastCapsdPoll=null, nodeId=17}/ICMP not scheduled, service is not enabled or does not exist in package: vmware7
+2025-04-10 11:03:37,372 DEBUG [collectd-Thread] o.o.n.c.Collectd: getSpecificationsForInterface: address/service: OnmsIpInterface{id=95, ipAddr=192.168.105.250, netMask=null, ipHostName=192.168.105.250, isManaged=M, snmpPrimary=P, ipLastCapsdPoll=null, nodeId=17}/ICMP not scheduled, service is not enabled or does not exist in package: opennms
+2025-04-10 11:03:37,372 DEBUG [collectd-Thread] o.o.n.c.Collectd: getSpecificationsForInterface: address/service: OnmsIpInterface{id=95, ipAddr=192.168.105.250, netMask=null, ipHostName=192.168.105.250, isManaged=M, snmpPrimary=P, ipLastCapsdPoll=null, nodeId=17}/ICMP not scheduled, service is not enabled or does not exist in package: example1
+2025-04-10 11:03:37,372 DEBUG [collectd-Thread] o.o.n.c.Collectd: getSpecificationsForInterface: address/service: OnmsIpInterface{id=95, ipAddr=192.168.105.250, netMask=null, ipHostName=192.168.105.250, isManaged=M, snmpPrimary=P, ipLastCapsdPoll=null, nodeId=17}/ICMP not scheduled, service is not enabled or does not exist in package: web-collection
+2025-04-10 11:03:37,372 DEBUG [collectd-Thread] o.o.n.c.Collectd: scheduleInterface: found 0 matching specs for interface: OnmsIpInterface{id=95, ipAddr=192.168.105.250, netMask=null, ipHostName=192.168.105.250, isManaged=M, snmpPrimary=P, ipLastCapsdPoll=null, nodeId=17}
+2025-04-10 11:03:37,422 DEBUG [collectd-Thread] o.o.n.e.EventIpcManagerDefaultImpl: run: calling onEvent on collectd for event {"uei":"uei.opennms.org\/nodes\/nodeGainedService","time":"2025-04-10 11:03:37,361-0400","dbid":342,"source":"Provisiond","nodeid":17,"parms":["ImmutableParm{parmName='iphostname', value=ImmutableValue{content='192.168.105.250', type='string', encoding='text', expand=false}}","ImmutableParm{parmName='nodelabel', value=ImmutableValue{content='192.168.105.250', type='string', encoding='text', expand=false}}","ImmutableParm{parmName='nodelabelsource', value=ImmutableValue{content='U', type='string', encoding='text', expand=false}}"]}
+2025-04-10 11:03:37,422 DEBUG [collectd-Thread] o.o.n.c.Collectd: received event, uei = uei.opennms.org/nodes/nodeGainedService
+2025-04-10 11:03:37,426 DEBUG [collectd-Thread] o.o.n.c.Collectd: getSpecificationsForInterface: address/service: OnmsIpInterface{id=95, ipAddr=192.168.105.250, netMask=null, ipHostName=192.168.105.250, isManaged=M, snmpPrimary=P, ipLastCapsdPoll=null, nodeId=17}/SNMP not scheduled, service is not enabled or does not exist in package: cassandra-via-jmx
+2025-04-10 11:03:37,426 DEBUG [collectd-Thread] o.o.n.c.Collectd: getSpecificationsForInterface: address/service: OnmsIpInterface{id=95, ipAddr=192.168.105.250, netMask=null, ipHostName=192.168.105.250, isManaged=M, snmpPrimary=P, ipLastCapsdPoll=null, nodeId=17}/SNMP not scheduled, service is not enabled or does not exist in package: vmware3
+2025-04-10 11:03:37,426 DEBUG [collectd-Thread] o.o.n.c.Collectd: getSpecificationsForInterface: address/service: OnmsIpInterface{id=95, ipAddr=192.168.105.250, netMask=null, ipHostName=192.168.105.250, isManaged=M, snmpPrimary=P, ipLastCapsdPoll=null, nodeId=17}/SNMP not scheduled, service is not enabled or does not exist in package: vmware4
+2025-04-10 11:03:37,426 DEBUG [collectd-Thread] o.o.n.c.Collectd: getSpecificationsForInterface: address/service: OnmsIpInterface{id=95, ipAddr=192.168.105.250, netMask=null, ipHostName=192.168.105.250, isManaged=M, snmpPrimary=P, ipLastCapsdPoll=null, nodeId=17}/SNMP not scheduled, service is not enabled or does not exist in package: vmware5
+2025-04-10 11:03:37,426 DEBUG [collectd-Thread] o.o.n.c.Collectd: getSpecificationsForInterface: address/service: OnmsIpInterface{id=95, ipAddr=192.168.105.250, netMask=null, ipHostName=192.168.105.250, isManaged=M, snmpPrimary=P, ipLastCapsdPoll=null, nodeId=17}/SNMP not scheduled, service is not enabled or does not exist in package: vmware6
+2025-04-10 11:03:37,426 DEBUG [collectd-Thread] o.o.n.c.Collectd: getSpecificationsForInterface: address/service: OnmsIpInterface{id=95, ipAddr=192.168.105.250, netMask=null, ipHostName=192.168.105.250, isManaged=M, snmpPrimary=P, ipLastCapsdPoll=null, nodeId=17}/SNMP not scheduled, service is not enabled or does not exist in package: vmware7
+2025-04-10 11:03:37,426 DEBUG [collectd-Thread] o.o.n.c.Collectd: getSpecificationsForInterface: address/service: OnmsIpInterface{id=95, ipAddr=192.168.105.250, netMask=null, ipHostName=192.168.105.250, isManaged=M, snmpPrimary=P, ipLastCapsdPoll=null, nodeId=17}/SNMP not scheduled, service is not enabled or does not exist in package: opennms
+2025-04-10 11:03:37,426 DEBUG [collectd-Thread] o.o.n.c.CollectdConfigFactory: interfaceInFilter: package is example1. filter rules are IPADDR != '0.0.0.0'
+2025-04-10 11:03:37,426 DEBUG [collectd-Thread] o.o.n.f.JdbcFilterDao: Filter.getIPAddressList(IPADDR != '0.0.0.0')
+2025-04-10 11:03:37,427 DEBUG [collectd-Thread] o.o.n.f.JdbcFilterDao: Filter.getIPAddressList(IPADDR != '0.0.0.0'): SQL statement: SELECT DISTINCT ipInterface.ipAddr FROM ipInterface WHERE ipInterface.IPADDR != '0.0.0.0' AND (ipInterface.isManaged != 'D' or ipInterface.isManaged IS NULL)
+2025-04-10 11:03:37,428 DEBUG [collectd-Thread] o.o.n.f.JdbcFilterDao: Filter.getIPAddressList(IPADDR != '0.0.0.0'): resultList.size = 2
+2025-04-10 11:03:37,428 INFO  [collectd-Thread] o.o.n.c.CollectdConfigFactory: interfaceInPackage: Interface 192.168.105.250 passed filter and specific/range for package example1?: true
+2025-04-10 11:03:37,428 DEBUG [collectd-Thread] o.o.n.c.Collectd: getSpecificationsForInterface: address/service: OnmsIpInterface{id=95, ipAddr=192.168.105.250, netMask=null, ipHostName=192.168.105.250, isManaged=M, snmpPrimary=P, ipLastCapsdPoll=null, nodeId=17}/SNMP scheduled, interface does belong to package: example1
+2025-04-10 11:03:37,428 DEBUG [collectd-Thread] o.o.n.c.c.CollectionSpecification: initializeParameters: adding service: SNMP parameter: collection of value default
+2025-04-10 11:03:37,428 DEBUG [collectd-Thread] o.o.n.c.c.CollectionSpecification: initializeParameters: adding service: SNMP parameter: thresholding-enabled of value true
+2025-04-10 11:03:37,428 DEBUG [collectd-Thread] o.o.n.c.Collectd: getSpecificationsForInterface: address/service: OnmsIpInterface{id=95, ipAddr=192.168.105.250, netMask=null, ipHostName=192.168.105.250, isManaged=M, snmpPrimary=P, ipLastCapsdPoll=null, nodeId=17}/SNMP not scheduled, service is not enabled or does not exist in package: web-collection
+2025-04-10 11:03:37,428 DEBUG [collectd-Thread] o.o.n.c.Collectd: scheduleInterface: found 1 matching specs for interface: OnmsIpInterface{id=95, ipAddr=192.168.105.250, netMask=null, ipHostName=192.168.105.250, isManaged=M, snmpPrimary=P, ipLastCapsdPoll=null, nodeId=17}
+2025-04-10 11:03:37,428 DEBUG [collectd-Thread] o.o.n.c.Collectd: scheduleInterface: now scheduling interface: OnmsIpInterface{id=95, ipAddr=192.168.105.250, netMask=null, ipHostName=192.168.105.250, isManaged=M, snmpPrimary=P, ipLastCapsdPoll=null, nodeId=17}/SNMP
+2025-04-10 11:03:37,429 DEBUG [collectd-Thread] o.o.n.c.c.DefaultCollectionAgentService: getStorageDir: isStoreByForeignSource = true, foreignSource = test, foreignId = 192.168.105.250, dir = fs/test/192.168.105.250
+2025-04-10 11:03:37,431 DEBUG [collectd-Thread] o.o.n.c.DefaultSnmpCollectionAgent: initialize: db retrieval info: nodeid = 17, address = 192.168.105.250, primaryIfIndex = -1, isSnmpPrimary = P, sysoid = null
+2025-04-10 11:03:37,431 DEBUG [collectd-Thread] o.o.n.c.DefaultSnmpCollectionAgent: initialize: db retrieval info: node 17 does not have a legitimate primaryIfIndex.  Assume node does not supply ipAddrTable and continue...
+2025-04-10 11:03:37,431 INFO  [collectd-Thread] o.o.n.c.Collectd: scheduleInterface: Unable to schedule OnmsIpInterface{id=95, ipAddr=192.168.105.250, netMask=null, ipHostName=192.168.105.250, isManaged=M, snmpPrimary=P, ipLastCapsdPoll=null, nodeId=17}/SNMP, reason: System Object ID for interface 192.168.105.250 does not exist in the database.
+2025-04-10 11:03:37,524 DEBUG [opennms-monitor housekeeper] c.z.h.p.HikariPool: opennms-monitor - Before cleanup stats (total=1, active=0, idle=1, waiting=0)
+2025-04-10 11:03:37,524 DEBUG [opennms-monitor housekeeper] c.z.h.p.HikariPool: opennms-monitor - After cleanup  stats (total=1, active=0, idle=1, waiting=0)
+2025-04-10 11:03:37,524 DEBUG [opennms-monitor housekeeper] c.z.h.p.HikariPool: opennms-monitor - Fill pool skipped, pool has sufficient level or currently being filled (queueDepth=0).
+2025-04-10 11:03:37,921 DEBUG [collectd-Thread] o.o.n.e.EventIpcManagerDefaultImpl: run: calling onEvent on collectd for event {"uei":"uei.opennms.org\/nodes\/reinitializePrimarySnmpInterface","time":"2025-04-10 11:03:37,915-0400","dbid":343,"source":"Provisiond","nodeid":17,"parms":[]}
+2025-04-10 11:03:37,921 DEBUG [collectd-Thread] o.o.n.c.Collectd: received event, uei = uei.opennms.org/nodes/reinitializePrimarySnmpInterface
+2025-04-10 11:03:37,921 DEBUG [collectd-Thread] o.o.n.c.Collectd: Comparing CollectableService ip address = 127.0.0.1 and event ip interface = 192.168.105.250
+2025-04-10 11:03:37,921 DEBUG [collectd-Thread] o.o.n.c.Collectd: Comparing CollectableService ip address = 127.0.0.1 and event ip interface = 192.168.105.250
+2025-04-10 11:03:37,921 DEBUG [collectd-Thread] o.o.n.c.Collectd: Comparing CollectableService ip address = 127.0.0.1 and event ip interface = 192.168.105.250
+2025-04-10 11:03:37,921 DEBUG [collectd-Thread] o.o.n.c.Collectd: Comparing CollectableService ip address = 127.0.0.1 and event ip interface = 192.168.105.250
+
+==> enlinkd.log <==
+2025-04-10 11:03:37,513 WARN  [DefaultUDPTransportMapping_0.0.0.0/0] o.s.Snmp: Received response that cannot be matched to any outstanding request, address=192.168.105.250/161, requestID=1199368015
+2025-04-10 11:03:37,514 WARN  [DefaultUDPTransportMapping_0.0.0.0/0] o.s.Snmp: Received response that cannot be matched to any outstanding request, address=192.168.105.250/161, requestID=2079079484
+2025-04-10 11:03:37,541 WARN  [DefaultUDPTransportMapping_0.0.0.0/0] o.s.MessageDispatcherImpl: java.io.IOException: The encoded length 85 exceeds the number of bytes left in input at position 4 which actually is 83
+
+==> instrumentation.log <==
+2025-04-10 11:03:37,371 INFO  [collectd-Thread] scheduleInterfaceWithService: begin: 17/192.168.105.250/ICMP
+2025-04-10 11:03:37,372 INFO  [collectd-Thread] scheduleInterfaceWithService: end: 17/192.168.105.250/ICMP
+2025-04-10 11:03:37,426 INFO  [collectd-Thread] scheduleInterfaceWithService: begin: 17/192.168.105.250/SNMP
+2025-04-10 11:03:37,429 INFO  [collectd-Thread] collector.initialize: begin: example1/17/192.168.105.250/SNMP
+2025-04-10 11:03:37,431 INFO  [collectd-Thread] collector.initialize: end: example1/17/192.168.105.250/SNMP
+2025-04-10 11:03:37,431 INFO  [collectd-Thread] scheduleInterfaceWithService: end: 17/192.168.105.250/SNMP
+
+==> enlinkd.log <==
+2025-04-10 11:03:47,574 WARN  [DefaultUDPTransportMapping_0.0.0.0/0] o.s.MessageDispatcherImpl: java.io.IOException: The encoded length 85 exceeds the number of bytes left in input at position 4 which actually is 83

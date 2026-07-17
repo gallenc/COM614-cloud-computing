@@ -1,0 +1,1140 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 12,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 9,
+      "panels": [],
+      "title": "Select Site on Geomap",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "c52de4bf-ec82-4ecd-be95-cac08b56d9e0"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "site details",
+              "url": "../grafana/d/radio-main-1/radio-main-1?orgId=1?&var-location=${__data.fields.location}"
+            }
+          ],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 8,
+      "options": {
+        "basemap": {
+          "config": {},
+          "name": "Layer 0",
+          "type": "default"
+        },
+        "controls": {
+          "mouseWheelZoom": true,
+          "showAttribution": true,
+          "showDebug": false,
+          "showMeasure": false,
+          "showScale": false,
+          "showZoom": true
+        },
+        "layers": [
+          {
+            "config": {
+              "showLegend": true,
+              "style": {
+                "color": {
+                  "fixed": "red"
+                },
+                "opacity": 0.9,
+                "rotation": {
+                  "fixed": 0,
+                  "max": 360,
+                  "min": -360,
+                  "mode": "mod"
+                },
+                "size": {
+                  "fixed": 5,
+                  "max": 15,
+                  "min": 2
+                },
+                "symbol": {
+                  "fixed": "img/icons/marker/circle.svg",
+                  "mode": "fixed"
+                },
+                "text": {
+                  "field": "location",
+                  "fixed": "",
+                  "mode": "field"
+                },
+                "textConfig": {
+                  "fontSize": 12,
+                  "offsetX": 0,
+                  "offsetY": 12,
+                  "textAlign": "center",
+                  "textBaseline": "middle"
+                }
+              }
+            },
+            "location": {
+              "mode": "auto"
+            },
+            "name": "Layer 1",
+            "tooltip": true,
+            "type": "markers"
+          }
+        ],
+        "tooltip": {
+          "mode": "details"
+        },
+        "view": {
+          "allLayers": true,
+          "id": "fit",
+          "lat": 0,
+          "lon": 0,
+          "padding": 10,
+          "zoom": 15
+        }
+      },
+      "pluginVersion": "10.1.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "c52de4bf-ec82-4ecd-be95-cac08b56d9e0"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT DISTINCT ON (node.location) node.location AS location, latitude, longitude FROM assets INNER JOIN node ON assets.nodeid = node.nodeid  WHERE latitude IS NOT NULL; ",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "GEOMAP",
+      "type": "geomap"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 9
+      },
+      "id": 10,
+      "panels": [],
+      "title": "Selected Site $nodelocation",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "c52de4bf-ec82-4ecd-be95-cac08b56d9e0"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "link to dashboard for equipment",
+              "url": "../grafana/d/${__data.fields.category}/${__data.fields.category}?orgId=1&var-nodeLabel=${__data.fields.nodelabel}"
+            }
+          ],
+          "mappings": [
+            {
+              "options": {
+                "INDETERMINATE": {
+                  "color": "#999000",
+                  "index": 0,
+                  "text": "Indeterminate"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "CLEARED": {
+                  "color": "#eee000",
+                  "index": 1,
+                  "text": "Cleared"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "NORMAL": {
+                  "color": "#86b15b",
+                  "index": 2,
+                  "text": "Normal"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "WARNING": {
+                  "color": "#fccc3b",
+                  "index": 3,
+                  "text": "Warning"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "MINOR": {
+                  "color": "#ee901c",
+                  "index": 4,
+                  "text": "Minor"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "MAJOR": {
+                  "color": "#e3692f",
+                  "index": 5,
+                  "text": "Major"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "CRITICAL": {
+                  "color": "#db4345",
+                  "index": 6,
+                  "text": "Critical"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 10
+      },
+      "id": 11,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "10.1.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "c52de4bf-ec82-4ecd-be95-cac08b56d9e0"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT  node.nodelabel,LOWER(assets.category) AS category FROM assets INNER JOIN node ON assets.nodeid = node.nodeid  WHERE node.location = '${nodelocation}'\r\n",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "devices in site $nodelocation",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "c52de4bf-ec82-4ecd-be95-cac08b56d9e0"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "link to dashboard for equipment",
+              "url": "../grafana/d/${__data.fields.category}/${__data.fields.category}?orgId=1&var-nodeLabel=${__data.fields.nodelabel}"
+            }
+          ],
+          "mappings": [
+            {
+              "options": {
+                "INDETERMINATE": {
+                  "color": "#999000",
+                  "index": 0,
+                  "text": "Indeterminate"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "CLEARED": {
+                  "color": "#eee000",
+                  "index": 1,
+                  "text": "Cleared"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "NORMAL": {
+                  "color": "#86b15b",
+                  "index": 2,
+                  "text": "Normal"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "WARNING": {
+                  "color": "#fccc3b",
+                  "index": 3,
+                  "text": "Warning"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "MINOR": {
+                  "color": "#ee901c",
+                  "index": 4,
+                  "text": "Minor"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "MAJOR": {
+                  "color": "#e3692f",
+                  "index": 5,
+                  "text": "Major"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "CRITICAL": {
+                  "color": "#db4345",
+                  "index": 6,
+                  "text": "Critical"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "severitylabel"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "gradient",
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "Cleared": {
+                        "color": "#808080",
+                        "index": 3
+                      },
+                      "Critical": {
+                        "color": "dark-purple",
+                        "index": 2
+                      },
+                      "Indeterminate": {
+                        "color": "super-light-green",
+                        "index": 5
+                      },
+                      "Major": {
+                        "color": "dark-red",
+                        "index": 1
+                      },
+                      "Minor": {
+                        "color": "dark-yellow",
+                        "index": 0
+                      },
+                      "Normal": {
+                        "color": "dark-green",
+                        "index": 4
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 10
+      },
+      "id": 12,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "10.1.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "c52de4bf-ec82-4ecd-be95-cac08b56d9e0"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT DISTINCT ON (node.nodeid)  node.nodelabel, LOWER(assets.category) AS category, a.severity,  ( CASE a.severity WHEN 7 THEN 'Critical' WHEN 6 THEN 'Major'   WHEN 5 THEN 'Minor'  WHEN 4 THEN 'Warning' WHEN 3 THEN 'Cleared' ELSE 'Indeterminate' END ) AS severityLabel\r\nFROM node LEFT JOIN assets ON assets.nodeid = node.nodeid  LEFT JOIN alarms a ON a.nodeid = node.nodeid \r\nWHERE node.location = '${nodelocation}' AND  a.severity= (\r\n    SELECT MAX(severity)\r\n    FROM alarms\r\n    WHERE nodeid = a.nodeid\r\n) ;\r\n",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Devices with alarms on site $nodelocation",
+      "type": "table"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 18
+      },
+      "id": 13,
+      "panels": [],
+      "title": "Alarm Tables",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "opennms-entity-datasource",
+        "uid": "fbf4dab5-e6f2-47b7-9bcc-8ed69da133b3"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "INDETERMINATE": {
+                  "color": "#999000",
+                  "index": 0,
+                  "text": "Indeterminate"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "CLEARED": {
+                  "color": "#eee000",
+                  "index": 1,
+                  "text": "Cleared"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "NORMAL": {
+                  "color": "#86b15b",
+                  "index": 2,
+                  "text": "Normal"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "WARNING": {
+                  "color": "#fccc3b",
+                  "index": 3,
+                  "text": "Warning"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "MINOR": {
+                  "color": "#ee901c",
+                  "index": 4,
+                  "text": "Minor"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "MAJOR": {
+                  "color": "#e3692f",
+                  "index": 5,
+                  "text": "Major"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "CRITICAL": {
+                  "color": "#db4345",
+                  "index": 6,
+                  "text": "Critical"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 19
+      },
+      "id": 14,
+      "options": {
+        "alarmTable": {
+          "alarmTableAdditional": {
+            "displayActionNotice": true,
+            "useGrafanaUser": false
+          },
+          "alarmTableAlarms": {
+            "severityTheme": {
+              "label": "Default",
+              "value": 0
+            },
+            "styleWithSeverity": {
+              "label": "Column",
+              "value": 1
+            }
+          },
+          "alarmTableColumnSizes": {
+            "active": false,
+            "columnSizes": []
+          },
+          "alarmTableData": {
+            "columns": [
+              {
+                "label": "Is Acknowledged",
+                "value": 20
+              },
+              {
+                "label": "Severity",
+                "value": 5
+              },
+              {
+                "label": "Count",
+                "value": 1
+              },
+              {
+                "label": "Last Event Time",
+                "value": 23
+              },
+              {
+                "label": "Location",
+                "value": 8
+              },
+              {
+                "label": "Node Label",
+                "value": 14
+              },
+              {
+                "label": "Log Message",
+                "value": 9
+              }
+            ]
+          },
+          "alarmTablePaging": {
+            "fontSize": {
+              "label": "100%",
+              "value": 2
+            },
+            "pauseRefresh": false,
+            "rowsPerPage": 10,
+            "scroll": true
+          }
+        }
+      },
+      "targets": [
+        {
+          "clauses": [
+            {
+              "attribute": {
+                "label": "Node Label",
+                "type": {
+                  "id": "STRING",
+                  "label": "string"
+                },
+                "value": {
+                  "id": "node.label",
+                  "label": "Node Label",
+                  "name": "Node: Label",
+                  "orderBy": true,
+                  "type": {
+                    "id": "STRING",
+                    "label": "string"
+                  }
+                }
+              },
+              "comparator": {
+                "label": "EQ",
+                "value": {
+                  "id": 1,
+                  "label": "EQ"
+                }
+              },
+              "comparedString": "$nodeLabel",
+              "comparedValue": {},
+              "nestingType": 0,
+              "type": 2
+            }
+          ],
+          "datasource": {
+            "type": "opennms-entity-datasource",
+            "uid": "fbf4dab5-e6f2-47b7-9bcc-8ed69da133b3"
+          },
+          "filter": {
+            "clauses": [
+              {
+                "operator": {
+                  "id": 1,
+                  "label": "AND"
+                },
+                "restriction": {
+                  "attribute": "node.label",
+                  "comparator": {
+                    "id": 1,
+                    "label": "EQ"
+                  },
+                  "value": "$nodeLabel"
+                }
+              }
+            ],
+            "limit": 10,
+            "orderBy": []
+          },
+          "refId": "A",
+          "selectType": {
+            "label": "Alarms"
+          }
+        }
+      ],
+      "title": "alarms on $nodeLabel",
+      "type": "opennms-alarm-table-panel"
+    },
+    {
+      "datasource": {
+        "type": "opennms-entity-datasource",
+        "uid": "fbf4dab5-e6f2-47b7-9bcc-8ed69da133b3"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "INDETERMINATE": {
+                  "color": "#999000",
+                  "index": 0,
+                  "text": "Indeterminate"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "CLEARED": {
+                  "color": "#eee000",
+                  "index": 1,
+                  "text": "Cleared"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "NORMAL": {
+                  "color": "#86b15b",
+                  "index": 2,
+                  "text": "Normal"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "WARNING": {
+                  "color": "#fccc3b",
+                  "index": 3,
+                  "text": "Warning"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "MINOR": {
+                  "color": "#ee901c",
+                  "index": 4,
+                  "text": "Minor"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "MAJOR": {
+                  "color": "#e3692f",
+                  "index": 5,
+                  "text": "Major"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "CRITICAL": {
+                  "color": "#db4345",
+                  "index": 6,
+                  "text": "Critical"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 27
+      },
+      "id": 3,
+      "options": {
+        "alarmTable": {
+          "alarmTableAdditional": {
+            "displayActionNotice": true,
+            "useGrafanaUser": false
+          },
+          "alarmTableAlarms": {
+            "severityTheme": {
+              "label": "Default",
+              "value": 0
+            },
+            "styleWithSeverity": {
+              "label": "Column",
+              "value": 1
+            }
+          },
+          "alarmTableColumnSizes": {
+            "active": false,
+            "columnSizes": []
+          },
+          "alarmTableData": {
+            "columns": [
+              {
+                "label": "Is Acknowledged",
+                "value": 20
+              },
+              {
+                "label": "Severity",
+                "value": 5
+              },
+              {
+                "label": "Count",
+                "value": 1
+              },
+              {
+                "label": "Last Event Time",
+                "value": 23
+              },
+              {
+                "label": "Location",
+                "value": 8
+              },
+              {
+                "label": "Node Label",
+                "value": 14
+              },
+              {
+                "label": "Log Message",
+                "value": 9
+              }
+            ]
+          },
+          "alarmTablePaging": {
+            "fontSize": {
+              "label": "100%",
+              "value": 2
+            },
+            "pauseRefresh": false,
+            "rowsPerPage": 10,
+            "scroll": true
+          }
+        }
+      },
+      "targets": [
+        {
+          "clauses": [
+            {
+              "attribute": {},
+              "comparator": {
+                "label": "EQ",
+                "value": {
+                  "id": 1,
+                  "label": "EQ"
+                }
+              },
+              "comparedString": "",
+              "comparedValue": {},
+              "nestingType": 0,
+              "type": 2
+            }
+          ],
+          "datasource": {
+            "type": "opennms-entity-datasource",
+            "uid": "fbf4dab5-e6f2-47b7-9bcc-8ed69da133b3"
+          },
+          "filter": {
+            "clauses": [
+              {
+                "operator": {
+                  "id": 1,
+                  "label": "AND"
+                },
+                "restriction": {
+                  "comparator": {
+                    "id": 1,
+                    "label": "EQ"
+                  }
+                }
+              }
+            ],
+            "limit": 10,
+            "orderBy": []
+          },
+          "refId": "A",
+          "selectType": {
+            "label": "Alarms"
+          }
+        }
+      ],
+      "title": "All Alarms",
+      "type": "opennms-alarm-table-panel"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "FTWIDLEY-VIGOR2927L-VIRTUAL",
+          "value": "FTWIDLEY-VIGOR2927L-VIRTUAL"
+        },
+        "datasource": {
+          "type": "postgres",
+          "uid": "c52de4bf-ec82-4ecd-be95-cac08b56d9e0"
+        },
+        "definition": "SELECT nodelabel FROM node where location = '$nodelocation'",
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "nodeLabel",
+        "options": [],
+        "query": "SELECT nodelabel FROM node where location = '$nodelocation'",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "ftwidley1",
+          "value": "ftwidley1"
+        },
+        "datasource": {
+          "type": "postgres",
+          "uid": "c52de4bf-ec82-4ecd-be95-cac08b56d9e0"
+        },
+        "definition": "SELECT DISTINCT node.location FROM assets INNER JOIN node ON assets.nodeid = node.nodeid  WHERE displaycategory = '$customer';",
+        "hide": 0,
+        "includeAll": false,
+        "label": "location",
+        "multi": false,
+        "name": "nodelocation",
+        "options": [],
+        "query": "SELECT DISTINCT node.location FROM assets INNER JOIN node ON assets.nodeid = node.nodeid  WHERE displaycategory = '$customer';",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "Customer1",
+          "value": "Customer1"
+        },
+        "datasource": {
+          "type": "postgres",
+          "uid": "c52de4bf-ec82-4ecd-be95-cac08b56d9e0"
+        },
+        "definition": "SELECT  DISTINCT displayCategory FROM assets",
+        "description": "unique customers from displayCategory",
+        "hide": 0,
+        "includeAll": false,
+        "label": "customer",
+        "multi": false,
+        "name": "customer",
+        "options": [],
+        "query": "SELECT  DISTINCT displayCategory FROM assets",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-24h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "radio-main-1",
+  "uid": "radio-main-1",
+  "version": 2,
+  "weekStart": ""
+}

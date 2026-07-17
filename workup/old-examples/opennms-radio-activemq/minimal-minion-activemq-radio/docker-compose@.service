@@ -1,0 +1,15 @@
+[Unit]
+Description=%i service with docker compose
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+WorkingDirectory=/opt/docker/compose/%i
+
+ExecStart=/bin/bash -c "docker compose up -d"
+ExecStop=/bin/bash -c "docker compose down"
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,2935 @@
+BW-V3-TRANSMITTER-MIB DEFINITIONS ::= BEGIN
+IMPORTS
+	MODULE-IDENTITY, OBJECT-TYPE, IpAddress, enterprises
+		FROM SNMPv2-SMI
+	DisplayString
+		FROM SNMPv2-TC
+	OBJECT-GROUP, MODULE-COMPLIANCE
+		FROM SNMPv2-CONF;
+
+bwb MODULE-IDENTITY
+	LAST-UPDATED "202005221228Z"
+	ORGANIZATION "BW Broadcast Ltd."
+	CONTACT-INFO "
+			E-Mail: support@bwbroadcast.com
+			International Phone: +44 (208) 2530295
+			US toll-free: 1-888-233-1663
+"
+	DESCRIPTION  "This MIB module describes the BW Broadcast Ltd. TX FM Transmitter."
+	REVISION     "202005221228Z"
+	DESCRIPTION  "Please do not modify this file."
+::= { enterprises 38508 }
+
+tx OBJECT IDENTIFIER ::= { bwb 137 }
+
+
+ad9788 OBJECT IDENTIFIER ::= { tx 1 }
+
+
+ad9788Clock OBJECT IDENTIFIER ::= { ad9788 1 }
+
+-- ad9788.clock.delay
+-- 1.3.6.1.4.1.38508.137.1.1.1.0
+ad9788ClockDelay OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "Ad9788ClockDelay"
+	::= { ad9788Clock 1 }
+
+-- ad9788.clock.delay_enable
+-- 1.3.6.1.4.1.38508.137.1.1.2.0
+ad9788ClockDelayEnable OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "Ad9788ClockDelayEnable"
+	::= { ad9788Clock 2 }
+
+-- ad9788.clock.invert
+-- 1.3.6.1.4.1.38508.137.1.1.3.0
+ad9788ClockInvert OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "Ad9788ClockInvert"
+	::= { ad9788Clock 3 }
+
+
+ad9788DataTiming OBJECT IDENTIFIER ::= { ad9788 2 }
+
+-- ad9788.data_timing.auto
+-- 1.3.6.1.4.1.38508.137.1.2.1.0
+ad9788DataTimingAuto OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "Ad9788DataTimingAuto"
+	::= { ad9788DataTiming 1 }
+
+-- ad9788.data_timing.margin
+-- 1.3.6.1.4.1.38508.137.1.2.2.0
+ad9788DataTimingMargin OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "Ad9788DataTimingMargin"
+	::= { ad9788DataTiming 2 }
+
+
+ad9788Idac OBJECT IDENTIFIER ::= { ad9788 3 }
+
+-- ad9788.idac.gain
+-- 1.3.6.1.4.1.38508.137.1.3.1.0
+ad9788IdacGain OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "Ad9788IdacGain"
+	::= { ad9788Idac 1 }
+
+-- ad9788.interpolation
+-- 1.3.6.1.4.1.38508.137.1.5.0
+ad9788Interpolation OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "Ad9788Interpolation"
+	::= { ad9788 5 }
+
+
+ad9788Qdac OBJECT IDENTIFIER ::= { ad9788 4 }
+
+-- ad9788.qdac.gain
+-- 1.3.6.1.4.1.38508.137.1.4.1.0
+ad9788QdacGain OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "Ad9788QdacGain"
+	::= { ad9788Qdac 1 }
+
+-- ad9788.real_mode
+-- 1.3.6.1.4.1.38508.137.1.6.0
+ad9788RealMode OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "Ad9788RealMode"
+	::= { ad9788 6 }
+
+
+aio OBJECT IDENTIFIER ::= { tx 2 }
+
+-- aio.mclk
+-- 1.3.6.1.4.1.38508.137.2.1.0
+aioMclk OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "AioMclk"
+	::= { aio 1 }
+
+-- aio.pa_bias
+-- 1.3.6.1.4.1.38508.137.2.2.0
+aioPaBias OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "AioPaBias"
+	::= { aio 2 }
+
+-- aio.pa_voltage
+-- 1.3.6.1.4.1.38508.137.2.3.0
+aioPaVoltage OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "AioPaVoltage"
+	::= { aio 3 }
+
+-- aio.refclk_adj
+-- 1.3.6.1.4.1.38508.137.2.4.0
+aioRefclkAdj OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "ppm"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "AioRefclkAdj"
+	::= { aio 4 }
+
+
+alarm1 OBJECT IDENTIFIER ::= { tx 3 }
+
+-- alarm[1].active
+-- 1.3.6.1.4.1.38508.137.3.12.0
+alarm1Active OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "Alarm1Active"
+	::= { alarm1 12 }
+
+
+alarm1Email OBJECT IDENTIFIER ::= { alarm1 1 }
+
+-- alarm[1].email.active
+-- 1.3.6.1.4.1.38508.137.3.1.1.0
+alarm1EmailActive OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SelectsIfAnE-mailWillBeSentWhenTheAlarmStateChanges"
+	::= { alarm1Email 1 }
+
+-- alarm[1].fwd_power_threshold
+-- 1.3.6.1.4.1.38508.137.3.3.0
+alarm1FwdPowerThreshold OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "W"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsTheThresholdAtWhichTheForwardPowerAlarmWillBeActivatedThisParameterAcceptsValuesFrom0To2000"
+	::= { alarm1 3 }
+
+-- alarm[1].modulation_threshold
+-- 1.3.6.1.4.1.38508.137.3.4.0
+alarm1ModulationThreshold OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "Hz"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SelectsTheThresholdAtWhichTheModulationLevelAlarmWillBeActivatedThisParameterAcceptsValuesFrom1000To100000"
+	::= { alarm1 4 }
+
+-- alarm[1].off_delay
+-- 1.3.6.1.4.1.38508.137.3.5.0
+alarm1OffDelay OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "s"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsHowLongTheErrorConditionMustHaveStoppedForBeforeAnAlarmIsUn-triggeredThisParameterAcceptsValuesFrom2To600"
+	::= { alarm1 5 }
+
+-- alarm[1].on_delay
+-- 1.3.6.1.4.1.38508.137.3.6.0
+alarm1OnDelay OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "s"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsHowLongTheErrorConditionMustOccurForBeforeAnAlarmIsTriggeredThisParameterAcceptsValuesFrom2To600"
+	::= { alarm1 6 }
+
+-- alarm[1].polarity
+-- 1.3.6.1.4.1.38508.137.3.7.0
+alarm1Polarity OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SelectsWhetherTheOutputIsActiveHighOrActiveLow"
+	::= { alarm1 7 }
+
+-- alarm[1].rev_power_threshold
+-- 1.3.6.1.4.1.38508.137.3.8.0
+alarm1RevPowerThreshold OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "W"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsTheThresholdAtWhichTheReversePowerAlarmIsActivatedThisParameterAcceptsValuesFrom0To2000"
+	::= { alarm1 8 }
+
+-- alarm[1].source
+-- 1.3.6.1.4.1.38508.137.3.9.0
+alarm1Source OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SelectsWhichDetectorIsTheSourceForTheAlarm"
+	::= { alarm1 9 }
+
+-- alarm[1].telemetrysource
+-- 1.3.6.1.4.1.38508.137.3.10.0
+alarm1Telemetrysource OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SelectsTheParameterThatWillBeReportedAsAnAnalogVoltageInTheAlarmPinVOut512CurrentValueNominalValuePleaseReferToTheManualForFurtherInformation"
+	::= { alarm1 10 }
+
+-- alarm[1].temp_threshold
+-- 1.3.6.1.4.1.38508.137.3.11.0
+alarm1TempThreshold OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "C"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsTheThresholdAtWhichThePATemperatureAlarmWillBeActivatedThisParameterAcceptsValuesFrom0To150"
+	::= { alarm1 11 }
+
+
+alarm1Trap OBJECT IDENTIFIER ::= { alarm1 2 }
+
+-- alarm[1].trap.active
+-- 1.3.6.1.4.1.38508.137.3.2.1.0
+alarm1TrapActive OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "EnableDisableTrapSendingForCurrentAlarm"
+	::= { alarm1Trap 1 }
+
+-- alarm[1].type
+-- 1.3.6.1.4.1.38508.137.3.13.0
+alarm1Type OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "ConfiguresTheAlarmPinAsAnAlarmOpenCollectorOrAsAnAnalogOutput0To5VoltsToInterfaceWithTelemetryEquipment"
+	::= { alarm1 13 }
+
+
+alarm2 OBJECT IDENTIFIER ::= { tx 4 }
+
+-- alarm[2].active
+-- 1.3.6.1.4.1.38508.137.4.12.0
+alarm2Active OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "Alarm2Active"
+	::= { alarm2 12 }
+
+
+alarm2Email OBJECT IDENTIFIER ::= { alarm2 1 }
+
+-- alarm[2].email.active
+-- 1.3.6.1.4.1.38508.137.4.1.1.0
+alarm2EmailActive OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SelectsIfAnE-mailWillBeSentWhenTheAlarmStateChanges"
+	::= { alarm2Email 1 }
+
+-- alarm[2].fwd_power_threshold
+-- 1.3.6.1.4.1.38508.137.4.3.0
+alarm2FwdPowerThreshold OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "W"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsTheThresholdAtWhichTheForwardPowerAlarmWillBeActivatedThisParameterAcceptsValuesFrom0To2000"
+	::= { alarm2 3 }
+
+-- alarm[2].modulation_threshold
+-- 1.3.6.1.4.1.38508.137.4.4.0
+alarm2ModulationThreshold OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "Hz"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SelectsTheThresholdAtWhichTheModulationLevelAlarmWillBeActivatedThisParameterAcceptsValuesFrom1000To100000"
+	::= { alarm2 4 }
+
+-- alarm[2].off_delay
+-- 1.3.6.1.4.1.38508.137.4.5.0
+alarm2OffDelay OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "s"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsHowLongTheErrorConditionMustHaveStoppedForBeforeAnAlarmIsUn-triggeredThisParameterAcceptsValuesFrom2To600"
+	::= { alarm2 5 }
+
+-- alarm[2].on_delay
+-- 1.3.6.1.4.1.38508.137.4.6.0
+alarm2OnDelay OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "s"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsHowLongTheErrorConditionMustOccurForBeforeAnAlarmIsTriggeredThisParameterAcceptsValuesFrom2To600"
+	::= { alarm2 6 }
+
+-- alarm[2].polarity
+-- 1.3.6.1.4.1.38508.137.4.7.0
+alarm2Polarity OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SelectsWhetherTheOutputIsActiveHighOrActiveLow"
+	::= { alarm2 7 }
+
+-- alarm[2].rev_power_threshold
+-- 1.3.6.1.4.1.38508.137.4.8.0
+alarm2RevPowerThreshold OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "W"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsTheThresholdAtWhichTheReversePowerAlarmIsActivatedThisParameterAcceptsValuesFrom0To2000"
+	::= { alarm2 8 }
+
+-- alarm[2].source
+-- 1.3.6.1.4.1.38508.137.4.9.0
+alarm2Source OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SelectsWhichDetectorIsTheSourceForTheAlarm"
+	::= { alarm2 9 }
+
+-- alarm[2].telemetrysource
+-- 1.3.6.1.4.1.38508.137.4.10.0
+alarm2Telemetrysource OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SelectsTheParameterThatWillBeReportedAsAnAnalogVoltageInTheAlarmPinVOut512CurrentValueNominalValuePleaseReferToTheManualForFurtherInformation"
+	::= { alarm2 10 }
+
+-- alarm[2].temp_threshold
+-- 1.3.6.1.4.1.38508.137.4.11.0
+alarm2TempThreshold OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "C"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsTheThresholdAtWhichThePATemperatureAlarmWillBeActivatedThisParameterAcceptsValuesFrom0To150"
+	::= { alarm2 11 }
+
+
+alarm2Trap OBJECT IDENTIFIER ::= { alarm2 2 }
+
+-- alarm[2].trap.active
+-- 1.3.6.1.4.1.38508.137.4.2.1.0
+alarm2TrapActive OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "EnableDisableTrapSendingForCurrentAlarm"
+	::= { alarm2Trap 1 }
+
+-- alarm[2].type
+-- 1.3.6.1.4.1.38508.137.4.13.0
+alarm2Type OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "ConfiguresTheAlarmPinAsAnAlarmOpenCollectorOrAsAnAnalogOutput0To5VoltsToInterfaceWithTelemetryEquipment"
+	::= { alarm2 13 }
+
+
+alarm3 OBJECT IDENTIFIER ::= { tx 5 }
+
+-- alarm[3].active
+-- 1.3.6.1.4.1.38508.137.5.12.0
+alarm3Active OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "Alarm3Active"
+	::= { alarm3 12 }
+
+
+alarm3Email OBJECT IDENTIFIER ::= { alarm3 1 }
+
+-- alarm[3].email.active
+-- 1.3.6.1.4.1.38508.137.5.1.1.0
+alarm3EmailActive OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SelectsIfAnE-mailWillBeSentWhenTheAlarmStateChanges"
+	::= { alarm3Email 1 }
+
+-- alarm[3].fwd_power_threshold
+-- 1.3.6.1.4.1.38508.137.5.3.0
+alarm3FwdPowerThreshold OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "W"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsTheThresholdAtWhichTheForwardPowerAlarmWillBeActivatedThisParameterAcceptsValuesFrom0To2000"
+	::= { alarm3 3 }
+
+-- alarm[3].modulation_threshold
+-- 1.3.6.1.4.1.38508.137.5.4.0
+alarm3ModulationThreshold OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "Hz"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SelectsTheThresholdAtWhichTheModulationLevelAlarmWillBeActivatedThisParameterAcceptsValuesFrom1000To100000"
+	::= { alarm3 4 }
+
+-- alarm[3].off_delay
+-- 1.3.6.1.4.1.38508.137.5.5.0
+alarm3OffDelay OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "s"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsHowLongTheErrorConditionMustHaveStoppedForBeforeAnAlarmIsUn-triggeredThisParameterAcceptsValuesFrom2To600"
+	::= { alarm3 5 }
+
+-- alarm[3].on_delay
+-- 1.3.6.1.4.1.38508.137.5.6.0
+alarm3OnDelay OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "s"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsHowLongTheErrorConditionMustOccurForBeforeAnAlarmIsTriggeredThisParameterAcceptsValuesFrom2To600"
+	::= { alarm3 6 }
+
+-- alarm[3].polarity
+-- 1.3.6.1.4.1.38508.137.5.7.0
+alarm3Polarity OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SelectsWhetherTheOutputIsActiveHighOrActiveLow"
+	::= { alarm3 7 }
+
+-- alarm[3].rev_power_threshold
+-- 1.3.6.1.4.1.38508.137.5.8.0
+alarm3RevPowerThreshold OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "W"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsTheThresholdAtWhichTheReversePowerAlarmIsActivatedThisParameterAcceptsValuesFrom0To2000"
+	::= { alarm3 8 }
+
+-- alarm[3].source
+-- 1.3.6.1.4.1.38508.137.5.9.0
+alarm3Source OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SelectsWhichDetectorIsTheSourceForTheAlarm"
+	::= { alarm3 9 }
+
+-- alarm[3].telemetrysource
+-- 1.3.6.1.4.1.38508.137.5.10.0
+alarm3Telemetrysource OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SelectsTheParameterThatWillBeReportedAsAnAnalogVoltageInTheAlarmPinVOut512CurrentValueNominalValuePleaseReferToTheManualForFurtherInformation"
+	::= { alarm3 10 }
+
+-- alarm[3].temp_threshold
+-- 1.3.6.1.4.1.38508.137.5.11.0
+alarm3TempThreshold OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "C"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsTheThresholdAtWhichThePATemperatureAlarmWillBeActivatedThisParameterAcceptsValuesFrom0To150"
+	::= { alarm3 11 }
+
+
+alarm3Trap OBJECT IDENTIFIER ::= { alarm3 2 }
+
+-- alarm[3].trap.active
+-- 1.3.6.1.4.1.38508.137.5.2.1.0
+alarm3TrapActive OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "EnableDisableTrapSendingForCurrentAlarm"
+	::= { alarm3Trap 1 }
+
+-- alarm[3].type
+-- 1.3.6.1.4.1.38508.137.5.13.0
+alarm3Type OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "ConfiguresTheAlarmPinAsAnAlarmOpenCollectorOrAsAnAnalogOutput0To5VoltsToInterfaceWithTelemetryEquipment"
+	::= { alarm3 13 }
+
+
+alarmactive OBJECT IDENTIFIER ::= { tx 22 }
+
+-- alarmactive.A
+-- 1.3.6.1.4.1.38508.137.22.1.0
+alarmactiveA OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "AlarmactiveA"
+	::= { alarmactive 1 }
+
+-- alarmactive.B
+-- 1.3.6.1.4.1.38508.137.22.2.0
+alarmactiveB OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "AlarmactiveB"
+	::= { alarmactive 2 }
+
+-- alarmactive.C
+-- 1.3.6.1.4.1.38508.137.22.3.0
+alarmactiveC OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "AlarmactiveC"
+	::= { alarmactive 3 }
+
+
+audio OBJECT IDENTIFIER ::= { tx 6 }
+
+-- audio.delay
+-- 1.3.6.1.4.1.38508.137.6.2.0
+audioDelay OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "us"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "AudioDelay"
+	::= { audio 2 }
+
+-- audio.input
+-- 1.3.6.1.4.1.38508.137.6.3.0
+audioInput OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SelectsTheInputSource"
+	::= { audio 3 }
+
+
+audioInputs OBJECT IDENTIFIER ::= { audio 1 }
+
+-- audio.inputs.analog_ref
+-- 1.3.6.1.4.1.38508.137.6.1.1.0
+audioInputsAnalogRef OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "dBu"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "AudioInputsAnalogRef"
+	::= { audioInputs 1 }
+
+-- audio.inputs.digital_ref
+-- 1.3.6.1.4.1.38508.137.6.1.2.0
+audioInputsDigitalRef OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "dBFS"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "AudioInputsDigitalRef"
+	::= { audioInputs 2 }
+
+-- audio.processing_preset
+-- 1.3.6.1.4.1.38508.137.6.4.0
+audioProcessingPreset OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "LoadsTheAudioProcessingPreset"
+	::= { audio 4 }
+
+-- audio.processor_off
+-- 1.3.6.1.4.1.38508.137.6.5.0
+audioProcessorOff OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "AudioProcessorOff"
+	::= { audio 5 }
+
+-- audio.right_trim
+-- 1.3.6.1.4.1.38508.137.6.6.0
+audioRightTrim OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "dB"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "AudioRightTrim"
+	::= { audio 6 }
+
+-- audio.stereo
+-- 1.3.6.1.4.1.38508.137.6.7.0
+audioStereo OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SelectsMonoOrStereo"
+	::= { audio 7 }
+
+-- audio.trim
+-- 1.3.6.1.4.1.38508.137.6.8.0
+audioTrim OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "dB"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "AudioTrim"
+	::= { audio 8 }
+
+
+email OBJECT IDENTIFIER ::= { tx 7 }
+
+
+emailCounter OBJECT IDENTIFIER ::= { email 1 }
+
+-- email.counter.today
+-- 1.3.6.1.4.1.38508.137.7.1.1.0
+emailCounterToday OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "ReportsTheNumberOfEmailsSentTodayThisParameterAcceptsValuesFrom0To100000"
+	::= { emailCounter 1 }
+
+-- email.from
+-- 1.3.6.1.4.1.38508.137.7.4.0
+emailFrom OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsTheEmailAddressOfTheSenderTheUnitWillSendE-mailsThroughThisAddressAcceptsTextOfUpTo64Characters"
+	::= { email 4 }
+
+
+emailLimit OBJECT IDENTIFIER ::= { email 2 }
+
+-- email.limit.daily
+-- 1.3.6.1.4.1.38508.137.7.2.1.0
+emailLimitDaily OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsTheMaximumNumberOfEmailsAllowedToBeSentByTheUnitInASingleDayToStopSpammingFromIntermittentErrorsThisParameterAcceptsValuesFrom1To1000"
+	::= { emailLimit 1 }
+
+-- email.method
+-- 1.3.6.1.4.1.38508.137.7.5.0
+emailMethod OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsTheMethodUsedForSendingEmailsForSimplicityChooseBWBroadcast"
+	::= { email 5 }
+
+-- email.recipient
+-- 1.3.6.1.4.1.38508.137.7.6.0
+emailRecipient OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsTheRecipientsOfTheEmailsMultipleAddressesMustBeSeparatedByCommasAcceptsTextOfUpTo99Characters"
+	::= { email 6 }
+
+
+emailTest OBJECT IDENTIFIER ::= { email 3 }
+
+-- email.test.recipient
+-- 1.3.6.1.4.1.38508.137.7.3.1.0
+emailTestRecipient OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsWhoTheTestEmailWillBeSentToMultipleAddressesMustBeSeparatedByCommasAcceptsTextOfUpTo99Characters"
+	::= { emailTest 1 }
+
+-- email.test.send
+-- 1.3.6.1.4.1.38508.137.7.3.2.0
+emailTestSend OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SendsATestE-mail"
+	::= { emailTest 2 }
+
+
+metering OBJECT IDENTIFIER ::= { tx 8 }
+
+-- metering.clock_lock_status
+-- 1.3.6.1.4.1.38508.137.8.1.0
+meteringClockLockStatus OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MeteringClockLockStatus"
+	::= { metering 1 }
+
+-- metering.power_control
+-- 1.3.6.1.4.1.38508.137.8.2.0
+meteringPowerControl OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MeteringPowerControl"
+	::= { metering 2 }
+
+
+meters OBJECT IDENTIFIER ::= { tx 9 }
+
+-- meters.acrfeff
+-- 1.3.6.1.4.1.38508.137.9.1.0
+metersAcrfeff OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MetersAcrfeff"
+	::= { meters 1 }
+
+-- meters.agc1
+-- 1.3.6.1.4.1.38508.137.9.2.0
+metersAgc1 OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MetersAgc1"
+	::= { meters 2 }
+
+-- meters.agc2
+-- 1.3.6.1.4.1.38508.137.9.3.0
+metersAgc2 OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MetersAgc2"
+	::= { meters 3 }
+
+-- meters.agc3
+-- 1.3.6.1.4.1.38508.137.9.4.0
+metersAgc3 OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MetersAgc3"
+	::= { meters 4 }
+
+-- meters.agc4
+-- 1.3.6.1.4.1.38508.137.9.5.0
+metersAgc4 OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MetersAgc4"
+	::= { meters 5 }
+
+-- meters.auxcurrent
+-- 1.3.6.1.4.1.38508.137.9.6.0
+metersAuxcurrent OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MetersAuxcurrent"
+	::= { meters 6 }
+
+-- meters.auxvoltage
+-- 1.3.6.1.4.1.38508.137.9.7.0
+metersAuxvoltage OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "ReadsTheAuxVoltageInVoltsThisParameterAcceptsValuesFrom0To30"
+	::= { meters 7 }
+
+-- meters.fallback
+-- 1.3.6.1.4.1.38508.137.9.8.0
+metersFallback OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MetersFallback"
+	::= { meters 8 }
+
+-- meters.fanspeed
+-- 1.3.6.1.4.1.38508.137.9.9.0
+metersFanspeed OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MetersFanspeed"
+	::= { meters 9 }
+
+-- meters.lim1
+-- 1.3.6.1.4.1.38508.137.9.10.0
+metersLim1 OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MetersLim1"
+	::= { meters 10 }
+
+-- meters.lim2
+-- 1.3.6.1.4.1.38508.137.9.11.0
+metersLim2 OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MetersLim2"
+	::= { meters 11 }
+
+-- meters.lim3
+-- 1.3.6.1.4.1.38508.137.9.12.0
+metersLim3 OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MetersLim3"
+	::= { meters 12 }
+
+-- meters.lim4
+-- 1.3.6.1.4.1.38508.137.9.13.0
+metersLim4 OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MetersLim4"
+	::= { meters 13 }
+
+-- meters.mainsv
+-- 1.3.6.1.4.1.38508.137.9.14.0
+metersMainsv OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MetersMainsv"
+	::= { meters 14 }
+
+-- meters.pafwd
+-- 1.3.6.1.4.1.38508.137.9.15.0
+metersPafwd OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "ReadsTheForwardPowerInWattsThisParameterAcceptsValuesFrom0To3000"
+	::= { meters 15 }
+
+-- meters.parev
+-- 1.3.6.1.4.1.38508.137.9.16.0
+metersParev OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "ReadsTheReversePowerInWattsThisParameterAcceptsValuesFrom0To3000"
+	::= { meters 16 }
+
+-- meters.patemp
+-- 1.3.6.1.4.1.38508.137.9.17.0
+metersPatemp OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "ReadsTheTemperatureOfThePAInDegreesCelsiusThisParameterAcceptsValuesFrom0To150"
+	::= { meters 17 }
+
+-- meters.peak_deviation
+-- 1.3.6.1.4.1.38508.137.9.18.0
+metersPeakDeviation OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "ReadsThePeakDeviationInKHzThisParameterAcceptsValuesFrom0To200"
+	::= { meters 18 }
+
+-- meters.psu1temp1
+-- 1.3.6.1.4.1.38508.137.9.19.0
+metersPsu1temp1 OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MetersPsu1temp1"
+	::= { meters 19 }
+
+-- meters.psu2temp1
+-- 1.3.6.1.4.1.38508.137.9.20.0
+metersPsu2temp1 OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MetersPsu2temp1"
+	::= { meters 20 }
+
+-- meters.psucurrent
+-- 1.3.6.1.4.1.38508.137.9.21.0
+metersPsucurrent OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MetersPsucurrent"
+	::= { meters 21 }
+
+-- meters.psuvoltage
+-- 1.3.6.1.4.1.38508.137.9.22.0
+metersPsuvoltage OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "ReadsThePAVoltageInVoltsThisParameterAcceptsValuesFrom0To60"
+	::= { meters 22 }
+
+-- meters.tx_input_l
+-- 1.3.6.1.4.1.38508.137.9.23.0
+metersTxInputL OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MetersTxInputL"
+	::= { meters 23 }
+
+-- meters.tx_input_r
+-- 1.3.6.1.4.1.38508.137.9.24.0
+metersTxInputR OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MetersTxInputR"
+	::= { meters 24 }
+
+-- meters.tx_output_l
+-- 1.3.6.1.4.1.38508.137.9.25.0
+metersTxOutputL OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MetersTxOutputL"
+	::= { meters 25 }
+
+-- meters.tx_output_mpx
+-- 1.3.6.1.4.1.38508.137.9.26.0
+metersTxOutputMpx OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MetersTxOutputMpx"
+	::= { meters 26 }
+
+-- meters.tx_output_r
+-- 1.3.6.1.4.1.38508.137.9.27.0
+metersTxOutputR OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MetersTxOutputR"
+	::= { meters 27 }
+
+
+mpx OBJECT IDENTIFIER ::= { tx 10 }
+
+
+mpxDigMpxIn OBJECT IDENTIFIER ::= { mpx 7 }
+
+-- mpx.dig_mpx_in.level
+-- 1.3.6.1.4.1.38508.137.10.7.1.0
+mpxDigMpxInLevel OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "dBFS"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MpxDigMpxInLevel"
+	::= { mpxDigMpxIn 1 }
+
+
+mpxGen OBJECT IDENTIFIER ::= { mpx 5 }
+
+-- mpx.gen.comp_clipper
+-- 1.3.6.1.4.1.38508.137.10.5.1.0
+mpxGenCompClipper OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "dB"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MpxGenCompClipper"
+	::= { mpxGen 1 }
+
+-- mpx.gen.level
+-- 1.3.6.1.4.1.38508.137.10.5.2.0
+mpxGenLevel OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "kHz"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MpxGenLevel"
+	::= { mpxGen 2 }
+
+-- mpx.gen.pilot_level
+-- 1.3.6.1.4.1.38508.137.10.5.3.0
+mpxGenPilotLevel OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "%"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MpxGenPilotLevel"
+	::= { mpxGen 3 }
+
+-- mpx.gen.pilot_protection
+-- 1.3.6.1.4.1.38508.137.10.5.4.0
+mpxGenPilotProtection OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MpxGenPilotProtection"
+	::= { mpxGen 4 }
+
+-- mpx.gen.power_limit
+-- 1.3.6.1.4.1.38508.137.10.5.5.0
+mpxGenPowerLimit OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-only
+	STATUS current
+	DESCRIPTION "MpxGenPowerLimit"
+	::= { mpxGen 5 }
+
+-- mpx.gen.preemphasis
+-- 1.3.6.1.4.1.38508.137.10.5.6.0
+mpxGenPreemphasis OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "ControlsThePre-emphasisOptionsAreOff50USEuropeAnd75USUSA"
+	::= { mpxGen 6 }
+
+-- mpx.gen.rds_level
+-- 1.3.6.1.4.1.38508.137.10.5.7.0
+mpxGenRdsLevel OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "%"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MpxGenRdsLevel"
+	::= { mpxGen 7 }
+
+-- mpx.gen.source
+-- 1.3.6.1.4.1.38508.137.10.5.8.0
+mpxGenSource OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SelectsTheSourceForTheExciter-InternalSelectsInternalGenerator-ExternalSelectsMPXBNCInput"
+	::= { mpxGen 8 }
+
+
+mpxInput1 OBJECT IDENTIFIER ::= { mpx 1 }
+
+-- mpx.input[1].level
+-- 1.3.6.1.4.1.38508.137.10.1.1.0
+mpxInput1Level OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "dBu"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MpxInput1Level"
+	::= { mpxInput1 1 }
+
+-- mpx.input[1].trim
+-- 1.3.6.1.4.1.38508.137.10.1.2.0
+mpxInput1Trim OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "dB"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MpxInput1Trim"
+	::= { mpxInput1 2 }
+
+
+mpxInput2 OBJECT IDENTIFIER ::= { mpx 2 }
+
+-- mpx.input[2].level
+-- 1.3.6.1.4.1.38508.137.10.2.1.0
+mpxInput2Level OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "dBu"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MpxInput2Level"
+	::= { mpxInput2 1 }
+
+-- mpx.input[2].trim
+-- 1.3.6.1.4.1.38508.137.10.2.2.0
+mpxInput2Trim OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "dB"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MpxInput2Trim"
+	::= { mpxInput2 2 }
+
+
+mpxOutput1 OBJECT IDENTIFIER ::= { mpx 3 }
+
+-- mpx.output[1].level
+-- 1.3.6.1.4.1.38508.137.10.3.1.0
+mpxOutput1Level OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "dBu"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MpxOutput1Level"
+	::= { mpxOutput1 1 }
+
+-- mpx.output[1].source
+-- 1.3.6.1.4.1.38508.137.10.3.2.0
+mpxOutput1Source OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MpxOutput1Source"
+	::= { mpxOutput1 2 }
+
+-- mpx.output[1].trim
+-- 1.3.6.1.4.1.38508.137.10.3.3.0
+mpxOutput1Trim OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "dB"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MpxOutput1Trim"
+	::= { mpxOutput1 3 }
+
+
+mpxOutput2 OBJECT IDENTIFIER ::= { mpx 4 }
+
+-- mpx.output[2].level
+-- 1.3.6.1.4.1.38508.137.10.4.1.0
+mpxOutput2Level OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "dBu"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MpxOutput2Level"
+	::= { mpxOutput2 1 }
+
+-- mpx.output[2].source
+-- 1.3.6.1.4.1.38508.137.10.4.2.0
+mpxOutput2Source OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MpxOutput2Source"
+	::= { mpxOutput2 2 }
+
+-- mpx.output[2].trim
+-- 1.3.6.1.4.1.38508.137.10.4.3.0
+mpxOutput2Trim OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "dB"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MpxOutput2Trim"
+	::= { mpxOutput2 3 }
+
+
+mpxTuner OBJECT IDENTIFIER ::= { mpx 6 }
+
+-- mpx.tuner.trim
+-- 1.3.6.1.4.1.38508.137.10.6.1.0
+mpxTunerTrim OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "dBu"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "MpxTunerTrim"
+	::= { mpxTuner 1 }
+
+
+powerscheduler OBJECT IDENTIFIER ::= { tx 11 }
+
+-- powerscheduler.enabled
+-- 1.3.6.1.4.1.38508.137.11.1.0
+powerschedulerEnabled OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "EnablesDisablesPowerScheduling"
+	::= { powerscheduler 1 }
+
+-- powerscheduler.finishtime
+-- 1.3.6.1.4.1.38508.137.11.4.0
+powerschedulerFinishtime OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SelectsTheTimeAtWhichTheOutputPowerWillChangeFromScheduledPowerToNormalPower"
+	::= { powerscheduler 4 }
+
+-- powerscheduler.power
+-- 1.3.6.1.4.1.38508.137.11.2.0
+powerschedulerPower OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "W"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SelectsTheOutputPowerThatWillBeSetDuringTheScheduledInterval"
+	::= { powerscheduler 2 }
+
+-- powerscheduler.starttime
+-- 1.3.6.1.4.1.38508.137.11.3.0
+powerschedulerStarttime OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SelectsTheTimeAtWhichTheOutputPowerWillChangeFromNormalPowerToScheduledPower"
+	::= { powerscheduler 3 }
+
+
+rds OBJECT IDENTIFIER ::= { tx 12 }
+
+
+rdsDsn1 OBJECT IDENTIFIER ::= { rds 1 }
+
+
+rdsDsn1Psn0 OBJECT IDENTIFIER ::= { rdsDsn1 1 }
+
+
+rdsDsn1Psn0Af OBJECT IDENTIFIER ::= { rdsDsn1Psn0 1 }
+
+-- rds.dsn[1].psn[0].af.10a
+-- 1.3.6.1.4.1.38508.137.12.1.1.1.19.0
+rdsDsn1Psn0Af10a OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "Hz"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0Af10a"
+	::= { rdsDsn1Psn0Af 19 }
+
+-- rds.dsn[1].psn[0].af.10b
+-- 1.3.6.1.4.1.38508.137.12.1.1.1.20.0
+rdsDsn1Psn0Af10b OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "Hz"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0Af10b"
+	::= { rdsDsn1Psn0Af 20 }
+
+-- rds.dsn[1].psn[0].af.11a
+-- 1.3.6.1.4.1.38508.137.12.1.1.1.21.0
+rdsDsn1Psn0Af11a OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "Hz"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0Af11a"
+	::= { rdsDsn1Psn0Af 21 }
+
+-- rds.dsn[1].psn[0].af.11b
+-- 1.3.6.1.4.1.38508.137.12.1.1.1.22.0
+rdsDsn1Psn0Af11b OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "Hz"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0Af11b"
+	::= { rdsDsn1Psn0Af 22 }
+
+-- rds.dsn[1].psn[0].af.12a
+-- 1.3.6.1.4.1.38508.137.12.1.1.1.23.0
+rdsDsn1Psn0Af12a OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "Hz"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0Af12a"
+	::= { rdsDsn1Psn0Af 23 }
+
+-- rds.dsn[1].psn[0].af.12b
+-- 1.3.6.1.4.1.38508.137.12.1.1.1.24.0
+rdsDsn1Psn0Af12b OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "Hz"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0Af12b"
+	::= { rdsDsn1Psn0Af 24 }
+
+-- rds.dsn[1].psn[0].af.13a
+-- 1.3.6.1.4.1.38508.137.12.1.1.1.25.0
+rdsDsn1Psn0Af13a OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "Hz"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0Af13a"
+	::= { rdsDsn1Psn0Af 25 }
+
+-- rds.dsn[1].psn[0].af.13b
+-- 1.3.6.1.4.1.38508.137.12.1.1.1.26.0
+rdsDsn1Psn0Af13b OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "Hz"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0Af13b"
+	::= { rdsDsn1Psn0Af 26 }
+
+-- rds.dsn[1].psn[0].af.1b
+-- 1.3.6.1.4.1.38508.137.12.1.1.1.2.0
+rdsDsn1Psn0Af1b OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "Hz"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0Af1b"
+	::= { rdsDsn1Psn0Af 2 }
+
+-- rds.dsn[1].psn[0].af.2a
+-- 1.3.6.1.4.1.38508.137.12.1.1.1.3.0
+rdsDsn1Psn0Af2a OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "Hz"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0Af2a"
+	::= { rdsDsn1Psn0Af 3 }
+
+-- rds.dsn[1].psn[0].af.2b
+-- 1.3.6.1.4.1.38508.137.12.1.1.1.4.0
+rdsDsn1Psn0Af2b OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "Hz"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0Af2b"
+	::= { rdsDsn1Psn0Af 4 }
+
+-- rds.dsn[1].psn[0].af.3a
+-- 1.3.6.1.4.1.38508.137.12.1.1.1.5.0
+rdsDsn1Psn0Af3a OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "Hz"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0Af3a"
+	::= { rdsDsn1Psn0Af 5 }
+
+-- rds.dsn[1].psn[0].af.3b
+-- 1.3.6.1.4.1.38508.137.12.1.1.1.6.0
+rdsDsn1Psn0Af3b OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "Hz"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0Af3b"
+	::= { rdsDsn1Psn0Af 6 }
+
+-- rds.dsn[1].psn[0].af.4a
+-- 1.3.6.1.4.1.38508.137.12.1.1.1.7.0
+rdsDsn1Psn0Af4a OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "Hz"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0Af4a"
+	::= { rdsDsn1Psn0Af 7 }
+
+-- rds.dsn[1].psn[0].af.4b
+-- 1.3.6.1.4.1.38508.137.12.1.1.1.8.0
+rdsDsn1Psn0Af4b OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "Hz"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0Af4b"
+	::= { rdsDsn1Psn0Af 8 }
+
+-- rds.dsn[1].psn[0].af.5a
+-- 1.3.6.1.4.1.38508.137.12.1.1.1.9.0
+rdsDsn1Psn0Af5a OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "Hz"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0Af5a"
+	::= { rdsDsn1Psn0Af 9 }
+
+-- rds.dsn[1].psn[0].af.5b
+-- 1.3.6.1.4.1.38508.137.12.1.1.1.10.0
+rdsDsn1Psn0Af5b OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "Hz"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0Af5b"
+	::= { rdsDsn1Psn0Af 10 }
+
+-- rds.dsn[1].psn[0].af.6a
+-- 1.3.6.1.4.1.38508.137.12.1.1.1.11.0
+rdsDsn1Psn0Af6a OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "Hz"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0Af6a"
+	::= { rdsDsn1Psn0Af 11 }
+
+-- rds.dsn[1].psn[0].af.6b
+-- 1.3.6.1.4.1.38508.137.12.1.1.1.12.0
+rdsDsn1Psn0Af6b OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "Hz"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0Af6b"
+	::= { rdsDsn1Psn0Af 12 }
+
+-- rds.dsn[1].psn[0].af.7a
+-- 1.3.6.1.4.1.38508.137.12.1.1.1.13.0
+rdsDsn1Psn0Af7a OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "Hz"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0Af7a"
+	::= { rdsDsn1Psn0Af 13 }
+
+-- rds.dsn[1].psn[0].af.7b
+-- 1.3.6.1.4.1.38508.137.12.1.1.1.14.0
+rdsDsn1Psn0Af7b OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "Hz"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0Af7b"
+	::= { rdsDsn1Psn0Af 14 }
+
+-- rds.dsn[1].psn[0].af.8a
+-- 1.3.6.1.4.1.38508.137.12.1.1.1.15.0
+rdsDsn1Psn0Af8a OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "Hz"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0Af8a"
+	::= { rdsDsn1Psn0Af 15 }
+
+-- rds.dsn[1].psn[0].af.8b
+-- 1.3.6.1.4.1.38508.137.12.1.1.1.16.0
+rdsDsn1Psn0Af8b OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "Hz"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0Af8b"
+	::= { rdsDsn1Psn0Af 16 }
+
+-- rds.dsn[1].psn[0].af.9a
+-- 1.3.6.1.4.1.38508.137.12.1.1.1.17.0
+rdsDsn1Psn0Af9a OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "Hz"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0Af9a"
+	::= { rdsDsn1Psn0Af 17 }
+
+-- rds.dsn[1].psn[0].af.9b
+-- 1.3.6.1.4.1.38508.137.12.1.1.1.18.0
+rdsDsn1Psn0Af9b OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "Hz"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0Af9b"
+	::= { rdsDsn1Psn0Af 18 }
+
+-- rds.dsn[1].psn[0].af.count
+-- 1.3.6.1.4.1.38508.137.12.1.1.1.1.0
+rdsDsn1Psn0AfCount OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0AfCount"
+	::= { rdsDsn1Psn0Af 1 }
+
+-- rds.dsn[1].psn[0].artificial_head
+-- 1.3.6.1.4.1.38508.137.12.1.1.2.0
+rdsDsn1Psn0ArtificialHead OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0ArtificialHead"
+	::= { rdsDsn1Psn0 2 }
+
+-- rds.dsn[1].psn[0].compressed
+-- 1.3.6.1.4.1.38508.137.12.1.1.3.0
+rdsDsn1Psn0Compressed OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0Compressed"
+	::= { rdsDsn1Psn0 3 }
+
+-- rds.dsn[1].psn[0].dynamicpty
+-- 1.3.6.1.4.1.38508.137.12.1.1.4.0
+rdsDsn1Psn0Dynamicpty OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0Dynamicpty"
+	::= { rdsDsn1Psn0 4 }
+
+-- rds.dsn[1].psn[0].ms
+-- 1.3.6.1.4.1.38508.137.12.1.1.5.0
+rdsDsn1Psn0Ms OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0Ms"
+	::= { rdsDsn1Psn0 5 }
+
+-- rds.dsn[1].psn[0].pi
+-- 1.3.6.1.4.1.38508.137.12.1.1.6.0
+rdsDsn1Psn0Pi OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0Pi"
+	::= { rdsDsn1Psn0 6 }
+
+-- rds.dsn[1].psn[0].ps
+-- 1.3.6.1.4.1.38508.137.12.1.1.7.0
+rdsDsn1Psn0Ps OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0Ps"
+	::= { rdsDsn1Psn0 7 }
+
+-- rds.dsn[1].psn[0].pty
+-- 1.3.6.1.4.1.38508.137.12.1.1.8.0
+rdsDsn1Psn0Pty OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0Pty"
+	::= { rdsDsn1Psn0 8 }
+
+-- rds.dsn[1].psn[0].pty_rbds
+-- 1.3.6.1.4.1.38508.137.12.1.1.9.0
+rdsDsn1Psn0PtyRbds OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0PtyRbds"
+	::= { rdsDsn1Psn0 9 }
+
+-- rds.dsn[1].psn[0].ptyn
+-- 1.3.6.1.4.1.38508.137.12.1.1.10.0
+rdsDsn1Psn0Ptyn OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0Ptyn"
+	::= { rdsDsn1Psn0 10 }
+
+-- rds.dsn[1].psn[0].rt
+-- 1.3.6.1.4.1.38508.137.12.1.1.11.0
+rdsDsn1Psn0Rt OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0Rt"
+	::= { rdsDsn1Psn0 11 }
+
+-- rds.dsn[1].psn[0].stereo
+-- 1.3.6.1.4.1.38508.137.12.1.1.12.0
+rdsDsn1Psn0Stereo OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0Stereo"
+	::= { rdsDsn1Psn0 12 }
+
+-- rds.dsn[1].psn[0].ta
+-- 1.3.6.1.4.1.38508.137.12.1.1.13.0
+rdsDsn1Psn0Ta OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0Ta"
+	::= { rdsDsn1Psn0 13 }
+
+-- rds.dsn[1].psn[0].tp
+-- 1.3.6.1.4.1.38508.137.12.1.1.14.0
+rdsDsn1Psn0Tp OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsDsn1Psn0Tp"
+	::= { rdsDsn1Psn0 14 }
+
+-- rds.pty_coding
+-- 1.3.6.1.4.1.38508.137.12.2.0
+rdsPtyCoding OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RdsPtyCoding"
+	::= { rds 2 }
+
+
+sfn OBJECT IDENTIFIER ::= { tx 13 }
+
+-- sfn.ext_ref_clk
+-- 1.3.6.1.4.1.38508.137.13.1.0
+sfnExtRefClk OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SfnExtRefClk"
+	::= { sfn 1 }
+
+-- sfn.gps_sync
+-- 1.3.6.1.4.1.38508.137.13.2.0
+sfnGpsSync OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SfnGpsSync"
+	::= { sfn 2 }
+
+-- sfn.MPXdelay
+-- 1.3.6.1.4.1.38508.137.13.3.0
+sfnMPXdelay OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "us"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SfnMPXdelay"
+	::= { sfn 3 }
+
+-- sfn.pilot_phase
+-- 1.3.6.1.4.1.38508.137.13.4.0
+sfnPilotPhase OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "deg"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SfnPilotPhase"
+	::= { sfn 4 }
+
+
+smtp OBJECT IDENTIFIER ::= { tx 14 }
+
+-- smtp.host
+-- 1.3.6.1.4.1.38508.137.14.1.0
+smtpHost OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsTheIPAddressOfTheSMTPServerAcceptsTextOfUpTo64Characters"
+	::= { smtp 1 }
+
+-- smtp.password
+-- 1.3.6.1.4.1.38508.137.14.4.0
+smtpPassword OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsThePasswordForSMTPAuthenticationMustBeLeftBlankIfNoAuthenticationIsRequiredAcceptsTextOfUpTo64Characters"
+	::= { smtp 4 }
+
+-- smtp.port
+-- 1.3.6.1.4.1.38508.137.14.2.0
+smtpPort OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsThePortNumberOfTheSMTPServerThisParameterAcceptsValuesFrom1To1024"
+	::= { smtp 2 }
+
+-- smtp.username
+-- 1.3.6.1.4.1.38508.137.14.3.0
+smtpUsername OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsTheUsernameForSMTPAuthenticationMustBeLeftBlankIfNoAuthenticationIsRequiredAcceptsTextOfUpTo64Characters"
+	::= { smtp 3 }
+
+
+status OBJECT IDENTIFIER ::= { tx 15 }
+
+-- status.TempLimitActive
+-- 1.3.6.1.4.1.38508.137.15.1.0
+statusTempLimitActive OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "StatusTempLimitActive"
+	::= { status 1 }
+
+-- status.VSWRLimitActive
+-- 1.3.6.1.4.1.38508.137.15.2.0
+statusVSWRLimitActive OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "StatusVSWRLimitActive"
+	::= { status 2 }
+
+
+system OBJECT IDENTIFIER ::= { tx 16 }
+
+-- system.contact
+-- 1.3.6.1.4.1.38508.137.16.14.0
+systemContact OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "TheContactDetailsForThePersonWhoManagesThisDeviceAcceptsTextOfUpTo64Characters"
+	::= { system 14 }
+
+-- system.date
+-- 1.3.6.1.4.1.38508.137.16.15.0
+systemDate OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsTheDateOfTheRealTimeClockAcceptsDateInFormatDdMmYy"
+	::= { system 15 }
+
+
+systemEthernet OBJECT IDENTIFIER ::= { system 1 }
+
+
+systemEthernetDhcp OBJECT IDENTIFIER ::= { systemEthernet 2 }
+
+-- system.ethernet.dhcp.dns[1]
+-- 1.3.6.1.4.1.38508.137.16.1.2.1.0
+systemEthernetDhcpDns1 OBJECT-TYPE
+	SYNTAX IpAddress
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "ReadsBackTheDHCPPrimaryDNSServerAcceptsIPv4AddressInTheFormWwwXxxYyyZzz"
+	::= { systemEthernetDhcp 1 }
+
+-- system.ethernet.dhcp.dns[2]
+-- 1.3.6.1.4.1.38508.137.16.1.2.2.0
+systemEthernetDhcpDns2 OBJECT-TYPE
+	SYNTAX IpAddress
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "ReadsBackTheDHCPSecondaryDNSServerAcceptsIPv4AddressInTheFormWwwXxxYyyZzz"
+	::= { systemEthernetDhcp 2 }
+
+-- system.ethernet.dhcp.gw
+-- 1.3.6.1.4.1.38508.137.16.1.2.3.0
+systemEthernetDhcpGw OBJECT-TYPE
+	SYNTAX IpAddress
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "ReadsBackTheDHCPGatewayAcceptsIPv4AddressInTheFormWwwXxxYyyZzz"
+	::= { systemEthernetDhcp 3 }
+
+-- system.ethernet.dhcp.ip
+-- 1.3.6.1.4.1.38508.137.16.1.2.4.0
+systemEthernetDhcpIp OBJECT-TYPE
+	SYNTAX IpAddress
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "ReadsBackTheDHCPIPAddressAcceptsIPv4AddressInTheFormWwwXxxYyyZzz"
+	::= { systemEthernetDhcp 4 }
+
+-- system.ethernet.dhcp.sm
+-- 1.3.6.1.4.1.38508.137.16.1.2.5.0
+systemEthernetDhcpSm OBJECT-TYPE
+	SYNTAX IpAddress
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "ReadsBackTheDHCPSubnetMaskAcceptsIPv4AddressInTheFormWwwXxxYyyZzz"
+	::= { systemEthernetDhcp 5 }
+
+-- system.ethernet.dhcpOn
+-- 1.3.6.1.4.1.38508.137.16.1.4.0
+systemEthernetDhcpOn OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsWhetherTheEthernetIsConfiguredManuallyOrByDHCP"
+	::= { systemEthernet 4 }
+
+-- system.ethernet.mac
+-- 1.3.6.1.4.1.38508.137.16.1.3.0
+systemEthernetMac OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-only
+	STATUS current
+	DESCRIPTION "ReadsBackTheEthernetMACAddress"
+	::= { systemEthernet 3 }
+
+
+systemEthernetStatic OBJECT IDENTIFIER ::= { systemEthernet 1 }
+
+-- system.ethernet.static.dns[1]
+-- 1.3.6.1.4.1.38508.137.16.1.1.1.0
+systemEthernetStaticDns1 OBJECT-TYPE
+	SYNTAX IpAddress
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsTheManualPrimaryDNSServerAcceptsIPv4AddressInTheFormWwwXxxYyyZzz"
+	::= { systemEthernetStatic 1 }
+
+-- system.ethernet.static.dns[2]
+-- 1.3.6.1.4.1.38508.137.16.1.1.2.0
+systemEthernetStaticDns2 OBJECT-TYPE
+	SYNTAX IpAddress
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsTheManualSecondaryDNSServerAcceptsIPv4AddressInTheFormWwwXxxYyyZzz"
+	::= { systemEthernetStatic 2 }
+
+-- system.ethernet.static.gw
+-- 1.3.6.1.4.1.38508.137.16.1.1.3.0
+systemEthernetStaticGw OBJECT-TYPE
+	SYNTAX IpAddress
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsTheManualGatewayAcceptsIPv4AddressInTheFormWwwXxxYyyZzz"
+	::= { systemEthernetStatic 3 }
+
+-- system.ethernet.static.ip
+-- 1.3.6.1.4.1.38508.137.16.1.1.4.0
+systemEthernetStaticIp OBJECT-TYPE
+	SYNTAX IpAddress
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsTheManualIPAddressAcceptsIPv4AddressInTheFormWwwXxxYyyZzz"
+	::= { systemEthernetStatic 4 }
+
+-- system.ethernet.static.sm
+-- 1.3.6.1.4.1.38508.137.16.1.1.5.0
+systemEthernetStaticSm OBJECT-TYPE
+	SYNTAX IpAddress
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsTheManualSubnetMaskAcceptsIPv4AddressInTheFormWwwXxxYyyZzz"
+	::= { systemEthernetStatic 5 }
+
+-- system.factory_reset
+-- 1.3.6.1.4.1.38508.137.16.16.0
+systemFactoryReset OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "PerformsAFactoryResetAllUserPresetsWillBeLost"
+	::= { system 16 }
+
+
+systemFreqPowLock OBJECT IDENTIFIER ::= { system 12 }
+
+-- system.freq_pow_lock.enabled
+-- 1.3.6.1.4.1.38508.137.16.12.1.0
+systemFreqPowLockEnabled OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "EnablesDisablesTheFrequencyAndPowerLock"
+	::= { systemFreqPowLock 1 }
+
+
+systemHttpd OBJECT IDENTIFIER ::= { system 2 }
+
+-- system.httpd.remote_control_message
+-- 1.3.6.1.4.1.38508.137.16.2.1.0
+systemHttpdRemoteControlMessage OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "DisplaysAMessageOnTheScreenWhenTheUnitIsControlledRemotely"
+	::= { systemHttpd 1 }
+
+-- system.httpd.session_timeout
+-- 1.3.6.1.4.1.38508.137.16.2.2.0
+systemHttpdSessionTimeout OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SystemHttpdSessionTimeout"
+	::= { systemHttpd 2 }
+
+-- system.location
+-- 1.3.6.1.4.1.38508.137.16.17.0
+systemLocation OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "ThePhysicalLocationOfThisDeviceEGTXSite1Rack2AcceptsTextOfUpTo64Characters"
+	::= { system 17 }
+
+
+systemLogging OBJECT IDENTIFIER ::= { system 3 }
+
+
+systemLoggingFile OBJECT IDENTIFIER ::= { systemLogging 1 }
+
+-- system.logging.file.active
+-- 1.3.6.1.4.1.38508.137.16.3.1.1.0
+systemLoggingFileActive OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "EnablesDisablesLoggingToFile"
+	::= { systemLoggingFile 1 }
+
+
+systemLoggingRs232 OBJECT IDENTIFIER ::= { systemLogging 2 }
+
+-- system.logging.rs232.active
+-- 1.3.6.1.4.1.38508.137.16.3.2.1.0
+systemLoggingRs232Active OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "EnablesDisablesLoggingToRS232"
+	::= { systemLoggingRs232 1 }
+
+
+systemLoggingUdp OBJECT IDENTIFIER ::= { systemLogging 3 }
+
+-- system.logging.udp.active
+-- 1.3.6.1.4.1.38508.137.16.3.3.1.0
+systemLoggingUdpActive OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "EnablesDisablesLoggingMessagesToARemoteUDPLoggingSyslogServer"
+	::= { systemLoggingUdp 1 }
+
+-- system.logging.udp.ip
+-- 1.3.6.1.4.1.38508.137.16.3.3.2.0
+systemLoggingUdpIp OBJECT-TYPE
+	SYNTAX IpAddress
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsTheIPAddressWhereTheLogMessagesShouldBeSentViaUDPAcceptsIPv4AddressInTheFormWwwXxxYyyZzz"
+	::= { systemLoggingUdp 2 }
+
+-- system.logging.udp.port
+-- 1.3.6.1.4.1.38508.137.16.3.3.3.0
+systemLoggingUdpPort OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsThePortWhereTheLogMessagesShouldBeSentViaUDPDisableUDPToChangeThisParameterAcceptsValuesFrom1To10000"
+	::= { systemLoggingUdp 3 }
+
+
+systemPassword OBJECT IDENTIFIER ::= { system 11 }
+
+-- system.password.admin
+-- 1.3.6.1.4.1.38508.137.16.11.1.0
+systemPasswordAdmin OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "ThePasswordForTheRemoteLoginAcceptsTextOfUpTo15Characters"
+	::= { systemPassword 1 }
+
+
+systemProduct OBJECT IDENTIFIER ::= { system 4 }
+
+-- system.product.born
+-- 1.3.6.1.4.1.38508.137.16.4.2.0
+systemProductBorn OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "DateOfManufactureAcceptsTextOfUpTo16Characters"
+	::= { systemProduct 2 }
+
+-- system.product.id
+-- 1.3.6.1.4.1.38508.137.16.4.1.0
+systemProductId OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-only
+	STATUS current
+	DESCRIPTION "ReadsBackTheProductID"
+	::= { systemProduct 1 }
+
+
+systemRdsInterface OBJECT IDENTIFIER ::= { system 5 }
+
+
+systemRdsInterfaceRs232 OBJECT IDENTIFIER ::= { systemRdsInterface 2 }
+
+-- system.rds_interface.rs232.baud
+-- 1.3.6.1.4.1.38508.137.16.5.2.2.0
+systemRdsInterfaceRs232Baud OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SystemRdsInterfaceRs232Baud"
+	::= { systemRdsInterfaceRs232 2 }
+
+-- system.rds_interface.rs232.enabled
+-- 1.3.6.1.4.1.38508.137.16.5.2.1.0
+systemRdsInterfaceRs232Enabled OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SystemRdsInterfaceRs232Enabled"
+	::= { systemRdsInterfaceRs232 1 }
+
+-- system.reboot
+-- 1.3.6.1.4.1.38508.137.16.18.0
+systemReboot OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "RebootsTheUnit"
+	::= { system 18 }
+
+
+systemRs232d OBJECT IDENTIFIER ::= { system 6 }
+
+-- system.rs232d.active
+-- 1.3.6.1.4.1.38508.137.16.6.1.0
+systemRs232dActive OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "EnablesDisablesTheRS232Remote"
+	::= { systemRs232d 1 }
+
+-- system.rs232d.baud
+-- 1.3.6.1.4.1.38508.137.16.6.2.0
+systemRs232dBaud OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsTheRS232BaudRate"
+	::= { systemRs232d 2 }
+
+
+systemScreen OBJECT IDENTIFIER ::= { system 7 }
+
+
+systemScreenLock OBJECT IDENTIFIER ::= { systemScreen 1 }
+
+-- system.screen.lock.code
+-- 1.3.6.1.4.1.38508.137.16.7.1.2.0
+systemScreenLockCode OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsTheScreenLockCode"
+	::= { systemScreenLock 2 }
+
+-- system.screen.lock.enabled
+-- 1.3.6.1.4.1.38508.137.16.7.1.1.0
+systemScreenLockEnabled OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "EnablesDisablesTheScreenLockCode"
+	::= { systemScreenLock 1 }
+
+-- system.screen.screensaver_type
+-- 1.3.6.1.4.1.38508.137.16.7.2.0
+systemScreenScreensaverType OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SelectsBetweenNormalForDisplayingStatusInfoOrStealthForABlankScreen"
+	::= { systemScreen 2 }
+
+-- system.screen.timeout
+-- 1.3.6.1.4.1.38508.137.16.7.3.0
+systemScreenTimeout OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "ThisAllowsTheTime-outBeforeTheScreensaverStartsToBeAdjustedBetween15sAnd30Minutes"
+	::= { systemScreen 3 }
+
+-- system.serial_number
+-- 1.3.6.1.4.1.38508.137.16.19.0
+systemSerialNumber OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-only
+	STATUS current
+	DESCRIPTION "ReadsBackSerialNumber"
+	::= { system 19 }
+
+
+systemSnmpd OBJECT IDENTIFIER ::= { system 8 }
+
+-- system.snmpd.active
+-- 1.3.6.1.4.1.38508.137.16.8.2.0
+systemSnmpdActive OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "EnablesDisablesSNMP"
+	::= { systemSnmpd 2 }
+
+-- system.snmpd.community
+-- 1.3.6.1.4.1.38508.137.16.8.5.0
+systemSnmpdCommunity OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "CommunityString"
+	::= { systemSnmpd 5 }
+
+-- system.snmpd.description
+-- 1.3.6.1.4.1.38508.137.16.8.4.0
+systemSnmpdDescription OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "ATextualDescriptionOfTheDeviceAcceptsTextOfUpTo64Characters"
+	::= { systemSnmpd 4 }
+
+-- system.snmpd.name
+-- 1.3.6.1.4.1.38508.137.16.8.3.0
+systemSnmpdName OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "AnAdministratively-assignedNameForThisDeviceByConventionThisIsTheDeviceSFully-qualifiedDomainNameAcceptsTextOfUpTo64Characters"
+	::= { systemSnmpd 3 }
+
+-- system.snmpd.object_id
+-- 1.3.6.1.4.1.38508.137.16.8.7.0
+systemSnmpdObjectId OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-only
+	STATUS current
+	DESCRIPTION "OIDForThisDevice"
+	::= { systemSnmpd 7 }
+
+-- system.snmpd.port
+-- 1.3.6.1.4.1.38508.137.16.8.6.0
+systemSnmpdPort OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsTheSNMPPortDisableSNMPToChangeThisParameterAcceptsValuesFrom1To1024"
+	::= { systemSnmpd 6 }
+
+-- system.snmpd.read_only
+-- 1.3.6.1.4.1.38508.137.16.8.8.0
+systemSnmpdReadOnly OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "EnablesDisablesRead-onlySNMPMode"
+	::= { systemSnmpd 8 }
+
+
+systemSnmpdTrap OBJECT IDENTIFIER ::= { systemSnmpd 1 }
+
+
+systemSnmpdTrapDst1 OBJECT IDENTIFIER ::= { systemSnmpdTrap 1 }
+
+-- system.snmpd.trap.dst[1].ip
+-- 1.3.6.1.4.1.38508.137.16.8.1.1.1.0
+systemSnmpdTrapDst1Ip OBJECT-TYPE
+	SYNTAX IpAddress
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "TrapDestination1IPAddressAcceptsIPv4AddressInTheFormWwwXxxYyyZzz"
+	::= { systemSnmpdTrapDst1 1 }
+
+-- system.snmpd.trap.dst[1].port
+-- 1.3.6.1.4.1.38508.137.16.8.1.1.2.0
+systemSnmpdTrapDst1Port OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "TrapDestination1IPPortThisParameterAcceptsValuesFrom1To1024"
+	::= { systemSnmpdTrapDst1 2 }
+
+
+systemSnmpdTrapDst2 OBJECT IDENTIFIER ::= { systemSnmpdTrap 2 }
+
+-- system.snmpd.trap.dst[2].ip
+-- 1.3.6.1.4.1.38508.137.16.8.1.2.1.0
+systemSnmpdTrapDst2Ip OBJECT-TYPE
+	SYNTAX IpAddress
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "TrapDestination2IPAddressAcceptsIPv4AddressInTheFormWwwXxxYyyZzz"
+	::= { systemSnmpdTrapDst2 1 }
+
+-- system.snmpd.trap.dst[2].port
+-- 1.3.6.1.4.1.38508.137.16.8.1.2.2.0
+systemSnmpdTrapDst2Port OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "TrapDestination2PortThisParameterAcceptsValuesFrom1To1024"
+	::= { systemSnmpdTrapDst2 2 }
+
+
+systemSnmpdTrapTest OBJECT IDENTIFIER ::= { systemSnmpdTrap 3 }
+
+-- system.snmpd.trap.test.send
+-- 1.3.6.1.4.1.38508.137.16.8.1.3.1.0
+systemSnmpdTrapTestSend OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SendSnmpTestTrapWarmStart"
+	::= { systemSnmpdTrapTest 1 }
+
+
+systemSoftware OBJECT IDENTIFIER ::= { system 13 }
+
+-- system.software.version
+-- 1.3.6.1.4.1.38508.137.16.13.1.0
+systemSoftwareVersion OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-only
+	STATUS current
+	DESCRIPTION "ReadsBackTheSoftwareVersion"
+	::= { systemSoftware 1 }
+
+-- system.telemetry
+-- 1.3.6.1.4.1.38508.137.16.20.0
+systemTelemetry OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SystemTelemetry"
+	::= { system 20 }
+
+
+systemTelnetd OBJECT IDENTIFIER ::= { system 9 }
+
+-- system.telnetd.active
+-- 1.3.6.1.4.1.38508.137.16.9.1.0
+systemTelnetdActive OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "EnablesDisablesTheTelnetServer"
+	::= { systemTelnetd 1 }
+
+-- system.telnetd.port
+-- 1.3.6.1.4.1.38508.137.16.9.2.0
+systemTelnetdPort OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsTheTelnetTCPPortDisableTelnetToChangeThisParameterAcceptsValuesFrom1To1024"
+	::= { systemTelnetd 2 }
+
+-- system.time
+-- 1.3.6.1.4.1.38508.137.16.21.0
+systemTime OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsTheTimeOfTheRealTimeClockAcceptsTimeInFormatHhMm"
+	::= { system 21 }
+
+-- system.uptime
+-- 1.3.6.1.4.1.38508.137.16.22.0
+systemUptime OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "ReportsTheUptimeOfTheUnitIEHowLongHasItBeenPoweredOnForAcceptsTextOfUpTo20Characters"
+	::= { system 22 }
+
+
+systemUsername OBJECT IDENTIFIER ::= { system 10 }
+
+-- system.username.admin
+-- 1.3.6.1.4.1.38508.137.16.10.1.0
+systemUsernameAdmin OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "TheUsernameForTheRemoteLoginAcceptsTextOfUpTo15Characters"
+	::= { systemUsername 1 }
+
+
+transmitter OBJECT IDENTIFIER ::= { tx 17 }
+
+-- transmitter.frequency
+-- 1.3.6.1.4.1.38508.137.17.3.0
+transmitterFrequency OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "Hz"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsTheTransmissionFrequency"
+	::= { transmitter 3 }
+
+
+transmitterFsk OBJECT IDENTIFIER ::= { transmitter 1 }
+
+-- transmitter.fsk.id
+-- 1.3.6.1.4.1.38508.137.17.1.1.0
+transmitterFskId OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsTheFSKTextThisWillBeConvertedIntoMorseCodeAcceptsTextOfUpTo16Characters"
+	::= { transmitterFsk 1 }
+
+-- transmitter.fsk.interval
+-- 1.3.6.1.4.1.38508.137.17.1.2.0
+transmitterFskInterval OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsIntervalBetweenFSKMessages"
+	::= { transmitterFsk 2 }
+
+
+transmitterRfMute OBJECT IDENTIFIER ::= { transmitter 2 }
+
+-- transmitter.rf_mute.active
+-- 1.3.6.1.4.1.38508.137.17.2.1.0
+transmitterRfMuteActive OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "TransmitterRfMuteActive"
+	::= { transmitterRfMute 1 }
+
+-- transmitter.rf_mute.manual_enable
+-- 1.3.6.1.4.1.38508.137.17.2.2.0
+transmitterRfMuteManualEnable OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "ManuallyMutesTheTransmitter"
+	::= { transmitterRfMute 2 }
+
+-- transmitter.rf_mute.timeout
+-- 1.3.6.1.4.1.38508.137.17.2.3.0
+transmitterRfMuteTimeout OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SelectsTheTimeAfterWhichTheTransmitterSOutputWillBeMutedIfTheTransmitterIsTransmittingSilence"
+	::= { transmitterRfMute 3 }
+
+-- transmitter.set_power
+-- 1.3.6.1.4.1.38508.137.17.4.0
+transmitterSetPower OBJECT-TYPE
+	SYNTAX DisplayString
+	UNITS "W"
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsTheOutputPowerLevelInWatts"
+	::= { transmitter 4 }
+
+
+trigger1 OBJECT IDENTIFIER ::= { tx 18 }
+
+-- trigger[1].action
+-- 1.3.6.1.4.1.38508.137.18.4.0
+trigger1Action OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "DeterminesTheActionPerformedUponTrigger"
+	::= { trigger1 4 }
+
+-- trigger[1].active
+-- 1.3.6.1.4.1.38508.137.18.5.0
+trigger1Active OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "EnablesDisablesTheTrigger"
+	::= { trigger1 5 }
+
+
+trigger1Email OBJECT IDENTIFIER ::= { trigger1 1 }
+
+-- trigger[1].email.active
+-- 1.3.6.1.4.1.38508.137.18.1.1.0
+trigger1EmailActive OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SelectsIfAnE-mailWillBeSentWhenTheAlarmStateChanges"
+	::= { trigger1Email 1 }
+
+
+trigger1Message OBJECT IDENTIFIER ::= { trigger1 2 }
+
+-- trigger[1].message.on
+-- 1.3.6.1.4.1.38508.137.18.2.1.0
+trigger1MessageOn OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsTheMessageThatWillBeSentWhenTheTriggerChangesToONAcceptsTextOfUpTo300Characters"
+	::= { trigger1Message 1 }
+
+
+trigger1Trap OBJECT IDENTIFIER ::= { trigger1 3 }
+
+-- trigger[1].trap.active
+-- 1.3.6.1.4.1.38508.137.18.3.1.0
+trigger1TrapActive OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "EnableDisableTrapSendingForCurrentTrigger"
+	::= { trigger1Trap 1 }
+
+
+trigger2 OBJECT IDENTIFIER ::= { tx 19 }
+
+-- trigger[2].action
+-- 1.3.6.1.4.1.38508.137.19.4.0
+trigger2Action OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "DeterminesTheActionPerformedUponTrigger"
+	::= { trigger2 4 }
+
+-- trigger[2].active
+-- 1.3.6.1.4.1.38508.137.19.5.0
+trigger2Active OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "EnablesDisablesTheTrigger"
+	::= { trigger2 5 }
+
+
+trigger2Email OBJECT IDENTIFIER ::= { trigger2 1 }
+
+-- trigger[2].email.active
+-- 1.3.6.1.4.1.38508.137.19.1.1.0
+trigger2EmailActive OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SelectsIfAnE-mailWillBeSentWhenTheAlarmStateChanges"
+	::= { trigger2Email 1 }
+
+
+trigger2Message OBJECT IDENTIFIER ::= { trigger2 2 }
+
+-- trigger[2].message.on
+-- 1.3.6.1.4.1.38508.137.19.2.1.0
+trigger2MessageOn OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsTheMessageThatWillBeSentWhenTheTriggerChangesToONAcceptsTextOfUpTo300Characters"
+	::= { trigger2Message 1 }
+
+
+trigger2Trap OBJECT IDENTIFIER ::= { trigger2 3 }
+
+-- trigger[2].trap.active
+-- 1.3.6.1.4.1.38508.137.19.3.1.0
+trigger2TrapActive OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "EnableDisableTrapSendingForCurrentTrigger"
+	::= { trigger2Trap 1 }
+
+
+trigger3 OBJECT IDENTIFIER ::= { tx 20 }
+
+-- trigger[3].action
+-- 1.3.6.1.4.1.38508.137.20.4.0
+trigger3Action OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "DeterminesTheActionPerformedUponTrigger"
+	::= { trigger3 4 }
+
+-- trigger[3].active
+-- 1.3.6.1.4.1.38508.137.20.5.0
+trigger3Active OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "EnablesDisablesTheTrigger"
+	::= { trigger3 5 }
+
+
+trigger3Email OBJECT IDENTIFIER ::= { trigger3 1 }
+
+-- trigger[3].email.active
+-- 1.3.6.1.4.1.38508.137.20.1.1.0
+trigger3EmailActive OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SelectsIfAnE-mailWillBeSentWhenTheAlarmStateChanges"
+	::= { trigger3Email 1 }
+
+
+trigger3Message OBJECT IDENTIFIER ::= { trigger3 2 }
+
+-- trigger[3].message.on
+-- 1.3.6.1.4.1.38508.137.20.2.1.0
+trigger3MessageOn OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsTheMessageThatWillBeSentWhenTheTriggerChangesToONAcceptsTextOfUpTo300Characters"
+	::= { trigger3Message 1 }
+
+
+trigger3Trap OBJECT IDENTIFIER ::= { trigger3 3 }
+
+-- trigger[3].trap.active
+-- 1.3.6.1.4.1.38508.137.20.3.1.0
+trigger3TrapActive OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "EnableDisableTrapSendingForCurrentTrigger"
+	::= { trigger3Trap 1 }
+
+
+trigger4 OBJECT IDENTIFIER ::= { tx 21 }
+
+-- trigger[4].action
+-- 1.3.6.1.4.1.38508.137.21.4.0
+trigger4Action OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "DeterminesTheActionPerformedUponTrigger"
+	::= { trigger4 4 }
+
+-- trigger[4].active
+-- 1.3.6.1.4.1.38508.137.21.5.0
+trigger4Active OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "EnablesDisablesTheTrigger"
+	::= { trigger4 5 }
+
+
+trigger4Email OBJECT IDENTIFIER ::= { trigger4 1 }
+
+-- trigger[4].email.active
+-- 1.3.6.1.4.1.38508.137.21.1.1.0
+trigger4EmailActive OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SelectsIfAnE-mailWillBeSentWhenTheAlarmStateChanges"
+	::= { trigger4Email 1 }
+
+
+trigger4Message OBJECT IDENTIFIER ::= { trigger4 2 }
+
+-- trigger[4].message.on
+-- 1.3.6.1.4.1.38508.137.21.2.1.0
+trigger4MessageOn OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "SetsTheMessageThatWillBeSentWhenTheTriggerChangesToONAcceptsTextOfUpTo300Characters"
+	::= { trigger4Message 1 }
+
+
+trigger4Trap OBJECT IDENTIFIER ::= { trigger4 3 }
+
+-- trigger[4].trap.active
+-- 1.3.6.1.4.1.38508.137.21.3.1.0
+trigger4TrapActive OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "EnableDisableTrapSendingForCurrentTrigger"
+	::= { trigger4Trap 1 }
+
+conformance OBJECT IDENTIFIER ::= { tx 999999 }
+
+conformanceGroups OBJECT IDENTIFIER ::= { conformance 1 }
+
+	allObjects OBJECT-GROUP
+	OBJECTS{
+		ad9788ClockDelay,
+		ad9788ClockDelayEnable,
+		ad9788ClockInvert,
+		ad9788DataTimingAuto,
+		ad9788DataTimingMargin,
+		ad9788IdacGain,
+		ad9788Interpolation,
+		ad9788QdacGain,
+		ad9788RealMode,
+		aioMclk,
+		aioPaBias,
+		aioPaVoltage,
+		aioRefclkAdj,
+		alarm1Active,
+		alarm1EmailActive,
+		alarm1FwdPowerThreshold,
+		alarm1ModulationThreshold,
+		alarm1OffDelay,
+		alarm1OnDelay,
+		alarm1Polarity,
+		alarm1RevPowerThreshold,
+		alarm1Source,
+		alarm1Telemetrysource,
+		alarm1TempThreshold,
+		alarm1TrapActive,
+		alarm1Type,
+		alarm2Active,
+		alarm2EmailActive,
+		alarm2FwdPowerThreshold,
+		alarm2ModulationThreshold,
+		alarm2OffDelay,
+		alarm2OnDelay,
+		alarm2Polarity,
+		alarm2RevPowerThreshold,
+		alarm2Source,
+		alarm2Telemetrysource,
+		alarm2TempThreshold,
+		alarm2TrapActive,
+		alarm2Type,
+		alarm3Active,
+		alarm3EmailActive,
+		alarm3FwdPowerThreshold,
+		alarm3ModulationThreshold,
+		alarm3OffDelay,
+		alarm3OnDelay,
+		alarm3Polarity,
+		alarm3RevPowerThreshold,
+		alarm3Source,
+		alarm3Telemetrysource,
+		alarm3TempThreshold,
+		alarm3TrapActive,
+		alarm3Type,
+		alarmactiveA,
+		alarmactiveB,
+		alarmactiveC,
+		audioDelay,
+		audioInput,
+		audioInputsAnalogRef,
+		audioInputsDigitalRef,
+		audioProcessingPreset,
+		audioProcessorOff,
+		audioRightTrim,
+		audioStereo,
+		audioTrim,
+		emailCounterToday,
+		emailFrom,
+		emailLimitDaily,
+		emailMethod,
+		emailRecipient,
+		emailTestRecipient,
+		emailTestSend,
+		meteringClockLockStatus,
+		meteringPowerControl,
+		metersAcrfeff,
+		metersAgc1,
+		metersAgc2,
+		metersAgc3,
+		metersAgc4,
+		metersAuxcurrent,
+		metersAuxvoltage,
+		metersFallback,
+		metersFanspeed,
+		metersLim1,
+		metersLim2,
+		metersLim3,
+		metersLim4,
+		metersMainsv,
+		metersPafwd,
+		metersParev,
+		metersPatemp,
+		metersPeakDeviation,
+		metersPsu1temp1,
+		metersPsu2temp1,
+		metersPsucurrent,
+		metersPsuvoltage,
+		metersTxInputL,
+		metersTxInputR,
+		metersTxOutputL,
+		metersTxOutputMpx,
+		metersTxOutputR,
+		mpxDigMpxInLevel,
+		mpxGenCompClipper,
+		mpxGenLevel,
+		mpxGenPilotLevel,
+		mpxGenPilotProtection,
+		mpxGenPowerLimit,
+		mpxGenPreemphasis,
+		mpxGenRdsLevel,
+		mpxGenSource,
+		mpxInput1Level,
+		mpxInput1Trim,
+		mpxInput2Level,
+		mpxInput2Trim,
+		mpxOutput1Level,
+		mpxOutput1Source,
+		mpxOutput1Trim,
+		mpxOutput2Level,
+		mpxOutput2Source,
+		mpxOutput2Trim,
+		mpxTunerTrim,
+		powerschedulerEnabled,
+		powerschedulerFinishtime,
+		powerschedulerPower,
+		powerschedulerStarttime,
+		rdsDsn1Psn0Af10a,
+		rdsDsn1Psn0Af10b,
+		rdsDsn1Psn0Af11a,
+		rdsDsn1Psn0Af11b,
+		rdsDsn1Psn0Af12a,
+		rdsDsn1Psn0Af12b,
+		rdsDsn1Psn0Af13a,
+		rdsDsn1Psn0Af13b,
+		rdsDsn1Psn0Af1b,
+		rdsDsn1Psn0Af2a,
+		rdsDsn1Psn0Af2b,
+		rdsDsn1Psn0Af3a,
+		rdsDsn1Psn0Af3b,
+		rdsDsn1Psn0Af4a,
+		rdsDsn1Psn0Af4b,
+		rdsDsn1Psn0Af5a,
+		rdsDsn1Psn0Af5b,
+		rdsDsn1Psn0Af6a,
+		rdsDsn1Psn0Af6b,
+		rdsDsn1Psn0Af7a,
+		rdsDsn1Psn0Af7b,
+		rdsDsn1Psn0Af8a,
+		rdsDsn1Psn0Af8b,
+		rdsDsn1Psn0Af9a,
+		rdsDsn1Psn0Af9b,
+		rdsDsn1Psn0AfCount,
+		rdsDsn1Psn0ArtificialHead,
+		rdsDsn1Psn0Compressed,
+		rdsDsn1Psn0Dynamicpty,
+		rdsDsn1Psn0Ms,
+		rdsDsn1Psn0Pi,
+		rdsDsn1Psn0Ps,
+		rdsDsn1Psn0Pty,
+		rdsDsn1Psn0PtyRbds,
+		rdsDsn1Psn0Ptyn,
+		rdsDsn1Psn0Rt,
+		rdsDsn1Psn0Stereo,
+		rdsDsn1Psn0Ta,
+		rdsDsn1Psn0Tp,
+		rdsPtyCoding,
+		sfnExtRefClk,
+		sfnGpsSync,
+		sfnMPXdelay,
+		sfnPilotPhase,
+		smtpHost,
+		smtpPassword,
+		smtpPort,
+		smtpUsername,
+		statusTempLimitActive,
+		statusVSWRLimitActive,
+		systemContact,
+		systemDate,
+		systemEthernetDhcpDns1,
+		systemEthernetDhcpDns2,
+		systemEthernetDhcpGw,
+		systemEthernetDhcpIp,
+		systemEthernetDhcpSm,
+		systemEthernetDhcpOn,
+		systemEthernetMac,
+		systemEthernetStaticDns1,
+		systemEthernetStaticDns2,
+		systemEthernetStaticGw,
+		systemEthernetStaticIp,
+		systemEthernetStaticSm,
+		systemFactoryReset,
+		systemFreqPowLockEnabled,
+		systemHttpdRemoteControlMessage,
+		systemHttpdSessionTimeout,
+		systemLocation,
+		systemLoggingFileActive,
+		systemLoggingRs232Active,
+		systemLoggingUdpActive,
+		systemLoggingUdpIp,
+		systemLoggingUdpPort,
+		systemPasswordAdmin,
+		systemProductBorn,
+		systemProductId,
+		systemRdsInterfaceRs232Baud,
+		systemRdsInterfaceRs232Enabled,
+		systemReboot,
+		systemRs232dActive,
+		systemRs232dBaud,
+		systemScreenLockCode,
+		systemScreenLockEnabled,
+		systemScreenScreensaverType,
+		systemScreenTimeout,
+		systemSerialNumber,
+		systemSnmpdActive,
+		systemSnmpdCommunity,
+		systemSnmpdDescription,
+		systemSnmpdName,
+		systemSnmpdObjectId,
+		systemSnmpdPort,
+		systemSnmpdReadOnly,
+		systemSnmpdTrapDst1Ip,
+		systemSnmpdTrapDst1Port,
+		systemSnmpdTrapDst2Ip,
+		systemSnmpdTrapDst2Port,
+		systemSnmpdTrapTestSend,
+		systemSoftwareVersion,
+		systemTelemetry,
+		systemTelnetdActive,
+		systemTelnetdPort,
+		systemTime,
+		systemUptime,
+		systemUsernameAdmin,
+		transmitterFrequency,
+		transmitterFskId,
+		transmitterFskInterval,
+		transmitterRfMuteActive,
+		transmitterRfMuteManualEnable,
+		transmitterRfMuteTimeout,
+		transmitterSetPower,
+		trigger1Action,
+		trigger1Active,
+		trigger1EmailActive,
+		trigger1MessageOn,
+		trigger1TrapActive,
+		trigger2Action,
+		trigger2Active,
+		trigger2EmailActive,
+		trigger2MessageOn,
+		trigger2TrapActive,
+		trigger3Action,
+		trigger3Active,
+		trigger3EmailActive,
+		trigger3MessageOn,
+		trigger3TrapActive,
+		trigger4Action,
+		trigger4Active,
+		trigger4EmailActive,
+		trigger4MessageOn,
+		trigger4TrapActive
+	}
+	STATUS current
+	DESCRIPTION "object group"
+	::= { conformanceGroups 1 }
+
+compliances OBJECT IDENTIFIER ::= { conformance 2 }
+
+compliance MODULE-COMPLIANCE
+	STATUS current
+	DESCRIPTION "compliance"
+	MODULE -- this module
+	MANDATORY-GROUPS { allObjects }
+	::= { compliances 1 }
+
+END

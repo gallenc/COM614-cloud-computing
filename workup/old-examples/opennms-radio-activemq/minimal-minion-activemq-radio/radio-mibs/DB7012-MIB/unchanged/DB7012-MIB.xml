@@ -1,0 +1,236 @@
+<datacollection-group xmlns="http://xmlns.opennms.org/xsd/config/datacollection" name="DB7012-MIB">
+   <resourceType name="dabAvailableServicesTableEntry" label="dabAvailableServicesTableEntry" resourceLabel="${dabAvailableEnsembleChannel} (${index})">
+      <persistenceSelectorStrategy class="org.opennms.netmgt.collection.support.PersistAllSelectorStrategy"/>
+      <storageStrategy class="org.opennms.netmgt.collection.support.IndexStorageStrategy"/>
+   </resourceType>
+   <resourceType name="serviceTableEntry" label="serviceTableEntry" resourceLabel="${serviceActive} (${index})">
+      <persistenceSelectorStrategy class="org.opennms.netmgt.collection.support.PersistAllSelectorStrategy"/>
+      <storageStrategy class="org.opennms.netmgt.collection.support.IndexStorageStrategy"/>
+   </resourceType>
+   <resourceType name="serviceStatusTableEntry" label="serviceStatusTableEntry" resourceLabel="${serviceAlarmRfStatus} (${index})">
+      <persistenceSelectorStrategy class="org.opennms.netmgt.collection.support.PersistAllSelectorStrategy"/>
+      <storageStrategy class="org.opennms.netmgt.collection.support.IndexStorageStrategy"/>
+   </resourceType>
+   <group name="product" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.35833.35.1.1" instance="0" alias="fwrev" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.1.2" instance="0" alias="sernum" type="octetstring"/>
+   </group>
+   <group name="averageAndPeak" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.1.1.1" instance="0" alias="avratck" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.1.1.2" instance="0" alias="avrrel" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.1.1.3" instance="0" alias="peakhold" type="integer32"/>
+   </group>
+   <group name="dabRadio" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.1.2.1" instance="0" alias="dabEnsembleChannel" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.1.2.2" instance="0" alias="dabServiceSid" type="integer32"/>
+   </group>
+   <group name="dabAvalableServicesTable" ifType="all">
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.1.2.3.1.1" instance="dabAvailableServicesTableEntry" alias="dabAvailServicIndex" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.1.2.3.1.2" instance="dabAvailableServicesTableEntry" alias="dabAvailEnsemChanne" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.1.2.3.1.3" instance="dabAvailableServicesTableEntry" alias="dabAvailabEnsemblId" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.1.2.3.1.4" instance="dabAvailableServicesTableEntry" alias="dabAvailaServiceSid" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.1.2.3.1.5" instance="dabAvailableServicesTableEntry" alias="dabAvailServicSubCh" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.1.2.3.1.6" instance="dabAvailableServicesTableEntry" alias="dabAvailServicLabel" type="octetstring"/>
+   </group>
+   <group name="generalSetup" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.1.1" instance="0" alias="ethen" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.1.2" instance="0" alias="snmpen" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.1.3" instance="0" alias="appen" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.1.4" instance="0" alias="httpen" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.1.5" instance="0" alias="ftpen" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.1.6" instance="0" alias="emailen" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.1.7" instance="0" alias="sntpen" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.1.8" instance="0" alias="streamen" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.1.9" instance="0" alias="syslogen" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.1.10" instance="0" alias="upnpen" type="string"/>
+   </group>
+   <group name="ethernet" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.2.1" instance="0" alias="dhcpen" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.2.2" instance="0" alias="ip" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.2.3" instance="0" alias="netmask" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.2.4" instance="0" alias="gwip" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.2.5" instance="0" alias="dns1ip" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.2.6" instance="0" alias="dns2ip" type="string"/>
+   </group>
+   <group name="snmp" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.3.1" instance="0" alias="snmpmip" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.3.2" instance="0" alias="snmpmport" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.3.3" instance="0" alias="snmpaport" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.3.4" instance="0" alias="snmpaid" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.3.5" instance="0" alias="snmprcomm" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.3.6" instance="0" alias="snmpwcomm" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.3.7" instance="0" alias="snmptout" type="integer32"/>
+   </group>
+   <group name="application" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.4.1" instance="0" alias="appport" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.4.2" instance="0" alias="apptout" type="integer32"/>
+   </group>
+   <group name="http" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.5.1" instance="0" alias="httpport" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.5.2" instance="0" alias="httptout" type="integer32"/>
+   </group>
+   <group name="ftp" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.6.1" instance="0" alias="ftpdport" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.6.2" instance="0" alias="ftpcport" type="integer32"/>
+   </group>
+   <group name="sntp" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.7.1" instance="0" alias="sntpsrv" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.7.2" instance="0" alias="sntpport" type="integer32"/>
+   </group>
+   <group name="email" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.8.1" instance="0" alias="smtpsrv" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.8.2" instance="0" alias="smtpport" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.8.3" instance="0" alias="email1" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.8.4" instance="0" alias="email2" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.8.5" instance="0" alias="smtpsender" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.8.6" instance="0" alias="smtpuname" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.8.7" instance="0" alias="smtpupass" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.8.8" instance="0" alias="smtphostname" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.8.9" instance="0" alias="smtpconntype" type="string"/>
+   </group>
+   <group name="streamer" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.9.1" instance="0" alias="strmport" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.9.2" instance="0" alias="strmbps" type="integer32"/>
+   </group>
+   <group name="gsmModem" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.10.1" instance="0" alias="mdmtype" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.10.2" instance="0" alias="mdmbrate" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.10.3" instance="0" alias="mdmnum1" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.10.4" instance="0" alias="mdmnum2" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.10.5" instance="0" alias="mdmnum3" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.10.6" instance="0" alias="mdmnum4" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.2.10.7" instance="0" alias="mdmnum5" type="octetstring"/>
+   </group>
+   <group name="remoteAccess" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.3.11.1" instance="0" alias="accaname" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.3.11.2" instance="0" alias="accapass" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.3.11.3" instance="0" alias="accuname" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.3.11.4" instance="0" alias="accupass" type="octetstring"/>
+   </group>
+   <group name="gpOutputs" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.5.1" instance="0" alias="gpofunc1" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.5.2" instance="0" alias="gpotype1" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.5.3" instance="0" alias="gpotout1" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.5.4" instance="0" alias="gpofunc2" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.5.5" instance="0" alias="gpotype2" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.5.6" instance="0" alias="gpotout2" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.5.7" instance="0" alias="gpofunc3" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.5.8" instance="0" alias="gpotype3" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.5.9" instance="0" alias="gpotout3" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.5.10" instance="0" alias="gpofunc4" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.5.11" instance="0" alias="gpotype4" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.5.12" instance="0" alias="gpotout4" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.5.13" instance="0" alias="gpofunc5" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.5.14" instance="0" alias="gpotype5" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.5.15" instance="0" alias="gpotout5" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.5.16" instance="0" alias="gpofunc6" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.5.17" instance="0" alias="gpotype6" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.5.18" instance="0" alias="gpotout6" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.5.19" instance="0" alias="gpofunc7" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.5.20" instance="0" alias="gpotype7" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.5.21" instance="0" alias="gpotout7" type="integer32"/>
+   </group>
+   <group name="audioMpxOutputs" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.6.1" instance="0" alias="volph" type="integer32"/>
+   </group>
+   <group name="device" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.7.1" instance="0" alias="alias" type="octetstring"/>
+   </group>
+   <group name="dateTime" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.7.2.1" instance="0" alias="date" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.7.2.2" instance="0" alias="time" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.7.2.3" instance="0" alias="tzone" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.7.2.4" instance="0" alias="dsten" type="string"/>
+   </group>
+   <group name="serviceTable" ifType="all">
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.1" instance="serviceTableEntry" alias="serviceNum" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.2" instance="serviceTableEntry" alias="serviceActive" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.3" instance="serviceTableEntry" alias="serviceName" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.4" instance="serviceTableEntry" alias="serviceDabChannel" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.5" instance="serviceTableEntry" alias="serviceServiceId" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.6" instance="serviceTableEntry" alias="serviceAcqtime" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.7" instance="serviceTableEntry" alias="serviceEmail" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.8" instance="serviceTableEntry" alias="serviceAlarmRfMin" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.9" instance="serviceTableEntry" alias="serviceAlarmRfMax" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.10" instance="serviceTableEntry" alias="servicAlarmRfTrigge" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.11" instance="serviceTableEntry" alias="servicAlarmRfReleas" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.12" instance="serviceTableEntry" alias="servicAlarmRfEvents" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.13" instance="serviceTableEntry" alias="serviceAlarmDabMin" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.14" instance="serviceTableEntry" alias="serviceAlarmDabMax" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.15" instance="serviceTableEntry" alias="serviAlarmDabTrigge" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.16" instance="serviceTableEntry" alias="serviAlarmDabReleas" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.17" instance="serviceTableEntry" alias="serviAlarmDabEvents" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.18" instance="serviceTableEntry" alias="serviceAlarmSnrMin" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.19" instance="serviceTableEntry" alias="serviceAlarmSnrMax" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.20" instance="serviceTableEntry" alias="serviAlarmSnrTrigge" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.21" instance="serviceTableEntry" alias="serviAlarmSnrReleas" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.22" instance="serviceTableEntry" alias="serviAlarmSnrEvents" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.23" instance="serviceTableEntry" alias="serviceAlarmCnrMin" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.24" instance="serviceTableEntry" alias="serviceAlarmCnrMax" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.25" instance="serviceTableEntry" alias="serviAlarmCnrTrigge" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.26" instance="serviceTableEntry" alias="serviAlarmCnrReleas" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.27" instance="serviceTableEntry" alias="serviAlarmCnrEvents" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.28" instance="serviceTableEntry" alias="serviceAlarmLeftMin" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.29" instance="serviceTableEntry" alias="serviceAlarmLeftMax" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.30" instance="serviceTableEntry" alias="serviAlarmLeftTrigg" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.31" instance="serviceTableEntry" alias="serviAlarmLeftRelea" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.32" instance="serviceTableEntry" alias="serviAlarmLeftEvent" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.33" instance="serviceTableEntry" alias="servicAlarmRightMin" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.34" instance="serviceTableEntry" alias="servicAlarmRightMax" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.35" instance="serviceTableEntry" alias="servAlarmRightTrigg" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.36" instance="serviceTableEntry" alias="servAlarmRightRelea" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.37" instance="serviceTableEntry" alias="servAlarmRightEvent" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.38" instance="serviceTableEntry" alias="serviAlarmFicquaMin" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.39" instance="serviceTableEntry" alias="serviAlarmFicquaMax" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.40" instance="serviceTableEntry" alias="servAlarmFicquTrigg" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.41" instance="serviceTableEntry" alias="servAlarmFicquRelea" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.2.4.2.1.42" instance="serviceTableEntry" alias="servAlarmFicquEvent" type="integer32"/>
+   </group>
+   <group name="monitoring" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.35833.35.3.1" instance="0" alias="mntrCurrentService" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.3.2" instance="0" alias="mntrEnsembleChannel" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.3.3" instance="0" alias="mntrEnsembleId" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.3.4" instance="0" alias="mntrEnsembleLabel" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.3.5" instance="0" alias="mntrServiceSid" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.3.6" instance="0" alias="mntrServiceSubch" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.3.7" instance="0" alias="mntrServiceLabel" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.3.8" instance="0" alias="mntrServiceDls" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.3.9" instance="0" alias="mntrLeftValue" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.3.10" instance="0" alias="mntrLeftValueAvr" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.3.11" instance="0" alias="mntrLeftPeakMax" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.3.12" instance="0" alias="mntrRightValue" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.3.13" instance="0" alias="mntrRightValueAvr" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.3.14" instance="0" alias="mntrRightPeakMax" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.3.15" instance="0" alias="mntrRflvlValue" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.3.16" instance="0" alias="mntrRflvlValueAvr" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.3.17" instance="0" alias="mntrRflvlPeakMax" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.3.18" instance="0" alias="mntrDab" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.3.19" instance="0" alias="mntrSnrValue" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.3.20" instance="0" alias="mntrSnrValueAvr" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.3.21" instance="0" alias="mntrSnrPeakMax" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.3.22" instance="0" alias="mntrCnrValue" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.3.23" instance="0" alias="mntrCnrValueAvr" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.3.24" instance="0" alias="mntrCnrPeakMax" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.3.25" instance="0" alias="mntrFicQualityValue" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.3.26" instance="0" alias="mntrFicQualValueAvr" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.3.27" instance="0" alias="mntrFicQualiPeakMax" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.3.28" instance="0" alias="mntrLoudMomeValuAvr" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.3.29" instance="0" alias="mntLouShoTerValuAvr" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.3.30" instance="0" alias="mntLouLonTerValuAvr" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.3.31" instance="0" alias="mntrEnsemblReconfig" type="integer32"/>
+   </group>
+   <group name="status" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.35833.35.4.1" instance="0" alias="loggerIsRunning" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.4.2" instance="0" alias="loggerCurrenService" type="integer32"/>
+   </group>
+   <group name="serviceStatusTable" ifType="all">
+      <mibObj oid=".1.3.6.1.4.1.35833.35.4.3.1.1" instance="serviceStatusTableEntry" alias="servicestatusNum" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.4.3.1.2" instance="serviceStatusTableEntry" alias="servicAlarmRfStatus" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.4.3.1.3" instance="serviceStatusTableEntry" alias="serviAlarmDabStatus" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.4.3.1.4" instance="serviceStatusTableEntry" alias="serviAlarmSnrStatus" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.4.3.1.5" instance="serviceStatusTableEntry" alias="serviAlarmCnrStatus" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.4.3.1.6" instance="serviceStatusTableEntry" alias="servAlarFicQualStat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.4.3.1.7" instance="serviceStatusTableEntry" alias="serviAlarmLeftStatu" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.35.4.3.1.8" instance="serviceStatusTableEntry" alias="servAlarmRightStatu" type="string"/>
+   </group>
+</datacollection-group>

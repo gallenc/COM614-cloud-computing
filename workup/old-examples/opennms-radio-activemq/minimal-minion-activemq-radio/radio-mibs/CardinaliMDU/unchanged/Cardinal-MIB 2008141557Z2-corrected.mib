@@ -1,0 +1,1950 @@
+--
+-- Copyright (c) 2008-2020 dB Broadcast Limited
+-- --
+-- MIB used for Cardinal MDU  
+-- 
+--
+
+CARDINAL-MIB DEFINITIONS ::= BEGIN
+
+	IMPORTS
+		enterprises
+			FROM RFC1155-SMI
+		Integer32
+		    FROM SNMPv2-SMI
+		MacAddress
+		    FROM SNMPv2-TC;
+
+	dB			OBJECT IDENTIFIER ::= { enterprises 8890 }
+
+	dBProducts	OBJECT IDENTIFIER ::= { dB 1 }
+	dBmibs		OBJECT IDENTIFIER ::= { dB 2 }
+
+	cardinal        OBJECT IDENTIFIER ::= { dBProducts 2002 }
+
+	cardinalMIB MODULE-IDENTITY
+		LAST-UPDATED	"2008141557Z"
+		ORGANIZATION	"dB Broadcast Limited"
+		CONTACT-INFO	"Customer Support
+                         Aurora House
+                         208 Lancaster Way
+                         Ely
+                         Cambridgeshire
+                         England
+                         CB6 3NX                    
+
+                         Tel.   +44 (0)1353 661117
+                         Fax.   +44 (0)1353 665671
+                         e-mail support@dbbroadcast.co.uk"
+		DESCRIPTION		"The MIB module for the Cardinal MDU"        
+        REVISION		"0910151720Z"
+		DESCRIPTION		"Table indexes now referenced from zero.
+		                 To use with SW version 1.3.2 or above."
+		REVISION		"1001141748Z"
+		DESCRIPTION		"Added support for optional temperature sensor
+		                 for use with software version 1.4.1 or above."
+		REVISION        "1309251719Z"
+		DESCRIPTION     "Added support for optional humidity sensor and
+		                 names in GPI and GP Relays for use with software
+		                 version 1.5.2 or above."                        
+		REVISION        "1309270955Z"
+		DESCRIPTION     "Added humidity trap."    
+		REVISION        "1402110749Z"
+		DESCRIPTION     "Changed OutputChangeDelay to integer only as now
+		                 the maximum range for stop and start delays is 
+		                 determined by the value of 
+		                 infoGroup.maxStopStartDelay"
+		REVISION        "1810291108Z"
+		DESCRIPTION     "Added powerFactor to infoGroup."
+		REVISION        "2001290752Z"
+		DESCRIPTION     "Significant internal updates for MDU12B including
+                         support for SNMP2/SNMP3. MIB mostly remains the same
+                         
+						     Power threshold traps
+							 startResetCode
+
+                         Added MIB-2 notifications:
+
+							outputStateChangeNotification
+							outputFuseChangeNotification
+							outputCurrentThresholdNotification
+							inputVoltageThresholdNotification
+							inputSelectionNotification
+							temperatureThresholdNotification
+							gpInputChangedNotification
+							gpRelayChangeNotification
+							humidityThresholdNotification
+							instantaneousPowerThresholdNotification
+							watchdogdNotification
+						 "
+		REVISION        "2008141557Z"
+		DESCRIPTION     "Updated postal address."
+                 
+		::= { dBmibs 2002 }
+
+-- 
+-- Type Definitions
+--
+                  
+    EnableDisable      ::=  TEXTUAL-CONVENTION                            
+	                        DISPLAY-HINT "d"
+	                        STATUS       current
+	                        DESCRIPTION
+	                        "Used to describe something that can be enabled 
+	                         or disabled!"               
+	                        SYNTAX       Integer32  { disabled(0), enabled(1) } 
+	                    
+	Present            ::=  TEXTUAL-CONVENTION
+	                        DISPLAY-HINT "d"
+	                        STATUS       current
+	                        DESCRIPTION
+	                        "Used to describe something that may or not be 
+	                         present."
+	                        SYNTAX       Integer32  { notPresent(0), present(1) } 
+	
+	    
+	FuseStates		   ::=  TEXTUAL-CONVENTION
+	                        DISPLAY-HINT "d"
+	                        STATUS       current
+	                        DESCRIPTION
+	                        "Used to indicate whether the fuse is good(0) or 
+	                         whether it has blown (1)."               
+	                        SYNTAX       Integer32  { ok(0), fail(1) } 
+	                
+	                
+	OutputState        ::= TEXTUAL-CONVENTION
+	                        DISPLAY-HINT "d"
+	                        STATUS       current
+	                        DESCRIPTION
+	                        "Whether or not the output has been switched on."                
+	                        SYNTAX       Integer32  { on(0), off(1), waiting(2), shed(3) } 
+	                         
+	                
+	GpiState        ::= TEXTUAL-CONVENTION
+	                        DISPLAY-HINT "d"
+	                        STATUS       current
+	                        DESCRIPTION
+	                        "Whether the Gpi circuit is open (0) or closed (1)."                
+	                        SYNTAX       Integer32  { open(0), closed(1) }    
+	                        
+      GpiIndex         ::= TEXTUAL-CONVENTION
+                            DISPLAY-HINT "d"
+                            STATUS       current
+                            DESCRIPTION
+                            "Identifies the gpi number."
+                            SYNTAX       Integer32 (0..7)
+                     
+    RelayState            ::= TEXTUAL-CONVENTION
+	                        DISPLAY-HINT "d"
+	                        STATUS       current
+	                        DESCRIPTION
+	                        "Whether the relay is open(0) or closed (1)."                
+	                        SYNTAX       Integer32  { open(0), closed(1) }    
+                
+	OutputSelect        ::= TEXTUAL-CONVENTION
+	                        DISPLAY-HINT "d"
+	                        STATUS       current
+	                        DESCRIPTION
+	                        "Whether or not the output has been switched on."                
+	                        SYNTAX       Integer32  { on(0), off(1) } 
+	                      
+	LockState           ::= TEXTUAL-CONVENTION
+	                        DISPLAY-HINT "d"
+	                        STATUS       current
+	                        DESCRIPTION
+	                        "Used to indicate whether the output has been 
+	                         locked in it's current state."                
+	                        SYNTAX       Integer32  { unlocked(0), locked(1) }     	  
+	
+	AlarmEnableState    ::= TEXTUAL-CONVENTION
+	                        DISPLAY-HINT "d"
+	                        STATUS       current
+	                        DESCRIPTION
+	                        "Used to control or indicate whether the alarm 
+	                         should be activated."                
+	                        SYNTAX       EnableDisable
+	                        
+	Current             ::= TEXTUAL-CONVENTION
+	                        DISPLAY-HINT "d"
+	                        STATUS       current
+	                        DESCRIPTION
+	                        "The current in milliamps. Accurate to 100mA but 
+	                         provided in milliamps to simplify manager code."
+	                        SYNTAX       Integer32 (0..15000)
+	                                         
+	InstantaneousPower  ::= TEXTUAL-CONVENTION
+	                        DISPLAY-HINT "d"
+	                        STATUS       current
+	                        DESCRIPTION
+	                        "The instantaneous power supplied in Watts."
+	                        SYNTAX       Integer32 (0..15000)	                                         
+	                        
+	PowerSupplied       ::= TEXTUAL-CONVENTION
+	                        DISPLAY-HINT "d"
+	                        STATUS       current
+	                        DESCRIPTION
+	                        "The power supplied in WH."
+	                        SYNTAX       Integer32 (0..15000)
+
+	OutputChangeDelay    ::= TEXTUAL-CONVENTION
+	                        DISPLAY-HINT "d"
+	                        STATUS       current
+	                        DESCRIPTION
+	                        "The delay in seconds."
+	                        SYNTAX       Integer32
+
+	Volts               ::= TEXTUAL-CONVENTION
+	                        DISPLAY-HINT "d"
+	                        STATUS       current
+	                        DESCRIPTION
+	                        "The potential in volts"
+	                        SYNTAX       Integer32 (0..250)
+                       
+    PowerFactor       	::= TEXTUAL-CONVENTION
+	                        DISPLAY-HINT "d"
+	                        STATUS       current
+	                        DESCRIPTION
+	                        "One hundred times the power factor."
+	                        SYNTAX       Integer32 ( -100..100 )
+							
+	Temperature         ::= TEXTUAL-CONVENTION
+	                        DISPLAY-HINT "d"
+	                        STATUS       current
+	                        DESCRIPTION
+	                        "Rack temperature in Celsius"
+	                        SYNTAX       Integer32 ( -25..125 )
+	                        
+
+	Humidity            ::= TEXTUAL-CONVENTION
+	                        DISPLAY-HINT "d"
+	                        STATUS       current
+	                        DESCRIPTION
+	                        "Rack relative humidity measured at sensor, 
+	                         expressed as a percentage."
+	                        SYNTAX       Integer32 ( 0..100 )
+	                          	                                              
+	TrapEnable          ::= TEXTUAL-CONVENTION
+	                        DISPLAY-HINT "d"
+	                        STATUS       current
+	                        DESCRIPTION
+	                        "Indicates whether traps should be sent or 
+	                         suppressed."
+	                        SYNTAX       EnableDisable
+	                        	                                              
+	ModelString		    ::= OCTET STRING 
+                                
+	FirmwareString      ::= OCTET STRING          
+	
+    LocationString      ::= TEXTUAL-CONVENTION
+	                        DISPLAY-HINT "32a"
+	                        STATUS       current
+	                        DESCRIPTION
+	                        "Used to describe the location or purpose of the 
+	                         unit."
+	                        SYNTAX       OCTET STRING ( SIZE(1..32))
+                                             
+                                             
+    EmailAddressString  ::= TEXTUAL-CONVENTION
+	                        DISPLAY-HINT "64a"
+	                        STATUS       current
+	                        DESCRIPTION
+	                        "Email address."
+	                        SYNTAX       OCTET STRING ( SIZE(1..64))
+                                            
+    SmtpServerString  ::= TEXTUAL-CONVENTION
+	                        DISPLAY-HINT "32a"
+	                        STATUS       current
+	                        DESCRIPTION
+	                        "Smtp server address"
+	                        SYNTAX       OCTET STRING ( SIZE(1..32))
+
+
+    OutputIndex         ::= TEXTUAL-CONVENTION
+                            DISPLAY-HINT "d"
+                            STATUS       current
+                            DESCRIPTION
+                            "Identifies the output number. The output on the 
+                            left is zero."
+                            SYNTAX       Integer32 (0..11)       
+                            
+    OutputName          ::= TEXTUAL-CONVENTION
+                            DISPLAY-HINT "8a"
+                            STATUS       current
+                            DESCRIPTION
+                            "Allows a user defined name to be associated with
+                             an output."
+                            SYNTAX       OCTET STRING ( SIZE(1..8))                    
+       
+   EventType            ::= TEXTUAL-CONVENTION	  
+                            STATUS       current
+	                        DESCRIPTION
+	                        "Used to indicate the type of event."              
+	                        SYNTAX       Integer32  { inputVoltageThresholdCrossed(0),
+	                                                  inputSelection(1),                                                                             
+	                                                  outputCurrentThresholdCrossed(2),
+	                                                  outputStateChange(3), 
+	                                                  fuseStateChange(4),
+	                                                  temperatureThresholdCrossed(5),
+	                                                  gpInput(6),
+	                                                  gpRelay(7),
+	                                                  humidityThresholdCrossed(8),
+	                                                  powerThresholdCrossed(9)
+	                                                }   
+	                        
+    LogTime             ::= OCTET STRING 
+      
+    
+    LogIndex            ::= Integer32
+                                                              
+    EventString         ::= OCTET STRING 
+     
+    InputIndex         ::= TEXTUAL-CONVENTION
+                            DISPLAY-HINT "d"
+                            STATUS       current
+                            DESCRIPTION
+                            "Identifies the input number. The input on the 
+                            left when viewed from the front is zero."
+                            SYNTAX       Integer32 (0..1)
+
+                            
+    GpiName              ::= TEXTUAL-CONVENTION
+                            DISPLAY-HINT "8a"
+                            STATUS       current
+                            DESCRIPTION
+                            "The name of a GPI input or output."
+                            SYNTAX       OCTET STRING ( SIZE(1..8))  
+--
+-- Group definitions
+--
+
+	cardinalObjects    		OBJECT IDENTIFIER ::= { cardinalMIB 1 }
+		infoGroup		    OBJECT IDENTIFIER ::= { cardinalObjects 1 }
+		settingsGroup		OBJECT IDENTIFIER ::= { cardinalObjects 2 }
+		outputStatusGroup	OBJECT IDENTIFIER ::= { cardinalObjects 3 }
+		outputSettingsGroup	OBJECT IDENTIFIER ::= { cardinalObjects 4 }    
+		logGroup	        OBJECT IDENTIFIER ::= { cardinalObjects 5 }                     
+         
+    dBCardinalEvents        OBJECT IDENTIFIER ::= { cardinalMIB 2 }  
+    
+    cardinalNotifications	OBJECT IDENTIFIER ::= { cardinalMIB 3 }
+
+                 
+--
+-- InfoGroup
+--     
+
+	model OBJECT-TYPE
+		SYNTAX			ModelString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Indicates the MDU model."
+		::= { infoGroup 1 }  
+		
+   serialNumber  OBJECT-TYPE 
+		SYNTAX			Integer32
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The serial number of the MDU."
+		::= { infoGroup 2 }
+
+ 	firmware OBJECT-TYPE
+		SYNTAX			FirmwareString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"The firmware version number."
+		::= { infoGroup 3 }  
+   
+	location  OBJECT-TYPE
+		SYNTAX			LocationString
+		MAX-ACCESS		read-write
+		STATUS			current
+		DESCRIPTION		"User configured location or description of the unit
+		                 to make identification easier."
+		::= { infoGroup 4 }  
+ 
+ 	ipAddress OBJECT-TYPE
+		SYNTAX			IpAddress
+		MAX-ACCESS		read-write
+		STATUS			current
+		DESCRIPTION		"IP address of this agent."
+		::= { infoGroup 5 }
+
+ 	ipSubnet OBJECT-TYPE
+		SYNTAX			IpAddress
+		MAX-ACCESS		read-write
+		STATUS			current
+		DESCRIPTION		"IP Subnet."
+		::= { infoGroup 6 }
+     
+ 	ipGateway OBJECT-TYPE
+		SYNTAX			IpAddress
+		MAX-ACCESS		read-write
+		STATUS			current
+		DESCRIPTION		"IP address of default gateway."
+		::= { infoGroup 7 }   
+		
+	numberOfInputSupplies OBJECT-TYPE
+		SYNTAX			Integer32
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"The number of mains input supplies to the Mains
+		                 Distribution Unit."
+		::= { infoGroup 8 }
+		  
+    inputVoltageSensingPresent OBJECT-TYPE
+		SYNTAX			Present
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Determines whether the Mains Distribution Unit 
+		                 supports input voltage sensing."
+		::= { infoGroup 9 }  
+     
+	outputCurrentSensingPresent OBJECT-TYPE
+		SYNTAX			Present
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Determines whether the Mains Distribution Unit 
+		                 supports output current sensing."
+		::= { infoGroup 10 }
+		
+	numberOfOutputSupplies OBJECT-TYPE
+		SYNTAX			Integer32
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"The number of outputs supplies from the Mains
+		                 Distribution Unit."
+		::= { infoGroup 11 }   
+		
+	inputSelected OBJECT-TYPE
+		SYNTAX			InputIndex
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"The input currently selected A(0) or B(1))."
+		::= { infoGroup 12 }  
+		   
+	inputVoltage1 OBJECT-TYPE
+		SYNTAX			Volts
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"The voltage at input 1."
+		::= { infoGroup 13 }  
+
+	inputVoltage2 OBJECT-TYPE
+		SYNTAX			Volts
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"The voltage at input 2."
+		::= { infoGroup 14 }      
+		
+ 	ipNtpServer OBJECT-TYPE
+		SYNTAX			IpAddress
+		MAX-ACCESS		read-write
+		STATUS			current
+		DESCRIPTION		"IP address of the NTP (network time server)."
+		::= { infoGroup 15 }   
+
+ 	ipPrimaryDnsServer OBJECT-TYPE
+		SYNTAX			IpAddress
+		MAX-ACCESS		read-write
+		STATUS			current
+		DESCRIPTION		"The IP address of the primary Domain Name System server."
+		::= { infoGroup 16 }   	
+		
+ 	ipSecondaryDnsServer OBJECT-TYPE
+		SYNTAX			IpAddress
+		MAX-ACCESS		read-write
+		STATUS			current
+		DESCRIPTION		"The IP address of the secondary Domain Name System server."
+		::= { infoGroup 17 }   	         
+				
+ 	dhcpEnabled OBJECT-TYPE
+		SYNTAX			EnableDisable
+		MAX-ACCESS		read-write
+		STATUS			current
+		DESCRIPTION		"Determines whether or not to use DHCP to find IP addresses."
+		::= { infoGroup 18 }
+
+ 	macAddress OBJECT-TYPE
+		SYNTAX			MacAddress
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"The MAC address of the Ethernet transceiver."
+		::= { infoGroup 19 }
+
+
+ 	relayRelaxedState OBJECT-TYPE
+		SYNTAX			RelayState
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"The relaxed state of the relays. Open (0) or closed (1)"
+		::= { infoGroup 20 }        
+		
+ 	eventObjectId OBJECT-TYPE
+		SYNTAX			OBJECT IDENTIFIER
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"The object identity used to identify the device type 
+		                 when events are sent."
+		::= { infoGroup 21 }       
+
+	externalDevicePresent OBJECT-TYPE
+		SYNTAX			Present
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Indicates whether the external device has been 
+		                 detected."
+		::= { infoGroup 22 }
+		
+ 	thermometerPresent OBJECT-TYPE
+		SYNTAX			Present
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Indicates whether the thermometer has reported any 
+		                 temperatures since startup."
+		::= { infoGroup 23 }
+
+ 	temperature OBJECT-TYPE
+		SYNTAX			Temperature
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"The temperature as measured at the device in celcius. 
+		                 If no thermometer has been detected this value has no
+		                 meaning and -127 (out of range) will be reported."
+		::= { infoGroup 24 }
+
+ 	humiditySensorPresent OBJECT-TYPE
+		SYNTAX			Present
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Indicates whether the sensor has reported any 
+		                 humidities since startup."
+		::= { infoGroup 25 }
+
+ 	humidity OBJECT-TYPE
+		SYNTAX			Humidity
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"The humidity as reported by the sensor."
+		::= { infoGroup 26 }       
+		
+ 	maxStopStartDelay OBJECT-TYPE
+		SYNTAX			Integer32
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"The maximum delay that can be configured for 
+		                 startup and shedding delays in outputStartDelay
+		                 and outputStopDelay."
+		::= { infoGroup 27 }
+		
+ 	powerFactor OBJECT-TYPE
+		SYNTAX			PowerFactor
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"One hundred times the power factor (e.g. -100=-1 and
+                         100=1. This avoids the need for decimals in the MIB."
+		::= { infoGroup 28 }
+		
+	inputCurrent OBJECT-TYPE
+		SYNTAX			Current
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"The input current in milliamps."
+		::= { infoGroup 29 }
+		   	     
+	instantaneousPower OBJECT-TYPE
+		SYNTAX			InstantaneousPower
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"The total power consumption of unit in Watts."
+		::= { infoGroup 30 }
+		
+	cumulativeEnergy OBJECT-TYPE
+		SYNTAX			Gauge32
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"The total energy consumption the unit in WH"
+		::= { infoGroup 31 }  
+				
+	startResetCode OBJECT-TYPE
+		SYNTAX			Integer32
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"The reset code read on startup."
+		::= { infoGroup 32 }  
+--
+--  Frame level settings group.
+--
+    inputVoltageLowerThreshold OBJECT-TYPE
+        SYNTAX          Volts   
+		MAX-ACCESS		read-write
+		STATUS			current
+		DESCRIPTION		"Minimum input potential in volts before an alarm is
+		                 raised."
+		::= { settingsGroup 1 }
+
+    inputVoltageUpperThreshold OBJECT-TYPE
+        SYNTAX          Volts   
+		MAX-ACCESS		read-write
+		STATUS			current
+		DESCRIPTION		"Maximum input potential in volts before an alarm is 
+		                 raised."
+		::= { settingsGroup 2 }
+     
+ 	ipTrapDestination1 OBJECT-TYPE
+		SYNTAX			IpAddress
+		MAX-ACCESS		read-write
+		STATUS			current
+		DESCRIPTION		"IP address of first trap destination."
+		::= { settingsGroup 3 }
+               
+  	ipTrapDestination2 OBJECT-TYPE
+		SYNTAX			IpAddress
+		MAX-ACCESS		read-write
+		STATUS			current
+		DESCRIPTION		"IP address of second trap destination."
+		::= { settingsGroup 4 }    
+	
+	trapEnable1 OBJECT-TYPE
+		SYNTAX			TrapEnable
+		MAX-ACCESS		read-write
+		STATUS			current
+		DESCRIPTION		"Allows traps to be enabled or inhibited to 
+		                 trap destination 1."
+		::= { settingsGroup 5 } 
+	
+	trapEnable2 OBJECT-TYPE
+		SYNTAX			TrapEnable
+		MAX-ACCESS		read-write
+		STATUS			current
+		DESCRIPTION		"Allows traps to be enabled or inhibited to 
+		                 trap destination 2."
+		::= { settingsGroup 6 } 		
+
+    temperatureLowerThreshold OBJECT-TYPE
+        SYNTAX          Temperature   
+		MAX-ACCESS		read-write
+		STATUS			current
+		DESCRIPTION		"Minimum internal temperature in Celsius before an 
+		                 alarm is raised."
+		::= { settingsGroup 7 }
+
+    temperatureUpperThreshold OBJECT-TYPE
+        SYNTAX          Temperature   
+		MAX-ACCESS		read-write
+		STATUS			current
+		DESCRIPTION		"Maximum internal temperature in Celsius before an 
+		                 alarm is raised."
+		::= { settingsGroup 8 }
+
+    emailAddress OBJECT-TYPE
+        SYNTAX          EmailAddressString   
+		MAX-ACCESS		read-write
+		STATUS			current
+		DESCRIPTION		"The email address to send email alarms to."
+		::= { settingsGroup 9 }
+		         
+ 	ipSmtpServer OBJECT-TYPE
+		SYNTAX			SmtpServerString
+		MAX-ACCESS		read-write
+		STATUS			current
+		DESCRIPTION		"Address of the SMTP mail server."
+		::= { settingsGroup 10 }
+		         
+	ipVoltageAlarmEnable OBJECT-TYPE
+		SYNTAX			AlarmEnableState
+		MAX-ACCESS		read-write
+		STATUS			current
+		DESCRIPTION		"Determines whether alarms should be sent if measured
+                         input voltages fall outside their predetermined
+                         thresholds. 
+                         disabled(0), enabled(1)"
+		::= { settingsGroup 11 } 
+		                                
+	ipEmailEnable OBJECT-TYPE
+		SYNTAX			EnableDisable
+		MAX-ACCESS		read-write
+		STATUS			current
+		DESCRIPTION		"Determines whether or not to send emails on events; 
+		                 those events already have to be enabled.
+		                 
+                         disabled(0), enabled(1)"
+		::= { settingsGroup 12 } 
+                                                   
+	temperatureAlarmEnable OBJECT-TYPE
+		SYNTAX			EnableDisable
+		MAX-ACCESS		read-write
+		STATUS			current
+		DESCRIPTION		"Enables or disables the temperature alarm.		                 
+                         disabled(0), enabled(1)"
+		::= { settingsGroup 13 } 
+		
+   humidityAlarmUpperThreshold OBJECT-TYPE
+		SYNTAX			Humidity
+		MAX-ACCESS		read-write
+		STATUS			current
+		DESCRIPTION		"The upper humidity alarm threshold (%)."
+		::= { settingsGroup 14 } 
+		
+   humidityAlarmLowerThreshold OBJECT-TYPE
+		SYNTAX			Humidity
+		MAX-ACCESS		read-write
+		STATUS			current
+		DESCRIPTION		"The lower humidity alarm threshold (%)."
+		::= { settingsGroup 15 } 
+		
+   humidityAlarmEnable OBJECT-TYPE
+		SYNTAX			EnableDisable
+		MAX-ACCESS		read-write
+		STATUS			current
+		DESCRIPTION		"Enables or disables the humidity alarm.		                 
+                         disabled(0), enabled(1)"
+		::= { settingsGroup 16 } 
+		
+   instantaneousPowerAlarmUpperThreshold OBJECT-TYPE
+		SYNTAX			InstantaneousPower
+		MAX-ACCESS		read-write
+		STATUS			current
+		DESCRIPTION		"The lower power alarm threshold."
+		::= { settingsGroup 17 } 
+
+   instantaneousPowerAlarmLowerThreshold OBJECT-TYPE
+		SYNTAX			InstantaneousPower
+		MAX-ACCESS		read-write
+		STATUS			current
+		DESCRIPTION		"The upper power alarm threshold."
+		::= { settingsGroup 18 } 
+
+   instantaneousPowerAlarmEnable OBJECT-TYPE
+		SYNTAX			EnableDisable
+		MAX-ACCESS		read-write
+		STATUS			current
+		DESCRIPTION		"Enables or disables the instantaneous power alarm.		                 
+                         disabled(0), enabled(1)"
+		::= { settingsGroup 19 } 
+
+--
+-- Output Status Group
+--
+	outputStatusTable OBJECT-TYPE
+		SYNTAX SEQUENCE OF OutputStatusEntry
+		ACCESS			not-accessible
+		STATUS			mandatory
+		DESCRIPTION		"Table describing the current state of each output." 	
+		::= { outputStatusGroup 1 }
+
+	outputStatusEntry OBJECT-TYPE
+		SYNTAX			OutputStatusEntry
+		ACCESS			not-accessible
+		STATUS			mandatory
+		DESCRIPTION		"Information about a single output."
+		INDEX           { outputStatusIndex }  
+		::= { outputStatusTable 1 }                    
+                      
+	OutputStatusEntry ::=
+		SEQUENCE {	outputStatusIndex   OutputIndex, 
+		            outputState 		OutputState,   
+		            lockState           LockState,
+					fuseState		    FuseStates,
+					outputCurrent       Current }
+
+  	outputStatusIndex OBJECT-TYPE 
+		SYNTAX			OutputIndex
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The output number - left (when viewed from the 
+		                 front of the unit) is zero."
+		::= { outputStatusEntry 1 }
+
+	outputState OBJECT-TYPE 
+		SYNTAX			OutputState
+		ACCESS  			read-only
+		STATUS			mandatory
+		DESCRIPTION		"Indicates whether the output is on or off."
+		::= { outputStatusEntry 2 }
+                                  
+	lockState OBJECT-TYPE 
+		SYNTAX			LockState
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"Indicates whether the output has been locked in this 
+		                 state to prevent users from modifying it."
+		::= { outputStatusEntry 3 }
+
+	fuseState OBJECT-TYPE 
+		SYNTAX			FuseStates
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"Indicates whether the fuse has failed."
+		::= { outputStatusEntry 4 }
+             
+	outputCurrent OBJECT-TYPE 
+		SYNTAX			Current
+		ACCESS  			read-only
+		STATUS			mandatory
+		DESCRIPTION		"The current measured at this output in milliamps."
+		::= { outputStatusEntry 5 }
+ 
+    gpiStatusTable OBJECT-TYPE 
+		SYNTAX SEQUENCE OF GpiStatusEntry
+		ACCESS			not-accessible
+		STATUS			mandatory
+		DESCRIPTION		"Table describing the current state of each GPI Input" 	
+		::= { outputStatusGroup 2 }
+
+	gpiStatusEntry OBJECT-TYPE
+		SYNTAX			GpiStatusEntry
+		ACCESS			not-accessible
+		STATUS			mandatory
+		DESCRIPTION		"Information about a single gpi (0) open (1) closed."
+		INDEX           { outputStatusIndex }  
+		::= { gpiStatusTable 1 }                    
+                      
+	GpiStatusEntry ::=
+		SEQUENCE {	gpiStatusIndex      GpiIndex, 
+		            gpiState 		    GpiState,
+		            gpiName             GpiName,
+		            gpiAlarmEnable      EnableDisable}
+                 
+
+  	gpiStatusIndex OBJECT-TYPE 
+		SYNTAX			GpiIndex
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The gpi number."
+		::= { gpiStatusEntry 1 }
+
+	gpiState OBJECT-TYPE 
+		SYNTAX			GpiState
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"Indicates whether the gpi contacts are open (0) or closed (1)."
+		::= { gpiStatusEntry 2 }
+ 
+	gpiName OBJECT-TYPE 
+		SYNTAX			GpiName
+		ACCESS  		read-write
+		STATUS			mandatory
+		DESCRIPTION		"The name of the GP Input used in the web, log and traps."
+		::= { gpiStatusEntry 3 }   
+		    
+	gpiAlarmEnable OBJECT-TYPE 
+		SYNTAX			EnableDisable
+		ACCESS  		read-write
+		STATUS			mandatory
+		DESCRIPTION		"Used to determine whether or not to send alarms 
+		                (traps) when the state of the input changes."
+		::= { gpiStatusEntry 4 }
+
+
+--
+-- Output Settings Group
+--
+	outputSettingsTable OBJECT-TYPE
+		SYNTAX SEQUENCE OF OutputSettingsEntry
+		ACCESS			not-accessible
+		STATUS			mandatory
+		DESCRIPTION		"Table allowing configuration of each output." 	
+		::= { outputSettingsGroup 1 }
+
+	outputSettingsEntry OBJECT-TYPE
+		SYNTAX			OutputSettingsEntry
+		ACCESS			not-accessible
+		STATUS			mandatory
+		DESCRIPTION		"Row to allow configuration of a single output."
+		INDEX           { outputSettingsIndex }  
+		::= { outputSettingsTable 1 }                    
+                      
+	OutputSettingsEntry ::=
+		SEQUENCE {	outputSettingsIndex          OutputIndex,  
+		            outputName                   OutputName,   
+		            outputAlarmEnable  	         AlarmEnableState,  					
+		            fuseAlarmEnable		         AlarmEnableState,
+					currentAlarmEnable           AlarmEnableState,   
+					outputCurrentLowerThreshold  Current,    
+					outputCurrentUpperThreshold  Current,
+					outputStartDelay             OutputChangeDelay,
+					outputStopDelay              OutputChangeDelay,      
+					outputCanShed                EnableDisable,       
+					outputIntendedState          OutputSelect,  
+					outputOverheatShed           EnableDisable
+		         }     
+					
+  	outputSettingsIndex OBJECT-TYPE 
+		SYNTAX			OutputIndex
+		ACCESS  		read-write
+		STATUS			mandatory
+		DESCRIPTION		"The output number - left (when viewed from the 
+		                 front) is 0."
+		::= { outputSettingsEntry 1 }
+          
+  	outputName OBJECT-TYPE 
+		SYNTAX			OutputName
+		ACCESS  		read-write
+		STATUS			mandatory
+		DESCRIPTION		"A label assigned to this output to allow it to be
+		                 easliy identified. Upto 8 characters long."
+		::= { outputSettingsEntry 2 }
+      
+  	fuseAlarmEnable OBJECT-TYPE 
+		SYNTAX			AlarmEnableState
+		ACCESS  		read-write
+		STATUS			mandatory
+		DESCRIPTION		"Enables or disables the traps sent when the fuse 
+		                 state changes."
+		::= { outputSettingsEntry 3 }
+      
+  	currentAlarmEnable OBJECT-TYPE 
+		SYNTAX			AlarmEnableState
+		ACCESS  		read-write
+		STATUS			mandatory
+		DESCRIPTION		"Enables or disables the traps sent when current for 
+		                 this output is outside it's configured boundaries."
+		::= { outputSettingsEntry 4 }
+
+  	outputAlarmEnable OBJECT-TYPE 
+		SYNTAX			AlarmEnableState
+		ACCESS  		read-write
+		STATUS			mandatory
+		DESCRIPTION		"Enables or disables the traps sent when output state 
+		                 changes."
+		::= { outputSettingsEntry 5 }    
+		
+     outputCurrentLowerThreshold OBJECT-TYPE
+        SYNTAX          Current   
+		MAX-ACCESS		read-write
+		STATUS			current
+		DESCRIPTION		"Minimum output current in milliamps before an alarm 
+		                 is raised. The indicator light uses some power which
+		                 needs to be taken into account when choosing a lower
+		                 threshold."
+		::= { outputSettingsEntry 6 }
+
+    outputCurrentUpperThreshold OBJECT-TYPE
+        SYNTAX          Current   
+		MAX-ACCESS		read-write
+		STATUS			current
+		DESCRIPTION		"Maximum output current in milliamps before an alarm 
+		                 is raised."
+		::= { outputSettingsEntry 7 }
+                                   
+    outputStartDelay OBJECT-TYPE
+        SYNTAX          OutputChangeDelay   
+		MAX-ACCESS		read-write
+		STATUS			current
+		DESCRIPTION		"The startup delay before this relay is activated. The
+		                 range is 0..infoGroup.maxStopStartDelay"
+		::= { outputSettingsEntry 8 }
+                               
+    outputStopDelay OBJECT-TYPE
+        SYNTAX          OutputChangeDelay   
+		MAX-ACCESS		read-write
+		STATUS			current
+		DESCRIPTION		"When shedding outputs this allows the order to be 
+		                 specified. The range is 
+		                 0..infoGroup.maxStopStartDelay"
+		::= { outputSettingsEntry 9 }
+              
+    outputCanShed OBJECT-TYPE
+        SYNTAX          EnableDisable   
+		MAX-ACCESS		read-write
+		STATUS			current
+		DESCRIPTION		"Indicates this output can be shed if necessary"
+		::= { outputSettingsEntry 10 }   
+		
+	outputIntendedState OBJECT-TYPE 
+		SYNTAX			OutputSelect
+		ACCESS  		read-write
+		STATUS			mandatory         
+		DESCRIPTION		"Used to set the output relay."
+		::= { outputSettingsEntry 11 }
+                        
+    outputOverheatShed OBJECT-TYPE
+        SYNTAX          EnableDisable   
+		MAX-ACCESS		read-write
+		STATUS			current
+		DESCRIPTION		"Indicates this output will be shed if the temperature
+		                 exceeds the upper threshold. This overrides the 
+		                 locking flag. When the temperature returns to normal
+		                 the output is not restored, the user will have to set
+		                 it again."
+		::= { outputSettingsEntry 12 }         
+                      
+	outputSheddingOnFirstInputLost OBJECT-TYPE
+		SYNTAX EnableDisable		
+		ACCESS			read-write
+		STATUS			mandatory
+		DESCRIPTION		"If the main input is lost allow ouput shedding. (0 - disable, 1 - enable)." 	
+		::= { outputSettingsGroup 2 }
+         
+         
+
+    gpRelayTable OBJECT-TYPE 
+		SYNTAX SEQUENCE OF GpRelayEntry
+		ACCESS			not-accessible
+		STATUS			mandatory
+		DESCRIPTION		"Table describing the current state of each GP Relay" 	
+		::= { outputSettingsGroup 3 }
+
+	gpRelayEntry OBJECT-TYPE
+		SYNTAX			GpRelayEntry
+		ACCESS			not-accessible
+		STATUS			mandatory
+		DESCRIPTION		"Information about a single gp relay (0) open (1) closed."
+		INDEX           { outputStatusIndex }  
+		::= { gpRelayTable 1 }                    
+                      
+	GpRelayEntry ::=
+		SEQUENCE {	gpRelayIndex      GpiIndex, 
+		            gpRelayState 		    GpiState,
+		            gpRelayName             GpiName,
+		            gpRelayAlarmEnable      EnableDisable}
+                 
+
+  	gpRelayIndex OBJECT-TYPE 
+		SYNTAX			GpiIndex
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The gpi number."
+		::= { gpRelayEntry 1 }
+
+	gpRelayState OBJECT-TYPE 
+		SYNTAX			GpiState
+		ACCESS  		read-write
+		STATUS			mandatory
+		DESCRIPTION		"Indicates whether the gpi contacts are open (0) or closed (1)."
+		::= { gpRelayEntry 2 }
+ 
+	gpRelayName OBJECT-TYPE 
+		SYNTAX			GpiName
+		ACCESS  		read-write
+		STATUS			mandatory
+		DESCRIPTION		"The name assigned to the GPI relay."
+		::= { gpRelayEntry 3 }   
+		    
+	gpRelayAlarmEnable OBJECT-TYPE 
+		SYNTAX			EnableDisable
+		ACCESS  		read-write
+		STATUS			mandatory
+		DESCRIPTION		"Used to determine whether or not to send alarms 
+		                (traps) when the state of the input changes."
+		::= { gpRelayEntry 4 }
+
+                                                          
+--                                                                                   
+--                                                                                --
+-- Logs
+--
+--                        
+	eventLogTable OBJECT-TYPE
+		SYNTAX SEQUENCE OF EventLogEntry
+		ACCESS			not-accessible
+		STATUS			mandatory
+		DESCRIPTION		"Event log table" 	
+		::= { logGroup 1 }
+            
+	eventLogEntry OBJECT-TYPE
+		SYNTAX			EventLogEntry
+		ACCESS			not-accessible
+		STATUS			mandatory
+		DESCRIPTION		"Single Row of the event log"
+		INDEX           { eventLogIndex }  
+		::= { eventLogTable 1 }                    
+                      
+	EventLogEntry ::=
+		SEQUENCE {	eventLogIndex                LogIndex,  
+		            eventTime                    LogTime,   
+		            eventType                    EventType,  					
+		            eventDescription             EventString
+		         }   
+		           
+       	eventLogIndex OBJECT-TYPE 
+		SYNTAX			LogIndex
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The index in the event log - increases with age."
+		::= { eventLogEntry 1 }
+  
+       	eventTime OBJECT-TYPE 
+		SYNTAX			LogTime
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The time of event log. (d/m/y h:m:s) GMT."
+		::= { eventLogEntry 2 }
+                                  
+       	eventType OBJECT-TYPE 
+		SYNTAX			EventType
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The type of the event."
+		::= { eventLogEntry 3 }   
+		    
+       	eventDescription OBJECT-TYPE 
+		SYNTAX			EventString
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"What happened."
+		::= { eventLogEntry 4 }
+
+                           
+                          
+	PowerLogEntry ::=
+		SEQUENCE {	powerLogIndex                LogIndex,  
+		            powerTime                    LogTime,   		   
+		            powerOp1                     PowerSupplied,    	   
+		            powerOp2                     PowerSupplied,   	   
+		            powerOp3                     PowerSupplied,    	   
+		            powerOp4                     PowerSupplied,     	   
+		            powerOp5                     PowerSupplied,    	   
+		            powerOp6                     PowerSupplied,   	   
+		            powerOp7                     PowerSupplied,    	   
+		            powerOp8                     PowerSupplied,        	   
+		            powerOp9                     PowerSupplied,    	   
+		            powerOp10                    PowerSupplied,   	   
+		            powerOp11                    PowerSupplied,    	   
+		            powerOp12                    PowerSupplied   
+		         }                                             
+           
+	powerLogTable OBJECT-TYPE
+		SYNTAX SEQUENCE OF PowerLogEntry
+		ACCESS			not-accessible
+		STATUS			mandatory
+		DESCRIPTION		"Power log table" 	
+		::= { logGroup 2 }
+            
+	powerLogEntry OBJECT-TYPE
+		SYNTAX			PowerLogEntry
+		ACCESS			not-accessible
+		STATUS			mandatory
+		DESCRIPTION		"Single Row of the power log"
+		INDEX           { eventLogIndex }  
+		::= { powerLogTable 1 }              
+		              
+		              
+    powerLogIndex OBJECT-TYPE 
+		SYNTAX			LogIndex
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The index in the power log - increases with age."
+		::= { powerLogEntry 1 }
+
+    powerTime OBJECT-TYPE 
+		SYNTAX			LogTime
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The time of power log. (d/m/y h:m:s) GMT."
+		::= { powerLogEntry 2 }
+          
+    powerOp1 OBJECT-TYPE 
+		SYNTAX			PowerSupplied
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The power supplied from this output in WH."
+		::= { powerLogEntry 3 }
+
+    powerOp2 OBJECT-TYPE 
+		SYNTAX			PowerSupplied
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The power supplied from this output in WH."
+		::= { powerLogEntry 4 }
+
+    powerOp3 OBJECT-TYPE 
+		SYNTAX			PowerSupplied
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The power supplied from this output in WH."
+		::= { powerLogEntry 5 }
+
+    powerOp4 OBJECT-TYPE 
+		SYNTAX			PowerSupplied
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The power supplied from this output in WH."
+		::= { powerLogEntry 6 }
+              
+    powerOp5 OBJECT-TYPE 
+		SYNTAX			PowerSupplied
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The power supplied from this output in WH."
+		::= { powerLogEntry 7 }
+
+    powerOp6 OBJECT-TYPE 
+		SYNTAX			PowerSupplied
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The power supplied from this output in WH."
+		::= { powerLogEntry 8 }
+
+    powerOp7 OBJECT-TYPE 
+		SYNTAX			PowerSupplied
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The power supplied from this output in WH."
+		::= { powerLogEntry 9 }
+
+    powerOp8 OBJECT-TYPE 
+		SYNTAX			PowerSupplied
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The power supplied from this output in WH."
+		::= { powerLogEntry 10 }
+          
+    powerOp9 OBJECT-TYPE 
+		SYNTAX			PowerSupplied
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The power supplied from this output in WH."
+		::= { powerLogEntry 11 }
+
+    powerOp10 OBJECT-TYPE 
+		SYNTAX			PowerSupplied
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The power supplied from this output in WH."
+		::= { powerLogEntry 12 }
+
+    powerOp11 OBJECT-TYPE 
+		SYNTAX			PowerSupplied
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The power supplied from this output in WH."
+		::= { powerLogEntry 13 }
+
+    powerOp12 OBJECT-TYPE 
+		SYNTAX			PowerSupplied
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The power supplied from this output in WH."
+		::= { powerLogEntry 14 }
+
+
+ 	PeakCurrentLogEntry ::=
+		SEQUENCE {	peakCurrentLogIndex          LogIndex,  
+		            peakCurrentLogTime           LogTime,   		   
+		            peakCurrentOp1                     Current,    	   
+		            peakCurrentOp2                     Current,   	   
+		            peakCurrentOp3                     Current,    	   
+		            peakCurrentOp4                     Current,     	   
+		            peakCurrentOp5                     Current,    	   
+		            peakCurrentOp6                     Current,   	   
+		            peakCurrentOp7                     Current,    	   
+		            peakCurrentOp8                     Current,        	   
+		            peakCurrentOp9                     Current,    	   
+		            peakCurrentOp10                    Current,   	   
+		            peakCurrentOp11                    Current,    	   
+		            peakCurrentOp12                    Current   
+		         }                                             
+           
+	peakCurrentLogTable OBJECT-TYPE
+		SYNTAX SEQUENCE OF PeakCurrentLogEntry
+		ACCESS			not-accessible
+		STATUS			mandatory
+		DESCRIPTION		"Peak current log table" 	
+		::= { logGroup 3 }
+            
+	peakCurrentLogEntry OBJECT-TYPE
+		SYNTAX			PeakCurrentLogEntry
+		ACCESS			not-accessible
+		STATUS			mandatory
+		DESCRIPTION		"Single Row of the peak current log"
+		INDEX           { eventLogIndex }  
+		::= { peakCurrentLogTable 1 }              
+		              		              
+    peakCurrentLogIndex OBJECT-TYPE 
+		SYNTAX			LogIndex
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The index in the peak current log - increases with age."
+		::= { peakCurrentLogEntry 1 }       
+
+    peakCurrentLogTime OBJECT-TYPE 
+		SYNTAX			LogTime
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The time of peak current log. (d/m/y h:m:s) GMT."
+		::= { peakCurrentLogEntry 2 }
+          
+    peakCurrentOp1 OBJECT-TYPE 
+		SYNTAX			Current
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The peak current supplied from this output in WH."
+		::= { peakCurrentLogEntry 3 }         
+          
+    peakCurrentOp2 OBJECT-TYPE 
+		SYNTAX			Current
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The peak current supplied from this output in WH."
+		::= { peakCurrentLogEntry 4 }
+          
+    peakCurrentOp3 OBJECT-TYPE 
+		SYNTAX			Current
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The peak current supplied from this output in WH."
+		::= { peakCurrentLogEntry 5 }
+          
+    peakCurrentOp4 OBJECT-TYPE 
+		SYNTAX			Current
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The peak current supplied from this output in WH."
+		::= { peakCurrentLogEntry 6 }      
+		
+      peakCurrentOp5 OBJECT-TYPE 
+		SYNTAX			Current
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The peak current supplied from this output in WH."
+		::= { peakCurrentLogEntry 7 }         
+          
+    peakCurrentOp6 OBJECT-TYPE 
+		SYNTAX			Current
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The peak current supplied from this output in WH."
+		::= { peakCurrentLogEntry 8 }
+          
+    peakCurrentOp7 OBJECT-TYPE 
+		SYNTAX			Current
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The peak current supplied from this output in WH."
+		::= { peakCurrentLogEntry 9 }
+       
+    peakCurrentOp8 OBJECT-TYPE 
+		SYNTAX			Current
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The peak current supplied from this output in WH."
+		::= { peakCurrentLogEntry 10 }   
+		
+    peakCurrentOp9 OBJECT-TYPE 
+		SYNTAX			Current
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The peak current supplied from this output in WH."
+		::= { peakCurrentLogEntry 11 }         
+          
+    peakCurrentOp10 OBJECT-TYPE 
+		SYNTAX			Current
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The peak current supplied from this output in WH."
+		::= { peakCurrentLogEntry 12 }
+       
+    peakCurrentOp11 OBJECT-TYPE 
+		SYNTAX			Current
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The peak current supplied from this output in WH."
+		::= { peakCurrentLogEntry 13 }
+       
+    peakCurrentOp12 OBJECT-TYPE 
+		SYNTAX			Current
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The peak current supplied from this output in WH."
+		::= { peakCurrentLogEntry 14 }
+
+
+
+
+ 	MinCurrentLogEntry ::=
+		SEQUENCE {	minCurrentLogIndex          LogIndex,  
+		            minCurrentLogTime           LogTime,   		   
+		            minCurrentOp1               Current,    	   
+		            minCurrentOp2               Current,   	   
+		            minCurrentOp3               Current,    	   
+		            minCurrentOp4               Current,     	   
+		            minCurrentOp5               Current,    	   
+		            minCurrentOp6               Current,   	   
+		            minCurrentOp7               Current,    	   
+		            minCurrentOp8               Current,        	   
+		            minCurrentOp9               Current,    	   
+		            minCurrentOp10              Current,   	   
+		            minCurrentOp11              Current,    	   
+		            minCurrentOp12              Current   
+		         }                                             
+           
+	minCurrentLogTable OBJECT-TYPE
+		SYNTAX SEQUENCE OF MinCurrentLogEntry
+		ACCESS			not-accessible
+		STATUS			mandatory
+		DESCRIPTION		"Minimum current log table" 	
+		::= { logGroup 4 }
+            
+	minCurrentLogEntry OBJECT-TYPE
+		SYNTAX			MinCurrentLogEntry
+		ACCESS			not-accessible
+		STATUS			mandatory
+		DESCRIPTION		"Single Row of the minimum current log"
+		INDEX           { eventLogIndex }  
+		::= { minCurrentLogTable 1 }              
+		              		              
+    minCurrentLogIndex OBJECT-TYPE 
+		SYNTAX			LogIndex
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The index in the minimum current log - increases with age."
+		::= { minCurrentLogEntry 1 }       
+
+    minCurrentLogTime OBJECT-TYPE 
+		SYNTAX			LogTime
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The time of minimum current log. (d/m/y h:m:s) GMT."
+		::= { minCurrentLogEntry 2 }
+          
+    minCurrentOp1 OBJECT-TYPE 
+		SYNTAX			Current
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The minimum current supplied from this output in WH."
+		::= { minCurrentLogEntry 3 }                
+          
+    minCurrentOp2 OBJECT-TYPE 
+		SYNTAX			Current
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The minimum current supplied from this output in WH."
+		::= { minCurrentLogEntry 4 }        
+          
+    minCurrentOp3 OBJECT-TYPE 
+		SYNTAX			Current
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The minimum current supplied from this output in WH."
+		::= { minCurrentLogEntry 5 }        
+		      
+          
+    minCurrentOp4 OBJECT-TYPE 
+		SYNTAX			Current
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The minimum current supplied from this output in WH."
+		::= { minCurrentLogEntry 6 }                
+          
+    minCurrentOp5 OBJECT-TYPE 
+		SYNTAX			Current
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The minimum current supplied from this output in WH."
+		::= { minCurrentLogEntry 7 }        
+          
+    minCurrentOp6 OBJECT-TYPE 
+		SYNTAX			Current
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The minimum current supplied from this output in WH."
+		::= { minCurrentLogEntry 8 }  
+          
+    minCurrentOp7 OBJECT-TYPE 
+		SYNTAX			Current
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The minimum current supplied from this output in WH."
+		::= { minCurrentLogEntry 9 }                
+          
+    minCurrentOp8 OBJECT-TYPE 
+		SYNTAX			Current
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The minimum current supplied from this output in WH."
+		::= { minCurrentLogEntry 10 }        
+          
+    minCurrentOp9 OBJECT-TYPE 
+		SYNTAX			Current
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The minimum current supplied from this output in WH."
+		::= { minCurrentLogEntry 11 }  
+          
+    minCurrentOp10 OBJECT-TYPE 
+		SYNTAX			Current
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The minimum current supplied from this output in WH."
+		::= { minCurrentLogEntry 12 }                
+          
+    minCurrentOp11 OBJECT-TYPE 
+		SYNTAX			Current
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The minimum current supplied from this output in WH."
+		::= { minCurrentLogEntry 13 }        
+          
+    minCurrentOp12 OBJECT-TYPE 
+		SYNTAX			Current
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The minimum current supplied from this output in WH."
+		::= { minCurrentLogEntry 14 }  
+
+
+ 	InputVoltageLogEntry ::=
+		SEQUENCE {	inputVoltageLogIndex          LogIndex,  
+		            inputVoltageLogTime           LogTime,   		   
+		            inputVoltagePeak1             Volts,    	   
+		            inputVoltageMinimum1          Volts,   	   
+		            inputVoltagePeak2             Volts,    	   
+		            inputVoltageMinimum2          Volts 
+		         }                                             
+           
+	inputVoltageLogTable OBJECT-TYPE
+		SYNTAX SEQUENCE OF InputVoltageLogEntry
+		ACCESS			not-accessible
+		STATUS			mandatory
+		DESCRIPTION		"Minimum current log table" 	
+		::= { logGroup 5 }
+            
+	inputVoltageLogEntry OBJECT-TYPE
+		SYNTAX			InputVoltageLogEntry
+		ACCESS			not-accessible
+		STATUS			mandatory
+		DESCRIPTION		"Single Row of the minimum current log"
+		INDEX           { eventLogIndex }  
+		::= { inputVoltageLogTable 1 }              
+		              		              
+    inputVoltageLogIndex OBJECT-TYPE 
+		SYNTAX			LogIndex
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The index in the minimum current log - increases with age."
+		::= { inputVoltageLogEntry 1 }       
+
+    inputVoltageLogTime OBJECT-TYPE 
+		SYNTAX			LogTime
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The time of minimum current log. (d/m/y h:m:s) GMT."
+		::= { inputVoltageLogEntry 2 }
+          
+    inputVoltagePeak1 OBJECT-TYPE 
+		SYNTAX			Volts
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The peak recorded input voltage for input 1 (volts)."
+		::= { inputVoltageLogEntry 3 } 			                         
+          
+    inputVoltageMinimum1 OBJECT-TYPE 
+		SYNTAX			Volts
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The lowest recorded input voltage for input 1 (volts)."
+		::= { inputVoltageLogEntry 4 }   
+          
+    inputVoltagePeak2 OBJECT-TYPE 
+		SYNTAX			Volts
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The peak recorded input voltage for input 2 (volts)."
+		::= { inputVoltageLogEntry 5 } 			                         
+          
+    inputVoltageMinimum2 OBJECT-TYPE 
+		SYNTAX			Volts
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The lowest recorded input voltage for input 2 (volts)."
+		::= { inputVoltageLogEntry 6 } 
+
+    -- Temperature		  
+		  
+ 	TemperatureLogEntry ::=
+		SEQUENCE {	temperatureLogIndex          LogIndex,  
+		            temperatureLogTime           LogTime,   		   
+		            temperaturePeak              Temperature,    	   
+		            temperatureMinimum           Temperature,		            		   
+		            humidityPeak                 Humidity,    	   
+		            humidityMinimum              Humidity
+
+		         }                                             
+           
+	temperatureLogTable OBJECT-TYPE
+		SYNTAX SEQUENCE OF TemperatureLogEntry
+		ACCESS			not-accessible
+		STATUS			mandatory
+		DESCRIPTION		"Temperature log table" 	
+		::= { logGroup 6 }
+            
+	temperatureLogEntry OBJECT-TYPE
+		SYNTAX			TemperatureLogEntry
+		ACCESS			not-accessible
+		STATUS			mandatory
+		DESCRIPTION		"Single Row of the temperature log"
+		INDEX           { eventLogIndex }  
+		::= { temperatureLogTable 1 }              
+		              		              
+    temperatureLogIndex OBJECT-TYPE 
+		SYNTAX			LogIndex
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The index in the temperature log - increases with age."
+		::= { temperatureLogEntry 1 }       
+
+    temperatureLogTime OBJECT-TYPE 
+		SYNTAX			LogTime
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The time of temperature log. (d/m/y h:m:s) GMT."
+		::= { temperatureLogEntry 2 }
+          
+    temperaturePeak OBJECT-TYPE 
+		SYNTAX			Temperature
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The peak recorded temperature (Celcius)."
+		::= { temperatureLogEntry 3 } 			                         
+          
+    temperatureMinimum OBJECT-TYPE 
+		SYNTAX			Temperature
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The lowest recorded temperature (Celcius)."
+		::= { temperatureLogEntry 4 }   
+                                            
+    humidityPeak OBJECT-TYPE 
+		SYNTAX			Humidity
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The peak recorded humidity (relative %)."
+		::= { temperatureLogEntry 5 } 			                         
+          
+    humidityMinimum OBJECT-TYPE 
+		SYNTAX			Humidity
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The lowest recorded humidity (relative %)."
+		::= { temperatureLogEntry 6 }   
+
+
+
+ 	InputPowerLogEntry ::=
+		SEQUENCE {	inputPowerLogIndex            	LogIndex,  
+		            inputPowerLogTime             	LogTime,   		   
+		            inputCurrentPeak              	Current,    	   
+		            inputCurrentMinimum           	Current,   	   
+		            inputInstantaneousPowerPeak		InstantaneousPower,    	   
+		            inputInstantaneousPowerMinimum  InstantaneousPower,
+					inputPowerFactorPeak			PowerFactor,
+					inputPowerFactorMinimum 		PowerFactor
+		         }                                             
+           
+	inputPowerLogTable OBJECT-TYPE
+		SYNTAX SEQUENCE OF InputPowerLogEntry
+		ACCESS			not-accessible
+		STATUS			mandatory
+		DESCRIPTION		"Table containing hourly logs of total power 
+		                 consumption for the iMDU-12B including power,
+						 current and power factor." 	
+		::= { logGroup 7 }
+            
+	inputPowerLogEntry OBJECT-TYPE
+		SYNTAX			InputPowerLogEntry
+		ACCESS			not-accessible
+		STATUS			mandatory
+		DESCRIPTION		"Single Row of the input power log."
+		INDEX           { inputPowerLogIndex }  
+		::= { inputPowerLogTable 1 }              
+	        		              
+    inputPowerLogIndex OBJECT-TYPE 
+		SYNTAX			LogIndex
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The index in the power log."
+		::= { inputPowerLogEntry 1 }       
+
+    inputPowerLogTime OBJECT-TYPE 
+		SYNTAX			LogTime
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The time of power log. (d/m/y h:m:s) GMT."
+		::= { inputPowerLogEntry 2 }     
+
+    inputCurrentPeak OBJECT-TYPE 
+		SYNTAX			Current
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The highest input current reading in this hour."
+		::= { inputPowerLogEntry 3 }    
+		
+    inputCurrentMinimum OBJECT-TYPE 
+		SYNTAX			Current
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The lowest input current reading in this hour."
+		::= { inputPowerLogEntry 4 }    
+		
+    inputInstantaneousPowerPeak OBJECT-TYPE 
+		SYNTAX			InstantaneousPower
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The highest instantaneous power input reading in 
+		                 this hour."
+		::= { inputPowerLogEntry 5 }    
+		
+    inputInstantaneousPowerMinimum OBJECT-TYPE 
+		SYNTAX			InstantaneousPower
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The lowest instantaneous input power reading in
+		                 this hour."
+		::= { inputPowerLogEntry 6 }    
+		
+    inputPowerFactorPeak OBJECT-TYPE 
+		SYNTAX			PowerFactor
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The most positive power factor logged in this hour."
+		::= { inputPowerLogEntry 7 }    
+
+    inputPowerFactorMinimum OBJECT-TYPE 
+		SYNTAX			PowerFactor
+		ACCESS  		read-only
+		STATUS			mandatory
+		DESCRIPTION		"The most negative power factor logged in this hour."
+		::= { inputPowerLogEntry 8 }   
+
+  ---
+  --- Traps
+  ---
+                     
+    outputStateChangeEvent TRAP-TYPE
+                  ENTERPRISE  dBCardinalEvents
+                  VARIABLES { outputName, outputState }
+                  DESCRIPTION
+                          "This trap indicates an output state has changed."
+                  ::= 1
+ 
+    outputFuseChangeEvent TRAP-TYPE
+                  ENTERPRISE  dBCardinalEvents
+                  VARIABLES { outputName, fuseState }
+                  DESCRIPTION
+                          "This trap indicates an output fuse has changed state."
+                  ::= 2
+ 
+    outputCurrentThresholdEvent TRAP-TYPE
+                  ENTERPRISE  dBCardinalEvents
+                  VARIABLES { outputName, outputCurrent, outputCurrentLowerThreshold, outputCurrentUpperThreshold }
+                  DESCRIPTION
+                          "This trap indicates the current in an output has 
+                           exceed it's upper threshold, fallen below it's 
+                           lower threshold or moved back into it's user 
+                           specified normal range."
+                  ::= 3
+                                   
+    inputVoltageThresholdEvent TRAP-TYPE
+                  ENTERPRISE  dBCardinalEvents
+                  VARIABLES { inputVoltage1, inputVoltage2, inputVoltageLowerThreshold, inputVoltageUpperThreshold }
+                  DESCRIPTION
+                          "This trap indicates the voltage to an input has 
+                           exceed it's upper threshold, fallen below it's 
+                           lower threshold or moved back into it's user 
+                           specified normal range."
+                  ::= 5
+                                   
+                                   
+    inputSelectionEvent TRAP-TYPE
+                  ENTERPRISE  dBCardinalEvents
+                  VARIABLES { inputSelected }
+                  DESCRIPTION
+                          "This trap indicates the input selected has changed."
+                  ::= 6                     
+                        
+                                   
+    temperatureThresholdEvent TRAP-TYPE
+                  ENTERPRISE  dBCardinalEvents
+                  VARIABLES { temperature, temperatureLowerThreshold, temperatureUpperThreshold }
+                  DESCRIPTION
+                          "This trap indicates the temperature has exceeded 
+                           it's upper threshold, fallen below it's lower
+                           threshold or moved back into it's userspecified 
+                           normal range."                                  
+                  ::= 7                     
+   
+    gpInputChangeEvent TRAP-TYPE
+                  ENTERPRISE  dBCardinalEvents
+                  VARIABLES { gpiName, gpiState }
+                  DESCRIPTION
+                          "This trap indicates a GP input has changed state."
+                  ::= 8
+
+   
+    gpRelayChangeEvent TRAP-TYPE
+                  ENTERPRISE  dBCardinalEvents
+                  VARIABLES { gpRelayName, gpRelayState }
+                  DESCRIPTION
+                          "This trap indicates a GP relay has changed state."
+                  ::= 9
+
+                                   
+    humidityThresholdEvent TRAP-TYPE
+                  ENTERPRISE  dBCardinalEvents
+                  VARIABLES { humidity, humidityAlarmLowerThreshold, humidityAlarmUpperThreshold }
+                  DESCRIPTION
+                          "This trap indicates the humidity has exceeded 
+                           it's upper threshold, fallen below it's lower
+                           threshold or moved back into it's userspecified 
+                           normal range."                                  
+                  ::= 10                     
+   
+       
+  ---
+  --- Notifications
+  ---              
+ 
+    outputStateChangeNotification NOTIFICATION-TYPE                
+    			  OBJECTS 
+    			  { 
+                      outputName, 
+    				  outputState 
+    			  }     
+    			  STATUS current
+                  DESCRIPTION
+                          "This notification indicates an output state has changed."
+                  ::= { cardinalNotifications 1 }
+                  
+              
+    outputFuseChangeNotification NOTIFICATION-TYPE
+                  OBJECTS
+                  { 
+                      outputName, 
+                      fuseState 
+                  }        
+    			  STATUS current
+                  DESCRIPTION
+                          "This notification indicates an output fuse has changed state."
+                  ::= { cardinalNotifications 2}
+ 
+    outputCurrentThresholdNotification NOTIFICATION-TYPE
+                  OBJECTS 
+                  { 
+                      outputName, 
+                      outputCurrent, 
+                      outputCurrentLowerThreshold, 
+                      outputCurrentUpperThreshold 
+                  }    
+    			  STATUS current
+                  DESCRIPTION
+                          "This notification indicates the current in an output  
+                           has exceed it's upper threshold, fallen below it's 
+                           lower threshold or moved back into it's user 
+                           specified normal range."
+                  ::= { cardinalNotifications 3 }
+                        
+    ---  Four is missing!!!
+             
+    inputVoltageThresholdNotification NOTIFICATION-TYPE
+                  OBJECTS 
+                  { 
+                      inputVoltage1, 
+                      inputVoltage2, 
+                      inputVoltageLowerThreshold, 
+                      inputVoltageUpperThreshold 
+                  }      
+    			  STATUS current
+                  DESCRIPTION
+                          "This notification indicates the voltage to an input  
+                           has exceed it's upper threshold, fallen below it's 
+                           lower threshold or moved back into it's user 
+                           specified normal range."
+                  ::= { cardinalNotifications 5 }
+                                   
+                                   
+    inputSelectionNotification NOTIFICATION-TYPE
+                OBJECTS 
+                { 
+                    inputSelected 
+                }         
+    			STATUS current
+                DESCRIPTION
+                          "This notification indicates the input selected has 
+                           changed."
+                ::= { cardinalNotifications 6 }                    
+                        
+                                   
+    temperatureThresholdNotification NOTIFICATION-TYPE
+                  OBJECTS 
+                  { 
+                      temperature, 
+                      temperatureLowerThreshold, 
+                      temperatureUpperThreshold 
+                  }       
+    			  STATUS current
+                  DESCRIPTION
+                          "This notification indicates the temperature has 
+                           exceeded it's upper threshold, fallen below it's 
+                           lower threshold or moved back into it's user  
+                           specified normal range."                                  
+                  ::= { cardinalNotifications 7 }                    
+   
+    gpInputChangeNotification NOTIFICATION-TYPE
+                  OBJECTS 
+                  { 
+                      gpiName, 
+                      gpiState 
+                  }     
+    			  STATUS current
+                  DESCRIPTION
+                          "This notification indicates a GP input has changed
+                           state."
+                  ::= { cardinalNotifications 8 }
+
+   
+    gpRelayChangeNotification NOTIFICATION-TYPE
+                  OBJECTS 
+                  { 
+                      gpRelayName, 
+                      gpRelayState 
+                  }     
+    			  STATUS current
+                  DESCRIPTION
+                          "This notification indicates a GP relay has changed 
+                          state."
+                  ::= { cardinalNotifications 9 }
+
+                                   
+    humidityThresholdNotification NOTIFICATION-TYPE
+                  OBJECTS 
+                  { 
+                      humidity, 
+                      humidityAlarmLowerThreshold, 
+                      humidityAlarmUpperThreshold 
+                  }    
+    			  STATUS current
+                  DESCRIPTION
+                          "This notification indicates the humidity has  
+                           exceeded it's upper threshold, fallen below it's 
+                           lower threshold or moved back into it's user  
+                           specified normal range."                                  
+                  ::= { cardinalNotifications 10 }    
+
+    instantaneousPowerThresholdNotification NOTIFICATION-TYPE
+                  OBJECTS 
+                  { 
+                      instantaneousPower, 
+                      instantaneousPowerAlarmLowerThreshold, 
+                      instantaneousPowerAlarmUpperThreshold 
+                  }    
+    			  STATUS current
+                  DESCRIPTION
+                          "This notification indicates the instantaneous total
+													 input power has exceeded it's upper threshold, 
+													 fallen below it's lower threshold or moved back 
+													 into it's user specified normal range."                                  
+                  ::= { cardinalNotifications 11 }
+
+    watchdogdNotification NOTIFICATION-TYPE
+                  OBJECTS 
+                  { 
+                      startResetCode
+                  }    
+    			  STATUS current
+                  DESCRIPTION
+                          "This notification indicates a watchdog reset has
+													 taken place."                                  
+                  ::= { cardinalNotifications 12 }  						
+
+ END

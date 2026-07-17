@@ -74,8 +74,8 @@ note that routerlogin.net needs to be set on pc using hosts file to 192.168.5.2
 |procurve vlan         |ports |
 |:---------------------|:------------|
 |VLAN 10 (Production)  |  Ports 1, 4, 7, 10, 13, 16, 19, 22 + Port 41 (Router uplink) |
-|VLAN 20 (Secondary)   |  Ports 2, 5, 8, 11, 14, 17, 20, 23 + Port 42 (Router uplink) |
-|VLAN 1 (Management/IPMI)|  Ports 3, 6, 9, 12, 15, 18, 21, 24 + Port 43 (Router uplink) |
+|VLAN 20 (Secondary)   |  Ports 2, 5, 8, 11, 14, 17, 20 + Port 42 (Router uplink) |
+|VLAN 1 (Management/IPMI)|  Ports 3, 6, 9, 12, 15, 18, 21, 23, 24 + Port 43 (Router uplink) |
 |Untagged/Unused|  Ports 25-40, 44 (17 ports available for future use) |
 
 | server name       | Management<BR>IP  | Management<BR>MAC | Mangement<BR>switch port | notes             |
@@ -92,7 +92,7 @@ note that routerlogin.net needs to be set on pc using hosts file to 192.168.5.2
 | blade-1-5         | 192.168.105.105   |00:25:90:54:6D:59  | 15                  |                   |                   | 13                |                   |                   | 14                |                 |
 | blade-1-6         | 192.168.105.106   |00:25:90:58:03:8F  | 18                  |                   |                   | 16                |                   |                   | 17                |                 |
 | blade-1-7         | 192.168.105.107   |00:25:90:54:6D:32  | 21                  |                   |                   | 19                |                   |                   | 20                |                 |
-| blade-1-8         | 192.168.105.108   |00:25:90:58:03:30  | 24                  |                   |00:25:90:3D:0F:BA  | 22                | 192.168.105.118   | 00:25:90:3D:0F:BB | 23                |                 |                 
+| blade-1-8         | 192.168.105.108   |00:25:90:58:03:30  | 24                  |                   |00:25:90:3D:0F:BA  | 22                | 192.168.105.118   | 00:25:90:3D:0F:BB | 23                | eth1 port 23 is in VLAN 1                |                 
 |                   |                   |                   |                     |                   |                   |                   |                   |                   |                   |                 |
 |                   |                   |                   |                     |                   |                   |                   |                   |                   |                   |                 |
 |                   |                   |                   |                     |                   |                   |                   |                   |                   |                   |                 |

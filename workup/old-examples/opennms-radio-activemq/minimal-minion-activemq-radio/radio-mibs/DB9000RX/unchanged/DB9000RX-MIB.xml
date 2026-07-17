@@ -1,0 +1,115 @@
+<datacollection-group xmlns="http://xmlns.opennms.org/xsd/config/datacollection" name="DB9000RX-MIB">
+   <resourceType name="streamEntry" label="streamEntry" resourceLabel="${decoder} (${index})">
+      <persistenceSelectorStrategy class="org.opennms.netmgt.collection.support.PersistAllSelectorStrategy"/>
+      <storageStrategy class="org.opennms.netmgt.collection.support.IndexStorageStrategy"/>
+   </resourceType>
+   <group name="product" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.35833.7.1.1" instance="0" alias="deviceID" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.1.2" instance="0" alias="serial" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.1.3" instance="0" alias="revision" type="octetstring"/>
+   </group>
+   <group name="network" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.1.1" instance="0" alias="deviceIpAddress" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.1.2" instance="0" alias="gatewayAddress" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.1.3" instance="0" alias="subnetMask" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.1.4" instance="0" alias="dnsAddress" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.1.5" instance="0" alias="dhcp" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.1.6" instance="0" alias="ipVoice" type="string"/>
+   </group>
+   <group name="ftp" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.2.1" instance="0" alias="ftpCmdPort" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.2.2" instance="0" alias="ftpDataPort" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.2.3" instance="0" alias="ftpUsername" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.2.4" instance="0" alias="ftpPassword" type="octetstring"/>
+   </group>
+   <group name="http" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.3.1" instance="0" alias="httpPort" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.3.2" instance="0" alias="httpUsername" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.3.3" instance="0" alias="httpPassword" type="octetstring"/>
+   </group>
+   <group name="snmp" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.4.1" instance="0" alias="snmpAgentEn" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.4.2" instance="0" alias="snmpMngrIp" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.4.3" instance="0" alias="snmpMngrPort" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.4.4" instance="0" alias="snmpAgentID" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.4.5" instance="0" alias="snmpAgentPort" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.4.6" instance="0" alias="snmpCommunity" type="octetstring"/>
+   </group>
+   <group name="streamTable" ifType="all">
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.5.1.1.1" instance="streamEntry" alias="streamNumber" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.5.1.1.2" instance="streamEntry" alias="url" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.5.1.1.3" instance="streamEntry" alias="decoder" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.5.1.1.4" instance="streamEntry" alias="sampleRate" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.5.1.1.5" instance="streamEntry" alias="channelsNumber" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.5.1.1.6" instance="streamEntry" alias="preBuffer" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.5.1.1.7" instance="streamEntry" alias="bufferingTout" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.5.1.1.8" instance="streamEntry" alias="gain" type="integer32"/>
+   </group>
+   <group name="icecastServer" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.5.2.1" instance="0" alias="soSerPort" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.5.2.2" instance="0" alias="soSerUser" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.5.2.3" instance="0" alias="soSerPass" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.5.2.4" instance="0" alias="soSerDec" type="string"/>
+   </group>
+   <group name="rtpServer" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.5.3.1" instance="0" alias="soRtpPort" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.5.3.2" instance="0" alias="soRtpDec" type="string"/>
+   </group>
+   <group name="backup" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.6.1" instance="0" alias="audioLossLevel" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.6.2" instance="0" alias="audioRecoverLevel" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.6.3" instance="0" alias="audioLossDelay" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.6.4" instance="0" alias="audioRecoverDelay" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.6.5" instance="0" alias="mp3PlaybackOrder" type="string"/>
+   </group>
+   <group name="ethToRS232" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.7.1" instance="0" alias="rs232Baud" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.7.2" instance="0" alias="rs232Port" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.7.3" instance="0" alias="rs232Pass" type="octetstring"/>
+   </group>
+   <group name="option" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.8.1" instance="0" alias="stereoMode" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.8.2" instance="0" alias="emphasis" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.8.3" instance="0" alias="audioGain" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.8.4" instance="0" alias="pilotInjLvl" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.8.5" instance="0" alias="rdsInjLvl" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.8.6" instance="0" alias="pilotPhaseAdj" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.8.7" instance="0" alias="lrSubPhaseAdj" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.8.8" instance="0" alias="rdsSubPhaseAdj" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.8.9" instance="0" alias="mpxLimiterEn" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.8.10" instance="0" alias="mpxLimiterPreset" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.8.11" instance="0" alias="mpxOutLvl" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.8.12" instance="0" alias="rdsOutLvl" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.8.13" instance="0" alias="agcEn" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.8.14" instance="0" alias="agcPreset" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.8.15" instance="0" alias="eq63hz" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.8.16" instance="0" alias="eq630hz" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.8.17" instance="0" alias="eq6300hz" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.8.18" instance="0" alias="rdsEncoderEn" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.8.19" instance="0" alias="psStatic" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.8.20" instance="0" alias="psDynamic" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.8.21" instance="0" alias="dpsScrollStep" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.8.22" instance="0" alias="dpsScrollSpeed" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.8.23" instance="0" alias="radioText" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.8.24" instance="0" alias="radioTextSpeed" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.8.25" instance="0" alias="piCode" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.8.26" instance="0" alias="programType" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.8.27" instance="0" alias="msFlag" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.8.28" instance="0" alias="tpFlag" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.8.29" instance="0" alias="taFlag" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.8.30" instance="0" alias="dateTimeEn" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.8.31" instance="0" alias="ptynEn" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.8.32" instance="0" alias="ptyn" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.8.33" instance="0" alias="consolePort" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.2.8.34" instance="0" alias="consolePass" type="octetstring"/>
+   </group>
+   <group name="monitoring" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.35833.7.3.1" instance="0" alias="currentSource" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.3.2" instance="0" alias="getLvlL" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.3.3" instance="0" alias="getLvlR" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.3.4" instance="0" alias="currSourcConneStatu" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.3.5" instance="0" alias="curreSourcSamplRate" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.3.6" instance="0" alias="currenSourceBitRate" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.35833.7.3.7" instance="0" alias="currSourcBuffeLevel" type="integer32"/>
+   </group>
+</datacollection-group>

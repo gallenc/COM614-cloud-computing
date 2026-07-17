@@ -1,0 +1,39 @@
+CHUBB-ROOT DEFINITIONS ::= BEGIN
+
+IMPORTS
+    enterprises, MODULE-IDENTITY, OBJECT-IDENTITY
+        FROM SNMPv2-SMI;
+
+chubb MODULE-IDENTITY
+    LAST-UPDATED "202001101200Z"
+    ORGANIZATION "Chubb Systems Ltd"
+    CONTACT-INFO
+	"Chubb Systems Ltd
+	United Technologies House
+	Shadsworth Road
+	Blackburn
+	England
+	Phone: +44 (0)1254 688688
+	E-Mail: info@chubb.co.uk
+	Web: www.chubb.co.uk"
+    DESCRIPTION
+        "The Chubb root MIB."    
+    REVISION      "202001101200Z"
+    DESCRIPTION
+        "Removed CHUBB-AVMS from the description of the products field."
+    REVISION      "201807031200Z"
+    DESCRIPTION
+        "Initial version of this MIB module."
+
+    ::= { enterprises 52330 }  -- assigned by IANA
+
+products OBJECT-IDENTITY
+    STATUS current
+    DESCRIPTION
+        "products is the root OBJECT IDENTIFIER from which
+         sysObjectID values are assigned. Actual values and
+         respectively products sub-tree are defined in:
+         CHUBB-ADACS, CHUBB-TVBS"
+    ::= { chubb 1 }
+
+END

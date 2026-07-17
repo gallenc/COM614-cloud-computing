@@ -1,0 +1,417 @@
+<datacollection-group xmlns="http://xmlns.opennms.org/xsd/config/datacollection" name="BW-V3-TRANSMITTER-MIB">
+   <group name="ad9788Clock" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.1.1.1" instance="0" alias="ad9788ClockDelay" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.1.1.2" instance="0" alias="ad9788ClocDelaEnabl" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.1.1.3" instance="0" alias="ad9788ClockInvert" type="octetstring"/>
+   </group>
+   <group name="ad9788DataTiming" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.1.2.1" instance="0" alias="ad9788DataTiminAuto" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.1.2.2" instance="0" alias="ad9788DataTimiMargi" type="octetstring"/>
+   </group>
+   <group name="ad9788Idac" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.1.3.1" instance="0" alias="ad9788IdacGain" type="octetstring"/>
+   </group>
+   <group name="ad9788" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.1.5" instance="0" alias="ad9788Interpolation" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.1.6" instance="0" alias="ad9788RealMode" type="octetstring"/>
+   </group>
+   <group name="ad9788Qdac" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.1.4.1" instance="0" alias="ad9788QdacGain" type="octetstring"/>
+   </group>
+   <group name="aio" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.2.1" instance="0" alias="aioMclk" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.2.2" instance="0" alias="aioPaBias" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.2.3" instance="0" alias="aioPaVoltage" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.2.4" instance="0" alias="aioRefclkAdj" type="octetstring"/>
+   </group>
+   <group name="alarm1" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.3.12" instance="0" alias="alarm1Active" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.3.3" instance="0" alias="alarm1FwdPowerThres" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.3.4" instance="0" alias="alarm1ModulaThresho" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.3.5" instance="0" alias="alarm1OffDelay" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.3.6" instance="0" alias="alarm1OnDelay" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.3.7" instance="0" alias="alarm1Polarity" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.3.8" instance="0" alias="alarm1RevPowerThres" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.3.9" instance="0" alias="alarm1Source" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.3.10" instance="0" alias="alarm1Telemetrysour" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.3.11" instance="0" alias="alarm1TempThreshold" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.3.13" instance="0" alias="alarm1Type" type="octetstring"/>
+   </group>
+   <group name="alarm1Email" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.3.1.1" instance="0" alias="alarm1EmailActive" type="octetstring"/>
+   </group>
+   <group name="alarm1Trap" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.3.2.1" instance="0" alias="alarm1TrapActive" type="octetstring"/>
+   </group>
+   <group name="alarm2" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.4.12" instance="0" alias="alarm2Active" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.4.3" instance="0" alias="alarm2FwdPowerThres" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.4.4" instance="0" alias="alarm2ModulaThresho" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.4.5" instance="0" alias="alarm2OffDelay" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.4.6" instance="0" alias="alarm2OnDelay" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.4.7" instance="0" alias="alarm2Polarity" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.4.8" instance="0" alias="alarm2RevPowerThres" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.4.9" instance="0" alias="alarm2Source" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.4.10" instance="0" alias="alarm2Telemetrysour" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.4.11" instance="0" alias="alarm2TempThreshold" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.4.13" instance="0" alias="alarm2Type" type="octetstring"/>
+   </group>
+   <group name="alarm2Email" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.4.1.1" instance="0" alias="alarm2EmailActive" type="octetstring"/>
+   </group>
+   <group name="alarm2Trap" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.4.2.1" instance="0" alias="alarm2TrapActive" type="octetstring"/>
+   </group>
+   <group name="alarm3" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.5.12" instance="0" alias="alarm3Active" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.5.3" instance="0" alias="alarm3FwdPowerThres" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.5.4" instance="0" alias="alarm3ModulaThresho" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.5.5" instance="0" alias="alarm3OffDelay" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.5.6" instance="0" alias="alarm3OnDelay" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.5.7" instance="0" alias="alarm3Polarity" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.5.8" instance="0" alias="alarm3RevPowerThres" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.5.9" instance="0" alias="alarm3Source" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.5.10" instance="0" alias="alarm3Telemetrysour" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.5.11" instance="0" alias="alarm3TempThreshold" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.5.13" instance="0" alias="alarm3Type" type="octetstring"/>
+   </group>
+   <group name="alarm3Email" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.5.1.1" instance="0" alias="alarm3EmailActive" type="octetstring"/>
+   </group>
+   <group name="alarm3Trap" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.5.2.1" instance="0" alias="alarm3TrapActive" type="octetstring"/>
+   </group>
+   <group name="alarmactive" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.22.1" instance="0" alias="alarmactiveA" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.22.2" instance="0" alias="alarmactiveB" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.22.3" instance="0" alias="alarmactiveC" type="octetstring"/>
+   </group>
+   <group name="audio" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.6.2" instance="0" alias="audioDelay" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.6.3" instance="0" alias="audioInput" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.6.4" instance="0" alias="audioProcessiPreset" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.6.5" instance="0" alias="audioProcessorOff" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.6.6" instance="0" alias="audioRightTrim" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.6.7" instance="0" alias="audioStereo" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.6.8" instance="0" alias="audioTrim" type="octetstring"/>
+   </group>
+   <group name="audioInputs" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.6.1.1" instance="0" alias="audioInputAnalogRef" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.6.1.2" instance="0" alias="audioInputDigitaRef" type="octetstring"/>
+   </group>
+   <group name="emailCounter" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.7.1.1" instance="0" alias="emailCounterToday" type="octetstring"/>
+   </group>
+   <group name="email" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.7.4" instance="0" alias="emailFrom" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.7.5" instance="0" alias="emailMethod" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.7.6" instance="0" alias="emailRecipient" type="octetstring"/>
+   </group>
+   <group name="emailLimit" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.7.2.1" instance="0" alias="emailLimitDaily" type="octetstring"/>
+   </group>
+   <group name="emailTest" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.7.3.1" instance="0" alias="emailTestRecipient" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.7.3.2" instance="0" alias="emailTestSend" type="octetstring"/>
+   </group>
+   <group name="metering" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.8.1" instance="0" alias="meterClockLockStatu" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.8.2" instance="0" alias="meterinPowerControl" type="octetstring"/>
+   </group>
+   <group name="meters" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.9.1" instance="0" alias="metersAcrfeff" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.9.2" instance="0" alias="metersAgc1" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.9.3" instance="0" alias="metersAgc2" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.9.4" instance="0" alias="metersAgc3" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.9.5" instance="0" alias="metersAgc4" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.9.6" instance="0" alias="metersAuxcurrent" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.9.7" instance="0" alias="metersAuxvoltage" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.9.8" instance="0" alias="metersFallback" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.9.9" instance="0" alias="metersFanspeed" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.9.10" instance="0" alias="metersLim1" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.9.11" instance="0" alias="metersLim2" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.9.12" instance="0" alias="metersLim3" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.9.13" instance="0" alias="metersLim4" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.9.14" instance="0" alias="metersMainsv" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.9.15" instance="0" alias="metersPafwd" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.9.16" instance="0" alias="metersParev" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.9.17" instance="0" alias="metersPatemp" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.9.18" instance="0" alias="metersPeakDeviation" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.9.19" instance="0" alias="metersPsu1temp1" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.9.20" instance="0" alias="metersPsu2temp1" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.9.21" instance="0" alias="metersPsucurrent" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.9.22" instance="0" alias="metersPsuvoltage" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.9.23" instance="0" alias="metersTxInputL" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.9.24" instance="0" alias="metersTxInputR" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.9.25" instance="0" alias="metersTxOutputL" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.9.26" instance="0" alias="metersTxOutputMpx" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.9.27" instance="0" alias="metersTxOutputR" type="octetstring"/>
+   </group>
+   <group name="mpxDigMpxIn" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.10.7.1" instance="0" alias="mpxDigMpxInLevel" type="octetstring"/>
+   </group>
+   <group name="mpxGen" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.10.5.1" instance="0" alias="mpxGenCompClipper" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.10.5.2" instance="0" alias="mpxGenLevel" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.10.5.3" instance="0" alias="mpxGenPilotLevel" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.10.5.4" instance="0" alias="mpxGenPilotProtecti" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.10.5.5" instance="0" alias="mpxGenPowerLimit" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.10.5.6" instance="0" alias="mpxGenPreemphasis" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.10.5.7" instance="0" alias="mpxGenRdsLevel" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.10.5.8" instance="0" alias="mpxGenSource" type="octetstring"/>
+   </group>
+   <group name="mpxInput1" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.10.1.1" instance="0" alias="mpxInput1Level" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.10.1.2" instance="0" alias="mpxInput1Trim" type="octetstring"/>
+   </group>
+   <group name="mpxInput2" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.10.2.1" instance="0" alias="mpxInput2Level" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.10.2.2" instance="0" alias="mpxInput2Trim" type="octetstring"/>
+   </group>
+   <group name="mpxOutput1" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.10.3.1" instance="0" alias="mpxOutput1Level" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.10.3.2" instance="0" alias="mpxOutput1Source" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.10.3.3" instance="0" alias="mpxOutput1Trim" type="octetstring"/>
+   </group>
+   <group name="mpxOutput2" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.10.4.1" instance="0" alias="mpxOutput2Level" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.10.4.2" instance="0" alias="mpxOutput2Source" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.10.4.3" instance="0" alias="mpxOutput2Trim" type="octetstring"/>
+   </group>
+   <group name="mpxTuner" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.10.6.1" instance="0" alias="mpxTunerTrim" type="octetstring"/>
+   </group>
+   <group name="powerscheduler" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.11.1" instance="0" alias="powerschedulEnabled" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.11.4" instance="0" alias="powerscheFinishtime" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.11.2" instance="0" alias="powerschedulerPower" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.11.3" instance="0" alias="powerschedStarttime" type="octetstring"/>
+   </group>
+   <group name="rdsDsn1Psn0Af" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.1.19" instance="0" alias="rdsDsn1Psn0Af10a" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.1.20" instance="0" alias="rdsDsn1Psn0Af10b" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.1.21" instance="0" alias="rdsDsn1Psn0Af11a" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.1.22" instance="0" alias="rdsDsn1Psn0Af11b" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.1.23" instance="0" alias="rdsDsn1Psn0Af12a" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.1.24" instance="0" alias="rdsDsn1Psn0Af12b" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.1.25" instance="0" alias="rdsDsn1Psn0Af13a" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.1.26" instance="0" alias="rdsDsn1Psn0Af13b" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.1.2" instance="0" alias="rdsDsn1Psn0Af1b" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.1.3" instance="0" alias="rdsDsn1Psn0Af2a" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.1.4" instance="0" alias="rdsDsn1Psn0Af2b" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.1.5" instance="0" alias="rdsDsn1Psn0Af3a" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.1.6" instance="0" alias="rdsDsn1Psn0Af3b" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.1.7" instance="0" alias="rdsDsn1Psn0Af4a" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.1.8" instance="0" alias="rdsDsn1Psn0Af4b" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.1.9" instance="0" alias="rdsDsn1Psn0Af5a" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.1.10" instance="0" alias="rdsDsn1Psn0Af5b" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.1.11" instance="0" alias="rdsDsn1Psn0Af6a" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.1.12" instance="0" alias="rdsDsn1Psn0Af6b" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.1.13" instance="0" alias="rdsDsn1Psn0Af7a" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.1.14" instance="0" alias="rdsDsn1Psn0Af7b" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.1.15" instance="0" alias="rdsDsn1Psn0Af8a" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.1.16" instance="0" alias="rdsDsn1Psn0Af8b" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.1.17" instance="0" alias="rdsDsn1Psn0Af9a" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.1.18" instance="0" alias="rdsDsn1Psn0Af9b" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.1.1" instance="0" alias="rdsDsn1Psn0AfCount" type="octetstring"/>
+   </group>
+   <group name="rdsDsn1Psn0" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.2" instance="0" alias="rdsDsn1Psn0ArtiHead" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.3" instance="0" alias="rdsDsn1Psn0Compress" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.4" instance="0" alias="rdsDsn1Psn0Dynamicp" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.5" instance="0" alias="rdsDsn1Psn0Ms" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.6" instance="0" alias="rdsDsn1Psn0Pi" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.7" instance="0" alias="rdsDsn1Psn0Ps" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.8" instance="0" alias="rdsDsn1Psn0Pty" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.9" instance="0" alias="rdsDsn1Psn0PtyRbds" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.10" instance="0" alias="rdsDsn1Psn0Ptyn" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.11" instance="0" alias="rdsDsn1Psn0Rt" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.12" instance="0" alias="rdsDsn1Psn0Stereo" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.13" instance="0" alias="rdsDsn1Psn0Ta" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.1.1.14" instance="0" alias="rdsDsn1Psn0Tp" type="octetstring"/>
+   </group>
+   <group name="rds" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.12.2" instance="0" alias="rdsPtyCoding" type="octetstring"/>
+   </group>
+   <group name="sfn" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.13.1" instance="0" alias="sfnExtRefClk" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.13.2" instance="0" alias="sfnGpsSync" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.13.3" instance="0" alias="sfnMPXdelay" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.13.4" instance="0" alias="sfnPilotPhase" type="octetstring"/>
+   </group>
+   <group name="smtp" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.14.1" instance="0" alias="smtpHost" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.14.4" instance="0" alias="smtpPassword" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.14.2" instance="0" alias="smtpPort" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.14.3" instance="0" alias="smtpUsername" type="octetstring"/>
+   </group>
+   <group name="status" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.15.1" instance="0" alias="statuTempLimitActiv" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.15.2" instance="0" alias="statuVSWRLimitActiv" type="octetstring"/>
+   </group>
+   <group name="system" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.14" instance="0" alias="systemContact" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.15" instance="0" alias="systemDate" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.16" instance="0" alias="systemFactoryReset" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.17" instance="0" alias="systemLocation" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.18" instance="0" alias="systemReboot" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.19" instance="0" alias="systemSerialNumber" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.20" instance="0" alias="systemTelemetry" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.21" instance="0" alias="systemTime" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.22" instance="0" alias="systemUptime" type="octetstring"/>
+   </group>
+   <group name="systemEthernetDhcp" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.1.2.1" instance="0" alias="systeEthernDhcpDns1" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.1.2.2" instance="0" alias="systeEthernDhcpDns2" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.1.2.3" instance="0" alias="systemEtherneDhcpGw" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.1.2.4" instance="0" alias="systemEtherneDhcpIp" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.1.2.5" instance="0" alias="systemEtherneDhcpSm" type="string"/>
+   </group>
+   <group name="systemEthernet" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.1.4" instance="0" alias="systemEtherneDhcpOn" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.1.3" instance="0" alias="systemEthernetMac" type="octetstring"/>
+   </group>
+   <group name="systemEthernetStatic" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.1.1.1" instance="0" alias="systeEtherStatiDns1" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.1.1.2" instance="0" alias="systeEtherStatiDns2" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.1.1.3" instance="0" alias="systeEthernStaticGw" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.1.1.4" instance="0" alias="systeEthernStaticIp" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.1.1.5" instance="0" alias="systeEthernStaticSm" type="string"/>
+   </group>
+   <group name="systemFreqPowLock" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.12.1" instance="0" alias="systFreqPowLockEnab" type="octetstring"/>
+   </group>
+   <group name="systemHttpd" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.2.1" instance="0" alias="sysHttpRemoContMess" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.2.2" instance="0" alias="systHttpdSessiTimeo" type="octetstring"/>
+   </group>
+   <group name="systemLoggingFile" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.3.1.1" instance="0" alias="systeLoggiFileActiv" type="octetstring"/>
+   </group>
+   <group name="systemLoggingRs232" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.3.2.1" instance="0" alias="systLoggiRs232Activ" type="octetstring"/>
+   </group>
+   <group name="systemLoggingUdp" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.3.3.1" instance="0" alias="systeLoggiUdpActive" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.3.3.2" instance="0" alias="systemLoggingUdpIp" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.3.3.3" instance="0" alias="systemLogginUdpPort" type="octetstring"/>
+   </group>
+   <group name="systemPassword" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.11.1" instance="0" alias="systemPasswordAdmin" type="octetstring"/>
+   </group>
+   <group name="systemProduct" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.4.2" instance="0" alias="systemProductBorn" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.4.1" instance="0" alias="systemProductId" type="octetstring"/>
+   </group>
+   <group name="systemRdsInterfaceRs232" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.5.2.2" instance="0" alias="sysRdsInteRs232Baud" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.5.2.1" instance="0" alias="sysRdsInteRs232Enab" type="octetstring"/>
+   </group>
+   <group name="systemRs232d" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.6.1" instance="0" alias="systemRs232dActive" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.6.2" instance="0" alias="systemRs232dBaud" type="octetstring"/>
+   </group>
+   <group name="systemScreenLock" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.7.1.2" instance="0" alias="systeScreenLockCode" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.7.1.1" instance="0" alias="systeScreeLockEnabl" type="octetstring"/>
+   </group>
+   <group name="systemScreen" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.7.2" instance="0" alias="systeScreeScreeType" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.7.3" instance="0" alias="systemScreenTimeout" type="octetstring"/>
+   </group>
+   <group name="systemSnmpd" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.8.2" instance="0" alias="systemSnmpdActive" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.8.5" instance="0" alias="systemSnmpdCommunit" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.8.4" instance="0" alias="systemSnmpdDescript" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.8.3" instance="0" alias="systemSnmpdName" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.8.7" instance="0" alias="systemSnmpdObjectId" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.8.6" instance="0" alias="systemSnmpdPort" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.8.8" instance="0" alias="systemSnmpdReadOnly" type="octetstring"/>
+   </group>
+   <group name="systemSnmpdTrapDst1" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.8.1.1.1" instance="0" alias="systSnmpdTrapDst1Ip" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.8.1.1.2" instance="0" alias="sysSnmpTrapDst1Port" type="octetstring"/>
+   </group>
+   <group name="systemSnmpdTrapDst2" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.8.1.2.1" instance="0" alias="systSnmpdTrapDst2Ip" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.8.1.2.2" instance="0" alias="sysSnmpTrapDst2Port" type="octetstring"/>
+   </group>
+   <group name="systemSnmpdTrapTest" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.8.1.3.1" instance="0" alias="sysSnmpTrapTestSend" type="octetstring"/>
+   </group>
+   <group name="systemSoftware" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.13.1" instance="0" alias="systemSoftwaVersion" type="octetstring"/>
+   </group>
+   <group name="systemTelnetd" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.9.1" instance="0" alias="systemTelnetdActive" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.9.2" instance="0" alias="systemTelnetdPort" type="octetstring"/>
+   </group>
+   <group name="systemUsername" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.16.10.1" instance="0" alias="systemUsernameAdmin" type="octetstring"/>
+   </group>
+   <group name="transmitter" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.17.3" instance="0" alias="transmitteFrequency" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.17.4" instance="0" alias="transmitterSetPower" type="octetstring"/>
+   </group>
+   <group name="transmitterFsk" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.17.1.1" instance="0" alias="transmitterFskId" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.17.1.2" instance="0" alias="transmitFskInterval" type="octetstring"/>
+   </group>
+   <group name="transmitterRfMute" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.17.2.1" instance="0" alias="transmiRfMuteActive" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.17.2.2" instance="0" alias="tranRfMuteManuEnabl" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.17.2.3" instance="0" alias="transmRfMuteTimeout" type="octetstring"/>
+   </group>
+   <group name="trigger1" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.18.4" instance="0" alias="trigger1Action" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.18.5" instance="0" alias="trigger1Active" type="octetstring"/>
+   </group>
+   <group name="trigger1Email" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.18.1.1" instance="0" alias="trigger1EmailActive" type="octetstring"/>
+   </group>
+   <group name="trigger1Message" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.18.2.1" instance="0" alias="trigger1MessageOn" type="octetstring"/>
+   </group>
+   <group name="trigger1Trap" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.18.3.1" instance="0" alias="trigger1TrapActive" type="octetstring"/>
+   </group>
+   <group name="trigger2" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.19.4" instance="0" alias="trigger2Action" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.19.5" instance="0" alias="trigger2Active" type="octetstring"/>
+   </group>
+   <group name="trigger2Email" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.19.1.1" instance="0" alias="trigger2EmailActive" type="octetstring"/>
+   </group>
+   <group name="trigger2Message" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.19.2.1" instance="0" alias="trigger2MessageOn" type="octetstring"/>
+   </group>
+   <group name="trigger2Trap" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.19.3.1" instance="0" alias="trigger2TrapActive" type="octetstring"/>
+   </group>
+   <group name="trigger3" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.20.4" instance="0" alias="trigger3Action" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.20.5" instance="0" alias="trigger3Active" type="octetstring"/>
+   </group>
+   <group name="trigger3Email" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.20.1.1" instance="0" alias="trigger3EmailActive" type="octetstring"/>
+   </group>
+   <group name="trigger3Message" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.20.2.1" instance="0" alias="trigger3MessageOn" type="octetstring"/>
+   </group>
+   <group name="trigger3Trap" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.20.3.1" instance="0" alias="trigger3TrapActive" type="octetstring"/>
+   </group>
+   <group name="trigger4" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.21.4" instance="0" alias="trigger4Action" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.38508.137.21.5" instance="0" alias="trigger4Active" type="octetstring"/>
+   </group>
+   <group name="trigger4Email" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.21.1.1" instance="0" alias="trigger4EmailActive" type="octetstring"/>
+   </group>
+   <group name="trigger4Message" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.21.2.1" instance="0" alias="trigger4MessageOn" type="octetstring"/>
+   </group>
+   <group name="trigger4Trap" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.38508.137.21.3.1" instance="0" alias="trigger4TrapActive" type="octetstring"/>
+   </group>
+</datacollection-group>

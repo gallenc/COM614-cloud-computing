@@ -1,0 +1,95 @@
+<datacollection-group xmlns="http://xmlns.opennms.org/xsd/config/datacollection" name="DRAYTEK-MIB">
+   <group name="usbsensorObjects" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.7367.1.1" instance="0" alias="temperValue" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.1.2" instance="0" alias="humiValue" type="octetstring"/>
+   </group>
+   <group name="vpnStatus" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.7367.2.1.1" instance="0" alias="connectedTunnels" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.2.1.2" instance="0" alias="connectedTunnelIdx" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.2.1.3" instance="0" alias="connecteVPNprofilen" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.2.1.4" instance="0" alias="connectedVPNType" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.2.1.5" instance="0" alias="connecteVPNClientIP" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.2.1.6" instance="0" alias="connecVPNWanIntface" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.2.1.7" instance="0" alias="conneVPNRemotSubnet" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.2.1.8" instance="0" alias="connectedVPNTXPkts" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.2.1.9" instance="0" alias="connectedVPNRXPkts" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.2.1.10" instance="0" alias="connectedVPNTXRate" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.2.1.11" instance="0" alias="connectedVPNRXRate" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.2.1.12" instance="0" alias="connectedVPNUpTime" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.2.1.13" instance="0" alias="connecVPNActionDrop" type="integer32"/>
+   </group>
+   <group name="lan2LanProfileStatus" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.7367.2.2.1" instance="0" alias="connectedL2LTunnels" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.2.2.2" instance="0" alias="lan2LanProfileIdx" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.2.2.3" instance="0" alias="lan2LanProfilename" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.2.2.4" instance="0" alias="connectedL2LType" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.2.2.5" instance="0" alias="connecteL2LClientIP" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.2.2.6" instance="0" alias="connecL2LWanIntface" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.2.2.7" instance="0" alias="conneL2LRemotSubnet" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.2.2.8" instance="0" alias="connectedL2LTXPkts" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.2.2.9" instance="0" alias="connectedL2LRXPkts" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.2.2.10" instance="0" alias="connectedL2LTXRate" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.2.2.11" instance="0" alias="connectedL2LRXRate" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.2.2.12" instance="0" alias="connectedL2LUpTime" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.2.2.13" instance="0" alias="connecL2LActionDrop" type="integer32"/>
+   </group>
+   <group name="remoteDialInProfileStatus" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.7367.2.3.1" instance="0" alias="connecteRDinTunnels" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.2.3.2" instance="0" alias="rDinProfileIdx" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.2.3.3" instance="0" alias="rDinProfilename" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.2.3.4" instance="0" alias="connectedRDinType" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.2.3.5" instance="0" alias="connectRDinClientIP" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.2.3.6" instance="0" alias="connecRDinWanIntfac" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.2.3.7" instance="0" alias="conneRDinRemotSubne" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.2.3.8" instance="0" alias="connectedRDinTXPkts" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.2.3.9" instance="0" alias="connectedRDinRXPkts" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.2.3.10" instance="0" alias="connectedRDinTXRate" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.2.3.11" instance="0" alias="connectedRDinRXRate" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.2.3.12" instance="0" alias="connectedRDinUpTime" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.2.3.13" instance="0" alias="conneRDinActionDrop" type="integer32"/>
+   </group>
+   <group name="routerinfoObjects" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.7367.3.1" instance="0" alias="routerModel" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.3.2" instance="0" alias="routerRevision" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.3.3" instance="0" alias="fwBuildDate" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.3.4" instance="0" alias="dslVersion" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.3.5" instance="0" alias="countryCode" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.3.6" instance="0" alias="wirelessRegion" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.3.7" instance="0" alias="memoryUsage" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.3.8" instance="0" alias="lanMac" type="octetstring"/>
+   </group>
+   <group name="lteinfoObjects" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.7367.4.1" instance="0" alias="ltestatus" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.4.2" instance="0" alias="lteimei" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.4.3" instance="0" alias="lteimsi" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.4.4" instance="0" alias="lteaccesstech" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.4.5" instance="0" alias="lteband" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.4.6" instance="0" alias="lteispoperator" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.4.7" instance="0" alias="lterssi" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.4.8" instance="0" alias="lteactivechannel" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.4.9" instance="0" alias="ltemaxchannelratetx" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.4.10" instance="0" alias="ltemaxchannelraterx" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.4.11" instance="0" alias="ltewanbudget" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.4.12" instance="0" alias="ltewanbudgettraffic" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.4.13" instance="0" alias="ltersrq" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.4.14" instance="0" alias="lteecio" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.4.15" instance="0" alias="ltersrp" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.4.16" instance="0" alias="lteiccid1" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.4.17" instance="0" alias="lteiccid2" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.4.18" instance="0" alias="ltemcc" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.4.19" instance="0" alias="ltemnc" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.4.20" instance="0" alias="lteplmn" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.4.21" instance="0" alias="ltelac" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.4.22" instance="0" alias="ltecellid" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.7367.4.23" instance="0" alias="lterscp" type="octetstring"/>
+   </group>
+   
+    <systemDef name="draytek">
+        <sysoid>.1.3.6.1.4.1.7367</sysoid> 
+        <collect>
+            <includeGroup>lteinfoObjects</includeGroup>
+        </collect>
+    </systemDef>
+   
+   
+</datacollection-group>

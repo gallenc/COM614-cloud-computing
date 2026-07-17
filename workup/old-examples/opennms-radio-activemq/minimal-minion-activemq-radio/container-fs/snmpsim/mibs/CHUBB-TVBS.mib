@@ -1,0 +1,152 @@
+CHUBB-TVBS-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+    chubb, products
+        FROM CHUBB-ROOT
+    MODULE-COMPLIANCE, NOTIFICATION-GROUP, OBJECT-GROUP
+        FROM SNMPv2-CONF            -- RFC 2580
+    Integer32, Unsigned32, MODULE-IDENTITY, NOTIFICATION-TYPE, OBJECT-TYPE
+        FROM SNMPv2-SMI             -- RFC 2578
+    SnmpAdminString
+        FROM SNMP-FRAMEWORK-MIB;    -- RFC 3411
+
+tvbsSystem MODULE-IDENTITY
+    LAST-UPDATED "202001101200Z"
+    ORGANIZATION "Chubb Systems Ltd"
+    CONTACT-INFO
+        	"Chubb Systems Ltd
+	United Technologies House
+	Shadsworth Road
+	Blackburn
+	England
+	Phone: +44 (0)1254 688688
+	E-Mail: info@chubb.co.uk
+	Web: www.chubb.co.uk"
+    DESCRIPTION "The MIB for defining TVBS system notifications"
+    REVISION "202001101200Z"
+    DESCRIPTION
+        "Initial version."
+    ::= { chubb 5 }
+
+-- Product OID used for the sysObjectOID
+tvbsSystemAgent OBJECT IDENTIFIER
+    ::= { products 5 }
+
+tvbsObjects OBJECT IDENTIFIER
+    ::= { tvbsSystem 1 }
+
+tvbsGroups OBJECT IDENTIFIER
+	::= { tvbsSystem 4 }
+	
+-- Objects used in Private Enterprise Traps
+tvbsNotifications OBJECT IDENTIFIER
+    ::= { tvbsSystem 2 }
+
+tvbsNotificationPrefix OBJECT IDENTIFIER
+    ::= { tvbsNotifications 0 }
+
+faultCode OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION
+        "This object indentifies a certain fault code (T_FaultCode)"
+    ::= { tvbsNotifications 1 }
+
+faultDescription1 OBJECT-TYPE
+    SYNTAX      OCTET STRING (SIZE(0..80))
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION
+        "Detailed description 1 of the fault."
+    ::= { tvbsNotifications 2 }
+
+faultDescription2 OBJECT-TYPE
+    SYNTAX      OCTET STRING (SIZE(0..80))
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION
+        "Detailed description 2 of the fault."
+    ::= { tvbsNotifications 3 }
+	
+faultId1 OBJECT-TYPE
+    SYNTAX      OCTET STRING (SIZE(0..46))
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION
+	"A string that identifies which the device asscociated with this fault."
+    ::= { tvbsNotifications 4 }
+
+faultStatus OBJECT-TYPE
+    SYNTAX      Integer32 (0..4)
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION
+	"A unsigned integer that identifies the current status of this fault."
+    ::= { tvbsNotifications 5 }
+	
+faultWorkgroup OBJECT-TYPE
+    SYNTAX      Integer32 (1..65535)
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION
+	"A unsigned integer that identifies which workgroup is asscociated to this fault."
+    ::= { tvbsNotifications 6 }
+	
+faultLocation OBJECT-TYPE
+    SYNTAX      OCTET STRING (SIZE(0..40))
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION
+	"A string that identifies the location."
+    ::= { tvbsNotifications 7 }
+	
+faultUsername OBJECT-TYPE
+    SYNTAX      OCTET STRING (SIZE(0..8))
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION
+	"A string that identifies which user triggered this fault"
+    ::= { tvbsNotifications 8 }
+
+faultAutoClear OBJECT-TYPE
+    SYNTAX      Integer32 (0..1)
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION
+        "Auto clear flag, 1 = Auto clears, 0 = manual clear"
+    ::= { tvbsNotifications 9 }
+	
+-- Groups
+tvbsGroup OBJECT-GROUP
+    OBJECTS {
+    faultCode, faultDescription1, faultDescription2,
+    faultId1, faultStatus, faultWorkgroup, faultLocation,
+    faultUsername, faultAutoClear  }
+    STATUS current
+    DESCRIPTION
+        "A collection of objects providing basic information about a TVBS"
+    ::= { tvbsGroups 1 }
+	
+tvbsNotificationGroup NOTIFICATION-GROUP
+    NOTIFICATIONS { logFault }
+    STATUS      current
+    DESCRIPTION
+        "A collection of TVBS notifications."
+    ::= { tvbsNotificationPrefix 2 }
+
+-- Generic fault log types
+
+logFault NOTIFICATION-TYPE
+    OBJECTS { 
+        faultCode, faultDescription1, faultDescription2,
+        faultId1, faultStatus, faultWorkgroup, faultLocation,
+        faultUsername, faultAutoClear }
+    STATUS      current
+    DESCRIPTION
+        "This notification is sent when a new fault log is
+         generated."
+    ::= { tvbsNotificationPrefix 1 }
+	
+
+END -- end of module CHUBB-TVBS.

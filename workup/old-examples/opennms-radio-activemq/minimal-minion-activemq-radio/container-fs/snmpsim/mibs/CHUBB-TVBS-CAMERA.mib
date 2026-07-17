@@ -1,0 +1,453 @@
+CHUBB-TVBS-CAMERA-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+    chubb, products
+        FROM CHUBB-ROOT
+    MODULE-COMPLIANCE, NOTIFICATION-GROUP, OBJECT-GROUP
+        FROM SNMPv2-CONF            -- RFC 2580
+    Integer32, Unsigned32, MODULE-IDENTITY, NOTIFICATION-TYPE, OBJECT-TYPE
+        FROM SNMPv2-SMI;            -- RFC 2578
+
+tvbsCamera MODULE-IDENTITY
+    LAST-UPDATED "202001101200Z"
+    ORGANIZATION "Chubb Systems Ltd"
+    CONTACT-INFO
+        "	Chubb Systems Ltd
+	United Technologies House
+	Shadsworth Road
+	Blackburn
+	England
+	Phone: +44 (0)1254 688688
+	E-Mail: info@chubb.co.uk
+	Web: www.chubb.co.uk"
+    DESCRIPTION 
+        "The MIB for defining TVBS camera objects."
+    REVISION "202001101200Z"
+    DESCRIPTION
+        "Initial version."
+    ::= { chubb 6 }
+
+-- Product OID used for the sysObjectOID
+tvbsCameraAgent OBJECT IDENTIFIER
+    ::= { products 6 }
+
+tvbsCameraObjects OBJECT IDENTIFIER
+    ::= { tvbsCamera 1 }
+
+-- Camera Status Objects
+cameraStatus OBJECT IDENTIFIER
+    ::= { tvbsCameraObjects 1}
+	
+panPos OBJECT-TYPE
+    SYNTAX Unsigned32 (0..65535)
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION 
+        "Pan position of the PTZ head."
+    ::= { cameraStatus 1 }
+	
+tiltPos OBJECT-TYPE
+    SYNTAX Unsigned32 (0..65535)
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION 
+        "Tilt position of the PTZ head."
+    ::= { cameraStatus 2 }
+	
+zoomPos OBJECT-TYPE
+    SYNTAX Unsigned32 (0..255)
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION 
+        "Zoom position of the lens."
+    ::= { cameraStatus 3 }
+	
+focusPos OBJECT-TYPE
+    SYNTAX Unsigned32 (0..255)
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION 
+        "Focus position of the lens."
+    ::= { cameraStatus 4 }
+
+focusMode OBJECT-TYPE
+    SYNTAX INTEGER { manual(0), auto(1) }
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION 
+        "Current focus mode."
+    ::= { cameraStatus 5 }
+
+irisMode OBJECT-TYPE
+    SYNTAX INTEGER { manual(0), auto(1) }
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION 
+        "Current iris mode."
+    ::= { cameraStatus 6 }
+
+carriagewayText OBJECT-TYPE
+    SYNTAX OCTET STRING (SIZE (0..14))
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION 
+        "Current carriageway text."
+    ::= { cameraStatus 7 }
+
+compassDirection OBJECT-TYPE
+    SYNTAX INTEGER { 
+        none(0), 
+        north(1),
+        northEast(2),
+        east(3),
+        southEast(4),
+        south(5),
+        southWest(6),
+        west(7),
+        northWest(8) }
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION 
+        "Current compass direction."
+    ::= { cameraStatus 8 }
+
+-- Camera Health
+cameraHealth OBJECT IDENTIFIER
+	::= { tvbsCameraObjects 2}
+
+comms OBJECT-TYPE
+    SYNTAX      INTEGER { good(0), faulty(1) }
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+        "Camera communication state."
+    ::= { cameraHealth 1 }
+
+panMotorFault OBJECT-TYPE
+    SYNTAX      INTEGER { good(0), faulty(1) }
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+        "Pan motor faulty."
+    ::= { cameraHealth 2 }
+
+tiltMotorFault OBJECT-TYPE
+    SYNTAX      INTEGER { good(0), faulty(1) }
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+        "Tilt motor faulty."
+    ::= { cameraHealth 3 }
+
+zoomMotorFault OBJECT-TYPE
+    SYNTAX      INTEGER { good(0), faulty(1) }
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+        "Zoom motor faulty."
+    ::= { cameraHealth 4 }
+
+apertureMotorFault OBJECT-TYPE
+    SYNTAX      INTEGER { good(0), faulty(1) }
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+        "Aperture motor faulty."
+    ::= { cameraHealth 5 }
+
+focusMotorFault OBJECT-TYPE
+    SYNTAX      INTEGER { good(0), faulty(1) }
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+        "Focus motor faulty."
+    ::= { cameraHealth 6 }
+
+wiperMotorFault OBJECT-TYPE
+    SYNTAX      INTEGER { good(0), faulty(1) }
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+        "Wiper motor faulty."
+    ::= { cameraHealth 7 }
+
+heaterFault OBJECT-TYPE
+    SYNTAX      INTEGER { good(0), faulty(1) }
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+        "Heater faulty."
+    ::= { cameraHealth 8 }
+
+fluidLevelFault OBJECT-TYPE
+    SYNTAX      INTEGER { good(0), faulty(1) }
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+        "Washer fluid level low."
+    ::= { cameraHealth 9 }
+
+videoSignalFault OBJECT-TYPE
+    SYNTAX      INTEGER { good(0), faulty(1) }
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+        "Video signal faulty."
+    ::= { cameraHealth 10 }
+
+housingTamper OBJECT-TYPE
+    SYNTAX      INTEGER { clear(0), triggered(1) }
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+        "Camera housing or TVBU housing tamper."
+    ::= { cameraHealth 11 }
+
+washerMotorFault OBJECT-TYPE
+    SYNTAX      INTEGER { good(0), faulty(1) }
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+        "Washer motor faulty."
+    ::= { cameraHealth 12 }
+
+configPlugFault OBJECT-TYPE
+    SYNTAX      INTEGER { good(0), faulty(1) }
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+        "Equipment configuration plug."
+    ::= { cameraHealth 13 }
+
+tvbuCameraCommsFault OBJECT-TYPE
+    SYNTAX      INTEGER { good(0), faulty(1) }
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+        "Comms from the TVBU to the camera fault."
+    ::= { cameraHealth 14 }
+
+-- TVOS external logic input Table
+logicTable OBJECT-TYPE
+    SYNTAX      SEQUENCE OF LogicEntry
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    DESCRIPTION
+        "Table containing information about all the logic inputs of the camera."
+    ::= { tvbsCameraObjects 3 }
+
+logicEntry OBJECT-TYPE
+    SYNTAX      LogicEntry
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    DESCRIPTION
+        "An logic input entry contains information about a specific logic input."
+    INDEX       { logicID }
+    ::= { logicTable 1 }
+
+LogicEntry ::= SEQUENCE {
+    logicID     Unsigned32,
+    logicStatus INTEGER,
+    logicDescription OCTET STRING
+}
+
+logicID OBJECT-TYPE
+    SYNTAX      Unsigned32 (1..8)
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+        "Logic input number."
+    ::= { logicEntry 1 }
+
+logicStatus OBJECT-TYPE
+    SYNTAX      INTEGER { clear(0), triggered(1) }
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+        "The status of the logic input."
+    ::= { logicEntry 2 }
+
+logicDescription OBJECT-TYPE
+    SYNTAX      OCTET STRING (SIZE (0..255))
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+        "Description of the logic input."
+    ::= { logicEntry 3 }
+
+-- End of external logic input Table definitions
+	
+-- Objects used in Private Enterprise Traps/Informs
+tvbsNotifications OBJECT IDENTIFIER
+    ::= { tvbsCamera 2 }
+
+tvbsNotificationPrefix OBJECT IDENTIFIER
+    ::= { tvbsNotifications 0 }
+
+healthChangeReason OBJECT-TYPE
+    SYNTAX      INTEGER 
+    { panMotor(0), 
+      tiltMotor(1),
+      zoomMotor(2),
+      apertureMotor(3),
+      focusMotor(4),
+      wiperMotor(5),
+      heater(6),
+      fluidLevel(7),
+      videoSignal(8),
+      housingTamper(9),
+      washerMotorFault(10),
+      configPlugFault(11),
+      tvbuCameraCommsFault(12) }
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION
+        "Identifies why the health change trap was sent."
+    ::= { tvbsNotifications 1 }
+
+tamperState OBJECT-TYPE
+    SYNTAX      INTEGER 
+    { clear(0), 
+      triggered(1) }
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION
+        "Identifies the tamper state."
+    ::= { tvbsNotifications 2 }
+
+logicInput OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION
+        "Identifies the input number that has changed state."
+    ::= { tvbsNotifications 3 }
+
+logicInputState OBJECT-TYPE
+    SYNTAX      INTEGER
+    { clear(0), triggered(1) }
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION
+        "Identifies the input number state."
+    ::= { tvbsNotifications 4 }
+
+faultState OBJECT-TYPE
+    SYNTAX      INTEGER
+    { clear(0), triggered(1) }
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION
+        "Identifies the fault state of a health object."
+    ::= { tvbsNotifications 5 }
+
+commsStateReason OBJECT-TYPE
+    SYNTAX      INTEGER 
+    { good(0), 
+      faulty(1) }
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION
+        "Identifies why the comms state in a notification."
+    ::= { tvbsNotifications 6 }
+
+-- Notifications
+healthChange NOTIFICATION-TYPE
+    OBJECTS { healthChangeReason, faultState }
+    STATUS      current
+    DESCRIPTION
+        "This notification is sent when one or more of the health
+         information changes. Show the fault item and its state. "
+    ::= { tvbsNotificationPrefix 1 }
+
+tamperDetected NOTIFICATION-TYPE
+    OBJECTS { tamperState }
+    STATUS      current
+    DESCRIPTION
+        "This notification is sent on detection of tampering."
+    ::= { tvbsNotificationPrefix 2 }
+
+logicInputChange NOTIFICATION-TYPE
+    OBJECTS { logicInput, logicInputState }
+    STATUS      current
+    DESCRIPTION
+        "This notification is sent on detection of a logic input change."
+    ::= { tvbsNotificationPrefix 3 }
+
+commsStateChange NOTIFICATION-TYPE
+    OBJECTS { commsStateReason }
+    STATUS      current
+    DESCRIPTION
+        "This notification is sent on communication state change."
+    ::= { tvbsNotificationPrefix 4 }
+
+-- Conformance
+cameraConformance OBJECT IDENTIFIER
+    ::= { tvbsCamera 3 }
+
+cameraGroups OBJECT IDENTIFIER
+    ::= { cameraConformance 1 }
+
+cameraCompliances OBJECT IDENTIFIER
+    ::= { cameraConformance 2 }
+	
+-- Groups
+tvbsCameraObjectGroup OBJECT-GROUP
+    OBJECTS {healthChangeReason, tamperState,
+    logicInput, logicInputState, faultState, commsStateReason, 
+    panPos, tiltPos, zoomPos, 
+    focusPos, focusMode, irisMode, 
+    carriagewayText, compassDirection,
+    comms, panMotorFault, 
+    tiltMotorFault, zoomMotorFault, apertureMotorFault, 
+    focusMotorFault, wiperMotorFault, heaterFault,
+    fluidLevelFault, videoSignalFault, housingTamper,
+    washerMotorFault, configPlugFault, tvbuCameraCommsFault,
+    logicID, logicStatus, logicDescription  }
+    STATUS current
+    DESCRIPTION
+        "A collection of objects providing basic information about a TVBS camera"
+    ::= { cameraGroups 1 }
+	
+tvbsNotificationGroup NOTIFICATION-GROUP
+    NOTIFICATIONS { healthChange, tamperDetected,
+        logicInputChange, commsStateChange }
+    STATUS      current
+    DESCRIPTION
+        "A collection of TVBS camera notifications."
+    ::= { cameraGroups 2 }
+
+tvbsCameraStatusGroup OBJECT-GROUP
+    OBJECTS { panPos, tiltPos, zoomPos, focusPos, focusMode, irisMode, 
+        carriagewayText, compassDirection }
+    STATUS current
+    DESCRIPTION
+        "Objects releated to the cameras PTZF positions."
+    ::= { cameraGroups 3 }
+
+tvbsCameraHealthGroup OBJECT-GROUP
+    OBJECTS { comms, panMotorFault, tiltMotorFault, zoomMotorFault, 
+    apertureMotorFault, focusMotorFault, wiperMotorFault, 
+    heaterFault, fluidLevelFault, videoSignalFault, housingTamper,
+    washerMotorFault }
+    STATUS current
+    DESCRIPTION
+        "Objects releated to the cameras status."
+    ::= { cameraGroups 4 }
+
+-- Compliance Statements
+tvbsCompliance MODULE-COMPLIANCE
+    STATUS current
+    DESCRIPTION
+        "The compliance statement for Chubb TVBS camera entities."
+    MODULE -- this module
+        MANDATORY-GROUPS { tvbsCameraObjectGroup, tvbsNotificationGroup }
+        GROUP tvbsCameraStatusGroup
+        DESCRIPTION
+            "This group is mandatory for all cameras that are PTZF capable"
+        GROUP  tvbsCameraHealthGroup
+        DESCRIPTION
+            "This group is mandatory and indicates the cameras health."
+        ::= { cameraCompliances 2 }
+
+END -- end of module CHUBB-TVBS-CAMERA.
