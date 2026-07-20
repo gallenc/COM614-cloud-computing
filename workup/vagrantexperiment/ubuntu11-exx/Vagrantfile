@@ -13,7 +13,9 @@ Vagrant.configure("2") do |config|
   config.vm.box = "generic/ubuntu2204"
 
   config.vm.hostname = "ubuntu11-dev1"
-
+  
+  config.vm.define "ubuntu11-dev1"
+  
   # Network configuration
   # Avoid 192.168.121.0/24 - that subnet is reserved for vagrant-libvirt's
   # internal management network and using it here will cause IP conflicts.
@@ -36,7 +38,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.provider :libvirt do |libvirt|
     
-    libvirt.name = "ubuntu11-dev1"
+    libvirt.default_prefix = ""
 
     # Connection URI - use qemu:///session for non-root, qemu:///system for root
     libvirt.uri = "qemu:///system"
