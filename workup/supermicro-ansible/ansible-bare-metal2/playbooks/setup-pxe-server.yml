@@ -1,0 +1,126 @@
+# playbooks/setup-pxe-server.yml
+---
+- name: Configure PXE boot server
+  hosts: pxe_server
+  become: true
+
+  vars:
+    tftp_root: /srv/tftp
+    http_root: /srv/http/install
+    ubuntu_iso_url: https://releases.ubuntu.com/22.04/ubuntu-22.04.5-live-server-amd64.iso
+
+  tasks:
+    # Install required packages
+    - name: Install PXE server packages
+      ansible.builtin.apt:
+        name:
+          - dnsmasq
+          - nginx
+          - shim-signed
+          - grub-efi-amd64-signed
+          - grub-common
+        state: present
+
+    - name: Create TFTP and HTTP roots
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        mode: '0755'
+      loop:
+        - "{{ tftp_root }}"
+        - "{{ http_root }}"
+
+    - name: Copy signed shim for UEFI PXE
+      ansible.builtin.copy:
+        src: /usr/lib/shim/shimx64.efi.signed.latest
+        dest: "{{ tftp_root }}/bootx64.efi"
+        remote_src: true
+        mode: '0644'
+
+    - name: Copy signed GRUB network loader for UEFI PXE
+      ansible.builtin.copy:
+        src: /usr/lib/grub/x86_64-efi-signed/grubnetx64.efi.signed
+        dest: "{{ tftp_root }}/grubx64.efi"
+        remote_src: true
+        mode: '0644'
+
+    - name: Copy GRUB font
+      ansible.builtin.copy:
+        src: /usr/share/grub/unicode.pf2
+        dest: "{{ tftp_root }}/unicode.pf2"
+        remote_src: true
+        mode: '0644'
+
+    # Configure dnsmasq for DHCP and TFTP
+    - name: Configure dnsmasq
+      ansible.builtin.copy:
+        dest: /etc/dnsmasq.d/pxe.conf
+        content: |
+          # DHCP range for provisioning network
+          dhcp-range=10.10.1.100,10.10.1.200,255.255.255.0,1h
+
+          # TFTP settings
+          enable-tftp
+          tftp-root={{ tftp_root }}
+
+          # PXE boot file for UEFI clients
+          dhcp-match=set:efi-x86_64,option:client-arch,7
+          dhcp-boot=tag:efi-x86_64,bootx64.efi
+
+          # Static DHCP assignments for known servers
+          dhcp-host=aa:bb:cc:dd:ee:01,10.10.1.11,server-01
+          dhcp-host=aa:bb:cc:dd:ee:02,10.10.1.12,server-02
+          dhcp-host=aa:bb:cc:dd:ee:03,10.10.1.13,server-03
+        mode: '0644'
+      notify: restart dnsmasq
+
+    # Configure nginx to serve installer and NoCloud files
+    - name: Configure nginx installer site
+      ansible.builtin.copy:
+        dest: /etc/nginx/sites-available/pxe-install
+        content: |
+          server {
+              listen 80;
+              server_name _;
+              root /srv/http;
+              autoindex on;
+          }
+        mode: '0644'
+      notify: restart nginx
+
+    - name: Enable nginx installer site
+      ansible.builtin.file:
+        src: /etc/nginx/sites-available/pxe-install
+        dest: /etc/nginx/sites-enabled/pxe-install
+        state: link
+      notify: restart nginx
+
+    # Set up GRUB configuration for automated install
+    - name: Create GRUB config directory
+      ansible.builtin.file:
+        path: "{{ tftp_root }}/grub"
+        state: directory
+        mode: '0755'
+
+    - name: Create GRUB configuration
+      ansible.builtin.copy:
+        dest: "{{ tftp_root }}/grub/grub.cfg"
+        content: |
+          set timeout=5
+          menuentry "Ubuntu 22.04 Automated Install" {
+              linux /vmlinuz ip=dhcp url={{ ubuntu_iso_url }} autoinstall 'ds=nocloud-net;s=http://10.10.0.1/install/__dmi.system-uuid__/'
+              initrd /initrd
+          }
+        mode: '0644'
+
+  handlers:
+    - name: restart dnsmasq
+      ansible.builtin.service:
+        name: dnsmasq
+        state: restarted
+
+    - name: restart nginx
+      ansible.builtin.service:
+        name: nginx
+        state: restarted
+        

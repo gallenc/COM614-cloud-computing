@@ -1,0 +1,35 @@
+# playbooks/ipmi-management.yml
+---
+- name: Manage bare metal servers via IPMI
+  hosts: bare_metal
+  gather_facts: false
+  connection: local
+
+  tasks:
+    # Check current power state
+    - name: Check server power status
+      ansible.builtin.command:
+        cmd: >
+          ipmitool -I lanplus
+          -H {{ ipmi_address }}
+          -U {{ ipmi_user }}
+          -E
+          chassis power status
+      register: power_status
+      delegate_to: localhost
+      changed_when: false
+      environment:
+        IPMI_PASSWORD: "{{ ipmi_password }}"
+
+    - name: Display power status
+      ansible.builtin.debug:
+        msg: "{{ inventory_hostname }}: {{ power_status.stdout }}"
+
+    # Power on servers that are off
+    - name: Power on server
+      community.general.ipmi_power:
+        name: "{{ ipmi_address }}"
+        user: "{{ ipmi_user }}"
+        password: "{{ ipmi_password }}"
+        state: on
+      when: "'is off' in power_status.stdout"

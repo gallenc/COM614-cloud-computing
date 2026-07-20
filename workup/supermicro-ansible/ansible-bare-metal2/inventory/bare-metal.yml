@@ -1,0 +1,33 @@
+# inventory/bare-metal.yml
+---
+all:
+  children:
+    bare_metal:
+      hosts:
+        server-01:
+          ansible_host: 10.10.1.11
+          ipmi_address: 10.10.0.11
+          ipmi_user: admin
+          ipmi_password: "{{ vault_ipmi_password }}"
+          mac_address: "aa:bb:cc:dd:ee:01"
+          system_uuid: "11111111-1111-1111-1111-111111111111"
+          role: compute
+        server-02:
+          ansible_host: 10.10.1.12
+          ipmi_address: 10.10.0.12
+          ipmi_user: admin
+          ipmi_password: "{{ vault_ipmi_password }}"
+          mac_address: "aa:bb:cc:dd:ee:02"
+          system_uuid: "22222222-2222-2222-2222-222222222222"
+          role: compute
+        server-03:
+          ansible_host: 10.10.1.13
+          ipmi_address: 10.10.0.13
+          ipmi_user: admin
+          ipmi_password: "{{ vault_ipmi_password }}"
+          mac_address: "aa:bb:cc:dd:ee:03"
+          system_uuid: "33333333-3333-3333-3333-333333333333"
+          role: storage
+      vars:
+        ansible_user: root
+        ansible_ssh_private_key_file: ~/.ssh/deploy

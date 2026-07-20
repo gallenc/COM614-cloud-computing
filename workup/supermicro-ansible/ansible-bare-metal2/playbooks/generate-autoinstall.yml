@@ -1,0 +1,82 @@
+# playbooks/generate-autoinstall.yml
+---
+- name: Generate autoinstall configs for each server
+  hosts: pxe_server
+  become: true
+
+  vars:
+    servers:
+      - hostname: server-01
+        ip: 10.10.1.11
+        gateway: 10.10.1.1
+        system_uuid: "11111111-1111-1111-1111-111111111111"
+        disk: /dev/sda
+      - hostname: server-02
+        ip: 10.10.1.12
+        gateway: 10.10.1.1
+        system_uuid: "22222222-2222-2222-2222-222222222222"
+        disk: /dev/sda
+      - hostname: server-03
+        ip: 10.10.1.13
+        gateway: 10.10.1.1
+        system_uuid: "33333333-3333-3333-3333-333333333333"
+        disk: /dev/sda
+
+  tasks:
+    # Create autoinstall directory structure
+    - name: Create autoinstall directories
+      ansible.builtin.file:
+        path: "/srv/http/install/{{ item.system_uuid }}"
+        state: directory
+        mode: '0755'
+      loop: "{{ servers }}"
+
+    - name: Generate NoCloud meta-data
+      ansible.builtin.copy:
+        dest: "/srv/http/install/{{ item.system_uuid }}/meta-data"
+        content: |
+          instance-id: {{ item.system_uuid }}
+          local-hostname: {{ item.hostname }}
+        mode: '0644'
+      loop: "{{ servers }}"
+
+    # Generate autoinstall configs
+    - name: Generate autoinstall user-data
+      ansible.builtin.copy:
+        dest: "/srv/http/install/{{ item.system_uuid }}/user-data"
+        content: |
+          #cloud-config
+          autoinstall:
+            version: 1
+            identity:
+              hostname: {{ item.hostname }}
+              password: "$6$rounds=4096$salt$hashedpassword"
+              username: deploy
+            ssh:
+              install-server: true
+              authorized-keys:
+                - {{ lookup('file', '~/.ssh/deploy.pub') }}
+            storage:
+              layout:
+                name: lvm
+                sizing-policy: all
+            network:
+              version: 2
+              ethernets:
+                ens3:
+                  addresses:
+                    - {{ item.ip }}/24
+                  routes:
+                    - to: default
+                      via: {{ item.gateway }}
+                  nameservers:
+                    addresses: [10.10.0.53, 10.10.0.54]
+            packages:
+              - openssh-server
+              - python3
+              - python3-apt
+            late-commands:
+              - echo "{{ item.hostname }}" > /target/etc/hostname
+        mode: '0644'
+      loop: "{{ servers }}"
+      

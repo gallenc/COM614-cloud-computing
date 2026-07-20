@@ -1,0 +1,30 @@
+# playbooks/set-pxe-boot.yml
+---
+- name: Configure PXE boot on bare metal servers
+  hosts: bare_metal
+  gather_facts: false
+  connection: local
+
+  tasks:
+    # Set next boot to PXE using ipmitool
+    - name: Set boot device to PXE for next boot
+      ansible.builtin.command:
+        cmd: >
+          ipmitool -I lanplus
+          -H {{ ipmi_address }}
+          -U {{ ipmi_user }}
+          -E
+          chassis bootdev pxe options=efiboot
+      delegate_to: localhost
+      environment:
+        IPMI_PASSWORD: "{{ ipmi_password }}"
+      changed_when: true
+
+    # Power cycle the server to trigger PXE boot
+    - name: Power cycle server
+      community.general.ipmi_power:
+        name: "{{ ipmi_address }}"
+        user: "{{ ipmi_user }}"
+        password: "{{ ipmi_password }}"
+        state: reset
+        
