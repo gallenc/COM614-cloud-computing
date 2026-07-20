@@ -1,0 +1,70 @@
+# playbooks/post-install.yml
+---
+- name: Post-installation configuration
+  hosts: bare_metal
+  become: true
+  gather_facts: true
+
+  tasks:
+    - name: Update all packages
+      ansible.builtin.apt:
+        upgrade: dist
+        update_cache: true
+
+    - name: Install essential packages
+      ansible.builtin.apt:
+        name:
+          - vim
+          - htop
+          - iotop
+          - sysstat
+          - net-tools
+          - lvm2
+          - mdadm
+          - smartmontools
+          - xfsprogs
+          - ntp
+          - fail2ban
+        state: present
+
+    # Configure storage for additional disks
+    - name: Create volume group for data disks
+      community.general.lvg:
+        vg: data-vg
+        pvs:
+          - /dev/sdb
+          - /dev/sdc
+      when: "'storage' in role"
+
+    - name: Create logical volume for data
+      community.general.lvol:
+        vg: data-vg
+        lv: data-lv
+        size: 100%FREE
+      when: "'storage' in role"
+
+    - name: Create filesystem on data LV
+      community.general.filesystem:
+        fstype: xfs
+        dev: /dev/data-vg/data-lv
+      when: "'storage' in role"
+
+    - name: Mount data volume
+      ansible.posix.mount:
+        path: /data
+        src: /dev/data-vg/data-lv
+        fstype: xfs
+        opts: noatime,nodiratime
+        state: mounted
+      when: "'storage' in role"
+
+    # Configure SMART monitoring
+    - name: Enable SMART on all drives
+      ansible.builtin.command:
+        cmd: "smartctl -s on {{ item }}"
+      loop:
+        - /dev/sda
+        - /dev/sdb
+      changed_when: true
+      failed_when: false
+      

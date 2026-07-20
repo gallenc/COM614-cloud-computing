@@ -1,0 +1,23 @@
+# playbooks/wait-for-install.yml
+---
+- name: Wait for bare metal OS installation to complete
+  hosts: bare_metal
+  gather_facts: false
+
+  tasks:
+    # Wait for SSH to become available after OS install
+    - name: Wait for SSH port to open
+      ansible.builtin.wait_for:
+        host: "{{ ansible_host }}"
+        port: 22
+        state: started
+        timeout: 1800
+        delay: 120
+      delegate_to: localhost
+
+    # Verify we can actually connect
+    - name: Wait for SSH connection to work
+      ansible.builtin.wait_for_connection:
+        delay: 10
+        timeout: 300
+        

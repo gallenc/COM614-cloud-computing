@@ -1,0 +1,7 @@
+# playbooks/provision-bare-metal.yml
+---
+- ansible.builtin.import_playbook: set-pxe-boot.yml
+
+- ansible.builtin.import_playbook: wait-for-install.yml
+
+- ansible.builtin.import_playbook: post-install.yml
