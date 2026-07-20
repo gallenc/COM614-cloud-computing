@@ -30,7 +30,7 @@ Vagrant.configure("2") do |config|
 #change #add line allow br1
 # sudo systemctl restart libvirtd
 
-  config.vm.network "public_network", bridge: "br1"
+  # config.vm.network "public_network", bridge: "br1"
 
   # libvirt provider configuration
 
