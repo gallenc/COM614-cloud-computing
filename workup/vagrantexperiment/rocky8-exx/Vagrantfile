@@ -1,0 +1,21 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.provider :libvirt do |libvirt|
+    libvirt.cpu_mode = "host-passthrough"
+    libvirt.cpus = 4
+    libvirt.memory = 8192
+    libvirt.machine_virtual_size = 40
+  end
+
+  config.vm.synced_folder ".", "/vagrant", type: "nfs", nfs_version: 4, nfs_udp: false
+  config.vm.box = "rockylinux/8"
+  config.vm.hostname = "rocky8"
+  config.vm.provision "shell", inline: <<-SHELL
+    dnf install -y cloud-utils-growpart
+    growpart /dev/vda 1
+    xfs_growfs /dev/vda1
+SHELL
+
+end

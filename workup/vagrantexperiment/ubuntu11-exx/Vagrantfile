@@ -1,0 +1,102 @@
+# Vagrantfile
+Vagrant.configure("2") do |config|
+
+  # Use a box that supports libvirt
+
+  config.vm.box = "generic/ubuntu2204"
+
+  config.vm.hostname = "kvm-dev"
+
+  # Network configuration
+  # Avoid 192.168.121.0/24 - that subnet is reserved for vagrant-libvirt's
+  # internal management network and using it here will cause IP conflicts.
+  config.vm.network "private_network", ip: "192.168.50.10"
+
+  # Forward ports
+  config.vm.network "forwarded_port", guest: 80, host: 8080
+
+  # libvirt provider configuration
+
+  config.vm.provider :libvirt do |libvirt|
+
+    # Connection URI - use qemu:///session for non-root, qemu:///system for root
+    libvirt.uri = "qemu:///system"
+    # VM name in libvirt
+    libvirt.default_prefix = "vagrant"
+    # CPU and memory
+
+    libvirt.cpus = 2
+
+    libvirt.memory = 2048
+
+
+
+    # CPU mode - 'host-passthrough' gives best performance
+
+    # but reduces live migration compatibility
+
+    libvirt.cpu_mode = "host-passthrough"
+
+
+
+    # Disk settings
+
+    libvirt.storage_pool_name = "default"
+
+
+
+    # Enable nested virtualization (if you need to run VMs inside this VM)
+
+    # libvirt.nested = true
+
+
+
+    # Graphics - disable for headless servers
+
+    libvirt.graphics_type = "none"
+
+
+
+    # Use virtio for better disk performance
+
+    libvirt.disk_bus = "virtio"
+
+    # disk_driver supersedes the older volume_cache option - don't set both
+
+    libvirt.disk_driver :cache => "writeback"
+
+
+
+    # Networking
+
+    libvirt.driver = "kvm"
+
+  end
+
+
+
+  # Synced folders with libvirt require virtiofs or NFS
+
+  # VirtualBox shared folders don't work with libvirt
+
+  config.vm.synced_folder ".", "/vagrant", type: "nfs",
+
+    nfs_udp: false,
+
+    nfs_version: 4,
+
+    mount_options: ["rw", "vers=4", "tcp", "nolock"]
+
+
+
+  config.vm.provision "shell", inline: <<-SHELL
+
+    apt-get update
+
+    apt-get install -y curl git vim
+
+    echo "KVM-backed VM provisioned successfully"
+
+  SHELL
+
+end
