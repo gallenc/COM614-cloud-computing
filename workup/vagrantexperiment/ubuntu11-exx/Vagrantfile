@@ -114,13 +114,37 @@ Vagrant.configure("2") do |config|
   printf 'nameserver 194.81.151.70\n' > /etc/resolv.conf
   chattr +i /etc/resolv.conf
 
-    apt-get update
+  apt-get update
 
     apt-get install -y curl git vim nano net-tools
     
     apt-get install -y software-properties-common
     add-apt-repository --yes --update ppa:ansible/ansible
     apt-get -y install ansible
+    
+    apt-get -y install whois
+
+    # only create admin user if doesn't exist (note inscecure password)
+    if getent passwd | grep -c '^admin:' > /dev/null ;
+      then 
+        echo "admin user already exists"; 
+      else 
+        echo creating admin user; 
+        sudo useradd -m -s /bin/bash -U admin -u 1001 --groups sudo --password "$(mkpasswd minad1234)"
+        sudo echo "%admin ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/admin
+    fi
+
+    # The graphical login managers do not show users with UID below 1000
+    # only create ansible user if doesn't exist (note insecure password - replace with ssh key)
+    if getent passwd | grep -c '^ansible:' > /dev/null ;
+      then 
+        echo "ansible user already exists"; 
+      else 
+        echo creating ansible user; 
+        sudo useradd -m -s /bin/bash -U ansible -u 800 --groups sudo --password "$(mkpasswd minad1234)"
+        sudo echo "%ansible ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/ansible
+    fi    
+    
 
     echo "KVM-backed VM provisioned successfully"
 
