@@ -1,0 +1,17 @@
+# templates/local-dns.conf.j2
+# Local DNS entries from inventory
+{% for host in groups['all'] %}
+{% if hostvars[host].ansible_host is defined %}
+address=/{{ host }}.{{ dnsmasq_domain }}/{{ hostvars[host].ansible_host }}
+{% endif %}
+{% endfor %}
+
+# Additional DNS entries
+{% for entry in dnsmasq_dns_entries | default([]) %}
+address=/{{ entry.name }}/{{ entry.ip }}
+{% endfor %}
+
+# CNAME aliases
+{% for cname in dnsmasq_cnames | default([]) %}
+cname={{ cname.alias }},{{ cname.target }}
+{% endfor %}

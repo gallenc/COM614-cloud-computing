@@ -1,0 +1,6 @@
+# templates/dhcp-reservations.conf.j2
+# Static DHCP reservations
+{% for host in dnsmasq_reservations | default([]) %}
+dhcp-host={{ host.mac }},{{ host.ip }},{{ host.hostname }}{% if host.lease is defined %},{{ host.lease }}{% endif %}
+
+{% endfor %}
