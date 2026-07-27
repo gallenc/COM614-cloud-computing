@@ -1,6 +1,6 @@
 ---
 ansible_connection: ssh 
-ansible_user: vagrant 
+ansible_user: ansible
 ansible_ssh_pass: minad1234
 
 
