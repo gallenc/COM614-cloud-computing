@@ -1,0 +1,153 @@
+# Vagrantfile
+
+# Grab the name of the default interface
+# see https://stackoverflow.com/questions/33250304/how-to-automatically-select-bridged-network-interfaces-in-vagrant
+#$default_network_interface = `ip route | awk '/^default/ {printf "%s", $5; exit 0}'`
+# Specify the interface when creating the public network
+# config.vm.network "public_network", bridge: "#$default_network_interface"
+
+Vagrant.configure("2") do |config|
+
+  # Use a box that supports libvirt
+
+  config.vm.box = "generic/ubuntu2204"
+
+  config.vm.hostname = "ubuntu11-dev1"
+  
+  config.vm.define "ubuntu11-dev1"
+  
+#  # Network configuration
+#  # Avoid 192.168.121.0/24 - that subnet is reserved for vagrant-libvirt's
+#  # internal management network and using it here will cause IP conflicts.
+#  config.vm.network "private_network", ip: "192.168.50.10"
+#
+#  # Forward ports
+#  config.vm.network "forwarded_port", guest: 80, host: 8080
+
+# second netowrk connected to second bridge - this needs done in guest
+#sudo nmcli connection add type bridge con-name br1 ifname br1
+#sudo nmcli connection add type bridge-slave con-name br1-slave ifname enp1s0f0 master br1
+#sudo nmcli connection up br1
+#sudo nano /etc/qemu-kvm/bridge.conf
+#change #add line allow br1
+# sudo systemctl restart libvirtd
+
+  # config.vm.network "public_network", bridge: "br1"
+  config.vm.network "public_network",
+       :dev => "br1",
+       :mode => "bridge",
+       :type => "bridge",
+      # :ip => "192.168.20.200"
+
+
+  # libvirt provider configuration
+
+  config.vm.provider :libvirt do |libvirt|
+    
+    libvirt.default_prefix = ""
+
+    # Connection URI - use qemu:///session for non-root, qemu:///system for root
+    libvirt.uri = "qemu:///system"
+    # VM name in libvirt
+    libvirt.default_prefix = "vagrant"
+    # CPU and memory
+
+    libvirt.cpus = 2
+
+    libvirt.memory = 2048
+
+    # CPU mode - 'host-passthrough' gives best performance
+
+    # but reduces live migration compatibility
+
+    libvirt.cpu_mode = "host-passthrough"
+
+    # Disk settings
+
+
+    # Enable nested virtualization (if you need to run VMs inside this VM)
+
+    # libvirt.nested = true
+
+    # Graphics - disable for headless servers
+    libvirt.graphics_type = "none"
+
+    # Use virtio for better disk performance
+
+    libvirt.disk_bus = "virtio"
+
+    # disk_driver supersedes the older volume_cache option - don't set both
+
+    libvirt.disk_driver :cache => "writeback"
+
+    # Networking
+
+    libvirt.driver = "kvm"
+
+  end
+
+
+
+  # Synced folders with libvirt require virtiofs or NFS
+
+  # VirtualBox shared folders don't work with libvirt
+  # see https://oneuptime.com/blog/post/2026-03-02-how-to-set-up-vagrant-with-kvm-provider-on-ubuntu/view
+  # for dscussion of nfs and alternative using rsync as one way copy
+#  config.vm.synced_folder ".", "/vagrant", type: "nfs",
+#    nfs_udp: false,
+#    nfs_version: 4,
+#    mount_options: ["rw", "vers=4", "tcp", "nolock"]
+   
+  config.vm.synced_folder ".", "/vagrant", type: "rsync",
+      rsync__exclude: [".git/", "node_modules/", ".vagrant/"]
+
+  config.vm.provision "shell", inline: <<-SHELL
+  
+  # Fix DNS resolution issues common in VirtualBox
+  # see https://fabiorehm.com/blog/2025/08/25/bulletproof-ubuntu-desktop-vagrant-virtualbox/#4-fix-dns-resolution-first
+  systemctl stop systemd-resolved || true
+  systemctl disable systemd-resolved || true
+  systemctl mask systemd-resolved || true
+  chattr -i /etc/resolv.conf 2>/dev/null || true
+  rm -f /etc/resolv.conf
+  # this is the nameserver used by solent - must be used throughout
+  printf 'nameserver 194.81.151.70\n' > /etc/resolv.conf
+  chattr +i /etc/resolv.conf
+
+  apt-get update
+
+    apt-get install -y curl git vim nano net-tools
+    
+    apt-get install -y software-properties-common
+    add-apt-repository --yes --update ppa:ansible/ansible
+    apt-get -y install ansible
+    
+    apt-get -y install whois
+
+    # only create admin user if doesn't exist (note inscecure password)
+    if getent passwd | grep -c '^admin:' > /dev/null ;
+      then 
+        echo "admin user already exists"; 
+      else 
+        echo creating admin user; 
+        sudo useradd -m -s /bin/bash -U admin -u 1001 --groups sudo --password "$(mkpasswd minad1234)"
+        sudo echo "%admin ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/admin
+    fi
+
+    # The graphical login managers do not show users with UID below 1000
+    # only create ansible user if doesn't exist (note insecure password - replace with ssh key)
+    if getent passwd | grep -c '^ansible:' > /dev/null ;
+      then 
+        echo "ansible user already exists"; 
+      else 
+        echo creating ansible user; 
+        sudo useradd -m -s /bin/bash -U ansible -u 800 --groups sudo --password "$(mkpasswd minad1234)"
+        sudo echo "%ansible ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/ansible
+    fi    
+    
+
+    echo "KVM-backed VM provisioned successfully"
+
+  SHELL
+
+end

@@ -47,3 +47,34 @@ activate sol -
 ```
  ipmitool -I lanplus -H 192.168.105.107 -U ADMIN -P ADMIN sol activate
 ```
+
+
+boot ipmi
+
+```
+ipmitool -I lanplus -H 192.168.105.102 -U ADMIN -P ADMIN chassis bootdev pxe options=efiboot
+Set Boot Device to pxe
+
+```
+
+uefi boot
+
+```
+ipmitool -I lanplus -H 192.168.105.102 -U ADMIN -P ADMIN chassis bootdev pxe options=efiboot
+Set Boot Device to pxe
+```
+
+One-time PXE boot: Run
+
+``` 
+ipmitool -I lanplus -H <ip_address> -U <username> -P <password> chassis bootdev pxe
+```
+
+Persistent PXE boot: Add the persistent flag if supported by your firmware:
+
+```
+ipmitool -I lanplus -H <ip_address> -U <username> -P <password> chassis bootdev pxe options=persistent
+
+```
+
+
