@@ -1,0 +1,51 @@
+# templates/dnsmasq.conf.j2
+# Managed by Ansible
+
+# Interface binding
+interface={{ dnsmasq_interface }}
+bind-interfaces
+
+# Domain
+domain={{ dnsmasq_domain }}
+local=/{{ dnsmasq_domain }}/
+
+# DHCP
+dhcp-range={{ dnsmasq_dhcp_range_start }},{{ dnsmasq_dhcp_range_end }},{{ dnsmasq_dhcp_lease_time }}
+dhcp-option=option:router,{{ dnsmasq_gateway }}
+dhcp-option=option:dns-server,{{ ansible_default_ipv4.address }}
+dhcp-option=option:domain-name,{{ dnsmasq_domain }}
+dhcp-option=option:ntp-server,{{ ansible_default_ipv4.address }}
+dhcp-authoritative
+
+# removed dhcp-leasefile option to avoid permission issues with dnsmasq running as non-root user
+# defaults to /var/lib/misc/dnsmasq.leases when not specified
+#dhcp-leasefile=/var/lib/dnsmasq/dnsmasq.leases
+
+# DNS
+{% for dns in dnsmasq_dns_servers %}
+server={{ dns }}
+{% endfor %}
+
+# Logging
+log-dhcp
+log-queries
+log-facility=/var/log/dnsmasq.log
+
+# Security
+bogus-priv
+domain-needed
+no-resolv
+no-poll
+
+# Cache
+cache-size=1000
+
+{% if dnsmasq_pxe_enabled | default(false) %}
+# PXE/TFTP
+enable-tftp
+tftp-root=/var/lib/tftpboot
+dhcp-boot=pxelinux.0
+{% endif %}
+
+# Include additional configs
+conf-dir=/etc/dnsmasq.d/,*.conf

@@ -1,0 +1,6 @@
+dnsmasq_dns_entries:
+  - { name: git.lab.example.com, ip: 10.0.0.30 }
+  - { name: registry.lab.example.com, ip: 10.0.0.31 }
+
+dnsmasq_cnames:
+  - { alias: www.lab.example.com, target: server1.lab.example.com }

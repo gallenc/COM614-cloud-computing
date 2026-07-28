@@ -1,0 +1,61 @@
+- name: Configure PXE boot
+  hosts: network_servers
+  become: true
+  vars:
+    dnsmasq_pxe_enabled: true
+  tasks:
+    - name: Create TFTP directory
+      ansible.builtin.file:
+        path: /var/lib/tftpboot
+        state: directory
+        mode: '0755'
+
+    - name: Install Syslinux for PXE
+      ansible.builtin.package:
+        name: syslinux-common
+        state: present
+        
+    - name: Install pxelinux for PXE
+      ansible.builtin.package:
+        name: pxelinux
+        state: present
+
+    - name: Copy bootloader files
+      ansible.builtin.copy:
+        src: /usr/lib/syslinux/modules/bios/{{ item }}
+        dest: /var/lib/tftpboot/{{ item }}
+        remote_src: true
+        mode: '0644'
+      loop:
+        - ldlinux.c32
+        - menu.c32
+        - libutil.c32
+        
+    - name: Copy PXE bootloader
+      ansible.builtin.copy:
+        src: /usr/lib/PXELINUX/{{ item }}
+        dest: /var/lib/tftpboot/{{ item }}
+        remote_src: true
+        mode: '0644'
+      loop:
+        - pxelinux.0
+        - lpxelinux.0
+
+    - name: Create PXE menu
+      ansible.builtin.copy:
+        dest: /var/lib/tftpboot/pxelinux.cfg/default
+        content: |
+          DEFAULT menu.c32
+          PROMPT 0
+          TIMEOUT 100
+          MENU TITLE PXE Boot Menu
+
+          LABEL ubuntu
+            MENU LABEL Install Ubuntu 24.04
+            KERNEL ubuntu/vmlinuz
+            APPEND initrd=ubuntu/initrd root=/dev/ram0 ramdisk_size=1500000 ip=dhcp url=http://{{ ansible_default_ipv4.address }}/ubuntu.iso
+
+          LABEL local
+            MENU LABEL Boot from local disk
+            LOCALBOOT 0
+        mode: '0644'

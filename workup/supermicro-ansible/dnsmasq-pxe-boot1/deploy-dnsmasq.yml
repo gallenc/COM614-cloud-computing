@@ -1,0 +1,60 @@
+---
+- name: Deploy Dnsmasq
+  hosts: network_servers
+  become: true
+  vars:
+    dnsmasq_interface: eth2
+    dnsmasq_domain: lab.example.com
+    dnsmasq_dhcp_range_start: 192.168.20.210
+    dnsmasq_dhcp_range_end: 192.168.20.230
+    dnsmasq_dhcp_lease_time: 1h
+    dnsmasq_gateway:   192.168.20.200
+    dnsmasq_dns_servers:
+      - 194.81.151.70
+    #  - 8.8.8.8
+  tasks:
+    - name: Install Dnsmasq
+      ansible.builtin.package:
+        name: dnsmasq
+        state: present
+
+    - name: Deploy dnsmasq.conf
+      ansible.builtin.template:
+        src: templates/dnsmasq.conf.j2
+        dest: /etc/dnsmasq.conf
+        mode: '0644'
+      notify: restart dnsmasq
+
+    - name: Deploy DHCP reservations
+      ansible.builtin.template:
+        src: templates/dhcp-reservations.conf.j2
+        dest: /etc/dnsmasq.d/reservations.conf
+        mode: '0644'
+      notify: restart dnsmasq
+
+#    - name: Deploy local DNS entries
+#      ansible.builtin.template:
+#        src: templates/local-dns.conf.j2
+#        dest: /etc/dnsmasq.d/local-dns.conf
+#        mode: '0644'
+#      notify: restart dnsmasq
+
+#    - name: Allow DHCP/DNS through firewall
+#      ansible.posix.firewalld:
+#        service: "{{ item }}"
+#        permanent: true
+#        state: enabled
+#        immediate: true
+#      loop: [dhcp, dns]
+
+    - name: Start Dnsmasq
+      ansible.builtin.service:
+        name: dnsmasq
+        state: started
+        enabled: true
+
+  handlers:
+    - name: restart dnsmasq
+      ansible.builtin.service:
+        name: dnsmasq
+        state: restarted

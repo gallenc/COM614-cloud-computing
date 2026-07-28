@@ -1,4 +1,4 @@
-# basre metal ansible provisioning
+# bare metal ansible provisioning
 
 Based on: How to Use Ansible to Provision Bare Metal Servers 
 
