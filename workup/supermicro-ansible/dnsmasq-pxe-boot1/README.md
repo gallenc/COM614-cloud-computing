@@ -19,6 +19,7 @@ all of the above configurations have been merged into this example.
 
 
 ```
+cd dnsmasq-pxe-boot1
 ansible-playbook -i inventory/dev/hosts.ini playbooks/setup-pxe-server.yml
 ```
 
