@@ -14,18 +14,32 @@
       ansible.builtin.package:
         name: syslinux-common
         state: present
+        
+    - name: Install pxelinux for PXE
+      ansible.builtin.package:
+        name: pxelinux
+        state: present
 
-    - name: Copy PXE bootloader
+    - name: Copy bootloader files
       ansible.builtin.copy:
         src: /usr/lib/syslinux/modules/bios/{{ item }}
         dest: /var/lib/tftpboot/{{ item }}
         remote_src: true
         mode: '0644'
       loop:
-        - pxelinux.0
         - ldlinux.c32
         - menu.c32
         - libutil.c32
+        
+    - name: Copy PXE bootloader
+      ansible.builtin.copy:
+        src: /usr/lib/PXELINUX/{{ item }}
+        dest: /var/lib/tftpboot/{{ item }}
+        remote_src: true
+        mode: '0644'
+      loop:
+        - pxelinux.0
+        - lpxelinux.0
 
     - name: Create PXE menu
       ansible.builtin.copy:
