@@ -8,6 +8,16 @@
     tftp_root: /srv/tftp
     http_root: /srv/http/install
     ubuntu_iso_url: https://releases.ubuntu.com/22.04/ubuntu-22.04.5-live-server-amd64.iso
+    
+    dnsmasq_interface: eth2
+    dnsmasq_domain: lab.example.com
+    dnsmasq_dhcp_range_start: 192.168.20.210
+    dnsmasq_dhcp_range_end: 192.168.20.230
+    dnsmasq_dhcp_lease_time: 1h
+    dnsmasq_gateway:   192.168.20.200
+    dnsmasq_dns_servers:
+      - 194.81.151.70
+    #  - 8.8.8.8
 
   tasks:
     # Install required packages
@@ -50,15 +60,33 @@
         dest: "{{ tftp_root }}/unicode.pf2"
         remote_src: true
         mode: '0644'
+        
+    - name: Deploy dnsmasq.conf
+      ansible.builtin.template:
+        src: templates/dnsmasq.conf.j2
+        dest: /etc/dnsmasq.conf
+        mode: '0644'
+      notify: restart dnsmasq
+
+    - name: Deploy DHCP reservations
+      ansible.builtin.template:
+        src: templates/dhcp-reservations.conf.j2
+        dest: /etc/dnsmasq.d/reservations.conf
+        mode: '0644'
+      notify: restart dnsmasq
+
+#    - name: Deploy local DNS entries
+#      ansible.builtin.template:
+#        src: templates/local-dns.conf.j2
+#        dest: /etc/dnsmasq.d/local-dns.conf
+#        mode: '0644'
+#      notify: restart dnsmasq
 
     # Configure dnsmasq for DHCP and TFTP
     - name: Configure dnsmasq
       ansible.builtin.copy:
         dest: /etc/dnsmasq.d/pxe.conf
         content: |
-          # DHCP range for provisioning network
-          dhcp-range=10.10.1.100,10.10.1.200,255.255.255.0,1h
-
           # TFTP settings
           enable-tftp
           tftp-root={{ tftp_root }}
@@ -67,12 +95,37 @@
           dhcp-match=set:efi-x86_64,option:client-arch,7
           dhcp-boot=tag:efi-x86_64,bootx64.efi
 
-          # Static DHCP assignments for known servers
-          dhcp-host=aa:bb:cc:dd:ee:01,10.10.1.11,server-01
-          dhcp-host=aa:bb:cc:dd:ee:02,10.10.1.12,server-02
-          dhcp-host=aa:bb:cc:dd:ee:03,10.10.1.13,server-03
         mode: '0644'
       notify: restart dnsmasq
+
+    - name: Start Dnsmasq
+      ansible.builtin.service:
+        name: dnsmasq
+        state: started
+        enabled: true
+
+    # Configure dnsmasq for DHCP and TFTP
+#    - name: Configure dnsmasq
+#      ansible.builtin.copy:
+#        dest: /etc/dnsmasq.d/pxe.conf
+#        content: |
+#          # DHCP range for provisioning network
+#          dhcp-range=10.10.1.100,10.10.1.200,255.255.255.0,1h
+#
+#          # TFTP settings
+#          enable-tftp
+#          tftp-root={{ tftp_root }}
+#
+#          # PXE boot file for UEFI clients
+#          dhcp-match=set:efi-x86_64,option:client-arch,7
+#          dhcp-boot=tag:efi-x86_64,bootx64.efi
+#
+#          # Static DHCP assignments for known servers
+#          dhcp-host=aa:bb:cc:dd:ee:01,10.10.1.11,server-01
+#          dhcp-host=aa:bb:cc:dd:ee:02,10.10.1.12,server-02
+#          dhcp-host=aa:bb:cc:dd:ee:03,10.10.1.13,server-03
+#        mode: '0644'
+#      notify: restart dnsmasq
 
     # Configure nginx to serve installer and NoCloud files
     - name: Configure nginx installer site
@@ -94,6 +147,12 @@
         dest: /etc/nginx/sites-enabled/pxe-install
         state: link
       notify: restart nginx
+
+    - name: Start Dnsmasq
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: true
 
     # Set up GRUB configuration for automated install
     - name: Create GRUB config directory
