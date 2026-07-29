@@ -26,6 +26,8 @@ Vagrant.configure("2") do |config|
 
 # second network connected to second bridge - this needs done in guest
 #sudo nmcli connection add type bridge con-name br1 ifname br1
+#sudo nmcli connection modify br1  ipv4.method manual ipv4.addresses 192.168.20.100/24 
+# (not used ipv4.gateway ${GW} ipv4.dns ${DNS1}) +ipv4.dns ${DNS2})
 #sudo nmcli connection add type bridge-slave con-name br1-slave ifname enp1s0f0 master br1
 #sudo nmcli connection up br1
 #sudo nano /etc/qemu-kvm/bridge.conf
