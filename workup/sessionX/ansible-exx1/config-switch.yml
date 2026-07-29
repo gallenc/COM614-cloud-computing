@@ -26,10 +26,12 @@
       - vlan 20
       - name "Secondary"
       - untagged  2,5,8,11,14,17,20,42  
+      #- ip address 192.168.30.5 255.255.255.0
       - exit
       - vlan 10
       - name "Production"
       - untagged 1,4,7,10,13,16,19,22,41
+      - ip address 192.168.20.5 255.255.255.0
       - exit
       - write memory
       - exit
