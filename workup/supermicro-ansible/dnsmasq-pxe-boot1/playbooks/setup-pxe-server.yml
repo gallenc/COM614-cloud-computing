@@ -204,7 +204,7 @@
         content: |
           set timeout=5
           menuentry "Ubuntu 22.04 Automated Install" {
-              linux /vmlinuz ip=dhcp url={{ ubuntu_iso_url }} autoinstall 'ds=nocloud-net;s=http://10.10.0.1/install/__dmi.system-uuid__/'
+              linux /vmlinuz ip=dhcp url={{ ubuntu_iso_url }} autoinstall 'ds=nocloud-net;s=http://{{ dnsmasq_gateway }}/install/__dmi.system-uuid__/'
               initrd /initrd
           }
         mode: '0644'
@@ -227,7 +227,7 @@
           LABEL ubuntu
             MENU LABEL Install Ubuntu 24.04
             KERNEL ubuntu/vmlinuz
-            APPEND initrd=ubuntu/initrd root=/dev/ram0 ramdisk_size=1500000 ip=dhcp url=http://{{ ansible_default_ipv4.address }}/ubuntu.iso
+            APPEND initrd=ubuntu/initrd root=/dev/ram0 ramdisk_size=1500000 ip=dhcp url=http://{{ dnsmasq_gateway }}/ubuntu.iso
           LABEL local
             MENU LABEL Boot from local disk
             LOCALBOOT 0

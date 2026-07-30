@@ -23,6 +23,14 @@ cd dnsmasq-pxe-boot1
 ansible-playbook -i inventory/dev/hosts.ini playbooks/setup-pxe-server.yml
 ```
 
+```
+ipmitool -I lan -H 192.168.105.102 -U ADMIN -P ADMIN chassis status
+ipmitool -I lan -H 192.168.105.102 -U ADMIN -P ADMIN chassis power off
+ipmitool -I lanplus -H 192.168.105.102 -U ADMIN -P ADMIN chassis bootdev pxe options=efiboot
+ipmitool -I lan -H 192.168.105.102 -U ADMIN -P ADMIN chassis power on
+
+```
+
 
 
 
