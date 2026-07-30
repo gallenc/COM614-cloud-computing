@@ -20,7 +20,7 @@
     #  - 8.8.8.8
 
   tasks:
-    # Install required packages
+    # Install required packages for UEFE PXE booting
     - name: Install PXE server packages
       ansible.builtin.apt:
         name:
@@ -61,6 +61,39 @@
         remote_src: true
         mode: '0644'
         
+      #    alternative Copy PXE bootloader packages pxelinux.0
+    - name: Install Syslinux for PXE
+      ansible.builtin.package:
+        name: syslinux-common
+        state: present
+        
+    - name: Install pxelinux for PXE
+      ansible.builtin.package:
+        name: pxelinux
+        state: present
+
+    - name: Copy bootloader files
+      ansible.builtin.copy:
+        src: /usr/lib/syslinux/modules/bios/{{ item }}
+        dest: "{{ tftp_root }}/{{ item }}"
+        remote_src: true
+        mode: '0644'
+      loop:
+        - ldlinux.c32
+        - menu.c32
+        - libutil.c32
+        
+    - name: Copy PXE bootloader
+      ansible.builtin.copy:
+        src: /usr/lib/PXELINUX/{{ item }}
+        dest: "{{ tftp_root }}/{{ item }}"
+        remote_src: true
+        mode: '0644'
+      loop:
+        - pxelinux.0
+        - lpxelinux.0
+        
+    # set up dnsmasq configuration for DHCP and TFTP based on template
     - name: Deploy dnsmasq.conf
       ansible.builtin.template:
         src: ../templates/dnsmasq.conf.j2
@@ -82,7 +115,7 @@
 #        mode: '0644'
 #      notify: restart dnsmasq
 
-    # Configure dnsmasq for DHCP and TFTP
+    # Configure dnsmasq for DHCP and TFTP pxe booting
     - name: Configure dnsmasq
       ansible.builtin.copy:
         dest: /etc/dnsmasq.d/pxe.conf
@@ -90,10 +123,14 @@
           # TFTP settings
           enable-tftp
           tftp-root={{ tftp_root }}
+          
+          # PXE boot for BIOS clients
+          pxe-service=x86PC, "PXELINUX (BIOS)", "pxelinux.0"
 
           # PXE boot file for UEFI clients
           dhcp-match=set:efi-x86_64,option:client-arch,7
           dhcp-boot=tag:efi-x86_64,bootx64.efi
+
 
         mode: '0644'
       notify: restart dnsmasq
@@ -171,6 +208,25 @@
               initrd /initrd
           }
         mode: '0644'
+        
+    - name: Create PXE menu
+      ansible.builtin.copy:
+        dest: /var/lib/tftpboot/pxelinux.cfg/default
+        content: |
+          DEFAULT menu.c32
+          PROMPT 0
+          TIMEOUT 100
+          MENU TITLE PXE Boot Menu
+
+          LABEL ubuntu
+            MENU LABEL Install Ubuntu 24.04
+            KERNEL ubuntu/vmlinuz
+            APPEND initrd=ubuntu/initrd root=/dev/ram0 ramdisk_size=1500000 ip=dhcp url=http://{{ ansible_default_ipv4.address }}/ubuntu.iso
+          LABEL local
+            MENU LABEL Boot from local disk
+            LOCALBOOT 0
+        mode: '0644'
+
 
   handlers:
     - name: restart dnsmasq
