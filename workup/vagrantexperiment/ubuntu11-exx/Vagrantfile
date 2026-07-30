@@ -85,6 +85,9 @@ Vagrant.configure("2") do |config|
     # Networking
 
     libvirt.driver = "kvm"
+    
+    # shared memory mode - used for virtiofs
+    libvirt.memorybacking :access, :mode => "shared"
 
   end
 
