@@ -8,6 +8,7 @@
     tftp_root: /srv/tftp
     http_root: /srv/http/install
     ubuntu_iso_url: https://releases.ubuntu.com/22.04/ubuntu-22.04.5-live-server-amd64.iso
+    ubuntu_iso_name: ubuntu-22.04.5-live-server-amd64.iso
     
     dnsmasq_interface: eth2
     dnsmasq_domain: lab.example.com
@@ -172,7 +173,7 @@
           server {
               listen 80;
               server_name _;
-              root /srv/http;
+              root /vagrant;
               autoindex on;
           }
         mode: '0644'
@@ -227,7 +228,7 @@
           LABEL ubuntu
             MENU LABEL Install Ubuntu 24.04
             KERNEL ubuntu/vmlinuz
-            APPEND initrd=ubuntu/initrd root=/dev/ram0 ramdisk_size=1500000 ip=dhcp url=http://{{ dnsmasq_gateway }}/ubuntu.iso
+            APPEND initrd=ubuntu/initrd root=/dev/ram0 ramdisk_size=1500000 ip=dhcp url=http://{{ dnsmasq_gateway }}/sharedisos/{{ubuntu_iso_name}}
           LABEL local
             MENU LABEL Boot from local disk
             LOCALBOOT 0
