@@ -211,7 +211,7 @@
         
     - name: Create PXE menu
       ansible.builtin.copy:
-        dest: /var/lib/tftpboot/pxelinux.cfg/default
+        dest: "{{ tftp_root }}/pxelinux.cfg/default"
         content: |
           DEFAULT menu.c32
           PROMPT 0
