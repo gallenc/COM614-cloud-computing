@@ -209,6 +209,12 @@
           }
         mode: '0644'
         
+    - name: Create tftp config directory
+      ansible.builtin.file:
+        path: "{{ tftp_root }}/pxelinux.cfg"
+        state: directory
+        mode: '0755'
+        
     - name: Create PXE menu
       ansible.builtin.copy:
         dest: "{{ tftp_root }}/pxelinux.cfg/default"
