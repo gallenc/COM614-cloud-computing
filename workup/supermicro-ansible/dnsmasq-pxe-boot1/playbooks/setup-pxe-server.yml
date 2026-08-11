@@ -241,7 +241,8 @@
           LABEL ubuntu
             MENU LABEL Install Ubuntu 24.04
             KERNEL ubuntu/vmlinuz
-            APPEND initrd=ubuntu/initrd.img root=/dev/ram0 ramdisk_size=8388608 ip=dhcp url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}}
+            INITRD ubuntu/initrd.img
+            APPEND ip=dhcp url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}}
           LABEL local
             MENU LABEL Boot from local disk
             LOCALBOOT 0
