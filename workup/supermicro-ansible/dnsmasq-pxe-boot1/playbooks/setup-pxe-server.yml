@@ -7,6 +7,7 @@
   vars:
     tftp_root: /srv/tftp
     http_root: /srv/http/install
+    ubuntu_root: /srv/tftp/ubuntu
     ubuntu_iso_url: https://releases.ubuntu.com/22.04/ubuntu-22.04.5-live-server-amd64.iso
     ubuntu_iso_name: ubuntu-22.04.5-live-server-amd64.iso
     
@@ -40,6 +41,7 @@
       loop:
         - "{{ tftp_root }}"
         - "{{ http_root }}"
+        - "{{ ubuntu_root }}"
 
     - name: Copy signed shim for UEFI PXE
       ansible.builtin.copy:
@@ -97,7 +99,7 @@
     - name: Copy ubuntu kernel and initrd for PXE boot
       ansible.builtin.copy:
         src: /boot/{{ item }}
-        dest: "{{ tftp_root }}/ubuntu/{{ item }}"
+        dest: "{{ ubuntu_root }}/{{ item }}"
         remote_src: true
         mode: '0644'
       loop:
