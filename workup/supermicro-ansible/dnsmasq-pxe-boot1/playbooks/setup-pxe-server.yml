@@ -171,7 +171,7 @@
         dest: /etc/nginx/sites-available/pxe-install
         content: |
           server {
-              listen 80;
+              listen 8080;
               server_name _;
               root /vagrant;
               autoindex on;
@@ -228,7 +228,7 @@
           LABEL ubuntu
             MENU LABEL Install Ubuntu 24.04
             KERNEL ubuntu/vmlinuz
-            APPEND initrd=ubuntu/initrd root=/dev/ram0 ramdisk_size=1500000 ip=dhcp url=http://{{ dnsmasq_gateway }}/sharedisos/{{ubuntu_iso_name}}
+            APPEND initrd=ubuntu/initrd root=/dev/ram0 ramdisk_size=1500000 ip=dhcp url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}}
           LABEL local
             MENU LABEL Boot from local disk
             LOCALBOOT 0
