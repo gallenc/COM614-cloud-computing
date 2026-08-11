@@ -94,6 +94,17 @@
         - pxelinux.0
         - lpxelinux.0
         
+    - name: Copy ubuntu kernel and initrd for PXE boot
+      ansible.builtin.copy:
+        src: /boot/{{ item }}
+        dest: "{{ tftp_root }}/ubuntu/{{ item }}"
+        remote_src: true
+        mode: '0644'
+      loop:
+        - vmlinuz
+        - initrd.img
+
+        
     # set up dnsmasq configuration for DHCP and TFTP based on template
     - name: Deploy dnsmasq.conf
       ansible.builtin.template:
@@ -228,7 +239,7 @@
           LABEL ubuntu
             MENU LABEL Install Ubuntu 24.04
             KERNEL ubuntu/vmlinuz
-            APPEND initrd=ubuntu/initrd root=/dev/ram0 ramdisk_size=1500000 ip=dhcp url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}}
+            APPEND initrd=ubuntu/initrd.img root=/dev/ram0 ramdisk_size=1500000 ip=dhcp url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}}
           LABEL local
             MENU LABEL Boot from local disk
             LOCALBOOT 0
