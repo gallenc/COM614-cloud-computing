@@ -242,7 +242,7 @@
             MENU LABEL Install Ubuntu 24.04
             KERNEL ubuntu/vmlinuz
             INITRD ubuntu/initrd.img
-            APPEND ip=dhcp boot=casper url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}}
+            APPEND ip=dhcp  url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}}
           LABEL local
             MENU LABEL Boot from local disk
             LOCALBOOT 0
