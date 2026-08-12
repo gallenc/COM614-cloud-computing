@@ -242,7 +242,7 @@
             MENU LABEL Install Ubuntu 24.04
             KERNEL ubuntu/vmlinuz
             INITRD ubuntu/initrd.img
-            APPEND break=initqueue ip=eth1:dhcp boot=casper netboot=url url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}}
+            APPEND break=premount ip=eth1:dhcp boot=casper netboot=url url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}}
           LABEL local
             MENU LABEL Boot from local disk
             LOCALBOOT 0
