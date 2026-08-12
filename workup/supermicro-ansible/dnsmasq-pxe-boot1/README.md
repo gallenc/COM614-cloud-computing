@@ -17,6 +17,11 @@ all of the above configurations have been merged into this example.
 
 # running
 
+```
+#you may need to change the known_hosts key
+rm ~/.ssh/known_hosts
+
+```
 
 ```
 cd dnsmasq-pxe-boot1
