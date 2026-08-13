@@ -243,14 +243,14 @@
             KERNEL ubuntu/vmlinuz
             INITRD ubuntu/initrd.img
             IPAPPEND 2
-            APPEND ip=dhcp boot=casper netboot=url url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}}  rd.debug rd.break
+            APPEND ip=dhcp boot=casper netboot=url url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}} 
             
           LABEL local
             MENU LABEL Boot from local disk
             LOCALBOOT 0
         mode: '0644'
 
-#  APPEND ip=eth1:dhcp boot=casper netboot=url url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}}
+#  APPEND ip=eth1:dhcp boot=casper netboot=url url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}}  rd.debug rd.break
 #           INITRD ubuntu/initrd.img
 #            APPEND ip=dhcp  url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}}
 
