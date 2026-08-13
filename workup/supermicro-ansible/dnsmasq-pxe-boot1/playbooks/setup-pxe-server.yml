@@ -242,8 +242,8 @@
             MENU LABEL Install Ubuntu 24.04
             KERNEL ubuntu/vmlinuz
             INITRD ubuntu/initrd.img
-            IPAPPEND 2
-            APPEND  boot=casper netboot=url url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}} 
+            IPAPPEND 3
+            APPEND url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}} cloud-config-url=/dev/null
             
           LABEL local
             MENU LABEL Boot from local disk
