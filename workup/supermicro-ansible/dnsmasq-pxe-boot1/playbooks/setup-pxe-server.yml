@@ -96,9 +96,10 @@
         - pxelinux.0
         - lpxelinux.0
         
+      # note must have unpacked iso here
     - name: Copy ubuntu kernel and initrd for PXE boot
       ansible.builtin.copy:
-        src: /boot/{{ item }}
+        src: /vagrant/sharedisos/casper/{{ item }}
         dest: "{{ ubuntu_root }}/{{ item }}"
         remote_src: true
         mode: '0644'
