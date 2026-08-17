@@ -244,8 +244,8 @@
             MENU LABEL Install Ubuntu 24.04
             KERNEL ubuntu/vmlinuz
             INITRD ubuntu/initrd.img
-            SYSAPPEND 2
-            APPEND ipv6.disable=1 ip=dhcp url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}} cloud-config-url=/dev/null 
+            SYSAPPEND 3
+            APPEND  url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}} cloud-config-url=/dev/null 
             
           LABEL local
             MENU LABEL Boot from local disk
