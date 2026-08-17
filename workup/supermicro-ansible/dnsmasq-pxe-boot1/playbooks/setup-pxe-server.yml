@@ -245,7 +245,7 @@
             KERNEL ubuntu/vmlinuz
             INITRD ubuntu/initrd.img
             IPAPPEND 2
-            APPEND ip=dhcp url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}} cloud-config-url=/dev/null 
+            APPEND ipv6.disable=1 ip=dhcp url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}} cloud-config-url=/dev/null 
             
           LABEL local
             MENU LABEL Boot from local disk
