@@ -1,5 +1,7 @@
-.iso
-.gz
-.tar
-.zip
-.7z
+*.iso
+*.gz
+*.tar
+*.zip
+*.7z
+vmlinuz
+initrd.img
