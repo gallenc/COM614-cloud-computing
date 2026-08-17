@@ -244,7 +244,7 @@
             MENU LABEL Install Ubuntu 24.04
             KERNEL ubuntu/vmlinuz
             INITRD ubuntu/initrd.img
-            IPAPPEND 2
+            SYSAPPEND 2
             APPEND ipv6.disable=1 ip=dhcp url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}} cloud-config-url=/dev/null 
             
           LABEL local
@@ -253,6 +253,8 @@
         mode: '0644'
 
 #IPAPPEND 3
+#            IPAPPEND 2
+#           APPEND ipv6.disable=1 ip=dhcp url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}} cloud-config-url=/dev/null 
 #  init=/bin/bash 
 # APPEND ip=enp1s0f1:dhcp
 #            APPEND url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}} cloud-config-url=/dev/null
