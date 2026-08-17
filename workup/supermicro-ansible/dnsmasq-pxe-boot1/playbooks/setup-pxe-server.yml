@@ -134,6 +134,8 @@
       ansible.builtin.copy:
         dest: /etc/dnsmasq.d/pxe.conf
         content: |
+          # No ping before DHCP offer
+          no-ping
           # TFTP settings
           enable-tftp
           tftp-root={{ tftp_root }}
