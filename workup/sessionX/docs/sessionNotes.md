@@ -143,6 +143,9 @@ Chassis Power is off
 
 ipmitool -I lanplus -H 192.168.105.102 -U ADMIN -P ADMIN chassis bootdev pxe options=efiboot
 
+OR
+ipmitool -I lanplus -H 192.168.105.102 -U ADMIN -P ADMIN chassis bootdev pxe
+
 ipmitool -I lanplus -H 192.168.105.102 -U ADMIN -P ADMIN chassis power on
 
 # the boot will try all of the mac addresses until it finds a boot file

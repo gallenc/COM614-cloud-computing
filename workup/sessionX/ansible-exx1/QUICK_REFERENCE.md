@@ -3,14 +3,15 @@
 ## 🖥️ Servers
 
 ```
-blade-1-1   ansible_host=192.168.105.107
-blade-1-2   ansible_host=192.168.105.106  
-blade-1-3   ansible_host=192.168.105.105
+blade-1-1   ansible_host=192.168.105.101
+blade-1-2   ansible_host=192.168.105.102  
+blade-1-3   ansible_host=192.168.105.103
 blade-1-4   ansible_host=192.168.105.104 
-blade-1-5   ansible_host=192.168.105.108 
-blade-1-6   ansible_host=192.168.105.103  
-blade-1-7   ansible_host=192.168.105.102 
-blade-1-8   ansible_host=192.168.105.101
+blade-1-5   ansible_host=192.168.105.105 
+blade-1-6   ansible_host=192.168.105.106  
+blade-1-7   ansible_host=192.168.105.107 
+# blade-1-8   ansible_host=192.168.105.108
+
 ```
 
 ## ⚡ Essential Commands

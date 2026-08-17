@@ -244,7 +244,7 @@
             MENU LABEL Install Ubuntu 24.04
             KERNEL ubuntu/vmlinuz
             INITRD ubuntu/initrd.img
-            APPEND ip=enp1s0f1:dhcp url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}} cloud-config-url=/dev/null
+            APPEND ip=enp1s0f1:dhcp url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}} cloud-config-url=/dev/null  init=/bin/bash rd.debug
             
           LABEL local
             MENU LABEL Boot from local disk
