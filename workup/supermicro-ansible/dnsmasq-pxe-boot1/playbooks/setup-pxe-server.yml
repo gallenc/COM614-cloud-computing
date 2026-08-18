@@ -263,7 +263,7 @@
             KERNEL ubuntu/vmlinuz
             INITRD ubuntu/initrd.img
             SYSAPPEND 3
-            APPEND  url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}} autoinstall cloud-config-url=/dev/null ds=nocloud-net\;s=http://{{ dnsmasq_gateway }}:8080/sharedisos/conf/default/
+            APPEND  url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}} cloud-config-url=/dev/null autoinstall  ds=nocloud-net\;s=http://{{ dnsmasq_gateway }}:8080/sharedisos/conf/default/
             
           LABEL local
             MENU LABEL Boot from local disk
