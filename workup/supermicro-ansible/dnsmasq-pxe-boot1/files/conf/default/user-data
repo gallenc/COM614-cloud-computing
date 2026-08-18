@@ -21,8 +21,6 @@ autoinstall:
   packages:
     - git
     - nano
-    - net-tools
-    # - qemu-guest-agent
   late-commands:
     - echo 'ansible ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/99_ansible
     # - sed -i 's/#Port 22/Port 8022/g' /target/etc/ssh/sshd_config
