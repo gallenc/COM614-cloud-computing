@@ -111,7 +111,6 @@
       ansible.builtin.copy:
         src: ../files/conf/default/{{ item }}
         dest: "/vagrant/sharedisos/conf/default/{{ item }}"
-        remote_src: true
         mode: '0644'
       loop:
         - meta-data
