@@ -107,6 +107,12 @@
         - vmlinuz
         - initrd.img
         
+    - name: Create config directory
+      ansible.builtin.file:
+        path: "/vagrant/sharedisos/conf/default"
+        state: directory
+        mode: '0755'
+        
     - name: Copy config files
       ansible.builtin.copy:
         src: ../files/conf/default/{{ item }}
