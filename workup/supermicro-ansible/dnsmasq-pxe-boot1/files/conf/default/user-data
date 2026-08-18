@@ -1,0 +1,28 @@
+#cloud-config
+autoinstall:
+  version: 1
+  locale: en_UK
+  keyboard:
+    layout: gb
+  identity:
+    hostname: ubu24-template
+    realname: 'Ansible user Installation User'
+    username: ansible
+    password: '$1$aQfg4A1j$48.XKX2r4iLvFfh680Glh/' # password is minad1234
+  storage:
+    layout:
+      name: lvm
+      sizing-policy: all
+  ssh:
+    install-server: yes
+    authorized-keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAJyyp6xjVsfMyQUU8ONgn8HUUTo4iDvRIOQR9Jp51e3 ansible@sekureco42.ch
+    allow-pw: yes
+  packages:
+    - git
+    - nano
+    - net-tools
+    # - qemu-guest-agent
+  late-commands:
+    - echo 'ansible ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/99_ansible
+    # - sed -i 's/#Port 22/Port 8022/g' /target/etc/ssh/sshd_config

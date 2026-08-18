@@ -106,6 +106,18 @@
       loop:
         - vmlinuz
         - initrd.img
+        
+    - name: Copy config files
+      ansible.builtin.copy:
+        src: ../files/conf/default/{{ item }}
+        dest: "/vagrant/sharedisos/conf/default/{{ item }}"
+        remote_src: true
+        mode: '0644'
+      loop:
+        - meta-data
+        - network-config
+        - user-data
+        - vendor-data
 
         
     # set up dnsmasq configuration for DHCP and TFTP based on template
@@ -136,7 +148,7 @@
         dest: /etc/dnsmasq.d/pxe.conf
         content: |
           # No ping before DHCP offer
-          no-ping
+          # no-ping
           # TFTP settings
           enable-tftp
           tftp-root={{ tftp_root }}
@@ -246,7 +258,7 @@
             KERNEL ubuntu/vmlinuz
             INITRD ubuntu/initrd.img
             SYSAPPEND 3
-            APPEND  url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}} cloud-config-url=/dev/null autoinstall ds="nocloud-net;s=http://{{ dnsmasq_gateway }}:8080/conf/default/"
+            APPEND  url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}} cloud-config-url=/dev/null autoinstall ds="nocloud-net;s=http://{{ dnsmasq_gateway }}:8080/sharedisos/conf/default/"
             
           LABEL local
             MENU LABEL Boot from local disk
