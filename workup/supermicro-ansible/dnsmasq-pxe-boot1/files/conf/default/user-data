@@ -1,9 +1,9 @@
 #cloud-config
 autoinstall:
   version: 1
-  locale: en_UK
+  locale: en_GB.UTF-8
   keyboard:
-    layout: gb
+    layout: uk
   identity:
     hostname: ubu24-template
     realname: 'Ansible user Installation User'
