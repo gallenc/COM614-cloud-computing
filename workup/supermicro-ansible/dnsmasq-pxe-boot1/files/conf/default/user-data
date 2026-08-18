@@ -3,7 +3,7 @@ autoinstall:
   version: 1
   locale: en_GB.UTF-8
   keyboard:
-    layout: uk
+    layout: gb
   identity:
     hostname: ubu24-template
     realname: 'Ansible user Installation User'
