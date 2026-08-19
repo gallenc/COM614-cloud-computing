@@ -249,7 +249,7 @@
         state: directory
         mode: '0755'
         
-    - name: Create PXE menu
+    - name: Create Default PXE menu
       ansible.builtin.copy:
         dest: "{{ tftp_root }}/pxelinux.cfg/default"
         content: |
