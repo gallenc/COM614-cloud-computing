@@ -1,6 +1,7 @@
 # templates/dhcp-reservations.conf.j2
 # Static DHCP reservations
 {% for host in groups['all'] %}
+{% if hostvars[host].eth0_mac | default('', true) | trim != '' %}
 dhcp-host={{ hostvars[host].eth0_mac }},{{ hostvars[host].eth0_ip }},{{ host }}
-
+{% endif %}
 {% endfor %}
