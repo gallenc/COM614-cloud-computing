@@ -140,12 +140,12 @@
         mode: '0644'
       notify: restart dnsmasq
 
-#    - name: Deploy local DNS entries
-#      ansible.builtin.template:
-#        src: ../templates/local-dns.conf.j2
-#        dest: /etc/dnsmasq.d/local-dns.conf
-#        mode: '0644'
-#      notify: restart dnsmasq
+    - name: Deploy local DNS entries
+      ansible.builtin.template:
+        src: ../templates/local-dns.conf.j2
+        dest: /etc/dnsmasq.d/local-dns.conf
+        mode: '0644'
+      notify: restart dnsmasq
 
     # Configure dnsmasq for DHCP and TFTP pxe booting
     - name: Configure dnsmasq
