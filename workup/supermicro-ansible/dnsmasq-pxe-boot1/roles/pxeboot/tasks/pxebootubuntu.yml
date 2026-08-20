@@ -1,6 +1,6 @@
 ---
 
- - name: debug
+ - name: debug pxebootubuntu.yml
    debug:
      msg: "generating pxeboot config for os_id=ubuntu os_version_id= {{ hostvars[item].os_version_id | default('', true) | trim }} eth0_mac={{ hostvars[item].eth0_mac | default('', true) | trim }}"
           
@@ -11,7 +11,7 @@
         DEFAULT menu.c32
         PROMPT 0
         TIMEOUT 100
-        MENU TITLE PXE Boot Menu
+        MENU TITLE PXE Boot Menu for eth0_mac={{ hostvars[item].eth0_mac }} {{ hostvars[item].hostname | default('', true) | trim }}
 
         LABEL ubuntu
           MENU LABEL Install Ubuntu 24.04
