@@ -11,7 +11,7 @@
         DEFAULT menu.c32
         PROMPT 0
         TIMEOUT 100
-        MENU TITLE PXE Boot Menu for eth0_mac={{ hostvars[item].eth0_mac }} {{ hostvars[item].hostname | default('', true) | trim }}
+        MENU TITLE PXE Boot Menu for eth0_mac={{ hostvars[item].eth0_mac }} {{ item }}
 
         LABEL ubuntu
           MENU LABEL Install Ubuntu 24.04
