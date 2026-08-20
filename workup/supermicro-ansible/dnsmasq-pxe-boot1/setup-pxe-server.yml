@@ -285,8 +285,8 @@
 #  removed           APPEND initrd=ubuntu/initrd.img root=/dev/ram0 ramdisk_size=1500000 ip=dhcp url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}}
 # APPEND initrd=ubuntu/initrd.img root=/dev/ram0 ramdisk_size=8388608 ip=dhcp url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}}
 
-  roles:
-    - pxeboot
+ # roles:
+ #   - pxeboot
 
   handlers:
     - name: restart dnsmasq
