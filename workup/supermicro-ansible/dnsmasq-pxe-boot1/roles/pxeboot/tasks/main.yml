@@ -1,0 +1,4 @@
+---
+- name: generate pxeboot ubuntu config
+  include_tasks: pxebootubuntu.yml
+  when: hostvars[host].os_id | default('', true) | trim == 'ubuntu'

@@ -128,21 +128,21 @@
     # set up dnsmasq configuration for DHCP and TFTP based on template
     - name: Deploy dnsmasq.conf
       ansible.builtin.template:
-        src: ../templates/dnsmasq.conf.j2
+        src: ./templates/dnsmasq.conf.j2
         dest: /etc/dnsmasq.conf
         mode: '0644'
       notify: restart dnsmasq
 
     - name: Deploy DHCP reservations
       ansible.builtin.template:
-        src: ../templates/dhcp-reservations.conf.j2
+        src: ./templates/dhcp-reservations.conf.j2
         dest: /etc/dnsmasq.d/reservations.conf
         mode: '0644'
       notify: restart dnsmasq
 
     - name: Deploy local DNS entries
       ansible.builtin.template:
-        src: ../templates/local-dns.conf.j2
+        src: ./templates/local-dns.conf.j2
         dest: /etc/dnsmasq.d/local-dns.conf
         mode: '0644'
       notify: restart dnsmasq
@@ -285,6 +285,8 @@
 #  removed           APPEND initrd=ubuntu/initrd.img root=/dev/ram0 ramdisk_size=1500000 ip=dhcp url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}}
 # APPEND initrd=ubuntu/initrd.img root=/dev/ram0 ramdisk_size=8388608 ip=dhcp url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}}
 
+  roles:
+    - pxeboot
 
   handlers:
     - name: restart dnsmasq
