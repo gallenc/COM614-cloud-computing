@@ -1,5 +1,47 @@
 ---
 
+# Delete existing PXE boot menu files
+- name: Get directory listing
+  find:
+    path: "{{ tftp_root }}/pxelinux.cfg/" 
+    file_type: any
+    hidden: yes
+  register: directory_content_result
+  
+- name: debug pxeboot role
+  debug:
+     msg: "removing existing PXE boot menu files from {{ tftp_root }}/pxelinux.cfg/ directory content={{ directory_content_result.files | map(attribute='path') | list }}"
+
+- name: Remove directory content
+  file:
+    path: "{{ item.path }}" 
+    state: absent
+  with_items: "{{ directory_content_result.files }}" 
+  loop_control:
+    label: "{{ item.path }}" 
+
+- name: Create Default PXE menu
+  ansible.builtin.copy:
+   dest: "{{ tftp_root }}/pxelinux.cfg/default"
+   content: |
+     DEFAULT menu.c32
+     PROMPT 0
+     TIMEOUT 100
+          MENU TITLE PXE Boot Menu
+
+     LABEL ubuntu
+       MENU LABEL Install Ubuntu 24.04
+       KERNEL ubuntu/vmlinuz
+       INITRD ubuntu/initrd.img
+       SYSAPPEND 3
+       APPEND  url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}} cloud-config-url=/dev/null autoinstall  ds=nocloud-net;s=http://{{ dnsmasq_gateway }}:8080/sharedisos/conf/default/ fsck.mode=skip
+
+     LABEL local
+       MENU LABEL Boot from local disk
+       LOCALBOOT 0
+   mode: '0644'
+
+
 - name: generate pxeboot ubuntu config
   include_tasks: pxebootubuntu.yml
   when: (hostvars[item].os_id | default('', true) | trim == 'ubuntu' ) and (hostvars[item].eth0_mac | default('', true) | trim !='')
