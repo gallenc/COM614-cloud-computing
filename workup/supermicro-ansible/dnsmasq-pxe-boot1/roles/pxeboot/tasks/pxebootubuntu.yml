@@ -31,15 +31,21 @@
        - name: Mount ISO file as a loop device
          ansible.posix.mount:
            path: /mnt/iso/ubuntu
-           src: "{{sharedisos}}/ubuntu/{{ hostvars[item].os_version_id | default('', true) | trim }} }}/{{ubuntu_iso_name}}"
+           src: "{{sharedisos}}/ubuntu/{{ hostvars[item].os_version_id | default('', true) | trim }}/{{ubuntu_iso_name}}"
            fstype: iso9660
            opts: loop,ro
            state: mounted
-    
+
+       - name: Ensure casper folder exists
+         ansible.builtin.file:
+           path: "{{sharedisos}}/ubuntu/{{ hostvars[item].os_version_id | default('', true) | trim }}/casper/"
+           state: directory
+           mode: '0755'
+           
        - name: Copy ubuntu kernel and initrd for PXE boot
          ansible.builtin.copy:
            src: /mnt/iso/ubuntu/casper/{{ item }}
-           dest: "{{sharedisos}}/ubuntu/{{ hostvars[item].os_version_id | default('', true) | trim }} }}/casper/"
+           dest: "{{sharedisos}}/ubuntu/{{ hostvars[item].os_version_id | default('', true) | trim }}/casper/"
            remote_src: true
            mode: '0644'
          loop:
@@ -49,7 +55,7 @@
        - name: Unmount ISO file on Linux
          ansible.posix.mount:
            path: /mnt/iso/ubuntu
-           src: "{{sharedisos}}/ubuntu/{{ hostvars[item].os_version_id | default('', true) | trim }} }}/{{ubuntu_iso_name}}"
+           src: "{{sharedisos}}/ubuntu/{{ hostvars[item].os_version_id | default('', true) | trim }}/{{ubuntu_iso_name}}"
            state: unmounted
  
           
