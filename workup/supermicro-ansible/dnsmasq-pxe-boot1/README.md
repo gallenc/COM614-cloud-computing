@@ -25,7 +25,8 @@ rm ~/.ssh/known_hosts
 
 ```
 cd dnsmasq-pxe-boot1
-ansible-playbook -i inventory/dev/hosts.ini playbooks/setup-pxe-server.yml
+ansible-playbook -i inventory/dev/hosts.ini  setup-pxe-server.yml
+
 ```
 
 ```
