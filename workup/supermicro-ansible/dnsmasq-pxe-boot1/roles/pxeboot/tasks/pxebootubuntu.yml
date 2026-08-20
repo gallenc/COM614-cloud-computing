@@ -2,7 +2,7 @@
 
  - name: debug
    debug:
-     msg: "generating pxeboot config for os_id=ubuntu os_version_id= {{ hostvars[item].os_version_id | default('', true) | trim }}"
+     msg: "generating pxeboot config for os_id=ubuntu os_version_id= {{ hostvars[item].os_version_id | default('', true) | trim }} eth0_mac={{ hostvars[item].eth0_mac | default('', true) | trim }}"
           
  - name: Create Ubuntu pxe Mac specific PXE menu
    ansible.builtin.copy:
@@ -24,4 +24,3 @@
           MENU LABEL Boot from local disk
           LOCALBOOT 0
       mode: '0644'
-      when: hostvars[item].eth0_mac | default('', true) | trim !=''
