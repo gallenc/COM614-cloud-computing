@@ -27,7 +27,7 @@
      DEFAULT menu.c32
      PROMPT 0
      TIMEOUT 100
-          MENU TITLE PXE Boot Menu
+     MENU TITLE PXE Boot Menu
 
      LABEL local
        MENU LABEL Boot from local disk
