@@ -1,26 +1,108 @@
 ---
+- name: debug preparefiles-ubuntu
+  debug:
+     msg: "peparing download files for os_id=ubuntu os_version_id= {{ hostvars[item].os_version_id | default('', true) | trim }} }}"
+     
+- name: check if iso file exists
+  stat: 
+    path: "{{sharedisos}}/ubuntu/{{ hostvars[item].os_version_id | default('', true) | trim }} }}/{{ubuntu_iso_name}}"
+  register: download_iso_file_stat
+     
+- name: Download and unpack iso file if it does not exist
+  when: download_iso_file_stat.stat.exists == false
+  block:
+       - name: downloading iso files
+         debug:
+             msg: "peparing download files for {{ubuntu_iso_url}}"
+             
+#       - name: Download ISO
+#         ansible.builtin.get_url:
+#            url: "{{ubuntu_iso_url}}"
+#            dest: "{{sharedisos}}/ubuntu/{{ hostvars[item].os_version_id | default('', true) | trim }} }}/{{ubuntu_iso_name}}"
+#            # checksum: "sha256:https://example.com.sha256"
+#            force: false # will not download if already exists
 
- - name: debug pxebootubuntu.yml
-   debug:
-     msg: "generating pxeboot config for os_id=ubuntu os_version_id= {{ hostvars[item].os_version_id | default('', true) | trim }} eth0_mac={{ hostvars[item].eth0_mac | default('', true) | trim }}"
+       - name: Ensure mount point exists
+         ansible.builtin.file:
+           path: /mnt/iso/ubuntu
+           state: directory
+           mode: '0755'
+
+       - name: Mount ISO file as a loop device
+         ansible.posix.mount:
+           path: /mnt/iso/ubuntu
+           src: "{{sharedisos}}/ubuntu/{{ hostvars[item].os_version_id | default('', true) | trim }} }}/{{ubuntu_iso_name}}"
+           fstype: iso9660
+           opts: loop,ro
+           state: mounted
+    
+       - name: Copy ubuntu kernel and initrd for PXE boot
+         ansible.builtin.copy:
+           src: /mnt/iso/ubuntu/casper/{{ item }}
+           dest: "{{sharedisos}}/ubuntu/{{ hostvars[item].os_version_id | default('', true) | trim }} }}/casper/"
+           remote_src: true
+           mode: '0644'
+         loop:
+           - vmlinuz
+           - initrd.img
+
+       - name: Unmount ISO file on Linux
+         ansible.posix.mount:
+           path: /mnt/iso/ubuntu
+           src: "{{sharedisos}}/ubuntu/{{ hostvars[item].os_version_id | default('', true) | trim }} }}/{{ubuntu_iso_name}}"
+           state: unmounted
+ 
           
- - name: Create Ubuntu pxe Mac specific PXE menu
-   ansible.builtin.copy:
-      dest: "{{ tftp_root }}/pxelinux.cfg/01-{{ hostvars[item].eth0_mac  | replace(':','-') | lower }}"
-      content: |
-        DEFAULT menu.c32
-        PROMPT 0
-        TIMEOUT 100
-        MENU TITLE PXE Boot Menu for {{ item }} eth0_mac={{ hostvars[item].eth0_mac }}
+ # note must have unpacked iso here
+- name: Copy ubuntu kernel and initrd for PXE boot to tftp root
+  ansible.builtin.copy:
+    src: "{{sharedisos}}/ubuntu/{{ hostvars[item].os_version_id | default('', true) | trim }} }}/casper/{{ item }}"
+    dest: "{{ ubuntu_root }}/{{ item }}"
+    remote_src: true
+    mode: '0644'
+  loop:
+    - vmlinuz
+    - initrd.img
 
-        LABEL ubuntu
-          MENU LABEL Install Ubuntu 24.04
-          KERNEL ubuntu/vmlinuz
-          INITRD ubuntu/initrd.img
-          SYSAPPEND 3
-          APPEND  url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}} cloud-config-url=/dev/null autoinstall  ds=nocloud-net;s=http://{{ dnsmasq_gateway }}:8080/sharedisos/conf/default/ fsck.mode=skip
+- name: Create config directory
+  ansible.builtin.file:
+    path: "/vagrant/sharedisos/conf/default"
+    state: directory
+    mode: '0755'
+
+- name: Copy config files
+  ansible.builtin.copy:
+    src: ../files/conf/default/{{ item }}
+    dest: "/vagrant/sharedisos/conf/default/{{ item }}"
+    mode: '0644'
+  loop:
+    - meta-data
+    - network-config
+    - user-data
+    - vendor-data
+
+
+- name: debug pxebootubuntu.yml
+  debug:
+    msg: "generating pxeboot config for os_id=ubuntu os_version_id= {{ hostvars[item].os_version_id | default('', true) | trim }} eth0_mac={{ hostvars[item].eth0_mac | default('', true) | trim }}"
+          
+- name: Create Ubuntu pxe Mac specific PXE menu
+  ansible.builtin.copy:
+     dest: "{{ tftp_root }}/pxelinux.cfg/01-{{ hostvars[item].eth0_mac  | replace(':','-') | lower }}"
+     content: |
+       DEFAULT menu.c32
+       PROMPT 0
+       TIMEOUT 100
+       MENU TITLE PXE Boot Menu for {{ item }} eth0_mac={{ hostvars[item].eth0_mac }}
+
+       LABEL ubuntu
+         MENU LABEL Install Ubuntu 24.04
+         KERNEL ubuntu/vmlinuz
+         INITRD ubuntu/initrd.img
+         SYSAPPEND 3
+         APPEND  url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}} cloud-config-url=/dev/null autoinstall  ds=nocloud-net;s=http://{{ dnsmasq_gateway }}:8080/sharedisos/conf/default/ fsck.mode=skip
             
-        LABEL local
-          MENU LABEL Boot from local disk
-          LOCALBOOT 0
-      mode: '0644'
+       LABEL local
+         MENU LABEL Boot from local disk
+         LOCALBOOT 0
+     mode: '0644'

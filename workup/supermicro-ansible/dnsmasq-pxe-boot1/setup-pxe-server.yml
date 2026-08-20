@@ -5,6 +5,7 @@
   become: true
 
   vars:
+    sharedisos: /vagrant/sharedisos
     tftp_root: /srv/tftp
     http_root: /srv/http/install
     ubuntu_root: /srv/tftp/ubuntu
@@ -96,33 +97,6 @@
         - pxelinux.0
         - lpxelinux.0
         
-      # note must have unpacked iso here
-    - name: Copy ubuntu kernel and initrd for PXE boot
-      ansible.builtin.copy:
-        src: /vagrant/sharedisos/casper/{{ item }}
-        dest: "{{ ubuntu_root }}/{{ item }}"
-        remote_src: true
-        mode: '0644'
-      loop:
-        - vmlinuz
-        - initrd.img
-        
-    - name: Create config directory
-      ansible.builtin.file:
-        path: "/vagrant/sharedisos/conf/default"
-        state: directory
-        mode: '0755'
-        
-    - name: Copy config files
-      ansible.builtin.copy:
-        src: ../files/conf/default/{{ item }}
-        dest: "/vagrant/sharedisos/conf/default/{{ item }}"
-        mode: '0644'
-      loop:
-        - meta-data
-        - network-config
-        - user-data
-        - vendor-data
 
         
     # set up dnsmasq configuration for DHCP and TFTP based on template
