@@ -6,7 +6,7 @@
           
  - name: Create Ubuntu pxe Mac specific PXE menu
    ansible.builtin.copy:
-      dest: "{{ tftp_root }}/pxelinux.cfg/{{ hostvars[item].eth0_mac }}"
+      dest: "{{ tftp_root }}/pxelinux.cfg/01-{{ hostvars[item].eth0_mac  | replace(':','-') | lower }}"
       content: |
         DEFAULT menu.c32
         PROMPT 0
