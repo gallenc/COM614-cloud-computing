@@ -51,7 +51,7 @@
            mode: '0777'
          loop:
            - vmlinuz
-           - initrd.img
+           - initrd
          loop_control:
            loop_var: image_item # Custom name prevents collisions
 
@@ -76,7 +76,7 @@
     mode: '0644'
   loop:
     - vmlinuz
-    - initrd.img
+    - initrd
   loop_control:
      loop_var: image_item # Custom name prevents collisions
 
@@ -116,7 +116,7 @@
        LABEL ubuntu
          MENU LABEL Install Ubuntu 24.04
          KERNEL ubuntu/vmlinuz
-         INITRD ubuntu/initrd.img
+         INITRD ubuntu/initrd
          SYSAPPEND 3
          APPEND  url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}} cloud-config-url=/dev/null autoinstall  ds=nocloud-net;s=http://{{ dnsmasq_gateway }}:8080/sharedisos/conf/default/ fsck.mode=skip
             
