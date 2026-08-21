@@ -1,11 +1,11 @@
 ---
 - name: debug preparefiles-ubuntu
   debug:
-     msg: "peparing download files for os_id=ubuntu os_version_id= {{ hostvars[item].os_version_id | default('', true) | trim }} }}"
+     msg: "peparing download files for os_id={{sharedisos}}/{{hostvars[item].os_id | default('', true) | trim }} os_version_id= {{ hostvars[item].os_version_id | default('', true) | trim }} }}"
      
 - name: check if iso file exists
   stat: 
-    path: "{{sharedisos}}/ubuntu/{{ hostvars[item].os_version_id | default('', true) | trim }} }}/{{ubuntu_iso_name}}"
+    path: "{{sharedisos}}/{{hostvars[item].os_id | default('', true) | trim }}/{{ hostvars[item].os_version_id | default('', true) | trim }} }}/{{ubuntu_iso_name}}"
   register: download_iso_file_stat
      
 - name: Download and unpack iso file if it does not exist
@@ -18,34 +18,35 @@
 #       - name: Download ISO
 #         ansible.builtin.get_url:
 #            url: "{{ubuntu_iso_url}}"
-#            dest: "{{sharedisos}}/ubuntu/{{ hostvars[item].os_version_id | default('', true) | trim }} }}/{{ubuntu_iso_name}}"
+#            dest: "{{iso-file-path}}"
 #            # checksum: "sha256:https://example.com.sha256"
 #            force: false # will not download if already exists
 
        - name: Ensure mount point exists
          ansible.builtin.file:
-           path: /mnt/iso/ubuntu
+           path: /tmp/iso/ubuntu
            state: directory
            mode: '0755'
 
        - name: Mount ISO file as a loop device
          ansible.posix.mount:
-           path: /mnt/iso/ubuntu
-           src: "{{sharedisos}}/ubuntu/{{ hostvars[item].os_version_id | default('', true) | trim }}/{{ubuntu_iso_name}}"
+           path: "{{iso-mount-point}}"
+           src: "{{iso-file-path}}"
            fstype: iso9660
            opts: loop,ro
            state: mounted
 
-       - name: Ensure casper folder exists
+       - name: Ensure bootimages folder exists
          ansible.builtin.file:
-           path: "{{sharedisos}}/ubuntu/{{ hostvars[item].os_version_id | default('', true) | trim }}/casper/"
+           path: "{{boot-images-path}}"
            state: directory
            mode: '0755'
            
        - name: Copy ubuntu kernel and initrd for PXE boot
          ansible.builtin.copy:
-           src: /mnt/iso/ubuntu/casper/{{ image_item }}
-           dest: "{{sharedisos}}/ubuntu/{{ hostvars[image_item].os_version_id | default('', true) | trim }}/casper/"
+           # note casper folder is where the kernel and initrd are located in ubuntu iso
+           src: "{{iso-mount-point}}/casper/{{ image_item }}"
+           dest: "{{boot-images-path}}/{{ image_item }}"
            remote_src: true
            mode: '0777'
          loop:
@@ -56,15 +57,20 @@
 
        - name: Unmount ISO file on Linux
          ansible.posix.mount:
-           path: /mnt/iso/ubuntu
-           src: "{{sharedisos}}/ubuntu/{{ hostvars[item].os_version_id | default('', true) | trim }}/{{ubuntu_iso_name}}"
+           path: "{{iso-mount-point}}"
+           src: "{{iso-file-path}}"
            state: unmounted
- 
+  vars:
+      os-id: "{{hostvars[item].os_id | default('', true) | trim }}"
+      os-version-id: "{{ hostvars[image_item].os_version_id | default('', true) | trim }}"
+      iso-file-path: "{{sharedisos}}/{{os-id}}/{{os-version-id}}/{{ubuntu_iso_name}}"
+      iso-mount-point : /tmp/iso/{{os-id}}/{{os-version-id}}
+      boot-images-path: "{{sharedisos}}/{{os-id}}/{{os-version-id}}/bootimages"
           
  # note must have unpacked iso here
 - name: Copy ubuntu kernel and initrd for PXE boot to tftp root
   ansible.builtin.copy:
-    src: "{{sharedisos}}/ubuntu/{{ hostvars[image_item ].os_version_id | default('', true) | trim }} }}/casper/{{ item }}"
+    src: "{{sharedisos}}/ubuntu/{{ hostvars[image_item ].os_version_id | default('', true) | trim }} }}/bootimages/{{ item }}"
     dest: "{{ ubuntu_root }}/{{ image_item }}"
     remote_src: true
     mode: '0644'
