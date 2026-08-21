@@ -42,18 +42,18 @@
            state: directory
            mode: '0755'
            
-       - name: Copy ubuntu kernel and initrd for PXE boot
-         ansible.builtin.copy:
-           # note casper folder is where the kernel and initrd are located in ubuntu iso
-           src: "{{iso_mount_point}}/casper/{{ image_item }}"
-           dest: "{{boot_images_path}}/{{ image_item }}"
-           remote_src: true
-           mode: '0777'
-         loop:
-           - vmlinuz
-           - initrd.img
-         loop_control:
-           loop_var: image_item # Custom name prevents collisions
+#       - name: Copy ubuntu kernel and initrd for PXE boot
+#         ansible.builtin.copy:
+#           # note casper folder is where the kernel and initrd are located in ubuntu iso
+#           src: "{{iso_mount_point}}/casper/{{ image_item }}"
+#           dest: "{{boot_images_path}}/{{ image_item }}"
+#           remote_src: true
+#           mode: '0777'
+#         loop:
+#           - vmlinuz
+#           - initrd.img
+#         loop_control:
+#           loop_var: image_item # Custom name prevents collisions
 
        - name: Unmount ISO file on Linux
          ansible.posix.mount:
