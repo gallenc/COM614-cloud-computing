@@ -70,7 +70,7 @@
  # note must have unpacked iso here
 - name: Copy ubuntu kernel and initrd for PXE boot to tftp root
   ansible.builtin.copy:
-    src: "{{sharedisos}}/ubuntu/{{ hostvars[image_item ].os_version_id | default('', true) | trim }} }}/bootimages/{{ image_item }}"
+    src: "{{sharedisos}}/{{hostvars[item].os_id | default('', true) | trim }}/{{ hostvars[item].os_version_id | default('', true) | trim }} }}/bootimages/{{ image_item }}"
     dest: "{{ ubuntu_root }}/{{ image_item }}"
     remote_src: true
     mode: '0644'
@@ -82,14 +82,14 @@
 
 - name: Create config directory
   ansible.builtin.file:
-    path: "/vagrant/sharedisos/conf/default"
+    path: "{{sharedisos}}/{{hostvars[item].os_id | default('', true) | trim }}/{{ hostvars[item].os_version_id | default('', true) | trim }} }}/conf/default"
     state: directory
     mode: '0755'
 
 - name: Copy config files
   ansible.builtin.copy:
-    src: ../files/conf/default/{{ image_item }}
-    dest: "/vagrant/sharedisos/conf/default/{{ image_item }}"
+    src: ../files/{{hostvars[item].os_id | default('', true) | trim }}/{{ hostvars[item].os_version_id | default('', true) | trim }} }}/conf/default/{{ image_item }}
+    dest: "{{sharedisos}}/{{hostvars[item].os_id | default('', true) | trim }}/{{ hostvars[item].os_version_id | default('', true) | trim }} }}/conf/default/{{ image_item }}"
     mode: '0644'
   loop:
     - meta-data
@@ -102,7 +102,7 @@
 
 - name: debug pxebootubuntu.yml
   debug:
-    msg: "generating pxeboot config for os_id=ubuntu os_version_id= {{ hostvars[item].os_version_id | default('', true) | trim }} eth0_mac={{ hostvars[item].eth0_mac | default('', true) | trim }}"
+    msg: "generating pxeboot config for os_id={{hostvars[item].os_id | default('', true) | trim }} os_version_id= {{ hostvars[item].os_version_id | default('', true) | trim }} eth0_mac={{ hostvars[item].eth0_mac | default('', true) | trim }}"
           
 - name: Create Ubuntu pxe Mac specific PXE menu
   ansible.builtin.copy:
@@ -118,7 +118,7 @@
          KERNEL ubuntu/vmlinuz
          INITRD ubuntu/initrd
          SYSAPPEND 3
-         APPEND  url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}} cloud-config-url=/dev/null autoinstall  ds=nocloud-net;s=http://{{ dnsmasq_gateway }}:8080/sharedisos/conf/default/ fsck.mode=skip
+         APPEND  url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{hostvars[item].os_id | default('', true) | trim }}/{{ hostvars[item].os_version_id | default('', true) | trim }}/{{ubuntu_iso_name}} cloud-config-url=/dev/null autoinstall  ds=nocloud-net;s=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{hostvars[item].os_id | default('', true) | trim }}/{{hostvars[item].os_id | default('', true) | trim }}/{{ hostvars[item].os_version_id | default('', true) | trim }}/conf/default/ fsck.mode=skip
             
        LABEL local
          MENU LABEL Boot from local disk
