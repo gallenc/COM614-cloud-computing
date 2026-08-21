@@ -18,7 +18,7 @@
 #       - name: Download ISO
 #         ansible.builtin.get_url:
 #            url: "{{ubuntu_iso_url}}"
-#            dest: "{{iso-file-path}}"
+#            dest: "{{iso_file_path}}"
 #            # checksum: "sha256:https://example.com.sha256"
 #            force: false # will not download if already exists
 
@@ -30,23 +30,23 @@
 
        - name: Mount ISO file as a loop device
          ansible.posix.mount:
-           path: "{{iso-mount-point}}"
-           src: "{{iso-file-path}}"
+           path: "{{iso_mount_point}}"
+           src: "{{iso_file_path}}"
            fstype: iso9660
            opts: loop,ro
            state: mounted
 
        - name: Ensure bootimages folder exists
          ansible.builtin.file:
-           path: "{{boot-images-path}}"
+           path: "{{boot_images_path}}"
            state: directory
            mode: '0755'
            
        - name: Copy ubuntu kernel and initrd for PXE boot
          ansible.builtin.copy:
            # note casper folder is where the kernel and initrd are located in ubuntu iso
-           src: "{{iso-mount-point}}/casper/{{ image_item }}"
-           dest: "{{boot-images-path}}/{{ image_item }}"
+           src: "{{iso_mount_point}}/casper/{{ image_item }}"
+           dest: "{{boot_images_path}}/{{ image_item }}"
            remote_src: true
            mode: '0777'
          loop:
@@ -57,15 +57,15 @@
 
        - name: Unmount ISO file on Linux
          ansible.posix.mount:
-           path: "{{iso-mount-point}}"
-           src: "{{iso-file-path}}"
+           path: "{{iso_mount_point}}"
+           src: "{{iso_file_path}}"
            state: unmounted
   vars:
-      os-id: "{{hostvars[item].os_id | default('', true) | trim }}"
-      os-version-id: "{{ hostvars[image_item].os_version_id | default('', true) | trim }}"
-      iso-file-path: "{{sharedisos}}/{{os-id}}/{{os-version-id}}/{{ubuntu_iso_name}}"
-      iso-mount-point : /tmp/iso/{{os-id}}/{{os-version-id}}
-      boot-images-path: "{{sharedisos}}/{{os-id}}/{{os-version-id}}/bootimages"
+      os_id: "{{hostvars[item].os_id | default('', true) | trim }}"
+      os_version_id: "{{ hostvars[image_item].os_version_id | default('', true) | trim }}"
+      iso_file_path: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/{{ubuntu_iso_name}}"
+      iso_mount_point : /tmp/iso/{{os_id}}/{{os_version_id}}
+      boot_images_path: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/bootimages"
           
  # note must have unpacked iso here
 - name: Copy ubuntu kernel and initrd for PXE boot to tftp root
