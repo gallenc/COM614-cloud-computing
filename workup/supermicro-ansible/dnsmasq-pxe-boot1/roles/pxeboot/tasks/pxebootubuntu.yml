@@ -1,7 +1,7 @@
 ---
 - name: debug preparefiles-ubuntu
   debug:
-     msg: "peparing download files for os_id={{sharedisos}}/{{hostvars[item].os_id | default('', true) | trim }} os_version_id= {{ hostvars[item].os_version_id | default('', true) | trim }} }}"
+     msg: "preparing download files for os_id={{sharedisos}}/{{hostvars[item].os_id | default('', true) | trim }} os_version_id= {{ hostvars[item].os_version_id | default('', true) | trim }} }}"
      
 - name: check if iso file exists
   stat: 
@@ -13,9 +13,9 @@
   block:
        - name: downloading iso files
          debug:
-             msg: "peparing download files for {{ubuntu_iso_url}}"
+             msg: "preparing download files for {{ubuntu_iso_url}}"
              
-# doesnt work becuase of Rocky 9 bug    
+# doesnt work because of Rocky 9 ansible bug    
 # • https://community.theforeman.org/t/managing-ubuntu-24-04-hosts-with-foreman-using-ansible-unable-to-use-multiple-modules-b-c-of-httpsconnection-init-got-an-unexpected-keyword-argument-cert-file/42017          
 #       - name: Download ISO
 #         ansible.builtin.get_url:
