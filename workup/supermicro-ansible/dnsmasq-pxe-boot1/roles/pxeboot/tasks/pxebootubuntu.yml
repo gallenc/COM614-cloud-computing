@@ -130,10 +130,10 @@
 
        LABEL ubuntu
          MENU LABEL Install Ubuntu 24.04
-         KERNEL ubuntu/vmlinuz
-         INITRD ubuntu/initrd
+         KERNEL {{hostvars[item].os_id | default('', true) | trim }}/{{ hostvars[item].os_version_id | default('', true) | trim }}/bootimages/vmlinuz
+         INITRD {{hostvars[item].os_id | default('', true) | trim }}/{{ hostvars[item].os_version_id | default('', true) | trim }}/bootimages/initrd
          SYSAPPEND 3
-         APPEND  url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{hostvars[item].os_id | default('', true) | trim }}/{{ hostvars[item].os_version_id | default('', true) | trim }}/{{ubuntu_iso_name}} cloud-config-url=/dev/null autoinstall  ds=nocloud-net;s=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{hostvars[item].os_id | default('', true) | trim }}/{{hostvars[item].os_id | default('', true) | trim }}/{{ hostvars[item].os_version_id | default('', true) | trim }}/conf/default/ fsck.mode=skip
+         APPEND  url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{hostvars[item].os_id | default('', true) | trim }}/{{ hostvars[item].os_version_id | default('', true) | trim }}/{{ubuntu_iso_name}} cloud-config-url=/dev/null autoinstall  ds=nocloud-net;s=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{hostvars[item].os_id | default('', true) | trim }}/{{ hostvars[item].os_version_id | default('', true) | trim }}/conf/default/ fsck.mode=skip
             
        LABEL local
          MENU LABEL Boot from local disk
