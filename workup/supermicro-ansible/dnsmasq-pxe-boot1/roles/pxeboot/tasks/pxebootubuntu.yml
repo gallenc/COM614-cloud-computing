@@ -15,12 +15,20 @@
          debug:
              msg: "peparing download files for {{ubuntu_iso_url}}"
              
+# doesnt work becuase of Rocky 9 bug    
+# • https://community.theforeman.org/t/managing-ubuntu-24-04-hosts-with-foreman-using-ansible-unable-to-use-multiple-modules-b-c-of-httpsconnection-init-got-an-unexpected-keyword-argument-cert-file/42017          
+#       - name: Download ISO
+#         ansible.builtin.get_url:
+#            url: "{{ubuntu_iso_url}}"
+#            dest: "{{iso_file_path}}"
+#            # checksum: "sha256:https://example.com.sha256"
+#            force: false # will not download if already exists
+
        - name: Download ISO
-         ansible.builtin.get_url:
-            url: "{{ubuntu_iso_url}}"
-            dest: "{{iso_file_path}}"
-            # checksum: "sha256:https://example.com.sha256"
-            force: false # will not download if already exists
+         ansible.builtin.shell: |
+           wget -O "{{iso_file_path}}" "{{ubuntu_iso_url}}"
+         args:
+           creates: "{{iso_file_path}}"
 
        - name: Ensure mount point exists
          ansible.builtin.file:
