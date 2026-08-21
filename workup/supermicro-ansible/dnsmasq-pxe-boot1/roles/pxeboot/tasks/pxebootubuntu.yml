@@ -9,7 +9,7 @@
   register: download_iso_file_stat
      
 - name: Download and unpack iso file if it does not exist
-  when: download_iso_file_stat.stat.exists == false
+ # when: download_iso_file_stat.stat.exists == false
   block:
        - name: downloading iso files
          debug:
