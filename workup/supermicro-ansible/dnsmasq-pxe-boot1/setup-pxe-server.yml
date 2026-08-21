@@ -180,7 +180,7 @@
           server {
               listen 8080;
               server_name _;
-              root /vagrant;
+              root {{http_root}};
               autoindex on;
           }
         mode: '0644'

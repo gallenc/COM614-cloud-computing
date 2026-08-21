@@ -3,6 +3,4 @@
 *.tar
 *.zip
 *.7z
-vmlinuz
-initrd.img
-conf
+sharedisos
