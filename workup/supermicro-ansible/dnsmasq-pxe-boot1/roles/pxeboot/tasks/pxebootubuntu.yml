@@ -13,7 +13,7 @@
   block:
        - name: downloading iso files
          debug:
-             msg: "preparing download files for {{ubuntu_iso_url}}"
+             msg: "preparing download files for {{ubuntu_iso_url}}  Downloading the ISO can take a very long time"
              
 # doesnt work because of Rocky 9 ansible bug    
 # • https://community.theforeman.org/t/managing-ubuntu-24-04-hosts-with-foreman-using-ansible-unable-to-use-multiple-modules-b-c-of-httpsconnection-init-got-an-unexpected-keyword-argument-cert-file/42017          
