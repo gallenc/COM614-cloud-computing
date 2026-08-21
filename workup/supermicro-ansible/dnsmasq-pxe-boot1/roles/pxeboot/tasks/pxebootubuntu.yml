@@ -44,13 +44,15 @@
            
        - name: Copy ubuntu kernel and initrd for PXE boot
          ansible.builtin.copy:
-           src: /mnt/iso/ubuntu/casper/{{ item }}
-           dest: "{{sharedisos}}/ubuntu/{{ hostvars[item].os_version_id | default('', true) | trim }}/casper/"
+           src: /mnt/iso/ubuntu/casper/{{ image_item }}
+           dest: "{{sharedisos}}/ubuntu/{{ hostvars[image_item].os_version_id | default('', true) | trim }}/casper/"
            remote_src: true
            mode: '0644'
          loop:
            - vmlinuz
            - initrd.img
+         loop_control:
+           loop_var: image_item # Custom name prevents collisions
 
        - name: Unmount ISO file on Linux
          ansible.posix.mount:
@@ -62,13 +64,15 @@
  # note must have unpacked iso here
 - name: Copy ubuntu kernel and initrd for PXE boot to tftp root
   ansible.builtin.copy:
-    src: "{{sharedisos}}/ubuntu/{{ hostvars[item].os_version_id | default('', true) | trim }} }}/casper/{{ item }}"
-    dest: "{{ ubuntu_root }}/{{ item }}"
+    src: "{{sharedisos}}/ubuntu/{{ hostvars[image_item ].os_version_id | default('', true) | trim }} }}/casper/{{ item }}"
+    dest: "{{ ubuntu_root }}/{{ image_item }}"
     remote_src: true
     mode: '0644'
   loop:
     - vmlinuz
     - initrd.img
+  loop_control:
+     loop_var: image_item # Custom name prevents collisions
 
 - name: Create config directory
   ansible.builtin.file:
@@ -78,14 +82,16 @@
 
 - name: Copy config files
   ansible.builtin.copy:
-    src: ../files/conf/default/{{ item }}
-    dest: "/vagrant/sharedisos/conf/default/{{ item }}"
+    src: ../files/conf/default/{{ image_item }}
+    dest: "/vagrant/sharedisos/conf/default/{{ image_item }}"
     mode: '0644'
   loop:
     - meta-data
     - network-config
     - user-data
     - vendor-data
+  loop_control:
+     loop_var: image_item # Custom name prevents collisions
 
 
 - name: debug pxebootubuntu.yml
