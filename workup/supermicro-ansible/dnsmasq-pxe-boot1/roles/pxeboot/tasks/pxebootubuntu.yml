@@ -24,7 +24,7 @@
 
        - name: Ensure mount point exists
          ansible.builtin.file:
-           path: /tmp/iso/ubuntu
+           path: "{{iso_mount_point}}"
            state: directory
            mode: '0755'
 
@@ -70,7 +70,7 @@
  # note must have unpacked iso here
 - name: Copy ubuntu kernel and initrd for PXE boot to tftp root
   ansible.builtin.copy:
-    src: "{{sharedisos}}/ubuntu/{{ hostvars[image_item ].os_version_id | default('', true) | trim }} }}/bootimages/{{ item }}"
+    src: "{{sharedisos}}/ubuntu/{{ hostvars[image_item ].os_version_id | default('', true) | trim }} }}/bootimages/{{ image_item }}"
     dest: "{{ ubuntu_root }}/{{ image_item }}"
     remote_src: true
     mode: '0644'
