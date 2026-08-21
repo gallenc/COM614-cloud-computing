@@ -8,7 +8,7 @@
     sharedisos: /vagrant/sharedisos
     tftp_root: /srv/tftp
     http_root: /srv/http/install
-    ubuntu_root: /srv/tftp/ubuntu
+    ubuntu_root: /srv/tftp/ubuntu/26.04
     ubuntu_iso_url: https://releases.ubuntu.com/resolute/ubuntu-26.04-live-server-amd64.iso
     ubuntu_iso_name: ubuntu-26.04-live-server-amd64.iso
     
