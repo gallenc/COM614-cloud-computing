@@ -94,7 +94,7 @@
 
 - name: Copy config files
   ansible.builtin.copy:
-    src: ./files/{{hostvars[item].os_id | default('', true) | trim }}/{{ hostvars[item].os_version_id | default('', true) | trim }} }}/conf/default/{{ image_item }}
+    src: ../files/{{hostvars[item].os_id | default('', true) | trim }}/{{ hostvars[item].os_version_id | default('', true) | trim }}/conf/default/{{ image_item }}
     dest: "{{sharedisos}}/{{hostvars[item].os_id | default('', true) | trim }}/{{ hostvars[item].os_version_id | default('', true) | trim }}/conf/default/{{ image_item }}"
     mode: '0644'
   loop:
