@@ -1,0 +1,234 @@
+---
+    # Install required packages for UEFE PXE booting
+    - name: Install PXE server packages
+      ansible.builtin.apt:
+        name:
+          - dnsmasq
+          - nginx
+          - shim-signed
+          - grub-efi-amd64-signed
+          - grub-common
+        state: present
+
+    - name: Create TFTP and HTTP roots
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        mode: '0755'
+      loop:
+        - "{{ tftp_root }}"
+        - "{{ http_root }}"
+
+    - name: Copy signed shim for UEFI PXE
+      ansible.builtin.copy:
+        src: /usr/lib/shim/shimx64.efi.signed.latest
+        dest: "{{ tftp_root }}/bootx64.efi"
+        remote_src: true
+        mode: '0644'
+
+    - name: Copy signed GRUB network loader for UEFI PXE
+      ansible.builtin.copy:
+        src: /usr/lib/grub/x86_64-efi-signed/grubnetx64.efi.signed
+        dest: "{{ tftp_root }}/grubx64.efi"
+        remote_src: true
+        mode: '0644'
+
+    - name: Copy GRUB font
+      ansible.builtin.copy:
+        src: /usr/share/grub/unicode.pf2
+        dest: "{{ tftp_root }}/unicode.pf2"
+        remote_src: true
+        mode: '0644'
+        
+      #    alternative Copy PXE bootloader packages pxelinux.0
+    - name: Install Syslinux for PXE
+      ansible.builtin.package:
+        name: syslinux-common
+        state: present
+        
+    - name: Install pxelinux for PXE
+      ansible.builtin.package:
+        name: pxelinux
+        state: present
+
+    - name: Copy bootloader files
+      ansible.builtin.copy:
+        src: /usr/lib/syslinux/modules/bios/{{ item }}
+        dest: "{{ tftp_root }}/{{ item }}"
+        remote_src: true
+        mode: '0644'
+      loop:
+        - ldlinux.c32
+        - menu.c32
+        - libutil.c32
+        
+    - name: Copy PXE bootloader
+      ansible.builtin.copy:
+        src: /usr/lib/PXELINUX/{{ item }}
+        dest: "{{ tftp_root }}/{{ item }}"
+        remote_src: true
+        mode: '0644'
+      loop:
+        - pxelinux.0
+        - lpxelinux.0
+        
+    # set up dnsmasq configuration for DHCP and TFTP based on template
+    - name: Deploy dnsmasq.conf
+      ansible.builtin.template:
+        src: ./templates/dnsmasq.conf.j2
+        dest: /etc/dnsmasq.conf
+        mode: '0644'
+      notify: restart dnsmasq
+
+    - name: Deploy DHCP reservations
+      ansible.builtin.template:
+        src: ./templates/dhcp-reservations.conf.j2
+        dest: /etc/dnsmasq.d/reservations.conf
+        mode: '0644'
+      notify: restart dnsmasq
+
+    - name: Deploy local DNS entries
+      ansible.builtin.template:
+        src: ./templates/local-dns.conf.j2
+        dest: /etc/dnsmasq.d/local-dns.conf
+        mode: '0644'
+      notify: restart dnsmasq
+
+    # Configure dnsmasq for DHCP and TFTP pxe booting
+    - name: Configure dnsmasq
+      ansible.builtin.copy:
+        dest: /etc/dnsmasq.d/pxe.conf
+        content: |
+          # No ping before DHCP offer
+          # no-ping
+          # TFTP settings
+          enable-tftp
+          tftp-root={{ tftp_root }}
+          
+          # PXE boot for BIOS clients
+          pxe-service=x86PC, "PXELINUX (BIOS)", "pxelinux.0"
+
+          # PXE boot file for UEFI clients
+          dhcp-match=set:efi-x86_64,option:client-arch,7
+          dhcp-boot=tag:efi-x86_64,bootx64.efi
+
+
+        mode: '0644'
+      notify: restart dnsmasq
+
+    - name: Start Dnsmasq
+      ansible.builtin.service:
+        name: dnsmasq
+        state: started
+        enabled: true
+
+    # Configure dnsmasq for DHCP and TFTP
+#    - name: Configure dnsmasq
+#      ansible.builtin.copy:
+#        dest: /etc/dnsmasq.d/pxe.conf
+#        content: |
+#          # DHCP range for provisioning network
+#          dhcp-range=10.10.1.100,10.10.1.200,255.255.255.0,1h
+#
+#          # TFTP settings
+#          enable-tftp
+#          tftp-root={{ tftp_root }}
+#
+#          # PXE boot file for UEFI clients
+#          dhcp-match=set:efi-x86_64,option:client-arch,7
+#          dhcp-boot=tag:efi-x86_64,bootx64.efi
+#
+#          # Static DHCP assignments for known servers
+#          dhcp-host=aa:bb:cc:dd:ee:01,10.10.1.11,server-01
+#          dhcp-host=aa:bb:cc:dd:ee:02,10.10.1.12,server-02
+#          dhcp-host=aa:bb:cc:dd:ee:03,10.10.1.13,server-03
+#        mode: '0644'
+#      notify: restart dnsmasq
+
+    # Configure nginx to serve installer and NoCloud files
+    - name: Configure nginx installer site
+      ansible.builtin.copy:
+        dest: /etc/nginx/sites-available/pxe-install
+        content: |
+          server {
+              listen 8080;
+              server_name _;
+              root {{http_root}};
+              autoindex on;
+          }
+        mode: '0644'
+      notify: restart nginx
+
+    - name: Enable nginx installer site
+      ansible.builtin.file:
+        src: /etc/nginx/sites-available/pxe-install
+        dest: /etc/nginx/sites-enabled/pxe-install
+        state: link
+      notify: restart nginx
+
+    - name: Start Dnsmasq
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: true
+
+    # Set up GRUB configuration for automated install
+    - name: Create GRUB config directory
+      ansible.builtin.file:
+        path: "{{ tftp_root }}/grub"
+        state: directory
+        mode: '0755'
+
+    - name: Create GRUB configuration
+      ansible.builtin.copy:
+        dest: "{{ tftp_root }}/grub/grub.cfg"
+        content: |
+          set timeout=5
+          menuentry "Ubuntu 22.04 Automated Install" {
+              linux /vmlinuz ip=dhcp url={{ ubuntu_iso_url }} autoinstall 'ds=nocloud-net;s=http://{{ dnsmasq_gateway }}/install/__dmi.system-uuid__/'
+              initrd /initrd
+          }
+        mode: '0644'
+        
+    - name: Create tftp config directory
+      ansible.builtin.file:
+        path: "{{ tftp_root }}/pxelinux.cfg"
+        state: directory
+        mode: '0755'
+        
+#    - name: Create Default PXE menu
+#      ansible.builtin.copy:
+#        dest: "{{ tftp_root }}/pxelinux.cfg/default"
+#        content: |
+#          DEFAULT menu.c32
+#          PROMPT 0
+#          TIMEOUT 100
+#          MENU TITLE PXE Boot Menu
+#
+#          LABEL ubuntu
+#            MENU LABEL Install Ubuntu 24.04
+#            KERNEL ubuntu/vmlinuz
+#            INITRD ubuntu/initrd.img
+#            SYSAPPEND 3
+#            APPEND  url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}} cloud-config-url=/dev/null autoinstall  ds=nocloud-net;s=http://{{ dnsmasq_gateway }}:8080/sharedisos/conf/default/ fsck.mode=skip
+#            
+#          LABEL local
+#            MENU LABEL Boot from local disk
+#            LOCALBOOT 0
+#        mode: '0644'
+
+#IPAPPEND 3
+#            IPAPPEND 2
+#           APPEND ipv6.disable=1 ip=dhcp url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}} cloud-config-url=/dev/null 
+#  init=/bin/bash 
+# APPEND ip=enp1s0f1:dhcp
+#            APPEND url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}} cloud-config-url=/dev/null
+# APPEND ip=dhcp rd.debug boot=casper netboot=url url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}} 
+#  APPEND ip=eth1:dhcp boot=casper netboot=url url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}}  rd.debug rd.break
+# ip=enp1s0f1:dhcp 
+#           INITRD ubuntu/initrd.img
+#            APPEND ip=dhcp  url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}}
+
+#  removed           APPEND initrd=ubuntu/initrd.img root=/dev/ram0 ramdisk_size=1500000 ip=dhcp url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}}
+# APPEND initrd=ubuntu/initrd.img root=/dev/ram0 ramdisk_size=8388608 ip=dhcp url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}}
+
