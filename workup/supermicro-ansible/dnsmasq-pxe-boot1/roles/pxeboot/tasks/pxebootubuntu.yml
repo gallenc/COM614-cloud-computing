@@ -53,7 +53,7 @@
            - vmlinuz
            - initrd
          loop_control:
-           loop_var: image_item # Custom name prevents collisions
+           loop_var: image_item 
 
        - name: Unmount ISO file on Linux
          ansible.posix.mount:
@@ -84,7 +84,7 @@
     - vmlinuz
     - initrd
   loop_control:
-     loop_var: image_item # Custom name prevents collisions
+     loop_var: image_item 
 
 - name: Create config directory
   ansible.builtin.file:
@@ -103,7 +103,7 @@
     - user-data
     - vendor-data
   loop_control:
-     loop_var: image_item # Custom name prevents collisions
+     loop_var: image_item 
 
 
 - name: debug pxebootubuntu.yml
