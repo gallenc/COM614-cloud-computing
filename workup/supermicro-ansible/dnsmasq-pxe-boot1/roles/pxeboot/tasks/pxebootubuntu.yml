@@ -70,8 +70,8 @@
  # note must have unpacked iso here
 - name: Copy ubuntu kernel and initrd for PXE boot to tftp root
   ansible.builtin.copy:
-    src: "{{sharedisos}}/{{hostvars[item].os_id | default('', true) | trim }}/{{ hostvars[item].os_version_id | default('', true) | trim }} }}/bootimages/{{ image_item }}"
-    dest: "{{ tftp_root }}/{{hostvars[item].os_id | default('', true) | trim }}/{{ hostvars[item].os_version_id | default('', true) | trim }} }}/bootimages/{{ image_item }}"
+    src: "{{sharedisos}}/{{hostvars[item].os_id | default('', true) | trim }}/{{ hostvars[item].os_version_id | default('', true) | trim }}/bootimages/{{ image_item }}"
+    dest: "{{ tftp_root }}/{{hostvars[item].os_id | default('', true) | trim }}/{{ hostvars[item].os_version_id | default('', true) | trim }}/bootimages/{{ image_item }}"
     remote_src: true
     mode: '0644'
   loop:
@@ -82,14 +82,14 @@
 
 - name: Create config directory
   ansible.builtin.file:
-    path: "{{sharedisos}}/{{hostvars[item].os_id | default('', true) | trim }}/{{ hostvars[item].os_version_id | default('', true) | trim }} }}/conf/default"
+    path: "{{sharedisos}}/{{hostvars[item].os_id | default('', true) | trim }}/{{ hostvars[item].os_version_id | default('', true) | trim }}/conf/default"
     state: directory
     mode: '0755'
 
 - name: Copy config files
   ansible.builtin.copy:
     src: ../files/{{hostvars[item].os_id | default('', true) | trim }}/{{ hostvars[item].os_version_id | default('', true) | trim }} }}/conf/default/{{ image_item }}
-    dest: "{{sharedisos}}/{{hostvars[item].os_id | default('', true) | trim }}/{{ hostvars[item].os_version_id | default('', true) | trim }} }}/conf/default/{{ image_item }}"
+    dest: "{{sharedisos}}/{{hostvars[item].os_id | default('', true) | trim }}/{{ hostvars[item].os_version_id | default('', true) | trim }}/conf/default/{{ image_item }}"
     mode: '0644'
   loop:
     - meta-data
