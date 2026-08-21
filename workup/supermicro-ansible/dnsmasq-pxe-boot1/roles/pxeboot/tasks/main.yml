@@ -38,3 +38,9 @@
   include_tasks: pxebootubuntu.yml
   when: (hostvars[item].os_id | default('', true) | trim == 'ubuntu' ) and (hostvars[item].eth0_mac | default('', true) | trim !='')
   with_items: "{{ groups.all }}"
+
+- name: restart dnsmasq
+  ansible.builtin.service:
+    name: dnsmasq
+    state: restarted
+        
