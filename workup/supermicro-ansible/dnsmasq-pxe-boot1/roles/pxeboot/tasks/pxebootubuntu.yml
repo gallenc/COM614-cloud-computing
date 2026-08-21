@@ -47,7 +47,7 @@
            src: /mnt/iso/ubuntu/casper/{{ image_item }}
            dest: "{{sharedisos}}/ubuntu/{{ hostvars[image_item].os_version_id | default('', true) | trim }}/casper/"
            remote_src: true
-           mode: '0644'
+           mode: '0777'
          loop:
            - vmlinuz
            - initrd.img
