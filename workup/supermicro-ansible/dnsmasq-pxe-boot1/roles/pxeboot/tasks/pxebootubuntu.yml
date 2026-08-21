@@ -112,6 +112,7 @@
     - vendor-data
   loop_control:
      loop_var: image_item 
+  notify: restart nginx
 
 
 - name: debug pxebootubuntu.yml

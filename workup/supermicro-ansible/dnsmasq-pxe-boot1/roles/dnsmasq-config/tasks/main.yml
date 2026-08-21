@@ -45,17 +45,6 @@
         dest: "{{ tftp_root }}/unicode.pf2"
         remote_src: true
         mode: '0644'
-        
-      #    alternative Copy PXE bootloader packages pxelinux.0
-    - name: Install Syslinux for PXE
-      ansible.builtin.package:
-        name: syslinux-common
-        state: present
-        
-    - name: Install pxelinux for PXE
-      ansible.builtin.package:
-        name: pxelinux
-        state: present
 
     - name: Copy bootloader files
       ansible.builtin.copy:
@@ -67,6 +56,17 @@
         - ldlinux.c32
         - menu.c32
         - libutil.c32
+        
+      #  Copy PXE bootloader packages pxelinux.0
+    - name: Install Syslinux for PXE
+      ansible.builtin.package:
+        name: syslinux-common
+        state: present
+        
+    - name: Install pxelinux for PXE
+      ansible.builtin.package:
+        name: pxelinux
+        state: present
         
     - name: Copy PXE bootloader
       ansible.builtin.copy:
