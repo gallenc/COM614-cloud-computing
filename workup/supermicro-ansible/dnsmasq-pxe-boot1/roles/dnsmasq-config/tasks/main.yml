@@ -18,6 +18,12 @@
       loop:
         - "{{ tftp_root }}"
         - "{{ http_root }}"
+        
+    - name: Create tftp pxelinux config directory
+      ansible.builtin.file:
+        path: "{{ tftp_root }}/pxelinux.cfg"
+        state: directory
+        mode: '0755'
 
     - name: Copy signed shim for UEFI PXE
       ansible.builtin.copy:
@@ -189,12 +195,7 @@
               initrd /initrd
           }
         mode: '0644'
-        
-    - name: Create tftp config directory
-      ansible.builtin.file:
-        path: "{{ tftp_root }}/pxelinux.cfg"
-        state: directory
-        mode: '0755'
+
         
 #    - name: Create Default PXE menu
 #      ansible.builtin.copy:
