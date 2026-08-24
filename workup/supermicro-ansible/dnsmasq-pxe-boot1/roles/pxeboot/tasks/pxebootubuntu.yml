@@ -75,8 +75,8 @@
   vars:
       os_id: "{{hostvars[item].os_id | default('', true) | trim }}"
       os_version_id: "{{ hostvars[item].os_version_id | default('', true) | trim }}"
-      iso_name: "{{ operating_systems | selectattr('os_id', 'search', 'ubuntu')  | selectattr('os_version_id', 'equalto', ''26.04'') | map(attribute='iso_name') | first }}"
-      iso_url: "{{ operating_systems | selectattr('os_id', 'search', 'ubuntu')   | selectattr('os_version_id', 'equalto', ''26.04'') | map(attribute='iso_url') | first }}"
+      iso_name: "{{ operating_systems | selectattr('os_id', 'search', 'ubuntu')  | selectattr('os_version_id', 'equalto', '26.04') | map(attribute='iso_name') | first }}"
+      iso_url: "{{ operating_systems | selectattr('os_id', 'search', 'ubuntu')   | selectattr('os_version_id', 'equalto', '26.04') | map(attribute='iso_url') | first }}"
      # iso_name: "{{ operating_systems | json_query('[?contains(os_id, ''ubuntu'') && string(os_version_id) == string(`26.04`)].iso_name | [0] ') }}"
      # iso_url: "{{ operating_systems | json_query('[?contains(os_id, ''ubuntu'') && string(os_version_id) == string(`26.04`)].iso_url | [0] ') }}"
      # iso_url: "{{ operating_systems | json_query(\"[?os_id==hostvars[`{{item}}`].os_id && os_version_id==hostvars[`{{item}}`].os_version_id].iso_url | [0]\") }}"
