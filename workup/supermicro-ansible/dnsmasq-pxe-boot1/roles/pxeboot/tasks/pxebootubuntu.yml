@@ -46,7 +46,7 @@
 
        - name: Ensure bootimages folder exists
          ansible.builtin.file:
-           path: "{{boot_images_path}}"
+           path: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/bootimages"
            state: directory
            mode: '0755'
            
@@ -54,7 +54,7 @@
          ansible.builtin.copy:
            # note casper folder is where the kernel and initrd are located in ubuntu iso
            src: "{{iso_mount_point}}/casper/{{ image_item }}"
-           dest: "{{boot_images_path}}/{{ image_item }}"
+           dest: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/bootimages/{{ image_item }}"
            remote_src: true
            mode: '0777'
          loop:
@@ -73,69 +73,80 @@
       os_version_id: "{{ hostvars[item].os_version_id | default('', true) | trim }}"
       iso_file_path: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/{{ubuntu_iso_name}}"
       iso_mount_point : /tmp/iso/{{os_id}}/{{os_version_id}}
-      boot_images_path: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/bootimages"
+      
+      
+- name: create pxe boot files for inventory
+  block:
 
-- name: Create ftp directory
-  ansible.builtin.file:
-    path: "{{ tftp_root }}/{{hostvars[item].os_id | default('', true) | trim }}/{{ hostvars[item].os_version_id | default('', true) | trim }}/bootimages"
-    state: directory
-    mode: '0755'
+       - name: Create ftp directory
+         ansible.builtin.file:
+           path: "{{ tftp_root }}/{ os_id }}/{{ os_version_id }}/bootimages"
+           state: directory
+           mode: '0755'
 
-# note must have unpacked iso here
-- name: Copy ubuntu kernel and initrd for PXE boot to tftp root
-  ansible.builtin.copy:
-    src: "{{sharedisos}}/{{hostvars[item].os_id | default('', true) | trim }}/{{ hostvars[item].os_version_id | default('', true) | trim }}/bootimages/{{ image_item }}"
-    dest: "{{ tftp_root }}/{{hostvars[item].os_id | default('', true) | trim }}/{{ hostvars[item].os_version_id | default('', true) | trim }}/bootimages/{{ image_item }}"
-    remote_src: true
-    mode: '0644'
-  loop:
-    - vmlinuz
-    - initrd
-  loop_control:
-     loop_var: image_item 
+       # note must have unpacked iso first
+       - name: Copy ubuntu kernel and initrd for PXE boot to tftp root
+         ansible.builtin.copy:
+           src: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/bootimages/{{ image_item }}"
+           dest: "{{ tftp_root }}/{{os_id}}/{{os_version_id}}/bootimages/{{ image_item }}"
+           remote_src: true
+           mode: '0644'
+         loop:
+           - vmlinuz
+           - initrd
+         loop_control:
+            loop_var: image_item 
 
-- name: Create config directory
-  ansible.builtin.file:
-    path: "{{sharedisos}}/{{hostvars[item].os_id | default('', true) | trim }}/{{ hostvars[item].os_version_id | default('', true) | trim }}/conf/default"
-    state: directory
-    mode: '0755'
+       - name: Create config directory
+         ansible.builtin.file:
+           path: "{{sharedisos}}//{{os_id}}/{{os_version_id}}/conf/default"
+           state: directory
+           mode: '0755'
 
-- name: Copy config files
-  ansible.builtin.copy:
-    src: ../files/{{hostvars[item].os_id | default('', true) | trim }}/{{ hostvars[item].os_version_id | default('', true) | trim }}/conf/default/{{ image_item }}
-    dest: "{{sharedisos}}/{{hostvars[item].os_id | default('', true) | trim }}/{{ hostvars[item].os_version_id | default('', true) | trim }}/conf/default/{{ image_item }}"
-    mode: '0644'
-  loop:
-    - meta-data
-    - network-config
-    - user-data
-    - vendor-data
-  loop_control:
-     loop_var: image_item 
-  notify: restart nginx
+       - name: Copy config files
+         ansible.builtin.copy:
+           src: ../files//{{os_id}}/{{os_version_id}}/conf/default/{{ image_item }}
+           dest: "{{sharedisos}}//{{os_id}}/{{os_version_id}}/conf/default/{{ image_item }}"
+           mode: '0644'
+         loop:
+           - meta-data
+           - network-config
+           - user-data
+           - vendor-data
+         loop_control:
+            loop_var: image_item 
+         notify: restart nginx
 
 
-- name: debug pxebootubuntu.yml
-  debug:
-    msg: "generating pxeboot config for os_id={{hostvars[item].os_id | default('', true) | trim }} os_version_id= {{ hostvars[item].os_version_id | default('', true) | trim }} eth0_mac={{ hostvars[item].eth0_mac | default('', true) | trim }}"
+       - name: debug pxebootubuntu.yml
+         debug:
+           msg: "generating pxeboot config for os_id={{hostvars[item].os_id | default('', true) | trim }} os_version_id= {{ hostvars[item].os_version_id | default('', true) | trim }} eth0_mac={{ hostvars[item].eth0_mac | default('', true) | trim }}"
           
-- name: Create Ubuntu pxe Mac specific PXE menu
-  ansible.builtin.copy:
-     dest: "{{ tftp_root }}/pxelinux.cfg/01-{{ hostvars[item].eth0_mac  | replace(':','-') | lower }}"
-     content: |
-       DEFAULT menu.c32
-       PROMPT 0
-       TIMEOUT 100
-       MENU TITLE PXE Boot Menu for {{ item }} eth0_mac={{ hostvars[item].eth0_mac }}
+       - name: Create Ubuntu pxe Mac specific PXE menu
+         ansible.builtin.copy:
+            dest: "{{ tftp_root }}/pxelinux.cfg/01-{{ hostvars[item].eth0_mac  | replace(':','-') | lower }}"
+            content: |
+              DEFAULT menu.c32
+              PROMPT 0
+              TIMEOUT 100
+              MENU TITLE PXE Boot Menu for {{ item }} eth0_mac={{ hostvars[item].eth0_mac }}
 
-       LABEL ubuntu
-         MENU LABEL Install Ubuntu 24.04
-         KERNEL {{hostvars[item].os_id | default('', true) | trim }}/{{ hostvars[item].os_version_id | default('', true) | trim }}/bootimages/vmlinuz
-         INITRD {{hostvars[item].os_id | default('', true) | trim }}/{{ hostvars[item].os_version_id | default('', true) | trim }}/bootimages/initrd
-         SYSAPPEND 3
-         APPEND  url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{hostvars[item].os_id | default('', true) | trim }}/{{ hostvars[item].os_version_id | default('', true) | trim }}/{{ubuntu_iso_name}} cloud-config-url=/dev/null autoinstall  ds=nocloud-net;s=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{hostvars[item].os_id | default('', true) | trim }}/{{ hostvars[item].os_version_id | default('', true) | trim }}/conf/default/ fsck.mode=skip
+              LABEL ubuntu
+                MENU LABEL Install Ubuntu 24.04
+                KERNEL /{{os_id}}/{{os_version_id}}/bootimages/vmlinuz
+                INITRD /{{os_id}}/{{os_version_id}}/bootimages/initrd
+                SYSAPPEND 3
+                APPEND  url=http://{{ dnsmasq_gateway }}:8080/sharedisos//{{os_id}}/{{os_version_id}}/{{ubuntu_iso_name}} cloud-config-url=/dev/null autoinstall  ds=nocloud-net;s=http://{{ dnsmasq_gateway }}:8080/sharedisos//{{os_id}}/{{os_version_id}}/conf/default/ fsck.mode=skip
             
-       LABEL local
-         MENU LABEL Boot from local disk
-         LOCALBOOT 0
-     mode: '0644'
+              LABEL local
+                MENU LABEL Boot from local disk
+                LOCALBOOT 0
+            mode: '0644'
+
+  vars:
+      os_id: "{{hostvars[item].os_id | default('', true) | trim }}"
+      os_version_id: "{{ hostvars[item].os_version_id | default('', true) | trim }}"
+      iso_file_path: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/{{ubuntu_iso_name}}"
+      iso_mount_point : /tmp/iso/{{os_id}}/{{os_version_id}}
+
+     
