@@ -128,6 +128,11 @@
         state: started
         enabled: true
 
+# allow ipv4 routing through server
+
+
+
+
     # Configure dnsmasq for DHCP and TFTP
 #    - name: Configure dnsmasq
 #      ansible.builtin.copy:
@@ -172,7 +177,7 @@
         state: link
       notify: restart nginx
 
-    - name: Start Dnsmasq
+    - name: Start Nginx
       ansible.builtin.service:
         name: nginx
         state: started
