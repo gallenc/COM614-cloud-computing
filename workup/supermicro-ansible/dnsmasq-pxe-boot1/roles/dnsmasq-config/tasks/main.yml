@@ -9,7 +9,17 @@
           - grub-efi-amd64-signed
           - grub-common
         state: present
-
+        
+    - name: Install Syslinux for PXE
+      ansible.builtin.package:
+        name: syslinux-common
+        state: present
+        
+    - name: Install pxelinux for PXE
+      ansible.builtin.package:
+        name: pxelinux
+        state: present
+        
     - name: Create TFTP and HTTP roots
       ansible.builtin.file:
         path: "{{ item }}"
@@ -58,16 +68,6 @@
         - libutil.c32
         
       #  Copy PXE bootloader packages pxelinux.0
-    - name: Install Syslinux for PXE
-      ansible.builtin.package:
-        name: syslinux-common
-        state: present
-        
-    - name: Install pxelinux for PXE
-      ansible.builtin.package:
-        name: pxelinux
-        state: present
-        
     - name: Copy PXE bootloader
       ansible.builtin.copy:
         src: /usr/lib/PXELINUX/{{ item }}
