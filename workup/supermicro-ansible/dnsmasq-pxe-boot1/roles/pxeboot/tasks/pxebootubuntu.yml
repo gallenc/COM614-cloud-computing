@@ -80,7 +80,7 @@
 
        - name: Create ftp directory
          ansible.builtin.file:
-           path: "{{ tftp_root }}/{ os_id }}/{{ os_version_id }}/bootimages"
+           path: "{{ tftp_root }}/{{ os_id }}/{{ os_version_id }}/bootimages"
            state: directory
            mode: '0755'
 
