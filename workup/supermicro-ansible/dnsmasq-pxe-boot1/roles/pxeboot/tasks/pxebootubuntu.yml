@@ -13,11 +13,7 @@
   block:
        - name: downloading iso files
          debug:
-             msg: "preparing download files for {{ubuntu_iso_url}}  Downloading the ISO can take a very long time"
-             
-       - name: test iso message
-         debug:
-             msg: "iso_name={{iso_name}} iso_url={{iso_url}} iso_file_path={{iso_file_path}} iso_mount_point={{iso_mount_point}}"
+             msg: "preparing download files for  iso_url={{iso_url}} iso_name={{iso_name}} iso_file_path={{iso_file_path}} iso_mount_point={{iso_mount_point}}  Downloading the ISO can take a very long time"
              
 # doesnt work because of Rocky 9 ansible bug    
 # • https://community.theforeman.org/t/managing-ubuntu-24-04-hosts-with-foreman-using-ansible-unable-to-use-multiple-modules-b-c-of-httpsconnection-init-got-an-unexpected-keyword-argument-cert-file/42017          
@@ -30,7 +26,7 @@
 
        - name: Download ISO
          ansible.builtin.shell: |
-           wget -O "{{iso_file_path}}" "{{ubuntu_iso_url}}"
+           wget -O "{{iso_file_path}}" "{{iso_url}}"
          args:
            creates: "{{iso_file_path}}"
 
@@ -80,10 +76,9 @@
      # iso_name: "{{ operating_systems | json_query('[?contains(os_id, ''ubuntu'') && string(os_version_id) == string(`26.04`)].iso_name | [0] ') }}"
      # iso_url: "{{ operating_systems | json_query('[?contains(os_id, ''ubuntu'') && string(os_version_id) == string(`26.04`)].iso_url | [0] ') }}"
      # iso_url: "{{ operating_systems | json_query(\"[?os_id==hostvars[`{{item}}`].os_id && os_version_id==hostvars[`{{item}}`].os_version_id].iso_url | [0]\") }}"
-      iso_file_path: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/{{ubuntu_iso_name}}"
+      iso_file_path: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/{{iso_name}}"
       iso_mount_point : /tmp/iso/{{os_id}}/{{os_version_id}}
       
-    # selectattr('os_version_id', 'equalto', 26.04)
       
       
       
@@ -135,7 +130,7 @@
          debug:
            msg: "generating pxeboot config for os_id={{hostvars[item].os_id | default('', true) | trim }} os_version_id= {{ hostvars[item].os_version_id | default('', true) | trim }} eth0_mac={{ hostvars[item].eth0_mac | default('', true) | trim }}"
           
-       - name: Create Ubuntu pxe Mac specific PXE menu
+       - name: Create Ubuntu pxe MAC address specific PXE menu
          ansible.builtin.copy:
             dest: "{{ tftp_root }}/pxelinux.cfg/01-{{ hostvars[item].eth0_mac  | replace(':','-') | lower }}"
             content: |
@@ -144,12 +139,12 @@
               TIMEOUT 100
               MENU TITLE PXE Boot Menu for {{ item }} eth0_mac={{ hostvars[item].eth0_mac }}
 
-              LABEL ubuntu
-                MENU LABEL Install Ubuntu 24.04
+              LABEL {{os_id}}
+                MENU LABEL Install {{os_id}} {{os_version_id}}
                 KERNEL /{{os_id}}/{{os_version_id}}/bootimages/vmlinuz
                 INITRD /{{os_id}}/{{os_version_id}}/bootimages/initrd
                 SYSAPPEND 3
-                APPEND  url=http://{{ dnsmasq_gateway }}:8080/sharedisos//{{os_id}}/{{os_version_id}}/{{ubuntu_iso_name}} cloud-config-url=/dev/null autoinstall  ds=nocloud-net;s=http://{{ dnsmasq_gateway }}:8080/sharedisos//{{os_id}}/{{os_version_id}}/conf/default/ fsck.mode=skip
+                APPEND  url=http://{{ dnsmasq_gateway }}:8080/sharedisos//{{os_id}}/{{os_version_id}}/{{iso_name}} cloud-config-url=/dev/null autoinstall  ds=nocloud-net;s=http://{{ dnsmasq_gateway }}:8080/sharedisos//{{os_id}}/{{os_version_id}}/conf/default/ fsck.mode=skip
             
               LABEL local
                 MENU LABEL Boot from local disk
@@ -159,7 +154,8 @@
   vars:
       os_id: "{{hostvars[item].os_id | default('', true) | trim }}"
       os_version_id: "{{ hostvars[item].os_version_id | default('', true) | trim }}"
-      iso_file_path: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/{{ubuntu_iso_name}}"
+      iso_name: "{{ operating_systems | selectattr('os_id', 'search', os_id)  | selectattr('os_version_id', 'equalto', os_version_id) | map(attribute='iso_name') | first }}"
+      iso_file_path: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/{{iso_name}}"
       iso_mount_point : /tmp/iso/{{os_id}}/{{os_version_id}}
 
      

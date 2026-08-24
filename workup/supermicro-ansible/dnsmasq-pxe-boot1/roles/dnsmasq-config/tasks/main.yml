@@ -179,22 +179,22 @@
         enabled: true
 
     # Set up GRUB configuration for automated install
-    - name: Create GRUB config directory
-      ansible.builtin.file:
-        path: "{{ tftp_root }}/grub"
-        state: directory
-        mode: '0755'
-
-    - name: Create GRUB configuration
-      ansible.builtin.copy:
-        dest: "{{ tftp_root }}/grub/grub.cfg"
-        content: |
-          set timeout=5
-          menuentry "Ubuntu 22.04 Automated Install" {
-              linux /vmlinuz ip=dhcp url={{ ubuntu_iso_url }} autoinstall 'ds=nocloud-net;s=http://{{ dnsmasq_gateway }}/install/__dmi.system-uuid__/'
-              initrd /initrd
-          }
-        mode: '0644'
+#    - name: Create GRUB config directory
+#      ansible.builtin.file:
+#        path: "{{ tftp_root }}/grub"
+#        state: directory
+#        mode: '0755'
+#
+#    - name: Create GRUB configuration
+#      ansible.builtin.copy:
+#        dest: "{{ tftp_root }}/grub/grub.cfg"
+#        content: |
+#          set timeout=5
+#          menuentry "Ubuntu 22.04 Automated Install" {
+#              linux /vmlinuz ip=dhcp url={{ ubuntu_iso_url }} autoinstall 'ds=nocloud-net;s=http://{{ dnsmasq_gateway }}/install/__dmi.system-uuid__/'
+#              initrd /initrd
+#          }
+#        mode: '0644'
 
         
 #    - name: Create Default PXE menu
