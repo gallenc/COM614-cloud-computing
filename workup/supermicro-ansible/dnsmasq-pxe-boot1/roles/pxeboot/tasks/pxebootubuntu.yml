@@ -15,6 +15,10 @@
          debug:
              msg: "preparing download files for {{ubuntu_iso_url}}  Downloading the ISO can take a very long time"
              
+       - name: test iso message
+         debug:
+             msg: "iso_name={{iso_name}} iso_url={{iso_url}} iso_file_path={{iso_file_path}} iso_mount_point={{iso_mount_point}}"
+             
 # doesnt work because of Rocky 9 ansible bug    
 # • https://community.theforeman.org/t/managing-ubuntu-24-04-hosts-with-foreman-using-ansible-unable-to-use-multiple-modules-b-c-of-httpsconnection-init-got-an-unexpected-keyword-argument-cert-file/42017          
 #       - name: Download ISO
@@ -71,6 +75,8 @@
   vars:
       os_id: "{{hostvars[item].os_id | default('', true) | trim }}"
       os_version_id: "{{ hostvars[item].os_version_id | default('', true) | trim }}"
+      iso_name: "{{ operating_systems | json_query(\"[?os_id==hostvars[item].os_id && os_version_id==hostvars[item].os_version_id].iso_name | [0]\") }}"
+      iso_url: "{{ operating_systems | json_query(\"[?os_id==hostvars[item].os_id && os_version_id==hostvars[item].os_version_id].iso_url | [0]\") }}"
       iso_file_path: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/{{ubuntu_iso_name}}"
       iso_mount_point : /tmp/iso/{{os_id}}/{{os_version_id}}
       
