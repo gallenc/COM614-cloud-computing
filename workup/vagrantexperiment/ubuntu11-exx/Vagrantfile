@@ -119,7 +119,7 @@ Vagrant.configure("2") do |config|
     chattr -i /etc/resolv.conf 2>/dev/null || true
     rm -f /etc/resolv.conf
     # this is the nameserver used by solent - must be used throughout
-    printf 'nameserver 194.81.151.70\n' > /etc/resolv.conf
+    printf 'nameserver 192.168.20.200\nnameserver 194.81.151.70\n' > /etc/resolv.conf
     chattr +i /etc/resolv.conf
 
     apt-get update
