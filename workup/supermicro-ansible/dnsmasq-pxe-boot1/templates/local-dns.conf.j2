@@ -1,14 +1,17 @@
 # templates/local-dns.conf.j2
 # Local DNS entries from inventory
 {% for host in groups['all'] %}
+{% if hostvars[host].ansible_host | default('', true) | trim != ''  %}
+address=/{{ host }}.{{ dnsmasq_domain }}/{{ hostvars[host].ansible_host }}
+{% endif %}
 {% if hostvars[host].eth0_ip | default('', true) | trim != '' %}
 address=/{{ host }}-eth0.{{ dnsmasq_domain }}/{{ hostvars[host].eth0_ip }}
 {% endif %}
 {% if hostvars[host].eth1_ip | default('', true) | trim != '' %}
 address=/{{ host }}-eth1.{{ dnsmasq_domain }}/{{ hostvars[host].eth1_ip }}
 {% endif %}
-{% if hostvars[host].ansible_host | default('', true) | trim != ''  %}
-address=/{{ host }}.{{ dnsmasq_domain }}/{{ hostvars[host].ansible_host }}
+{% if hostvars[host].ipmi_host | default('', true) | trim != ''  %}
+address=/{{ host }}-ipmi.{{ dnsmasq_domain }}/{{ hostvars[host].ipmi_host }}
 {% endif %}
 {% endfor %}
 
