@@ -61,11 +61,18 @@ note that routerlogin.net needs to be set on pc using hosts file to 192.168.5.2
 * \Windows\System32\drivers\etc\hosts
 * add line 192.168.5.2     www.routerlogin.net
 
+NOTE You must set up a static route to allow routing to the vlan 10. (it may be possible to use RIP but i haven't investigated)
+
+```
+Name    Destination     Gateway     Metric  Active  Private
+vlan10  192.168.20.0    192.168.105.118 2   Yes No
+```
+
 
 |Router port |Connectivity |
 |:-----------|:------------|
-| 1          |  ProCurve Port 42 (VLAN 20 Uplink) |
-| 2          |  ProCurve Port 43 (VLAN 1 Uplink) used for IPMI and internet gateway|
+| 1          |             |
+| 2          | ProCurve Port 43 (VLAN 1 Uplink) used for IPMI and internet gateway|
 | 3-8        | free |
 | WAN  | connected to PC/mypublicwifi gateway  |
 

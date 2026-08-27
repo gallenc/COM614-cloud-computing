@@ -128,9 +128,39 @@
         state: started
         enabled: true
 
-# allow ipv4 routing through server
+# NOTE YOU MUST HAVE ALLOWED IP FORWARDING IN THE HOST
+# allow ipv4 routing through server 
+    - name: Set net.ipv4.ip_forward to 1
+      ansible.builtin.sysctl:
+        name: net.ipv4.ip_forward
+        value: '1'
+        state: present
+        reload: yes
+        sysctl_file: /etc/sysctl.d/99-ip-forward.conf
 
+#    - name: Add default route for eth2
+#      ansible.builtin.command:
+#        cmd:
+#          sudo ip route add default via 192.168.20.100 dev eth2 metric 50
+ 
 
+    - name: Add permanent static route via Netplan
+      ansible.builtin.copy:
+        dest: /etc/netplan/99-static-route.yaml
+        content: |
+          network:
+            version: 2
+            renderer: networkd
+            ethernets:
+              eth2:
+                routes:
+                  - to: default
+                        via: 192.168.20.100
+                metric: 50
+        mode: '0600'
+
+    - name: Apply netplan
+      ansible.builtin.command: netplan apply  
 
 
     # Configure dnsmasq for DHCP and TFTP
@@ -183,7 +213,8 @@
         state: started
         enabled: true
 
-    # Set up GRUB configuration for automated install
+
+# Set up GRUB configuration for automated install
 #    - name: Create GRUB config directory
 #      ansible.builtin.file:
 #        path: "{{ tftp_root }}/grub"
@@ -237,4 +268,4 @@
 
 #  removed           APPEND initrd=ubuntu/initrd.img root=/dev/ram0 ramdisk_size=1500000 ip=dhcp url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}}
 # APPEND initrd=ubuntu/initrd.img root=/dev/ram0 ramdisk_size=8388608 ip=dhcp url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{ubuntu_iso_name}}
-
+   
