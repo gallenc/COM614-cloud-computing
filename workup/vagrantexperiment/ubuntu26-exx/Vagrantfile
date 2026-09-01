@@ -113,6 +113,14 @@ Vagrant.configure("2") do |config|
   
     # Fix DNS resolution issues common in VirtualBox
     # see https://fabiorehm.com/blog/2025/08/25/bulletproof-ubuntu-desktop-vagrant-virtualbox/#4-fix-dns-resolution-first
+    
+    # stopping and disabling systemd-resolved to avoid conflicts with /etc/resolv.conf
+    systemctl stop systemd-resolved-varlink.socket || true
+    systemctl disable systemd-resolved-varlink.socket || true
+    
+    systemctl stop systemd-resolved-monitor.socket || true
+    systemctl disable systemd-resolved-monitor.socket || true
+
     systemctl stop systemd-resolved || true
     systemctl disable systemd-resolved || true
     systemctl mask systemd-resolved || true
