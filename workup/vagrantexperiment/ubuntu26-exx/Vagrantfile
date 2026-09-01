@@ -138,18 +138,15 @@ Vagrant.configure("2") do |config|
     #    chattr +i /etc/sysctl.d/99-ip-forward.conf
     #    
     #    sysctl --system
+    
+    export DEBIAN_FRONTEND=noninteractive
 
     apt-get update
 
-    apt-get install -y curl git vim nano net-tools tftp-hpa
-    
-    apt-get install -y software-properties-common
+    apt-get install -y curl git vim nano net-tools tftp-hpa whois nethogs inetutils-traceroute software-properties-common
+
     add-apt-repository --yes --update ppa:ansible/ansible
     apt-get -y install ansible
-    
-    apt-get -y install whois
-    
-    apt-get -y install nethogs  inetutils-traceroute
 
     # only create admin user if doesn't exist (note inscecure password)
     if getent passwd | grep -c '^admin:' > /dev/null ;
