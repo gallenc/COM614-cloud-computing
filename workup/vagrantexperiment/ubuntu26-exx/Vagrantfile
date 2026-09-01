@@ -145,7 +145,7 @@ Vagrant.configure("2") do |config|
 
     apt-get install -y curl git vim nano net-tools tftp-hpa whois nethogs inetutils-traceroute software-properties-common
 
-    # add-apt-repository --yes --update ppa:ansible/ansible
+    # add-apt-repository --yes --update ppa:ansible/ansible # not needed for ubuntu 26.04
     apt-get -y install ansible
 
     # only create admin user if doesn't exist (note inscecure password)
