@@ -10,6 +10,7 @@
      
 - name: Download and unpack iso file if it does not exist
   # when: download_vmlinuz_file_stat.stat.exists == false
+  run_once: true
   block:
        - name: downloading iso files
          debug:
@@ -73,9 +74,7 @@
       iso_file_path: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/{{iso_name}}"
       iso_directory: "{{sharedisos}}/{{os_id}}/{{os_version_id}}"
       iso_mount_point : /tmp/iso/{{os_id}}/{{os_version_id}}
-      
-      
-      
+
       
 - name: create pxe boot files for inventory
   block:
