@@ -145,13 +145,12 @@
               MENU TITLE PXE Boot Menu for {{ item }} eth0_mac={{ hostvars[item].eth0_mac }}
 
               LABEL {{os_id}} preseed install
-                MENU LABEL Install {{os_id}} {{os_version_id}}
+                MENU LABEL Install {{os_id}} {{os_version_id}} preseed install
                 KERNEL /{{os_id}}/{{os_version_id}}/bootimages/vmlinuz
                 INITRD /{{os_id}}/{{os_version_id}}/bootimages/initrd.gz
-                SYSAPPEND 3
-                APPEND auto=true priority=critical preseed/url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{os_id}}/{{os_version_id}}/conf/default/preseed.conf 
+                APPEND auto=true priority=critical interface=enp1s0f1 preseed/url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{os_id}}/{{os_version_id}}/conf/default/preseed.conf 
               LABEL {{os_id}} memdisk install ( no preseed )
-                MENU LABEL Install {{os_id}} {{os_version_id}}
+                MENU LABEL Install {{os_id}} {{os_version_id}} memdisk install ( no preseed )
                 KERNEL memdisk
                 INITRD /{{os_id}}/{{os_version_id}}/isos/{{iso_name}}
                 APPEND iso raw
