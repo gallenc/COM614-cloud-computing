@@ -165,7 +165,7 @@
                 routes:
                   - to: default
                         via: 192.168.20.100
-                metric: 50
+                        metric: 50
         mode: '0600'
 
     - name: Apply netplan
