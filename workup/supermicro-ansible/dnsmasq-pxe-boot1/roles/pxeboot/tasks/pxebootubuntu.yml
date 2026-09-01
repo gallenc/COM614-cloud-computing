@@ -24,6 +24,12 @@
 #            # checksum: "sha256:https://example.com.sha256"
 #            force: false # will not download if already exists
 
+       - name: Ensure directory for ISO file exists
+         ansible.builtin.file:
+           path: "{{iso_directory}}"
+           state: directory
+           mode: '0755'
+
        - name: Download ISO
          ansible.builtin.shell: |
            wget -O "{{iso_file_path}}" "{{iso_url}}"
@@ -73,6 +79,7 @@
       os_version_id: "{{ hostvars[item].os_version_id | default('', true) | trim }}"
       iso_name: "{{ operating_systems | selectattr('os_id', 'search', os_id)  | selectattr('os_version_id', 'equalto', os_version_id) | map(attribute='iso_name') | first }}"
       iso_url: "{{ operating_systems | selectattr('os_id', 'search', os_id)   | selectattr('os_version_id', 'equalto', os_version_id) | map(attribute='iso_url') | first }}"
+      iso_directory: "{{sharedisos}}/{{os_id}}/{{os_version_id}}"
       iso_file_path: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/{{iso_name}}"
       iso_mount_point : /tmp/iso/{{os_id}}/{{os_version_id}}
       

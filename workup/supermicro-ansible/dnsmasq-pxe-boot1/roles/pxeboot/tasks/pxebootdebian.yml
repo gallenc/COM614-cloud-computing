@@ -15,6 +15,12 @@
          debug:
              msg: "preparing download files for  iso_url={{iso_url}} iso_name={{iso_name}} iso_file_path={{iso_file_path}} iso_mount_point={{iso_mount_point}}  Downloading the ISO can take a very long time"
 
+       - name: Ensure directory for ISO file exists
+         ansible.builtin.file:
+           path: "{{iso_directory}}"
+           state: directory
+           mode: '0755'
+
        - name: Download ISO
          ansible.builtin.shell: |
            wget -O "{{iso_file_path}}" "{{iso_url}}"
@@ -65,6 +71,7 @@
       iso_name: "{{ operating_systems | selectattr('os_id', 'search', os_id)  | selectattr('os_version_id', 'equalto', os_version_id) | map(attribute='iso_name') | first }}"
       iso_url: "{{ operating_systems | selectattr('os_id', 'search', os_id)   | selectattr('os_version_id', 'equalto', os_version_id) | map(attribute='iso_url') | first }}"
       iso_file_path: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/{{iso_name}}"
+      iso_directory: "{{sharedisos}}/{{os_id}}/{{os_version_id}}"
       iso_mount_point : /tmp/iso/{{os_id}}/{{os_version_id}}
       
       
