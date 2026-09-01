@@ -27,44 +27,44 @@
          args:
            creates: "{{iso_file_path}}"
 
-#       - name: Ensure mount point exists
-#         ansible.builtin.file:
-#           path: "{{iso_mount_point}}"
-#           state: directory
-#           mode: '0755'
-#
-#       - name: Mount ISO file as a loop device
-#         ansible.posix.mount:
-#           path: "{{iso_mount_point}}"
-#           src: "{{iso_file_path}}"
-#           fstype: iso9660
-#           opts: loop,ro
-#           state: mounted
-#
-#       - name: Ensure bootimages folder exists
-#         ansible.builtin.file:
-#           path: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/bootimages"
-#           state: directory
-#           mode: '0755'
-#           
-#       - name: Copy debian kernel and initrd for PXE boot
-#         ansible.builtin.copy:
-#           # note casper folder is where the kernel and initrd are located in debian iso
-#           src: "{{iso_mount_point}}/casper/{{ image_item }}"
-#           dest: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/bootimages/{{ image_item }}"
-#           remote_src: true
-#           mode: '0777'
-#         loop:
-#           - vmlinuz
-#           - initrd
-#         loop_control:
-#           loop_var: image_item 
-#
-#       - name: Unmount ISO file on Linux
-#         ansible.posix.mount:
-#           path: "{{iso_mount_point}}"
-#           src: "{{iso_file_path}}"
-#           state: unmounted
+       - name: Ensure mount point exists
+         ansible.builtin.file:
+           path: "{{iso_mount_point}}"
+           state: directory
+           mode: '0755'
+
+       - name: Mount ISO file as a loop device
+         ansible.posix.mount:
+           path: "{{iso_mount_point}}"
+           src: "{{iso_file_path}}"
+           fstype: iso9660
+           opts: loop,ro
+           state: mounted
+
+       - name: Ensure bootimages folder exists
+         ansible.builtin.file:
+           path: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/bootimages"
+           state: directory
+           mode: '0755'
+           
+       - name: Copy debian kernel and initrd for PXE boot
+         ansible.builtin.copy:
+           # note install.amd folder is where the kernel and initrd are located in debian iso
+           src: "{{iso_mount_point}}/install.amd/{{ image_item }}"
+           dest: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/bootimages/{{ image_item }}"
+           remote_src: true
+           mode: '0777'
+         loop:
+           - vmlinuz
+           - initrd.gz
+         loop_control:
+           loop_var: image_item 
+
+       - name: Unmount ISO file on Linux
+         ansible.posix.mount:
+           path: "{{iso_mount_point}}"
+           src: "{{iso_file_path}}"
+           state: unmounted
   vars:
       os_id: "{{hostvars[item].os_id | default('', true) | trim }}"
       os_version_id: "{{ hostvars[item].os_version_id | default('', true) | trim }}"
@@ -100,18 +100,18 @@
            mode: '0644'
 
 
-#       # note must have unpacked iso first
-#       - name: Copy debian kernel and initrd for PXE boot to tftp root
-#         ansible.builtin.copy:
-#           src: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/bootimages/{{ image_item }}"
-#           dest: "{{ tftp_root }}/{{os_id}}/{{os_version_id}}/bootimages/{{ image_item }}"
-#           remote_src: true
-#           mode: '0644'
-#         loop:
-#           - vmlinuz
-#           - initrd
-#         loop_control:
-#            loop_var: image_item 
+       # note must have unpacked iso first
+       - name: Copy debian kernel and initrd for PXE boot to tftp root
+         ansible.builtin.copy:
+           src: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/bootimages/{{ image_item }}"
+           dest: "{{ tftp_root }}/{{os_id}}/{{os_version_id}}/bootimages/{{ image_item }}"
+           remote_src: true
+           mode: '0644'
+         loop:
+           - vmlinuz
+           - initrd.gz
+         loop_control:
+            loop_var: image_item 
 
        - name: Create config directory
          ansible.builtin.file:
@@ -144,12 +144,17 @@
               TIMEOUT 100
               MENU TITLE PXE Boot Menu for {{ item }} eth0_mac={{ hostvars[item].eth0_mac }}
 
-              LABEL {{os_id}}
+              LABEL {{os_id}} preseed install
+                MENU LABEL Install {{os_id}} {{os_version_id}}
+                KERNEL /{{os_id}}/{{os_version_id}}/bootimages/vmlinuz
+                INITRD /{{os_id}}/{{os_version_id}}/bootimages/initrd.gz
+                SYSAPPEND 3
+                APPEND auto=true priority=critical preseed/url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{os_id}}/{{os_version_id}}/conf/default/preseed.conf 
+              LABEL {{os_id}} memdisk install ( no preseed )
                 MENU LABEL Install {{os_id}} {{os_version_id}}
                 KERNEL memdisk
                 INITRD /{{os_id}}/{{os_version_id}}/isos/{{iso_name}}
-                SYSAPPEND 3
-                APPEND iso raw auto preseed/url=http://{{ dnsmasq_gateway }}:8080/sharedisos//{{os_id}}/{{os_version_id}}/conf/default/preseed.conf 
+                APPEND iso raw
               LABEL local
                 MENU LABEL Boot from local disk
                 LOCALBOOT 0
