@@ -112,26 +112,23 @@
 #           - initrd
 #         loop_control:
 #            loop_var: image_item 
-#
-#       - name: Create config directory
-#         ansible.builtin.file:
-#           path: "{{sharedisos}}//{{os_id}}/{{os_version_id}}/conf/default"
-#           state: directory
-#           mode: '0755'
-#
-#       - name: Copy config files
-#         ansible.builtin.copy:
-#           src: ../files//{{os_id}}/{{os_version_id}}/conf/default/{{ image_item }}
-#           dest: "{{sharedisos}}//{{os_id}}/{{os_version_id}}/conf/default/{{ image_item }}"
-#           mode: '0644'
-#         loop:
-#           - meta-data
-#           - network-config
-#           - user-data
-#           - vendor-data
-#         loop_control:
-#            loop_var: image_item 
-#         notify: restart nginx
+
+       - name: Create config directory
+         ansible.builtin.file:
+           path: "{{sharedisos}}//{{os_id}}/{{os_version_id}}/conf/default"
+           state: directory
+           mode: '0755'
+
+       - name: Copy config files
+         ansible.builtin.copy:
+           src: ../files//{{os_id}}/{{os_version_id}}/conf/default/{{ image_item }}
+           dest: "{{sharedisos}}//{{os_id}}/{{os_version_id}}/conf/default/{{ image_item }}"
+           mode: '0644'
+         loop:
+           - preseed.conf
+         loop_control:
+            loop_var: image_item 
+         notify: restart nginx
 
 
        - name: debug pxebootdebian.yml
