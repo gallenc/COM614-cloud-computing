@@ -76,3 +76,97 @@
       
       
       
+      
+- name: create pxe boot files for inventory
+  block:
+
+       - name: Create tftp boot images directory
+         ansible.builtin.file:
+           path: "{{ tftp_root }}/{{ os_id }}/{{ os_version_id }}/bootimages"
+           state: directory
+           mode: '0755'
+           
+       - name: Create tftp isos directory
+         ansible.builtin.file:
+           path: "{{ tftp_root }}/{{ os_id }}/{{ os_version_id }}/isos"
+           state: directory
+           mode: '0755'
+
+       - name: Copy debian iso to tftp root
+         ansible.builtin.copy:
+           src: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/{{iso_name}}"
+           dest: "{{ tftp_root }}/{{os_id}}/{{os_version_id}}/isos/{{iso_name}}"
+           remote_src: true
+           mode: '0644'
+
+
+#       # note must have unpacked iso first
+#       - name: Copy debian kernel and initrd for PXE boot to tftp root
+#         ansible.builtin.copy:
+#           src: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/bootimages/{{ image_item }}"
+#           dest: "{{ tftp_root }}/{{os_id}}/{{os_version_id}}/bootimages/{{ image_item }}"
+#           remote_src: true
+#           mode: '0644'
+#         loop:
+#           - vmlinuz
+#           - initrd
+#         loop_control:
+#            loop_var: image_item 
+#
+#       - name: Create config directory
+#         ansible.builtin.file:
+#           path: "{{sharedisos}}//{{os_id}}/{{os_version_id}}/conf/default"
+#           state: directory
+#           mode: '0755'
+#
+#       - name: Copy config files
+#         ansible.builtin.copy:
+#           src: ../files//{{os_id}}/{{os_version_id}}/conf/default/{{ image_item }}
+#           dest: "{{sharedisos}}//{{os_id}}/{{os_version_id}}/conf/default/{{ image_item }}"
+#           mode: '0644'
+#         loop:
+#           - meta-data
+#           - network-config
+#           - user-data
+#           - vendor-data
+#         loop_control:
+#            loop_var: image_item 
+#         notify: restart nginx
+
+
+       - name: debug pxebootdebian.yml
+         debug:
+           msg: "generating pxeboot config for os_id={{hostvars[item].os_id | default('', true) | trim }} os_version_id= {{ hostvars[item].os_version_id | default('', true) | trim }} eth0_mac={{ hostvars[item].eth0_mac | default('', true) | trim }}"
+          
+       - name: Create debian pxe MAC address specific PXE menu
+         ansible.builtin.copy:
+            dest: "{{ tftp_root }}/pxelinux.cfg/01-{{ hostvars[item].eth0_mac  | replace(':','-') | lower }}"
+            content: |
+              DEFAULT menu.c32
+              PROMPT 0
+              TIMEOUT 100
+              MENU TITLE PXE Boot Menu for {{ item }} eth0_mac={{ hostvars[item].eth0_mac }}
+
+              LABEL {{os_id}}
+                MENU LABEL Install {{os_id}} {{os_version_id}}
+                KERNEL memdisk
+                INITRD /{{os_id}}/{{os_version_id}}/isos/{{iso_name}}
+                APPEND iso raw
+              LABEL local
+                MENU LABEL Boot from local disk
+                LOCALBOOT 0
+            mode: '0644'
+            
+#                SYSAPPEND 3
+#                APPEND  url=http://{{ dnsmasq_gateway }}:8080/sharedisos//{{os_id}}/{{os_version_id}}/{{iso_name}} cloud-config-url=/dev/null autoinstall  ds=nocloud-net;s=http://{{ dnsmasq_gateway }}:8080/sharedisos//{{os_id}}/{{os_version_id}}/conf/default/ fsck.mode=skip
+
+
+  vars:
+      os_id: "{{hostvars[item].os_id | default('', true) | trim }}"
+      os_version_id: "{{ hostvars[item].os_version_id | default('', true) | trim }}"
+      iso_name: "{{ operating_systems | selectattr('os_id', 'search', os_id)  | selectattr('os_version_id', 'equalto', os_version_id) | map(attribute='iso_name') | first }}"
+      iso_file_path: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/{{iso_name}}"
+      iso_mount_point : /tmp/iso/{{os_id}}/{{os_version_id}}
+
+           
+      
