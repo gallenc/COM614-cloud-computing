@@ -151,7 +151,8 @@
                 MENU LABEL Install {{os_id}} {{os_version_id}}
                 KERNEL memdisk
                 INITRD /{{os_id}}/{{os_version_id}}/isos/{{iso_name}}
-                APPEND iso raw
+                SYSAPPEND 3
+                APPEND iso raw auto preseed/url=http://{{ dnsmasq_gateway }}:8080/sharedisos//{{os_id}}/{{os_version_id}}/conf/default/preseed.conf 
               LABEL local
                 MENU LABEL Boot from local disk
                 LOCALBOOT 0
