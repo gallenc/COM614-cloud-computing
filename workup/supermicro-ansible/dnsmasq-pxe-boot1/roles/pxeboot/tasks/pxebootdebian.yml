@@ -147,7 +147,7 @@
                 MENU LABEL Install {{os_id}} {{os_version_id}} preseed install
                 KERNEL /{{os_id}}/{{os_version_id}}/bootimages/vmlinuz
                 INITRD /{{os_id}}/{{os_version_id}}/bootimages/initrd.gz
-                APPEND auto=true priority=critical netcfg/choose_interface=enp1s0f1 preseed/url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{os_id}}/{{os_version_id}}/conf/default/preseed.conf 
+                APPEND auto=true priority=critical netcfg/choose_interface=enp1s0f0 preseed/url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{os_id}}/{{os_version_id}}/conf/default/preseed.conf 
               LABEL {{os_id}} memdisk install ( no preseed )
                 MENU LABEL Install {{os_id}} {{os_version_id}} memdisk install ( no preseed )
                 KERNEL memdisk
