@@ -67,6 +67,15 @@
         - menu.c32
         - libutil.c32
         
+    - name: Copy memdisk files
+      ansible.builtin.copy:
+        src: /usr/lib/syslinux/{{ item }}
+        dest: "{{ tftp_root }}/{{ item }}"
+        remote_src: true
+        mode: '0644'
+      loop:
+        - memdisk
+        
       #  Copy PXE bootloader packages pxelinux.0
     - name: Copy PXE bootloader
       ansible.builtin.copy:

@@ -3,13 +3,13 @@
   debug:
      msg: "preparing download files for os_id={{sharedisos}}/{{hostvars[item].os_id | default('', true) | trim }} os_version_id= {{ hostvars[item].os_version_id | default('', true) | trim }} }}"
      
-- name: check if iso file exists
-  stat: 
-    path: "{{sharedisos}}/{{hostvars[item].os_id | default('', true) | trim }}/{{ hostvars[item].os_version_id | default('', true) | trim }} }}/vmlinuz"
-  register: download_vmlinuz_file_stat
+#- name: check if iso file exists
+#  stat: 
+#    path: "{{sharedisos}}/{{hostvars[item].os_id | default('', true) | trim }}/{{ hostvars[item].os_version_id | default('', true) | trim }} }}/vmlinuz"
+#  register: download_vmlinuz_file_stat
      
 - name: Download and unpack iso file if it does not exist
-  when: download_vmlinuz_file_stat.stat.exists == false
+  # when: download_vmlinuz_file_stat.stat.exists == false
   block:
        - name: downloading iso files
          debug:
@@ -21,44 +21,44 @@
          args:
            creates: "{{iso_file_path}}"
 
-       - name: Ensure mount point exists
-         ansible.builtin.file:
-           path: "{{iso_mount_point}}"
-           state: directory
-           mode: '0755'
-
-       - name: Mount ISO file as a loop device
-         ansible.posix.mount:
-           path: "{{iso_mount_point}}"
-           src: "{{iso_file_path}}"
-           fstype: iso9660
-           opts: loop,ro
-           state: mounted
-
-       - name: Ensure bootimages folder exists
-         ansible.builtin.file:
-           path: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/bootimages"
-           state: directory
-           mode: '0755'
-           
-       - name: Copy debian kernel and initrd for PXE boot
-         ansible.builtin.copy:
-           # note casper folder is where the kernel and initrd are located in debian iso
-           src: "{{iso_mount_point}}/casper/{{ image_item }}"
-           dest: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/bootimages/{{ image_item }}"
-           remote_src: true
-           mode: '0777'
-         loop:
-           - vmlinuz
-           - initrd
-         loop_control:
-           loop_var: image_item 
-
-       - name: Unmount ISO file on Linux
-         ansible.posix.mount:
-           path: "{{iso_mount_point}}"
-           src: "{{iso_file_path}}"
-           state: unmounted
+#       - name: Ensure mount point exists
+#         ansible.builtin.file:
+#           path: "{{iso_mount_point}}"
+#           state: directory
+#           mode: '0755'
+#
+#       - name: Mount ISO file as a loop device
+#         ansible.posix.mount:
+#           path: "{{iso_mount_point}}"
+#           src: "{{iso_file_path}}"
+#           fstype: iso9660
+#           opts: loop,ro
+#           state: mounted
+#
+#       - name: Ensure bootimages folder exists
+#         ansible.builtin.file:
+#           path: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/bootimages"
+#           state: directory
+#           mode: '0755'
+#           
+#       - name: Copy debian kernel and initrd for PXE boot
+#         ansible.builtin.copy:
+#           # note casper folder is where the kernel and initrd are located in debian iso
+#           src: "{{iso_mount_point}}/casper/{{ image_item }}"
+#           dest: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/bootimages/{{ image_item }}"
+#           remote_src: true
+#           mode: '0777'
+#         loop:
+#           - vmlinuz
+#           - initrd
+#         loop_control:
+#           loop_var: image_item 
+#
+#       - name: Unmount ISO file on Linux
+#         ansible.posix.mount:
+#           path: "{{iso_mount_point}}"
+#           src: "{{iso_file_path}}"
+#           state: unmounted
   vars:
       os_id: "{{hostvars[item].os_id | default('', true) | trim }}"
       os_version_id: "{{ hostvars[item].os_version_id | default('', true) | trim }}"
