@@ -101,6 +101,14 @@
         dest: /etc/dnsmasq.d/reservations.conf
         mode: '0644'
       notify: restart dnsmasq
+      
+    - name: Display DHCP reservations
+      command: cat /etc/dnsmasq.d/reservations.conf
+      register: dhcp_output
+
+    - name: Display DHCP reservations to console
+      debug:
+        msg: "{{ dhcp_output.stdout_lines }}"
 
     - name: Deploy local DNS entries
       ansible.builtin.template:
@@ -108,6 +116,14 @@
         dest: /etc/dnsmasq.d/local-dns.conf
         mode: '0644'
       notify: restart dnsmasq
+      
+    - name: Display local DNS entries
+      command: /etc/dnsmasq.d/local-dns.conf
+      register: dns_output
+
+    - name: Display local DNS entries to console
+      debug:
+        msg: "{{ dns_output.stdout_lines }}"
 
     # Configure dnsmasq for DHCP and TFTP pxe booting
     - name: Configure dnsmasq
