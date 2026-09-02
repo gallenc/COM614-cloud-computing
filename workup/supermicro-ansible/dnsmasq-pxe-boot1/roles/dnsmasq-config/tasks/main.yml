@@ -118,7 +118,7 @@
       notify: restart dnsmasq
       
     - name: Display local DNS entries
-      command: /etc/dnsmasq.d/local-dns.conf
+      command: cat /etc/dnsmasq.d/local-dns.conf
       register: dns_output
 
     - name: Display local DNS entries to console
