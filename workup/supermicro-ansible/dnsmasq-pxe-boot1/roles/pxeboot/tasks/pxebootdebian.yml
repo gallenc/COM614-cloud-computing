@@ -14,8 +14,14 @@
   block:
        - name: downloading iso files
          debug:
-             msg: "preparing download files for  iso_url={{iso_url}} iso_name={{iso_name}} iso_file_path={{iso_file_path}} iso_mount_point={{iso_mount_point}}  Downloading the ISO can take a very long time"
+             msg: "preparing download files for  iso_url={{iso_url}} iso_name={{iso_name}} iso_file_path={{iso_file_path}} iso_mount_point={{iso_mount_point}}  pxe_installer_url={{pxe_installer_url}} Downloading the ISO can take a very long time"
 
+       - name: Ensure bootimages folder exists
+         ansible.builtin.file:
+           path: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/bootimages"
+           state: directory
+           mode: '0755'
+           
        - name: Ensure directory for ISO file exists
          ansible.builtin.file:
            path: "{{iso_directory}}"
@@ -27,7 +33,7 @@
            wget -O "{{iso_file_path}}" "{{iso_url}}"
          args:
            creates: "{{iso_file_path}}"
-
+           
        - name: Ensure mount point exists
          ansible.builtin.file:
            path: "{{iso_mount_point}}"
@@ -41,12 +47,6 @@
            fstype: iso9660
            opts: loop,ro
            state: mounted
-
-       - name: Ensure bootimages folder exists
-         ansible.builtin.file:
-           path: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/bootimages"
-           state: directory
-           mode: '0755'
            
        - name: Copy debian kernel and initrd for PXE boot
          ansible.builtin.copy:
@@ -79,6 +79,33 @@
            path: "{{iso_mount_point}}"
            src: "{{iso_file_path}}"
            state: unmounted
+           
+       - name: Ensure net bootimages folder exists
+         ansible.builtin.file:
+           path: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/netbootimages"
+           state: directory
+           mode: '0755'
+
+       - name: Download PXE installer url
+         ansible.builtin.shell: |
+           wget -O "{{pxe_installer_filepath}}" "{{pxe_installer_url}}"
+           mkdir -p /tmp/pxe_installer_unpack
+           tar -xvzf "{{pxe_installer_filepath}}" -C /tmp/pxe_installer_unpack
+         args:
+           creates: "{{pxe_installer_filepath}}"
+           
+       - name: Copy netboot debian kernel and initrd for PXE boot
+         ansible.builtin.copy:
+           src: "/tmp/pxe_installer_unpack/{{ image_item }}"
+           dest: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/netbootimages/{{ image_item }}"
+           remote_src: true
+           mode: '0777'
+         loop:
+           - vmlinuz
+           - initrd.gz
+         loop_control:
+           loop_var: image_item 
+
   vars:
       os_id: "{{hostvars[item].os_id | default('', true) | trim }}"
       os_version_id: "{{ hostvars[item].os_version_id | default('', true) | trim }}"
@@ -87,6 +114,8 @@
       iso_file_path: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/{{iso_name}}"
       iso_directory: "{{sharedisos}}/{{os_id}}/{{os_version_id}}"
       iso_mount_point : /tmp/iso/{{os_id}}/{{os_version_id}}
+      pxe_installer_filepath: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/netboot.tar.gz"
+      pxe_installer_url: "{{ operating_systems | selectattr('os_id', 'search', os_id)   | selectattr('os_version_id', 'equalto', os_version_id) | map(attribute='pxe_installer_url') | first }}"
 
       
 - name: create pxe boot files for inventory
@@ -111,12 +140,29 @@
            remote_src: true
            mode: '0644'
 
-
-       # note must have unpacked iso first
        - name: Copy debian kernel and initrd for PXE boot to tftp root
          ansible.builtin.copy:
            src: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/bootimages/{{ image_item }}"
            dest: "{{ tftp_root }}/{{os_id}}/{{os_version_id}}/bootimages/{{ image_item }}"
+           remote_src: true
+           mode: '0644'
+         loop:
+           - vmlinuz
+           - initrd.gz
+         loop_control:
+            loop_var: image_item 
+
+
+       - name: Create tftp netbootimages directory
+         ansible.builtin.file:
+           path: "{{ tftp_root }}/{{ os_id }}/{{ os_version_id }}/netbootimages"
+           state: directory
+           mode: '0755'
+           
+       - name: Copy netboot debian kernel and initrd for PXE boot to tftp root
+         ansible.builtin.copy:
+           src: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/netbootimages/{{ image_item }}"
+           dest: "{{ tftp_root }}/{{os_id}}/{{os_version_id}}/netbootimages/{{ image_item }}"
            remote_src: true
            mode: '0644'
          loop:
@@ -158,8 +204,8 @@
 
               LABEL {{os_id}} preseed install
                 MENU LABEL Install {{os_id}} {{os_version_id}} preseed install
-                KERNEL /{{os_id}}/{{os_version_id}}/bootimages/vmlinuz
-                INITRD /{{os_id}}/{{os_version_id}}/bootimages/initrd.gz
+                KERNEL /{{os_id}}/{{os_version_id}}/netbootimages/vmlinuz
+                INITRD /{{os_id}}/{{os_version_id}}/netbootimages/initrd.gz
                 
                 APPEND  root=/dev/nfs nfsroot={{ dnsmasq_gateway }}:/srv/nfs/{{os_id}}/{{os_version_id}},tcp,v3 ip=:::::enp1s0f0:dhcp rw  auto=true priority=critical netcfg/choose_interface=enp1s0f0 preseed/url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{os_id}}/{{os_version_id}}/conf/default/preseed.conf 
                 
