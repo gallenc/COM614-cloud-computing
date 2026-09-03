@@ -18,6 +18,7 @@ operating_systems:
        os_version_id: "13.6.0"
        iso_url: https://cdimage.debian.org/debian-cd/13.6.0/amd64/iso-cd/debian-13.6.0-amd64-netinst.iso
        iso_name: debian-13.6.0-amd64-netinst.iso
+       pxe_installer_url: http://ftp.debian.org/debian/dists/Debian13.6/main/installer-amd64/current/images/netboot/netboot.tar.gz
 
      - os_id: "gparted"
        os_version_id: "1.8.1-6"
