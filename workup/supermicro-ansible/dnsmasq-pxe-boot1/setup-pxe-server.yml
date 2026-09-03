@@ -9,6 +9,7 @@
     sharedisos: /vagrant/www/sharedisos
     http_root: /vagrant/www
     tftp_root: /srv/tftp
+    nfs_root: /srv/nfs
 
     ubuntu_iso_url: https://releases.ubuntu.com/resolute/ubuntu-26.04-live-server-amd64.iso
     ubuntu_iso_name: ubuntu-26.04-live-server-amd64.iso
@@ -25,6 +26,7 @@
 
 
   roles:
+    - nfs-config
     - dnsmasq-config
     - pxeboot
 
@@ -38,4 +40,8 @@
       ansible.builtin.service:
         name: nginx
         state: restarted
+        
+    - name: reload nfs exports
+      ansible.builtin.command:
+        cmd: exportfs -ra
         

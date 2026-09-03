@@ -1,0 +1,5 @@
+# /etc/exports - Managed by Ansible
+# Do not edit manually, changes will be overwritten
+{% for export in nfs_exports %}
+{{ export.path }}    {{ export.clients }}({{ export.options }})
+{% endfor %}

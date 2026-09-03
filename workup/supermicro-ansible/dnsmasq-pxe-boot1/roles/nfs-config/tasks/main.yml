@@ -1,0 +1,41 @@
+---
+    # see https://oneuptime.com/blog/post/2026-02-21-ansible-set-up-nfs-server/view
+    # Install required packages for NFS
+        
+    - name: Install NFS server for PXE
+      ansible.builtin.apt:
+        name:
+          - nfs-kernel-server
+        state: present
+        
+    - name: Create NFS roots
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        mode: '0755'
+      loop:
+        - "{{ nfs_root }}"
+
+   # Configure /etc/exports file
+    - name: Configure NFS exports
+      ansible.builtin.template:
+        src: ./templates/exports.j2
+        dest: /etc/exports
+        owner: root
+        group: root
+        mode: '0644'
+        backup: true
+      notify: reload nfs exports
+
+    # Enable and start required services
+    - name: Enable rpcbind
+      ansible.builtin.systemd:
+        name: rpcbind
+        state: started
+        enabled: true
+
+    - name: Enable NFS server
+      ansible.builtin.systemd:
+        name: nfs-server
+        state: started
+        enabled: true

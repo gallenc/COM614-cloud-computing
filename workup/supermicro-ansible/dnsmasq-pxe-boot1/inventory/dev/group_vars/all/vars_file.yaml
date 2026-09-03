@@ -3,6 +3,11 @@ ansible_connection: ssh
 ansible_user: ansible
 ansible_ssh_pass: minad1234
 
+nfs_exports:
+     - path: /srv/nfs/debian
+       clients: "*"
+       options: "ro,sync,no_subtree_check,no_root_squash"
+
 operating_systems:
      - os_id: "ubuntu"
        os_version_id: "26.04"

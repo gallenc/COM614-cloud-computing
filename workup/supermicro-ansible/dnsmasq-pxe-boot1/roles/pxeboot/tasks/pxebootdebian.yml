@@ -60,6 +60,19 @@
            - initrd.gz
          loop_control:
            loop_var: image_item 
+           
+       - name: Ensure NFS Server folder exists
+         ansible.builtin.file:
+           path: "{{nfs_root}}/{{os_id}}/{{os_version_id}}"
+           state: directory
+           mode: '0755'
+           
+       # only rsync if /boot doesnt already exist
+       - name: rsync iso to NFS Server folder
+         ansible.builtin.shell: |
+           rsync -av "{{iso_mount_point}}" "{{nfs_root}}/{{os_id}}/{{os_version_id}}/"
+         args:
+           creates: "{{nfs_root}}/{{os_id}}/{{os_version_id}}/boot"
 
        - name: Unmount ISO file on Linux
          ansible.posix.mount:
@@ -147,7 +160,8 @@
                 MENU LABEL Install {{os_id}} {{os_version_id}} preseed install
                 KERNEL /{{os_id}}/{{os_version_id}}/bootimages/vmlinuz
                 INITRD /{{os_id}}/{{os_version_id}}/bootimages/initrd.gz
-                APPEND auto=true priority=critical netcfg/choose_interface=enp1s0f0 preseed/url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{os_id}}/{{os_version_id}}/conf/default/preseed.conf 
+                
+                APPEND auto=true priority=critical netcfg/choose_interface=enp1s0f0 root=/dev/nfs nfsroot={{ dnsmasq_gateway }}:/srv/nfs//{{os_id}}/{{os_version_id}} rw preseed/url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{os_id}}/{{os_version_id}}/conf/default/preseed.conf 
               LABEL {{os_id}} memdisk install ( no preseed )
                 MENU LABEL Install {{os_id}} {{os_version_id}} memdisk install ( no preseed )
                 KERNEL memdisk
