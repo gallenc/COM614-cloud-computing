@@ -85,9 +85,11 @@
            path: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/netbootimages"
            state: directory
            mode: '0755'
+           
 
        - name: Download PXE installer url
          ansible.builtin.shell: |
+           rm -rf /tmp/pxe_installer_unpack
            wget -O "{{pxe_installer_filepath}}" "{{pxe_installer_url}}"
            mkdir -p /tmp/pxe_installer_unpack
            tar -xvzf "{{pxe_installer_filepath}}" -C /tmp/pxe_installer_unpack
@@ -108,7 +110,7 @@
            
        - name: remove temporary unpack directory
          ansible.builtin.shell: |
-           rm -r /tmp/pxe_installer_unpack
+           rm -rf /tmp/pxe_installer_unpack
 
   vars:
       os_id: "{{hostvars[item].os_id | default('', true) | trim }}"
