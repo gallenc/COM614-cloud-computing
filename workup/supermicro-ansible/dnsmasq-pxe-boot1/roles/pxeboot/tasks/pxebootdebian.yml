@@ -161,7 +161,7 @@
                 KERNEL /{{os_id}}/{{os_version_id}}/bootimages/vmlinuz
                 INITRD /{{os_id}}/{{os_version_id}}/bootimages/initrd.gz
                 
-                APPEND auto=true priority=critical netcfg/choose_interface=enp1s0f0 root=/dev/nfs nfsroot={{ dnsmasq_gateway }}:/srv/nfs/{{os_id}}/{{os_version_id}},tcp,v3 rw preseed/url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{os_id}}/{{os_version_id}}/conf/default/preseed.conf 
+                APPEND  root=/dev/nfs nfsroot={{ dnsmasq_gateway }}:/srv/nfs/{{os_id}}/{{os_version_id}},tcp,v3 ip=:::::enp1s0f0:dhcp rw  auto=true priority=critical netcfg/choose_interface=enp1s0f0 preseed/url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{os_id}}/{{os_version_id}}/conf/default/preseed.conf 
                 
               LABEL {{os_id}} memdisk install ( no preseed )
                 MENU LABEL Install {{os_id}} {{os_version_id}} memdisk install ( no preseed )
@@ -175,6 +175,7 @@
             
 #                SYSAPPEND 3
 #                APPEND  url=http://{{ dnsmasq_gateway }}:8080/sharedisos//{{os_id}}/{{os_version_id}}/{{iso_name}} cloud-config-url=/dev/null autoinstall  ds=nocloud-net;s=http://{{ dnsmasq_gateway }}:8080/sharedisos//{{os_id}}/{{os_version_id}}/conf/default/ fsck.mode=skip
+#                APPEND auto=true priority=critical netcfg/choose_interface=enp1s0f0 root=/dev/nfs nfsroot={{ dnsmasq_gateway }}:/srv/nfs/{{os_id}}/{{os_version_id}},tcp,v3 rw preseed/url=http://{{ dnsmasq_gateway }}:8080/sharedisos/{{os_id}}/{{os_version_id}}/conf/default/preseed.conf 
 
 
   vars:
