@@ -105,6 +105,10 @@
            - initrd.gz
          loop_control:
            loop_var: image_item 
+           
+       - name: remove temporary unpack directory
+         ansible.builtin.shell: |
+           rm -r /tmp/pxe_installer_unpack
 
   vars:
       os_id: "{{hostvars[item].os_id | default('', true) | trim }}"
