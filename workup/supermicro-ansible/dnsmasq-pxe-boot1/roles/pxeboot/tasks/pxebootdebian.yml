@@ -96,12 +96,12 @@
            
        - name: Copy netboot debian kernel and initrd for PXE boot
          ansible.builtin.copy:
-           src: "/tmp/pxe_installer_unpack/{{ image_item }}"
+           src: "/tmp/pxe_installer_unpack/debian-installer/amd64/{{ image_item }}"
            dest: "{{sharedisos}}/{{os_id}}/{{os_version_id}}/netbootimages/{{ image_item }}"
            remote_src: true
            mode: '0777'
          loop:
-           - vmlinuz
+           - linux
            - initrd.gz
          loop_control:
            loop_var: image_item 
@@ -166,7 +166,7 @@
            remote_src: true
            mode: '0644'
          loop:
-           - vmlinuz
+           - linux
            - initrd.gz
          loop_control:
             loop_var: image_item 
