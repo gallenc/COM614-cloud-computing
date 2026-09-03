@@ -70,7 +70,7 @@
        # only rsync if /boot doesnt already exist
        - name: rsync iso to NFS Server folder
          ansible.builtin.shell: |
-           rsync -av "{{iso_mount_point}}" "{{nfs_root}}/{{os_id}}/{{os_version_id}}/"
+           rsync -av "{{iso_mount_point}}/" "{{nfs_root}}/{{os_id}}/{{os_version_id}}/"
          args:
            creates: "{{nfs_root}}/{{os_id}}/{{os_version_id}}/boot"
 
