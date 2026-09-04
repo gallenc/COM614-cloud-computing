@@ -1,5 +1,6 @@
 ---
 # based on https://github.com/elnappo/ansible-role-apt-cacher-ng/blob/master/tasks/main.yml
+# https://www.atlantic.net/vps-hosting/how-to-set-up-apt-caching-server-using-apt-cacher-ng-on-ubuntu/
 
 # tasks file for apt-cacher-ng
 - name: Install apt-cacher-ng
@@ -14,6 +15,32 @@
     group: apt-cacher-ng
     mode: 02755
     state: directory
+    
+- name: backup ng_cache acng.conf first time only
+  copy: 
+    src: /etc/apt-cacher-ng/acng.conf
+    dest: /etc/apt-cacher-ng/acng.conf.bak
+    force: no
+    
+- name: Set config
+  lineinfile:
+    dest: /etc/apt-cacher-ng/acng.conf
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: "{{ item.state | default('present') }}"
+  with_items:
+    - { regexp: "^Port:", line: "Port: {{ apt_cacher_ng_port }}" }
+    - { regexp: "^CacheDir:\ ", line: "CacheDir: {{ apt_cacher_ng_cache_dir }}" }
+    - { regexp: "^PassThroughPattern:\ ", line: "PassThroughPattern: .*" }
+  notify:
+    - restart apt-cacher-ng
+
+- name: Remove /etc/apt-cacher-ng/zz_debconf.conf
+  file:
+    path: /etc/apt-cacher-ng/zz_debconf.conf
+    state: absent
+  notify:
+    - restart apt-cacher-ng
     
 - name: Enable apt-cacher-ng on boot
   service:

@@ -6,11 +6,13 @@
 
   vars:
     # using the vagrant shared folder so that survives a vagrant destroy and vagrant up cycle
-    apt_cacher_ng_cache_dir: /vagrant/cache/apt-cacher-ng
     sharedisos: /vagrant/www/sharedisos
     http_root: /vagrant/www
     tftp_root: /srv/tftp
     nfs_root: /srv/nfs
+    
+    apt_cacher_ng_cache_dir: /vagrant/cache/apt-cacher-ng
+    apt_cacher_ng_port: 3142
 
     ubuntu_iso_url: https://releases.ubuntu.com/resolute/ubuntu-26.04-live-server-amd64.iso
     ubuntu_iso_name: ubuntu-26.04-live-server-amd64.iso
