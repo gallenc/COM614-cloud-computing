@@ -23,6 +23,7 @@
     force: no
     remote_src: true
     
+  # note ^ matches the start of line. Relace if present or at end of file if commented
 - name: Set config
   lineinfile:
     dest: /etc/apt-cacher-ng/acng.conf
