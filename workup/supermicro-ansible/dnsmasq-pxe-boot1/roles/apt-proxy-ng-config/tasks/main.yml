@@ -49,3 +49,7 @@
     name: apt-cacher-ng
     state: started
     enabled: true
+    
+- name:  apt-cacher-ng message  
+  debug:
+     msg: "apt-cacher-ng running on port {{ apt_cacher_ng_port }} with cache dir {{ apt_cacher_ng_cache_dir }} info page at http://{{ dnsmasq_gateway }}:{{ apt_cacher_ng_port }}/acng-report.html"

@@ -178,8 +178,8 @@
            state: directory
            mode: '0755'
 
-       - name: Copy config files
-         ansible.builtin.copy:
+       - name: Copy config template files
+         ansible.builtin.template:
            src: ../files//{{os_id}}/{{os_version_id}}/conf/default/{{ image_item }}
            dest: "{{sharedisos}}//{{os_id}}/{{os_version_id}}/conf/default/{{ image_item }}"
            mode: '0644'

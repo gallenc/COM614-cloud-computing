@@ -11,6 +11,7 @@
     tftp_root: /srv/tftp
     nfs_root: /srv/nfs
     
+    use_apt_cacher_ng: true
     apt_cacher_ng_cache_dir: /vagrant/cache/apt-cacher-ng
     apt_cacher_ng_port: 3142
 
