@@ -1,0 +1,22 @@
+---
+# based on https://github.com/elnappo/ansible-role-apt-cacher-ng/blob/master/tasks/main.yml
+
+# tasks file for apt-cacher-ng
+- name: Install apt-cacher-ng
+  package:
+    name: apt-cacher-ng
+    state: present
+
+- name: Create CacheDir
+  file:
+    path: "{{ apt_cacher_ng_cache_dir }}"
+    owner: apt-cacher-ng
+    group: apt-cacher-ng
+    mode: 02755
+    state: directory
+    
+- name: Enable apt-cacher-ng on boot
+  service:
+    name: apt-cacher-ng
+    state: started
+    enabled: true

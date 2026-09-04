@@ -6,6 +6,7 @@
 
   vars:
     # using the vagrant shared folder so that survives a vagrant destroy and vagrant up cycle
+    apt_cacher_ng_cache_dir: /vagrant/cache/apt-cacher-ng
     sharedisos: /vagrant/www/sharedisos
     http_root: /vagrant/www
     tftp_root: /srv/tftp
@@ -26,6 +27,7 @@
 
 
   roles:
+    - apt-proxy-ng-config
     - nfs-config
     - dnsmasq-config
     - pxeboot
