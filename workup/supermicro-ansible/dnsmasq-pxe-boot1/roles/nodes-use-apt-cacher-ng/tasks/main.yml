@@ -11,6 +11,6 @@
 
      - name: Run system update on responsive hosts
        ansible.builtin.apt:
-       update_cache: yes
+         update_cache: yes
       
    when: (hostvars[inventory_hostname].os_id | default('', true) | trim == 'debian' ) and (hostvars[inventory_hostname].ansible_host | default('', true) | trim !='')
