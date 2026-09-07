@@ -30,7 +30,7 @@
 
 
   roles:
-    - apt-proxy-ng-config
+    - apt-casher-ng-config
     - nfs-config
     - dnsmasq-config
     - pxeboot

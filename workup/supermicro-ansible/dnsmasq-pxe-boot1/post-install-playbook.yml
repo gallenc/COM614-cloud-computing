@@ -1,0 +1,13 @@
+---
+  
+- name: run post install tasks 
+  hosts: blade_1
+  gather_facts: false
+  become: true
+  
+  
+  roles:
+    - apt-casher-ng-config
+
+
+      

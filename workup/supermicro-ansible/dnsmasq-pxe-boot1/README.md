@@ -38,6 +38,11 @@ ipmitool -I lan -H 192.168.105.102 -U ADMIN -P ADMIN chassis power on
 ```
 
 
+# post install playbook
 
+```
+cd dnsmasq-pxe-boot1
+ansible-playbook -i inventory/dev/hosts.ini  post-install-playbook.yml
 
+```
 

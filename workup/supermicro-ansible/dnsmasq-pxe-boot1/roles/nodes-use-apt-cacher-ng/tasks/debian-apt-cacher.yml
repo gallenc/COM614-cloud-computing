@@ -1,0 +1,14 @@
+---
+# see https://oneuptime.com/blog/post/2026-03-02-how-to-set-up-apt-cacher-ng-for-package-caching-on-ubuntu/view
+
+    - name: debug debian-apt-cacher.yml
+      debug:
+        msg: "generating apt cache config for os_id={{hostvars[item].os_id | default('', true) | trim }} os_version_id= {{ hostvars[item].os_version_id | default('', true) | trim }}"
+          
+    - name: Create debian apt-casher-ng
+      ansible.builtin.copy:
+           dest: "/etc/apt/apt.conf.d/01-apt-casher-ng-proxy"
+           content: |
+              echo 'Acquire::http::Proxy "http://{{ dnsmasq_gateway }}:{{ apt_cacher_ng_port }}";' | sudo tee /etc/apt/apt.conf.d/01-apt-casher-ng-proxy
+           mode: '0644'
+           creates: "/etc/apt/apt.conf.d/01-apt-casher-ng-proxy"

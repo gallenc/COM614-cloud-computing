@@ -1,0 +1,16 @@
+---
+
+ - name: run post install tasks for debian
+   block:
+      
+     - debug:
+         msg: "running post install tasks for debian os_id={{hostvars[inventory_hostname].os_id | default('', true) | trim }} os_version_id= {{ hostvars[inventory_hostname].os_version_id | default('', true) | trim }} ansible_host={{ hostvars[inventory_hostname].ansible_host | default('', true) | trim }}"
+       
+     - name: generate apt-casher config for responsive debian hosts
+       include_tasks: debian-apt-cacher.yml
+
+     - name: Run system update on responsive hosts
+       ansible.builtin.apt:
+       update_cache: yes
+      
+   when: (hostvars[inventory_hostname].os_id | default('', true) | trim == 'debian' ) and (hostvars[inventory_hostname].ansible_host | default('', true) | trim !='')
