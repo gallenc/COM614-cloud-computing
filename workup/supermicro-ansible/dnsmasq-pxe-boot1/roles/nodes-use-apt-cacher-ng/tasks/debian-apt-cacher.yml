@@ -9,6 +9,6 @@
       ansible.builtin.copy:
            dest: "/etc/apt/apt.conf.d/01-apt-casher-ng-proxy"
            content: |
-              echo 'Acquire::http::Proxy "http://{{ dnsmasq_gateway }}:{{ apt_cacher_ng_port }}";' | sudo tee /etc/apt/apt.conf.d/01-apt-casher-ng-proxy
+              Acquire::http::Proxy "http://{{ dnsmasq_gateway }}:{{ apt_cacher_ng_port }}";
            mode: '0644'
 
