@@ -3,7 +3,7 @@
 
     - name: debug debian-apt-cacher.yml
       debug:
-        msg: "generating apt cache config for os_id={{hostvars[item].os_id | default('', true) | trim }} os_version_id= {{ hostvars[item].os_version_id | default('', true) | trim }}"
+        msg: "generating apt cache config for os_id={{hostvars[inventory_hostname].os_id | default('', true) | trim }} os_version_id= {{ hostvars[inventory_hostname].os_version_id | default('', true) | trim }}"
           
     - name: Create debian apt-casher-ng
       ansible.builtin.copy:
