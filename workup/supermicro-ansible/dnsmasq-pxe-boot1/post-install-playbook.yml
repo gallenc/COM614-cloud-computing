@@ -7,7 +7,7 @@
   
   
   roles:
-    - apt-casher-ng-config
+    - nodes-use-apt-cacher-ng
 
 
       
