@@ -1,0 +1,28 @@
+---
+# see https://oneuptime.com/blog/post/2026-03-02-how-to-set-up-apt-cacher-ng-for-package-caching-on-ubuntu/view
+
+    - name: debug debian-apt-cacher.yml
+      debug:
+        msg: "updating settings for os_id={{hostvars[inventory_hostname].os_id | default('', true) | trim }} os_version_id= {{ hostvars[inventory_hostname].os_version_id | default('', true) | trim }}"
+          
+    - name: update power settings for debian hosts
+      ansible.builtin.copy:
+           dest: "/etc/systemd/sleep.conf.d/nosuspend.conf"
+           content: |
+             [Sleep]
+             AllowSuspend=no
+             AllowHibernation=no
+             AllowSuspendThenHibernate=no
+             AllowHybridSleep=no
+           mode: '0644'
+           
+    - name: update power keyboard settings for debian hosts
+      ansible.builtin.copy:
+           dest: "/etc/systemd/logind.conf.d/nokeyboard.conf"
+           content: |
+             [Login]
+             HandleLidSwitch=ignore
+             HandleLidSwitchExternalPower=ignore
+             HandleSuspendKey=ignore
+           mode: '0644'
+
