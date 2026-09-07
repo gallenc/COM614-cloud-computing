@@ -3,6 +3,9 @@ ansible_connection: ssh
 ansible_user: ansible
 ansible_ssh_pass: minad1234
 
+ipmi_user: ADMIN
+ipmi_password: ADMIN
+
 # using the vagrant shared folder so that survives a vagrant destroy and vagrant up cycle
 sharedisos: /vagrant/www/sharedisos
 http_root: /vagrant/www

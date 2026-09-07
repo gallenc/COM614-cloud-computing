@@ -30,10 +30,19 @@ ansible-playbook -i inventory/dev/hosts.ini  setup-pxe-server.yml
 ```
 
 ```
-ipmitool -I lan -H 192.168.105.102 -U ADMIN -P ADMIN chassis status
-ipmitool -I lan -H 192.168.105.102 -U ADMIN -P ADMIN chassis power off
+# only for grub
 ipmitool -I lanplus -H 192.168.105.102 -U ADMIN -P ADMIN chassis bootdev pxe options=efiboot
-ipmitool -I lan -H 192.168.105.102 -U ADMIN -P ADMIN chassis power on
+
+# for pxe
+ipmitool -I lanplus -H 192.168.105.102 -U ADMIN -P ADMIN chassis status
+
+ipmitool -I lanplus -H 192.168.105.102 -U ADMIN -P ADMIN chassis power off
+ipmitool -I lanplus -H 192.168.105.102 -U ADMIN -P ADMIN chassis bootdev pxe
+ipmitool -I lanplus -H 192.168.105.102 -U ADMIN -P ADMIN chassis power on
+
+ipmitool -I lanplus -H 192.168.105.102 -U ADMIN -P ADMIN chassis power off
+ipmitool -I lanplus -H 192.168.105.102 -U ADMIN -P ADMIN chassis bootdev disk
+ipmitool -I lanplus -H 192.168.105.102 -U ADMIN -P ADMIN chassis power on
 
 ```
 

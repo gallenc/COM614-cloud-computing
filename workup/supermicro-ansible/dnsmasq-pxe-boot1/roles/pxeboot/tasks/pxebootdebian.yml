@@ -89,12 +89,15 @@
        - name: Download PXE installer url
          ansible.builtin.shell: |
            wget -O "{{pxe_installer_filepath}}" "{{pxe_installer_url}}"
-           rm -rf /tmp/pxe_installer_unpack
-           mkdir -p /tmp/pxe_installer_unpack
-           tar -xvzf "{{pxe_installer_filepath}}" -C /tmp/pxe_installer_unpack
          args:
            creates: "{{pxe_installer_filepath}}"
            
+       - name: Uunpack PXE installer url
+         ansible.builtin.shell: |
+           rm -rf /tmp/pxe_installer_unpack
+           mkdir -p /tmp/pxe_installer_unpack
+           tar -xvzf "{{pxe_installer_filepath}}" -C /tmp/pxe_installer_unpack
+
        - name: Copy netboot debian kernel and initrd for PXE boot
          ansible.builtin.copy:
            src: "/tmp/pxe_installer_unpack/debian-installer/amd64/{{ image_item }}"
