@@ -16,6 +16,16 @@
     mode: 02755
     state: directory
     
+- name: apt-cacher-ng user to vagrant so that it can write to the shared folder
+  lineinfile:
+    dest: /lib/systemd/system/apt-cacher-ng.service
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: "{{ item.state | default('present') }}"
+  with_items:
+    - { regexp: "^User=", line: "User=vagrant" }
+    - { regexp: "^Group=", line: "Group=vagrant" }
+    
 - name: backup ng_cache acng.conf first time only
   copy: 
     src: /etc/apt-cacher-ng/acng.conf
