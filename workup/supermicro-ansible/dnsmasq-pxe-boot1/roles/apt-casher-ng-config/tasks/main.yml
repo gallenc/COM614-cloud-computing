@@ -8,7 +8,7 @@
     name: apt-cacher-ng
     state: present
     
-- name: stop apt-cacher-ng before shanges to config
+- name: stop apt-cacher-ng before changes to config
   service:
     name: apt-cacher-ng
     state: stopped
@@ -16,8 +16,16 @@
 - name: Create CacheDir
   file:
     path: "{{ apt_cacher_ng_cache_dir }}"
-    owner: "{{ apt_cacher_ng_cache_dir_owner }}"
-    group: "{{ apt_cacher_ng_cache_dir_group }}"
+    owner: "{{ apt_cacher_ng_cache_user }}"
+    group: "{{ apt_cacher_ng_cache_user_group }}"
+    mode: 02755
+    state: directory
+    
+- name: Create LogDir
+  file:
+    path: "{{ apt_cacher_ng_log_dir }}"
+    owner: "{{ apt_cacher_ng_cache_user }}"
+    group: "{{ apt_cacher_ng_cache_user_group }}"
     mode: 02755
     state: directory
     
@@ -28,8 +36,8 @@
     line: "{{ item.line }}"
     state: "{{ item.state | default('present') }}"
   with_items:
-    - { regexp: "^User=", line: "User={{ apt_cacher_ng_cache_dir_owner }}" }
-    - { regexp: "^Group=", line: "Group={{ apt_cacher_ng_cache_dir_group }}" }
+    - { regexp: "^User=", line: "User={{ apt_cacher_ng_cache_user }}" }
+    - { regexp: "^Group=", line: "Group={{ apt_cacher_ng_cache_user_group }}" }
     - { regexp: "^RequiresMountsFor=", line: "RequiresMountsFor={{ apt_cacher_ng_cache_dir }}" }
     - { regexp: "^Restart=", line: "Restart=no" }
 
@@ -37,7 +45,7 @@
   file:
     path: /etc/apt-cacher-ng/security.conf
     owner: root
-    group: "{{ apt_cacher_ng_cache_dir_owner }}"
+    group: "{{ apt_cacher_ng_cache_user }}"
 
 
 - name: backup ng_cache acng.conf first time only
@@ -57,6 +65,7 @@
   with_items:
     - { regexp: "^Port:", line: "Port: {{ apt_cacher_ng_port }}" }
     - { regexp: "^CacheDir:", line: "CacheDir: {{ apt_cacher_ng_cache_dir }}" }
+    - { regexp: "^LogDir:", line: "LogDir: {{ apt_cacher_ng_log_dir }}" }
     - { regexp: "^PassThroughPattern:", line: "PassThroughPattern: .*" }
 
 
