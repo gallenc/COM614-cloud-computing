@@ -28,10 +28,16 @@
     line: "{{ item.line }}"
     state: "{{ item.state | default('present') }}"
   with_items:
-    - { regexp: "^User=", line: "User=vagrant" }
-    - { regexp: "^Group=", line: "Group=vagrant" }
+    - { regexp: "^User=", line: "User={{ apt_cacher_ng_cache_dir_owner }}" }
+    - { regexp: "^Group=", line: "Group={{ apt_cacher_ng_cache_dir_group }}" }
     - { regexp: "^RequiresMountsFor=", line: "RequiresMountsFor={{ apt_cacher_ng_cache_dir }}" }
     - { regexp: "^Restart=", line: "Restart=no" }
+
+- name: change permissions of /etc/apt-cacher-ng/security.conf so that vagrant can read it
+  file:
+    path: /etc/apt-cacher-ng/security.conf
+    owner: root
+    group: "{{ apt_cacher_ng_cache_dir_owner }}"
 
 
 - name: backup ng_cache acng.conf first time only
