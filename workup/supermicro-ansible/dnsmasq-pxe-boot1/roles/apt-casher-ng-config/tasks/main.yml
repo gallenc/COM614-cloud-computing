@@ -62,6 +62,7 @@
     name: apt-cacher-ng
     state: started
     enabled: true
+    daemon_reload: true
     
 - name:  apt-cacher-ng message  
   debug:
