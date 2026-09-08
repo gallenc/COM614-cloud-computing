@@ -11,8 +11,8 @@
 - name: Create CacheDir
   file:
     path: "{{ apt_cacher_ng_cache_dir }}"
-    owner: apt-cacher-ng
-    group: apt-cacher-ng
+    owner: "{{ apt-cacher-ng_cache_dir_owner }}"
+    group: "{{ apt-cacher-ng_cache_dir_group }}"
     mode: 02755
     state: directory
     
