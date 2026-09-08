@@ -30,7 +30,10 @@
   with_items:
     - { regexp: "^User=", line: "User=vagrant" }
     - { regexp: "^Group=", line: "Group=vagrant" }
-    
+    - { regexp: "^RequiresMountsFor=", line: "RequiresMountsFor={{ apt_cacher_ng_cache_dir }}" }
+    - { regexp: "^Restart=", line: "Restart=no" }
+
+
 - name: backup ng_cache acng.conf first time only
   copy: 
     src: /etc/apt-cacher-ng/acng.conf
