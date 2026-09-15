@@ -11,9 +11,9 @@
 BIOS : Delete (Del) key repeatedly during the Power-On Self-Test (POST). Some models may require pressing F11 or F12 to open the boot menu OR ctrl -s 
  gateway  |
 
-# layer 2 switch   cisco
+# layer 2 switch   cisco 2950
 
-|procurve vlan         |ports |
+|         vlan         |ports |
 |:---------------------|:------------|
 |VLAN 10 (Production)  |  Ports 1, 4, 7, 10, 13, 16, 19, 22 + Port 41 (Router uplink) |
 |VLAN 20 (Secondary)   |  Ports 2, 5, 8, 11, 14, 17, 20, 23 + Port 42 (Router uplink) |
@@ -22,7 +22,7 @@ BIOS : Delete (Del) key repeatedly during the Power-On Self-Test (POST). Some mo
 
 | server name       | Management<BR>IP  | Management<BR>MAC | Mangement<BR>switch port | notes             |
 |:------------------|:------------------|:------------------|:-------------------------|:------------------|
-| cisco switch   |192.168.105.100    |                   | 43 VVLAN 1 (default)     |                   | 
+| cisco switch      |192.168.105.100    |                   | 43 VVLAN 1 (default)     |user admin pw minad1234 | 
 
 
 | server name       | ipmi<BR>IP        | ipmi<BR>MAC       | ipmi<BR>switch port |eth0 enp1s0f1<BR>IP| eth0<BR>MAC       | eth0 switch port  |eth1 enp1s0f1<BR>IP| eth1<BR>MAC       | eth1 switch port  | notes           |
