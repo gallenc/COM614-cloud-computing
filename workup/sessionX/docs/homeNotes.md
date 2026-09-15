@@ -13,6 +13,9 @@ BIOS : Delete (Del) key repeatedly during the Power-On Self-Test (POST). Some mo
 
 # layer 2 switch   cisco 2950
 
+connect serial lead and press menu switch on front while powering on. Note may need to press again to enter switch: mode
+
+
 |         vlan         |ports |
 |:---------------------|:------------|
 |VLAN 10 (Production)  |  Ports 1, 4, 7, 10, 13, 16, 19, 22 + Port 41 (Router uplink) |
