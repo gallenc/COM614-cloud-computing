@@ -22,7 +22,7 @@ connect serial lead and press menu switch on front while powering on. Note may n
 
 | server name       | Management<BR>IP  | Management<BR>MAC | Mangement<BR>switch port | notes             |
 |:------------------|:------------------|:------------------|:-------------------------|:------------------|
-| cisco switch      |192.168.105.100    |20:BB:C0:0E:E0:40  | 43 VVLAN 1 (default)     |user admin pw minad1234 | 
+| cisco switch      |192.168.105.100    |20:BB:C0:0E:E0:40  | 43 VLAN 1 (default)      |user admin pw minad1234 | 
 
 
 | server name       | ipmi<BR>IP        | ipmi<BR>MAC       | ipmi<BR>switch port |eth0 enp1s0f1<BR>IP| eth0<BR>MAC       | eth0 switch port  |eth1 enp1s0f1<BR>IP| eth1<BR>MAC       | eth1 switch port  | notes           |
