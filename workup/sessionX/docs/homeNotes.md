@@ -6,11 +6,12 @@
 # supermicro
 
 BIOS : Delete (Del) key repeatedly during the Power-On Self-Test (POST). Some models may require pressing F11 or F12 to open the boot menu OR ctrl -s 
- gateway  |
+
+When installing ubuntu 26.04 from usb select minimal graphical install to avoid hanging waiting for drivers.
 
 # layer 2 switch   cisco 2950
 
-connect serial lead and press menu switch on front while powering on. Note may need to press again to enter switch: mode
+connect serial lead and press menu switch on front while powering on. Note may need to press again to enter `switch: mode`
 
 
 |         vlan         |ports |
