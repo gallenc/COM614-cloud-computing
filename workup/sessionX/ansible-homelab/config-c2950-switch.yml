@@ -1,0 +1,43 @@
+- name: Configure HP ProCurve 3400cl
+  hosts: procurve_switches
+  gather_facts: no
+
+  tasks:
+  - name: configure procurve switch1
+    ansible.netcommon.telnet:
+      port: "{{ ansible_port | default(omit) }}"
+      host: "{{ansible_host}}"
+      user: manager
+      password: minad1234
+      timeout: 30
+      login_prompt: ""
+      password_prompt: "Password: "
+      prompts:
+#      - 'ProCurve Switch 3400cl-48G# '
+       - '[>#]'
+      command:
+      - show version
+      - config
+      - vlan 1
+      - name "Default_IPMI"
+      - untagged 3,6,9,12,15,18,21,23,24,43 
+      - ip address 192.168.105.100 255.255.255.0
+      - exit
+      - vlan 20
+      - name "Secondary"
+      - untagged  2,5,8,11,14,17,20,42  
+      #- ip address 192.168.30.5 255.255.255.0
+      - exit
+      - vlan 10
+      - name "Production"
+      - untagged 1,4,7,10,13,16,19,22,41
+      - ip address 192.168.20.5 255.255.255.0
+      - exit
+      - write memory
+      - exit
+      
+    register: telnet_output
+
+  - name: Display telnet output
+    debug:
+      var: "telnet_output.stdout_lines"
