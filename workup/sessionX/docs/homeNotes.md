@@ -9,7 +9,9 @@ BIOS : Delete (Del) key repeatedly during the Power-On Self-Test (POST). Some mo
 
 When installing ubuntu 26.04 from usb select minimal graphical install to avoid hanging waiting for drivers.
 
-# layer 2 switch   cisco 2950
+# layer 2 switch   cisco 2960-s (uses gigabit interfaces)
+
+http access enabled http://192.168.1.100/xhome.htm
 
 connect serial lead and press menu switch on front while powering on. Note may need to press again to enter `switch: mode`
 
